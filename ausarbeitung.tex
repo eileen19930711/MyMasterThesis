@@ -9,12 +9,12 @@
 \RequirePackage{kvoptions-patch}
 
 %English:
-%\let\ifdeutsch\iffalse
-%\let\ifenglisch\iftrue
+\let\ifdeutsch\iffalse
+\let\ifenglisch\iftrue
 
 %German:
-\let\ifdeutsch\iftrue
-\let\ifenglisch\iffalse
+%\let\ifdeutsch\iftrue
+%\let\ifenglisch\iffalse
 
 %
 \ifenglisch
@@ -81,7 +81,7 @@
 %Angaben in die PDF-Infos uebernehmen
 \makeatletter
 \hypersetup{
-            pdftitle={}, %Titel der Arbeit
+            pdftitle={Automatic 3D lane marking reconstruction using multi-view aerial imagery}, %Titel der Arbeit
             pdfauthor={}, %Author
             pdfkeywords={}, % CR-Klassifikation und ggf. weitere Stichworte
             pdfsubject={}
@@ -215,6 +215,7 @@
 \input{content/einleitung}
 %\input{...weitere Kapitel...}
 \input{content/kapitel2}
+\input{content/kapitel3}
 \input{content/zusammenfassung_und_ausblick}
 %
 %
@@ -233,7 +234,7 @@
 \ifdeutsch
 Alle URLs wurden zuletzt am 17.\,03.\,2008 geprüft.
 \else
-All links were last followed on March 17, 2008.
+All links were last followed on December 22, 2017.
 \fi
 
 \pagestyle{empty}
