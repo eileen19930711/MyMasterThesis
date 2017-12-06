@@ -8,8 +8,8 @@ The following sections describe the principles of 3D lane marking reconstruction
 
 Section~\ref{sec:2.1.LineExtraction} describes how lane markings are extracted.
 Section~\ref{sec:2.2.Geometry} introduces the geometric properties of aerial images and their mathematical models, including collinearity equation and lens distortion correction. 
-Section~\ref{sec:2.3.LineFitting} describes the principle of line fitting, including line equation in two-point form and linear regression.
-Section~\ref{sec:2.4} elaborates the usage of line fitting on 3D lane marking reconstruction modeled through Least-Squares Adjustment. This is the key approach to solve the non-textured-neighboring quasi-infinite line reconstruction problem.
+Section~\ref{sec:2.3.LineFitting} describes the principle of line fitting as well as line equation in two-point form.
+Modeled through non-linear least-squares adjustment, section~\ref{sec:2.4} elaborates the usage of line fitting on 3D lane marking reconstruction, which is the key approach to solve the non-textured-neighboring quasi-infinite line reconstruction problem.
 
 
 
@@ -50,35 +50,31 @@ $(X, Y, Z)$: object coordinates of the point \newline
 $(X_0, Y_0, Z_0)$: object coordinates of projection center \newline
 $R_{11},...,R_{33}$: elements of the rotation matrix R (orthogonal 3$\times$3-matrix from object space to image space, with 3 independent angles $\omega$, $\phi$ and $\kappa$)\newline
 
-The exterior orientations: $X_0$, $Y_0$, $Z_0$, $\omega$, $\phi$, $\kappa$ as well as the interior orientations: $x_0$, $y_0$, $c$ are the known elements in this work.
-
+The exterior orientations: $X_0$, $Y_0$, $Z_0$, $\omega$, $\phi$, $\kappa$ as well as the interior orientations: $x_0$, $y_0$, $c$ are the bundle-adjusted, known elements in this work.
 %The image coordinates $x,y$ are the measurements.
-
-
-The collinearity model as presented here can be expanded to include parameters of
-the interior orientation.
-
-As real cameras generally only approximate the perspective camera model, we discuss the relation of the sensor w.r.t. the lens, and also models for lens distortion, which make it possible to correct the position of image features such that they obey the perspective or spherical model with sufficient accuracy. This allows us to reconstruct the bundle of viewing rays from the corresponding set of image points.
 
 \subsection{Lens Distortion Correction}
 \label{subsec:2.2.2.LensDistortion}
 
-Assuming $x$ and $y$ to be the distorted image coordinates, the corrections $\delta x$ and $\delta y$ are then calculated by the following equations
-\begin{equation} %\label{eq:2.2}
-\begin{aligned}
-\Delta x = x_p + A_1x_*(r^2-R_0^2) + A_2x_*(r^4-R_0^4) + B_1(r^2+2x_*^2) + B_22x_*y+C_2y \\
-\Delta y = y_p + A_1y  (r^2-R_0^2) + A_2y  (r^4-R_0^4) + B_1(r^2+2y^2)   + B_22x_*y
-\end{aligned}
-\end{equation}
-with $r=\sqrt{x_*^2+y^2}$ and $x_*=\dfrac{x}{C_1}$. The undistorted image coordinates $x\prime$ and $y\prime$ are then calculated by $x’=x+\Delta x$ and $y’=y+\Delta y$. [F. Kurz et al 2012] 
+Regarding the fact that real cameras generally only approximate the perspective camera model, the collinearity model can be expanded to include parameters of lens distortion. Lens distortion correction attempts to correct the position of image features such that they obey the perspective model with sufficient accuracy.[W. Förstner et al. 2016] 
 
+Assuming $x$ and $y$ to be the distorted image coordinates, the corrections $\Delta x$ and $\Delta y$ are then calculated by the following equations
+\begin{equation} %\label{eq:2.2}
+\begin{split}
+\Delta x &= x_p + A_1x_*(r^2-R_0^2) + A_2x_*(r^4-R_0^4) + B_1(r^2+2x_*^2) + B_22x_*y+C_2y \\
+\Delta y &= y_p + A_1y  (r^2-R_0^2) + A_2y  (r^4-R_0^4) + B_1(r^2+2y^2)   + B_22x_*y
+\end{split}
+\end{equation}
+with $r=\sqrt{x_*^2+y^2}$ and $x_*=\dfrac{x}{C_1}$. The undistorted image coordinates $x\prime$ and $y\prime$ are then calculated by $x\prime=x+\Delta x$ and $y\prime=y+\Delta y$. [F. Kurz et al. 2012] 
+
+%This allows us to reconstruct the viewing rays from the corresponding set of image points.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Line Fitting}
 \label{sec:2.3.LineFitting}
 
-Line fitting is the process of constructing a infinite straight line that has the best fit to a 2D dataset. One of the approaches is linear regression, which attempts to model the relationship between two variables by fitting a linear equation to observed data. In the following subsections we derive the model to fit the observed data, the extracted lines from section~\ref{sec:2.1} in forms of sets of points, in image space by line equation in two-point form.
+Line fitting is the process of constructing a infinite straight line that has the best fit to a 2D dataset. One of the approaches is linear regression, which attempts to model the relationship between two variables by fitting a linear equation to observed data. In the following subsections we derive the model to fit the observed data, the extracted lines from section~\ref{sec:2.1.LineExtraction} in forms of sets of points, in image space by line equation in two-point form.
 
 \subsection{Linear Regression}
 \label{subsec:2.3.1}
