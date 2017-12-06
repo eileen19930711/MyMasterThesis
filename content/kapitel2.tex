@@ -32,7 +32,7 @@ This section describes the geometric model of the projection of 3D points into t
 
 \subsection{Collinearity Equation}
 \label{subsec:2.2.1.Collinearity}
-Assuming frame photography, i.e. photographs exposed in one instant, and assuming central projection model, i.e. cameras who have a single viewpoint and a planar sensor and being straight line-preserving,
+We assume frame photography, i.e. photographs exposed in one instant, and assume central projection model, i.e. cameras who have a single viewpoint and a planar sensor and being straight line-preserving.
 
 Collinearity indicates the condition that the image point (on the sensor plate of the camera), the observed point (on the object) and the projection center of the camera were aligned at the moment the picture was taken. Every measured point leads to two collinearity equations, describing transformations from object space to image coordinates:
 \begin{equation} %\label{eq:2.3}
@@ -48,13 +48,17 @@ $(x_0, y_0)$: image coordinates of principal point \newline
 $c$: principal distance \newline
 $(X, Y, Z)$: object coordinates of the point \newline
 $(X_0, Y_0, Z_0)$: object coordinates of projection center \newline
-$R_{11}$~$R_{33}$: elements of the rotation matrix R (3$\times$3-matrix orthogonal matrix from object space to image space, with 3 independent angles $\omega$, $\phi$ and $\kappa$\newline
+$R_{11},...,R_{33}$: elements of the rotation matrix R (orthogonal 3$\times$3-matrix from object space to image space, with 3 independent angles $\omega$, $\phi$ and $\kappa$)\newline
 
-The exterior orientations: $X_0$, $Y_0$, $Z_0$, $\omega$, $\phi$, $\kappa$ as well as the interior orientations: $x_0$, $y_0$, $c$ are the known elements in this work. The image coordinates $x,y$ are the measurements.
+The exterior orientations: $X_0$, $Y_0$, $Z_0$, $\omega$, $\phi$, $\kappa$ as well as the interior orientations: $x_0$, $y_0$, $c$ are the known elements in this work.
+
+%The image coordinates $x,y$ are the measurements.
 
 
 The collinearity model as presented here can be expanded to include parameters of
 the interior orientation.
+
+As real cameras generally only approximate the perspective camera model, we discuss the relation of the sensor w.r.t. the lens, and also models for lens distortion, which make it possible to correct the position of image features such that they obey the perspective or spherical model with sufficient accuracy. This allows us to reconstruct the bundle of viewing rays from the corresponding set of image points.
 
 \subsection{Lens Distortion Correction}
 \label{subsec:2.2.2.LensDistortion}
