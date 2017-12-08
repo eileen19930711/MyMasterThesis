@@ -3,17 +3,33 @@
 \chapter{Methodology}
 \label{chap:k2}
 
-The following sections describe the principles of 3D lane marking reconstruction method proposed in this thesis. 
-% with respect to their location in the processing chain (Fig.1.).
+The following sections introduce the principles of 3D lane marking reconstruction method as well the materials used in this thesis.
+% sorting with respect to their position in the processing chain (Fig.1.).
 
-Section~\ref{sec:LineExtraction} describes how lane markings are extracted.
+Section~\ref{sec:Materials} gives the information of the input data and some preprocessing applied in this work.
+Section~\ref{sec:LineExtraction} describes the principle of line detection for lane marking extraction.
 Section~\ref{sec:Geometry} introduces the geometric properties of aerial images and their mathematical models, including collinearity equation and lens distortion correction. 
-Section~\ref{sec:LineFitting} describes the principle of line fitting as well as line equation in two-point form.
-Modeled through non-linear least-squares adjustment, section~\ref{sec:2.4} elaborates the usage of line fitting on 3D lane marking reconstruction, which is the key approach to solve the non-textured-neighboring quasi-infinite line reconstruction problem.
+The principle of line fitting and the LS model is presented in section~\ref{sec:LineFitting}.
+Section~\ref{sec:} elaborates the usage of line fitting on 3D lane marking reconstruction, where the observations are in image space yet the unknowns in object space. It is the key approach to solve non-textured-neighborings quasi-infinite line reconstruction problem.
+As initial values of unknown quantities are required in non-linear LS model, the extracted line features are projected onto DSM to provide such 3D lane marking approximations in Section~\ref{sec:ProjectionOnDSM}.
 
-
+% mainflowchart
 Fig. 1. Processing chain
 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Materials}
+\label{sec:Materials}
+
+% subflowchart-preprocessing of input data
+
+\subsection{Images and their orientations}
+
+\section{Digital Surface Model}
+
+\subsection{Masking of Road Segments}
+Image masking with OSM road database
 
 
 
@@ -142,8 +158,26 @@ Taylor expansion...(local linear approximation)
 the linear equation can also be expanded
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Least-Squares Adjustment Model with constraints}
+\label{sec:}
 
 
+\subsection{constraints}
+\label{subsec:}
+
+% % %
+C matrix
+D matrix
+
+\subsection{LS Adjustment with Constraints}
+\label{sec:}
+Line fitting in image space with unknowns in object coordinates
+
+
+% % %
+derive matrices
+extended normal equation matrix N*
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -170,29 +204,6 @@ Considering that X,Y have continuous numerical values whereas the DSM is raster 
 to provide the initial approximation for non-linear LS adj
 
 
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Least-Squares Adjustment Model with constraints}
-\label{sec:}
-
-
-\subsection{constraints}
-\label{subsec:}
-
-% % %
-C matrix
-D matrix
-
-\subsection{LS Adjustment with Constraints}
-\label{sec:}
-Line fitting in image space with unknowns in object coordinates
-
-
-% % %
-derive matrices
-extended normal equation matrix N*
 
 
 
