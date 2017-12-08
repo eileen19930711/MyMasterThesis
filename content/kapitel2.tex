@@ -7,7 +7,7 @@ The following sections introduce the principles of 3D lane marking reconstructio
 % sorting with respect to their position in the processing chain (Fig.1.).
 
 Section~\ref{sec:Materials} gives the information of the input data and some preprocessing applied in this work.
-Section~\ref{sec:LineExtraction} describes the principle of line detection for lane marking extraction.
+Section~\ref{sec:LineExtraction} describes the standard line detection algorithm for automatic lane marking extraction.
 Section~\ref{sec:Geometry} introduces the geometric properties of aerial images and their mathematical models, including collinearity equation and lens distortion correction. 
 Section~\ref{sec:LineFitting} presents the principle of line fitting and further derives the non-linear LS model for line equations in two-points form.
 Section~\ref{sec:} elaborates the usage of line fitting on 3D lane marking reconstruction, where the observations are in image space yet the unknowns in object space. It is the key approach to solve non-textured-neighborings quasi-infinite line reconstruction problem.
@@ -16,7 +16,7 @@ As initial values of unknown quantities are required in non-linear LS model, the
 % mainflowchart
 Fig. 1. Processing chain
 
-
+\clearpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Materials}
@@ -24,13 +24,14 @@ Fig. 1. Processing chain
 
 % subflowchart-preprocessing of input data
 
-\subsection{Aerial Images}
+\subsubsection{Aerial Images Acquisition}
 
-The special flight configuration at both sides of the motorway is realized by 
-as shown in fig.???
-The aerial image dataset oblique views
-unprojected (original) images
-undistorted images (without additional parameters for distortion)
+For real-time mapping applications during disasters, mass events and traffic monitoring scenarios, the German Aerospace Center (DLR) has developed a new optical sensor system -- the 4k system -- on a helicopter. %[F. Kurz et al.]
+The low-oblique aerial images used in this work are acquired from Canon EOS 1D-X, one of the non-metric cameras in 4k system, with viewing angle of 15$\degree$. Table ??? lists the properties of this camera, and Table ??? provides the information of the viewing geometry.
+
+The images are acquired with a special flight configuration at both sides of the motorway which guarantees a stereo view perpendicular to the lane marking direction. The flight configuration is shown in fig.??? on Google Earth platform.
+
+% fig. flight configuration in Google Earth
 
 \begin{table}
   \centering
@@ -38,17 +39,23 @@ undistorted images (without additional parameters for distortion)
   \toprule
                                       {} & \textbf{Canon EOS 1D-X} \\
   \midrule
-  \multirow{2}{*}{Lenses}                & Zeiss Makro Planar 2/50, 2/100\\
-                                         & Zeiss Distagon T* 35\\
+  Lenses                          & Zeiss Makro Planar 2/50\\
   \\[-1em]
-  Sensor / Pixel size                    & Full frame CMOS/ 6.944 \textmu m\\
+  Sensor / Pixel size             & Full frame CMOS / 6.944 \textmu m\\
   \\[-1em]
-  \multirow{2}{*}{Image size}            & 5184$\times$3456 pixel, ratio 3:2\\
-                                         & (17.9 MPix)\\
-
+  \multirow{2}{*}{Image size}     & 5184$\times$3456 pixel, ratio 3:2\\
+                                  & (17.9 MPix)\\
+  \\[-1em]
+  ISO                             & 100--204800\\
+  \\[-1em]
+  max. frame rate / max. images   & 14 fps/ 180 images\\
+  \\[-1em]
+  Exposure time                   & 30 s -- 1/8000 s\\
+  \\[-1em]
+  Data interface                  & LAN (EDSDK software interface)\\
   \bottomrule
   \end{tabular}
-  \caption{Properties of the 4k camera (oblique) }
+  \caption{Properties of the oblique camera }
   \label{tab:CameraProperties}
 \end{table}
 
@@ -57,7 +64,7 @@ undistorted images (without additional parameters for distortion)
   \centering
   \begin{tabular}{lll}
   \toprule
-                         & \textbf{RGB, 50mm lense} \\
+                         & \textbf{RGB, 50mm lens} \\
   \midrule
   Viewing directions     & $\pm$15$\degree$\\
   \\[-1em]
@@ -70,14 +77,25 @@ undistorted images (without additional parameters for distortion)
   \bottomrule
   \end{tabular}
   \caption{Viewing geometry}
-  \label{tab:CameraProperties}
+  \label{tab:SensorViewingGeometry}
 \end{table}
 
-\subsection{Image Orientations}
+
+\subsubsection{Image Interior and Exterior Orientations}
+The interior and exterior camera parameters are bundle-adjusted
+The GPS/IMU system in 4k system provides 
+refined by bundle adjustment
 
 
 
-\subsection{Digital Surface Model}
+unprojected (original) images
+undistorted images (without additional parameters for distortion)
+
+
+\subsubsection{Digital Surface Model}
+
+High-resolution DSM derived from the images (gives a good starting point for the lane marking refinement. Assuming that the final 3D correction is < 1m)
+
 Digital Surface Models Generation by Semi-Global Matching
 for semi-global matching, the matching step is cast into an energy minimization problem.
 The smoothness is not strong
@@ -86,15 +104,17 @@ low texture area, not able to triangulate the 3D point, it took a min value as t
 
 
 
-\subsection{Masking of Road Segments}
+\subsubsection{Masking of Road Segments}
 Image masking with OSM road database
-
+Road-Database (gives good knowledge about the orientation of lane markings)
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Lane markings Extraction}
 \label{sec:LineExtraction}
 [This is done with Halcon11/C...]
+
+apply standard line detection algorithms for automatic lane marking detection
 with subpixel precision
 Each extracted line is rasterized as a set of points in image coordinate (with … precision).
 line (2D) -> a set of points (2D) , in image space
@@ -164,13 +184,13 @@ Additional least-squares (LS) models are commonly used for regression by means o
 
 In the case of simple linear regression as presented in subsection~\ref{subsec:LinearRegression}, the independent variable $x$ is error free, inconsistencies are only for the dependent variable $y$. Geometrically it means that the vertical distances from observed data to the fitted line is minimized. To minimize the sum of squared perpendicular distances from the data points to the regression line, a LS mixed model is derived in subsection~\ref{subsec:MixedModel} to perform orthogonal regression.
 
-For a later combination with collinearity equations from subsection~\ref{subsec:Collinearity}, we aim to fit the line equation in two-point form to the extracted lines from section~\ref{sec:LineExtraction} (in forms of sets of points in image space). For such purpose, a non-linear LS adjustment model is derived in subsection~\ref{subsec:NonLinear}. 
+For a later combination with collinearity equations from subsection~\ref{subsec:Collinearity}, we aim to fit the line equation in two-point form to the extracted lines produced in section~\ref{sec:LineExtraction} (in forms of sets of points in image space). For such purpose, a non-linear LS adjustment model is derived in subsection~\ref{subsec:NonLinear}. 
 
 
 \subsection{Linear Regression Model}
 \label{subsec:LinearRegression}
 
-Given a data set $\{x_i,y_i\}^n_{i=1}$ of $n$ points on a 2D plane, a linear regression model assumes that the relationship between the dependent variable $y_i$ and the regressors $x_i$ is linear. This relationship is modeled through a error variable $e_{y_i}$ -an unobserved random variable that adds noise to the linear relationship between the dependent variable and regressors.
+Given a data set $\{x_i,y_i\}^n_{i=1}$ of $n$ points on a 2D plane, a linear regression model assumes that the relationship between the dependent variable $y_i$ and the regressors $x_i$ is linear. This relationship is modeled through a error variable $e_{y_i}$ --- an unobserved random variable that adds noise to the linear relationship between the dependent variable and regressors.
 Thus the model takes the form:
 \begin{equation} %\label{eq:2.1}
 y_i - e_{y_i} = a_0 + a_1x_i
@@ -255,6 +275,38 @@ pseudo code:
 %	Z_new = DSM.Get_height(X,Y);		// Z_new in world coordinates
 %end
 %return (X,Y,Z_new);
+
+%\begin{Algorithmus} 
+%\caption{Line Projection on DSM}
+%\label{alg:LineProjectionOnDSM}
+%\begin{algorithmic}
+%\Procedure{Sample}{$a$,$v_e$}
+%  \State $\mathsf{parentHandled} \gets (a = \mathsf{process}) \lor \mathsf{visited}(a'), (a',c,a) \in \mathsf{HR}$
+%  \State \Comment $(a',c'a) \in \mathsf{HR}$ denotes that $a'$ is the parent of $a$
+%  \If{$\mathsf{parentHandled}\,\land(\mathcal{L}_\mathit{in}(a)=\emptyset\,\lor\,\forall l \in %\mathcal{L}_\mathit{in}(a): \mathsf{visited}(l))$}
+%    \State $\mathsf{visited}(a) \gets \text{true}$
+%    \State $\mathsf{writes}_\circ(a,v_e) \gets
+%    \begin{cases}
+%      \mathsf{joinLinks}(a,v_e)                & \abs{\mathcal{L}_\mathit{in}(a)} > 0\\
+%      \mathsf{writes}_\circ(p,v_e)             & \exists p: (p,c,a) \in \mathsf{HR}\\
+%      (\emptyset, \emptyset, \emptyset, false) & \text{otherwise}
+%    \end{cases}
+%  \EndIf
+%\EndProcedure
+%\end{algorithmic}
+%\end{Algorithmus}
+
+
+
+
+
+
+
+
+
+
+
+
 
 Considering that X,Y have continuous numerical values whereas the DSM is raster (discrete), bilinear interpolation is adopted in this work.
 
