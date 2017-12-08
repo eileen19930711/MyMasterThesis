@@ -3,13 +3,13 @@
 \chapter{Methodology}
 \label{chap:k2}
 
-The following sections introduce the principles of 3D lane marking reconstruction method as well the materials used in this thesis.
+The following sections introduce the principles of 3D lane marking reconstruction method as well the materials used in this work.
 % sorting with respect to their position in the processing chain (Fig.1.).
 
 Section~\ref{sec:Materials} gives the information of the input data and some preprocessing applied in this work.
 Section~\ref{sec:LineExtraction} describes the principle of line detection for lane marking extraction.
 Section~\ref{sec:Geometry} introduces the geometric properties of aerial images and their mathematical models, including collinearity equation and lens distortion correction. 
-The principle of line fitting and the LS model is presented in section~\ref{sec:LineFitting}.
+Section~\ref{sec:LineFitting} presents the principle of line fitting and further derives the non-linear LS model for line equations in two-points form.
 Section~\ref{sec:} elaborates the usage of line fitting on 3D lane marking reconstruction, where the observations are in image space yet the unknowns in object space. It is the key approach to solve non-textured-neighborings quasi-infinite line reconstruction problem.
 As initial values of unknown quantities are required in non-linear LS model, the extracted line features are projected onto DSM to provide such 3D lane marking approximations in Section~\ref{sec:ProjectionOnDSM}.
 
@@ -24,9 +24,67 @@ Fig. 1. Processing chain
 
 % subflowchart-preprocessing of input data
 
-\subsection{Images and their orientations}
+\subsection{Aerial Images}
 
-\section{Digital Surface Model}
+The special flight configuration at both sides of the motorway is realized by 
+as shown in fig.???
+The aerial image dataset oblique views
+unprojected (original) images
+undistorted images (without additional parameters for distortion)
+
+\begin{table}
+  \centering
+  \begin{tabular}{ll}
+  \toprule
+                                      {} & \textbf{Canon EOS 1D-X} \\
+  \midrule
+  \multirow{2}{*}{Lenses}                & Zeiss Makro Planar 2/50, 2/100\\
+                                         & Zeiss Distagon T* 35\\
+  \\[-1em]
+  Sensor / Pixel size                    & Full frame CMOS/ 6.944 \textmu m\\
+  \\[-1em]
+  \multirow{2}{*}{Image size}            & 5184$\times$3456 pixel, ratio 3:2\\
+                                         & (17.9 MPix)\\
+
+  \bottomrule
+  \end{tabular}
+  \caption{Properties of the 4k camera (oblique) }
+  \label{tab:CameraProperties}
+\end{table}
+
+
+\begin{table}
+  \centering
+  \begin{tabular}{lll}
+  \toprule
+                         & \textbf{RGB, 50mm lense} \\
+  \midrule
+  Viewing directions     & $\pm$15$\degree$\\
+  \\[-1em]
+  \multirow{2}{*}{FOV}   & $\pm$34$\degree$ across strip,\\
+                         & $\pm$13$\degree$ along strip\\
+  \\[-1em]
+  Coverage @500m         & 780 m $\times$ 230 m\\
+  GSD      @500m         & 6.9 cm (nadir)\\
+
+  \bottomrule
+  \end{tabular}
+  \caption{Viewing geometry}
+  \label{tab:CameraProperties}
+\end{table}
+
+\subsection{Image Orientations}
+
+
+
+\subsection{Digital Surface Model}
+Digital Surface Models Generation by Semi-Global Matching
+for semi-global matching, the matching step is cast into an energy minimization problem.
+The smoothness is not strong
+low texture area, not able to triangulate the 3D point, it took a min value as the height of that area -> systematic error
+
+
+
 
 \subsection{Masking of Road Segments}
 Image masking with OSM road database
