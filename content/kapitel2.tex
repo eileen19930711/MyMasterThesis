@@ -24,7 +24,7 @@ Fig. 1. Processing chain
 
 % subflowchart-preprocessing of input data
 
-\subsubsection{Aerial Images Acquisition}
+\subsubsection{Aerial Images}
 
 For real-time mapping applications during disasters, mass events and traffic monitoring scenarios, the German Aerospace Center (DLR) has developed a new optical sensor system -- the 4k system -- on a helicopter. %[F. Kurz et al.]
 The low-oblique aerial images used in this work are acquired from Canon EOS 1D-X, one of the non-metric cameras in 4k system, with viewing angle of 15$\degree$. Table ??? lists the properties of this camera, and Table ??? provides the information of the viewing geometry.
@@ -82,29 +82,26 @@ The images are acquired with a special flight configuration at both sides of the
 
 
 \subsubsection{Image Interior and Exterior Orientations}
-The interior and exterior camera parameters are bundle-adjusted
-The GPS/IMU system in 4k system provides 
-refined by bundle adjustment
+The interior and exterior camera parameters are refined by bundle adjustment.
+accuracy:
+Additional parameters for lens distortion are also calibrated.
+
+We can further derive the undistorted images with the calibrated lens distortion parameters.
 
 
+\subsubsection{\gls{dsm}}
+A disparity map is first generated from the aerial images using \gls{sgm} algorithm and then reprojected into a DSM of 5-meter grid spacing with the bundle-adjusted orientations. The detail information about the DSM is shown in Table ???.
+% table
 
-unprojected (original) images
-undistorted images (without additional parameters for distortion)
-
-
-\subsubsection{Digital Surface Model}
-
-High-resolution DSM derived from the images (gives a good starting point for the lane marking refinement. Assuming that the final 3D correction is < 1m)
-
-Digital Surface Models Generation by Semi-Global Matching
-for semi-global matching, the matching step is cast into an energy minimization problem.
-The smoothness is not strong
-low texture area, not able to triangulate the 3D point, it took a min value as the height of that area -> systematic error
+\subsubsection{Orthorectified Images}
+With the interior and exterior iamge orientations, the original image can be reprojected on DSM model to generate orthorectified image. 
+orthophoto characteristics:
 
 
+\subsubsection{Road Masks}
+Road segments are masked out from original images based on \gls{osm} data.
+OSM data is firstly written into orthorectified image
 
-
-\subsubsection{Masking of Road Segments}
 Image masking with OSM road database
 Road-Database (gives good knowledge about the orientation of lane markings)
 
@@ -190,7 +187,7 @@ For a later combination with collinearity equations from subsection~\ref{subsec:
 \subsection{Linear Regression Model}
 \label{subsec:LinearRegression}
 
-Given a data set $\{x_i,y_i\}^n_{i=1}$ of $n$ points on a 2D plane, a linear regression model assumes that the relationship between the dependent variable $y_i$ and the regressors $x_i$ is linear. This relationship is modeled through a error variable $e_{y_i}$ --- an unobserved random variable that adds noise to the linear relationship between the dependent variable and regressors.
+Given a data set $\{x_i,y_i\}^n_{i=1}$ of $n$ points on a 2D plane, a linear regression model assumes that the relationship between the dependent variable $y_i$ and the regressors $x_i$ is linear. This relationship is modeled through a error variable $e_{y_i}$--- an unobserved random variable that adds noise to the linear relationship between the dependent variable and regressors.
 Thus the model takes the form:
 \begin{equation} %\label{eq:2.1}
 y_i - e_{y_i} = a_0 + a_1x_i
@@ -260,7 +257,7 @@ extended normal equation matrix N*
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Line Projection on DSM}
-\label{sec:}
+\label{sec:LineProjectionOnDSM}
 
 Given image coordinates $(x,y)$ of a point and the (bundle-adjusted) image orientations, there is still one degree of freedom in collinearity equation system Equa. on solving object coordinates $(X,Y,Z)$. Combined with the usage of DSM, who provides an initial height information given a position $(X,Y)$, the corresponding object coordinates can be solved iteratively.
 
