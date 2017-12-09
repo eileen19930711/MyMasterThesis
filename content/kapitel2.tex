@@ -81,12 +81,13 @@ The images are acquired with a special flight configuration at both sides of the
 \end{table}
 
 
-\subsubsection{Image Interior and Exterior Orientations}
-The interior and exterior camera parameters are refined by bundle adjustment.
-accuracy:
-Additional parameters for lens distortion are also calibrated.
+\subsubsection{Image Orientations}
+The image orientations are bundle-adjusted using tie points and ground control, where GPS positions of the projection centers are also introduced into the bundle-adjustment.
 
-We can further derive the undistorted images with the calibrated lens distortion parameters.
+achieved accuracy:
+
+
+The undistorted images can be further derived with the calibrated lens distortion parameters.
 
 
 \subsubsection{\gls{dsm}}
@@ -94,7 +95,7 @@ A disparity map is first generated from the aerial images using \gls{sgm} algori
 % table
 
 \subsubsection{Orthorectified Images}
-With the interior and exterior iamge orientations, the original image can be reprojected on DSM model to generate orthorectified image. 
+With the bundle-adjusted image orientations, the original images are pixel-wise reprojected onto DSM model to generate orthorectified image. 
 orthophoto characteristics:
 
 
