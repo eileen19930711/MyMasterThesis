@@ -3,17 +3,13 @@
 \chapter{Methodology}
 \label{chap:k2}
 
-The following sections introduce the principles of 3D lane marking reconstruction method as well the materials used in this work.
-% sorting with respect to their position in the processing chain (Fig.1.).
+The following sections introduce the principles of 3D lane marking reconstruction method as well the materials used in this work.% sorting with respect to their position in the processing chain (Fig.1.).
 
-Section~\ref{sec:Materials} gives the information of the input data and some preprocessing applied in this work.
-Section~\ref{sec:LineExtraction} describes the standard line detection algorithm for automatic lane marking extraction.
-Section~\ref{sec:Geometry} introduces the geometric properties of aerial images and their mathematical models, including collinearity equation and lens distortion correction. 
-Section~\ref{sec:LineFitting} presents the principle of line fitting and further derives the non-linear LS model for line equations in two-points form.
-Section~\ref{sec:} elaborates the usage of line fitting on 3D lane marking reconstruction, where the observations are in image space yet the unknowns in object space. It is the key approach to solve non-textured-neighborings quasi-infinite line reconstruction problem.
-As initial values of unknown quantities are required in non-linear LS model, the extracted line features are projected onto DSM to provide such 3D lane marking approximations in Section~\ref{sec:ProjectionOnDSM}.
+~\cref{sec:Materials} gives the information of the input dataset and some preprocessing applied in this work.~\cref{sec:LineExtraction} describes the standard line detection algorithm for automatic lane marking extraction.~\cref{sec:Geometry} introduces the geometric properties of aerial images and their mathematical models, including collinearity equation and lens distortion correction.
 
-% mainflowchart
+~\cref{sec:LineFitting} presents the principle of line fitting and further derives the non-linear LS model for line equations in two-points form.~\cref{sec:} elaborates the usage of line fitting on 3D lane marking reconstruction, where the observations are in image space yet the unknowns in object space. It is the key approach to solve non-textured-neighborings quasi-infinite line reconstruction problem. As initial values of unknown quantities are required in non-linear LS model, the extracted line features are projected onto DSM to provide 3D lane marking approximations in ~\cref{sec:LineProjectionOnDSM}.
+
+% mainflowchart [!hb]
 Fig. 1. Processing chain
 
 \clearpage
@@ -26,21 +22,10 @@ Fig. 1. Processing chain
 
 \subsubsection{Aerial Images}
 
-For real-time mapping applications during disasters, mass events and traffic monitoring scenarios, the German Aerospace Center (DLR) has developed a new optical sensor system -- the 4k system -- on a helicopter. %[F. Kurz et al.]
-The low-oblique aerial images used in this work are acquired from Canon EOS 1D-X, one of the non-metric cameras in 4k system, with viewing angle of 15$\degree$. Table ??? lists the properties of this camera, and Table ??? provides the information of the viewing geometry.
+For real-time mapping applications during disasters, mass events and traffic monitoring scenarios, the German Aerospace Center (DLR) has developed a new optical sensor system-- the 4k system-- on a helicopter. %[F. Kurz et al.]
+The low-oblique aerial images used in this work are acquired from Canon EOS 1D-X, one of the non-metric cameras in 4k system, with 15$\degree$ viewing angle.~\cref{tab:CameraProperties} lists the properties of this camera, and~\cref{tab:SensorViewingGeometry} provides the viewing geometry information.
 
-The images are acquired with a special flight configuration at both sides of the motorway which guarantees a stereo view perpendicular to the lane marking direction. The flight configuration is shown in fig.??? on Google Earth platform.
-
-% fig. flight configuration in Google Earth
-\begin{figure}
-  \centering
-  \includegraphics[width=\textwidth]{FlightTrajectory2.png}
-  \caption{Flight Trajectory}
-  \label{fig:FlightTrajectory}
-\end{figure}
-
-
-\begin{table}
+\begin{table}[!h]
   \centering
   \begin{tabular}{ll}
   \toprule
@@ -67,7 +52,7 @@ The images are acquired with a special flight configuration at both sides of the
 \end{table}
 
 
-\begin{table}
+\begin{table}[!h]
   \centering
   \begin{tabular}{lll}
   \toprule
@@ -87,11 +72,23 @@ The images are acquired with a special flight configuration at both sides of the
   \label{tab:SensorViewingGeometry}
 \end{table}
 
+\clearpage
+
+The images are acquired with a special flight configuration at both sides of the motorway which guarantees a stereo view perpendicular to the lane marking direction. The flight configuration is shown in~\cref{fig:FlightTrajectory} on Google Earth platform.
+
+% fig. flight configuration in Google Earth
+\begin{figure}[!h]
+  \centering
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{FlightTrajectory1.png} \label{fig:trajectory1}}
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{FlightTrajectory2.png} \label{fig:trajectory2}}
+  \caption{Flight Trajectory}
+  \label{fig:FlightTrajectory}
+\end{figure}
+
 
 \subsubsection{Image Orientations}
-The image orientations are bundle-adjusted using tie points and ground control, where GPS positions of the projection centers are also introduced into the bundle-adjustment.
-
-achieved accuracy:
+The image orientations are refined by GPS-assisted self-calibrating bundle adjustment.
+achieved accuracy:...
 
 
 The undistorted images can be further derived with the calibrated lens distortion parameters.
@@ -134,7 +131,7 @@ line (2D) -> a set of points (2D) , in image space
 \section{Geometric Properties of Aerial Photographs}
 \label{sec:Geometry}
 
-This section describes the geometric model of the projection of 3D points into the image generated by a real camera. We first restrict the discussion in subsection~\ref{subsec:Collinearity} to central perspective projection where the collinearity equation originate from. We then model deviations from this model, addressing real cameras with imperfect lenses, in subsection~\ref{subsec:LensDistortion}.
+This section describes the geometric model of the projection of 3D points into the image generated by a real camera. We first restrict the discussion in ~\cref{subsec:Collinearity} to central perspective projection where the collinearity equation originate from. We then model deviations from this model, addressing real cameras with imperfect lenses, in ~\cref{subsec:LensDistortion}.
 
 \subsection{Collinearity Equations}
 \label{subsec:Collinearity}
@@ -187,9 +184,9 @@ with $r=\sqrt{x_*^2+y^2}$ and $x_*=\dfrac{x}{C_1}$. The undistorted image coordi
 Line fitting is the process of constructing a infinite straight line that has the best fit to a 2D dataset. One of the approaches is linear regression which attempts to model the relationship between two variables by fitting a linear equation to observed data. % [www.stat.yale.edu/Courses/1997-98/101/linreg.htmf]
 Additional least-squares (LS) models are commonly used for regression by means of minimization of sum of squared residuals.
 
-In the case of simple linear regression as presented in subsection~\ref{subsec:LinearRegression}, the independent variable $x$ is error free, inconsistencies are only for the dependent variable $y$. Geometrically it means that the vertical distances from observed data to the fitted line is minimized. To minimize the sum of squared perpendicular distances from the data points to the regression line, a LS mixed model is derived in subsection~\ref{subsec:MixedModel} to perform orthogonal regression.
+In the case of simple linear regression as presented in ~\cref{subsec:LinearRegression}, the independent variable $x$ is error free, inconsistencies are only for the dependent variable $y$. Geometrically it means that the vertical distances from observed data to the fitted line is minimized. To minimize the sum of squared perpendicular distances from the data points to the regression line, a LS mixed model is derived in ~\cref{subsec:MixedModel} to perform orthogonal regression.
 
-For a later combination with collinearity equations from subsection~\ref{subsec:Collinearity}, we aim to fit the line equation in two-point form to the extracted lines produced in section~\ref{sec:LineExtraction} (in forms of sets of points in image space). For such purpose, a non-linear LS adjustment model is derived in subsection~\ref{subsec:NonLinear}. 
+For a later combination with collinearity equations from ~\cref{subsec:Collinearity}, we aim to fit the line equation in two-point form to the extracted lines produced in ~\cref{sec:LineExtraction} (in forms of sets of points in image space). For such purpose, a non-linear LS adjustment model is derived in ~\cref{subsec:NonLinear}. 
 
 
 \subsection{Linear Regression Model}
