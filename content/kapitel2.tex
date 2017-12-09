@@ -23,7 +23,9 @@ Fig. 1. Processing chain
 \subsubsection{Aerial Images}
 
 For real-time mapping applications during disasters, mass events and traffic monitoring scenarios, the German Aerospace Center (DLR) has developed a new optical sensor system-- the 4k system-- on a helicopter. %[F. Kurz et al.]
-The low-oblique aerial images used in this work are acquired from Canon EOS 1D-X, one of the non-metric cameras in 4k system, with 15$\degree$ viewing angle.~\cref{tab:CameraProperties} lists the properties of this camera, and~\cref{tab:SensorViewingGeometry} provides the viewing geometry information.
+The low-oblique aerial images used in this work are acquired from Canon EOS 1D-X, one of the non-metric cameras in 4k system, with an oblique viewing angle of 15$\degree$.
+
+An example aerial image is shown in~\cref{fig:OriImg}.~\cref{tab:CameraProperties} lists the properties of this camera, and~\cref{tab:SensorViewingGeometry} provides the viewing geometry information.
 \newline
 
 \begin{table}[!h]
@@ -134,14 +136,17 @@ achieved accuracy:...
 A disparity map is firstly generated from the aerial images using \gls{sgm} algorithm and then reprojected into a DSM of 0.2 m grid spacing with the bundle-adjusted orientations.
 
 \subsubsection{Orthorectified Images}
-With the bundle-adjusted image orientations, the original images are pixel-wise reprojected onto DSM model to generate orthorectified image. 
+With the bundle-adjusted image orientations, the original images are pixel-wise reprojected onto DSM model to generate the orthorectified images, as shown in~\cref{fig:OrthoImg}.
 orthophoto characteristics:
 georeferenced
 
-\begin{figure}
+\subsubsection{Road Masks}
+Road segments are masked out from original images based on \gls{osm} data: Firstly, OSM data is written into orthorectified images. Road regions are then extracted with 20 meter buffer width around road axes. By back-projecting the mask from orthorectified image to original image, it can then be used to mask out the road regions on the original images, as shown in~\cref{fig:MaskedImg}.
+
+\begin{figure}[!h]
   \parbox{.3\linewidth}{
     \centering
-    \includegraphics[width=0.3\textwidth]{OL1234_rsz.png}
+    \includegraphics[width=0.3\textwidth]{L1234_rsz.png}
     \caption{Original Image}
     \label{fig:OriImg}
   }
@@ -161,11 +166,7 @@ georeferenced
   }
 \end{figure}
 
-\subsubsection{Road Masks}
-Road segments are masked out from original images based on \gls{osm} data.
-
-Firstly, OSM data is written into orthorectified images. Road regions are then extracted with 20 meter buffer width around road axes. By back-projecting the mask from orthorectified image to original image, it can then be used to mask out the road regions on the original images.
-
+\clearpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Lane markings Extraction}
@@ -245,7 +246,7 @@ In the case of simple linear regression as presented in ~\cref{subsec:LinearRegr
 For a later combination with collinearity equations from ~\cref{subsec:Collinearity}, we aim to fit the line equation in two-point form to the extracted lines produced in ~\cref{sec:LineExtraction} (in forms of sets of points in image space). For such purpose, a non-linear LS adjustment model is derived in ~\cref{subsec:NonLinear}. 
 
 
-\subsection{Linear Regression Model}
+\subsection{Linear Regression}
 \label{subsec:LinearRegression}
 
 Given a data set $\{x_i,y_i\}^n_{i=1}$ of $n$ points on a 2D plane, a linear regression model assumes that the relationship between the dependent variable $y_i$ and the regressors $x_i$ is linear. This relationship is modeled through a error variable $e_{y_i}$--- an unobserved random variable that adds noise to the linear relationship between the dependent variable and regressors.
@@ -273,7 +274,7 @@ As eq.?2.4? describes the relationship between observation and unknowns and eq.?
 
 
 
-\subsection{Non-linear Least-Squares Adjustment Model}
+\subsection{Non-linear Least-Squares Adjustment}
 \label{subsec:NonLinear}
 
 Line Equation in two-point form:
@@ -293,7 +294,7 @@ The observations $y_i$ are non-linear functions of all unknown quantities.
 Taylor expansion...(local linear approximation)
 the linear equation can also be expanded
 
-
+\clearpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Least-Squares Adjustment Model with constraints}
 \label{sec:}
