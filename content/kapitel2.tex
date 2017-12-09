@@ -80,8 +80,8 @@ The images are acquired with a special flight configuration at both sides of the
 
 \begin{figure}[!h]
   \centering
-  \subfloat[]{\includegraphics[width=0.5\textwidth]{FlightTrajectory1.png} \label{fig:trajectory1}}%5
-  %\subfloat[]{\includegraphics[width=0.5\textwidth]{FlightTrajectory3.png} \label{fig:trajectory2}}%3
+  \subfloat[]{\includegraphics[width=0.3\textwidth]{FlightTrajectory5.png} \label{fig:trajectory1}}
+  \subfloat[]{\includegraphics[width=0.4\textwidth]{FlightTrajectory3.png} \label{fig:trajectory2}}
   \caption{Flight Trajectory on Google Earth platform. The green polyline shows the flight trajectory}
   \label{fig:FlightTrajectory}
 \end{figure}
@@ -107,14 +107,19 @@ georeferenced
   \centering
   \includegraphics[width=0.5\textwidth]{OL1234.png}
   \caption{Orthorectified Image}
-  \label{fig:OrthoPhoto}
+  \label{fig:OrthoImg}
 \end{figure}
 
 \subsubsection{Road Masks}
 Road segments are masked out from original images based on \gls{osm} data.
 
 Firstly, OSM data is written into orthorectified images. Road regions are then extracted with 20 meter buffer width around road axes. By back-projecting the mask from orthorectified image to original image, it can then be used to mask out the road regions on the original images.
-
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=0.5\textwidth]{ML1234.png}
+  \caption{Masked Image}
+  \label{fig:MaskedImage}
+\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Lane markings Extraction}
