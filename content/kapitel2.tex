@@ -23,7 +23,7 @@ Fig. 1. Processing chain
 \paragraph{Aerial Images}
 
 For real-time mapping applications during disasters, mass events and traffic monitoring scenarios, the German Aerospace Center (DLR) has developed a new optical sensor system-- the 4k system-- on a helicopter. %[F. Kurz et al.]
-The low-oblique aerial images used in this work are acquired from Canon EOS 1D-X, one of the non-metric cameras in 4k system, with an oblique viewing angle of 15$\degree$.
+The low-oblique aerial images used in this work are acquired from Canon EOS 1D-X, one of the non-metric cameras in 4k system, with an oblique viewing angle of 15$\degree$ and around 500m flying height above ground.
 
 An example aerial image is shown in~\cref{fig:OriImg}.~\cref{tab:CameraProperties} lists the properties of this camera, and~\cref{tab:SensorViewingGeometry} provides the viewing geometry information.
 \newline
@@ -80,11 +80,11 @@ An example aerial image is shown in~\cref{fig:OriImg}.~\cref{tab:CameraPropertie
 
 The images are acquired with a special flight configuration at both sides of the motorway which guarantees a stereo view perpendicular to the lane marking direction. This is realized by flying at the right-hand side along the motorway with the left oblique camera looking left to the motorway. The flight configuration is shown in~\cref{fig:FlightTrajectory} on Google Earth platform.
 
-\begin{figure}[!h]
+\begin{figure}%[!h]
   \centering
-  \subfloat[]{\includegraphics[height=0.4\textwidth]{FlightTrajectory5.png} \label{fig:trajectory1}}
-  \subfloat[]{\includegraphics[height=0.4\textwidth]{FlightTrajectory3.png} \label{fig:trajectory2}}
-  \caption{Flight Trajectory on Google Earth platform. The green polyline shows the flight trajectory}
+  \subfloat[]{\includegraphics[height=0.45\textwidth]{FlightTrajectory5.png} \label{fig:trajectory1}}
+  \subfloat[]{\includegraphics[height=0.45\textwidth]{FlightTrajectory3.png} \label{fig:trajectory2}}
+  \caption{Flight Trajectory on Google Earth platform. The green polyline shows the flight trajectory.}
   \label{fig:FlightTrajectory}
 \end{figure}
 
@@ -143,27 +143,27 @@ georeferenced
 \paragraph{Road Masks}
 Road segments are masked out from original images based on \gls{osm} data: Firstly, OSM data is written into orthorectified images. Road regions are then extracted with 20 meter buffer width around road axes. By back-projecting the mask from orthorectified image to original image, it can then be used to mask out the road regions on the original images, as shown in~\cref{fig:MaskedImg}.
 
-\begin{figure}[!h]
-  \parbox{.3\linewidth}{
+\begin{figure}%[!h]
+  \parbox{.45\linewidth}{
     \centering
-    \includegraphics[width=0.3\textwidth]{L1234_rsz.png}
+    \includegraphics[width=0.45\textwidth]{L1234_rsz.png}
     \caption{Original Image}
     \label{fig:OriImg}
   }
   \hfill
-  \parbox{.3\linewidth}{
+  \parbox{.45\linewidth}{
     \centering
-    \includegraphics[width=0.3\textwidth]{OL1234_rsz.png}
+    \includegraphics[width=0.45\textwidth]{OL1234_rsz.png}
     \caption{Orthorectified Image}
     \label{fig:OrthoImg}
   }
-  \hfill
-  \parbox{.3\linewidth}{
+%  \hfill
+%  \parbox{.3\linewidth}{
     \centering
-    \includegraphics[width=0.3\textwidth]{ML1234_rsz.png}
+    \includegraphics[width=0.45\textwidth]{ML1234_rsz.png}
     \caption{Masked Image}
     \label{fig:MaskedImg}
-  }
+%  }
 \end{figure}
 
 \clearpage
@@ -172,24 +172,17 @@ Road segments are masked out from original images based on \gls{osm} data: First
 \section{Lane markings Extraction}
 \label{sec:LineExtraction}
 
-%The extraction is done by using partial derivatives of a Gaussian smoothing kernel to determine the parameters of a quadratic polynomial in x and y for each point of the image. The parameter Sigma determines the amount of smoothing to be performed. Larger values of Sigma lead to a larger smoothing of the image, but can lead to worse localization of the line. Generally, the localization will be much better than that of lines returned by lines_facet with comparable parameters. The parameters of the polynomial are used to calculate the line direction for each pixel. Pixels which exhibit a local maximum in the second directional derivative perpendicular to the line direction are marked as line points. The line points found in this manner are then linked to contours. This is done by immediately accepting line points that have a second derivative larger than High. Points that have a second derivative smaller than Low are rejected. All other line points are accepted if they are connected to accepted points by a connected path. This is similar to a hysteresis threshold operation with infinite path length (see hysteresis_threshold). However, this function is not used internally since it does not allow the extraction of subpixel precise contours. 
+The principle to extract line features is to firstly derive the line direction for each pixel by using partial derivatives of a Gaussian smoothing kernel. Pixels that have a local maximum in the second directional derivative perpendicular to the line direction are marked as line points which are then linked and connected.
 
-apply standard line detection algorithms for automatic lane marking detection
-with subpixel precision
-Each extracted line is rasterized as a set of points in image coordinate (with … precision).
-line (2D) -> a set of points (2D) , in image space
+The $\sigma$ value for Gaussian smoothing is set to be 1.8 in this work to slightly suppress the noise. Each extracted line is rasterized as a set of points with sub-pixel precision in image space.
 % http://www.mvtec.com/doc/halcon/11/en/lines_gauss.html
-
-
-
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Geometric Properties of Aerial Photographs}
 \label{sec:Geometry}
 
-This section describes the geometric model of the projection of 3D points into the image generated by a real camera. We first restrict the discussion in ~\cref{subsec:Collinearity} to central perspective projection where the collinearity equation originate from. We then model deviations from this model, addressing real cameras with imperfect lenses, in ~\cref{subsec:LensDistortion}.
+This section describes the geometric model of the projection of 3D points into the image generated by a real camera. We first restrict the discussion in~\cref{subsec:Collinearity} to central perspective projection where the collinearity equation originate from. We then model deviations from this model, addressing real cameras with imperfect lenses, in~\cref{subsec:LensDistortion}.
 
 \subsection{Collinearity Equations}
 \label{subsec:Collinearity}
@@ -208,18 +201,17 @@ $(X, Y, Z)$: object coordinates of the point \newline
 $(X_0, Y_0, Z_0)$: object coordinates of projection center \newline
 $R_{11},...,R_{33}$: elements of the rotation matrix R (orthogonal 3$\times$3-matrix from object space to image space, with 3 independent angles $\omega$, $\phi$ and $\kappa$)
 
-The exterior orientations: $X_0$, $Y_0$, $Z_0$, $\omega$, $\phi$, $\kappa$ as well as the interior orientations: $x_0$, $y_0$, $c$ are the bundle-adjusted, known elements in this work.
+%The exterior orientations: $X_0$, $Y_0$, $Z_0$, $\omega$, $\phi$, $\kappa$ as well as the interior orientations: $x_0$, $y_0$, $c$ are the bundle-adjusted, known elements in this work.
 %The image coordinates $x,y$ are the measurements.
 
 \subsection{Lens Distortion Correction}
 \label{subsec:LensDistortion}
 
 As real cameras generally only approximate the perspective camera model, lens distortion correction can be additionally included in the collinearity model, attempting to correct the position of image features such that they obey the perspective model with sufficient accuracy.[W. Förstner et al. 2016] 
+%(Varies models for lens distortion ...)
+%A subset of a physical distortion model[] is chosen for...
 
-Varies models for lens distortion ...
-
-A subset of a physical distortion model[] is chosen for...
-Assuming $x$ and $y$ to be the distorted image coordinates, the corrections $\Delta x$ and $\Delta y$ are then calculated by the following equations
+A 6-parameter lens distortion model is chosen, with two radial symmetric distortion parameters $A_1$ and $A_2$, two asymmetric parameters $B_1$ and $B_2$, and a scaling $C1$ and an affine shearing parameter $C_2$. Assuming $x$ and $y$ to be the distorted image coordinates, the corrections $\Delta x$ and $\Delta y$ are then calculated by the following equations:
 \begin{equation} %\label{eq:2.2}
 \begin{split}
 \Delta x &= x_p + A_1x_*(r^2-R_0^2) + A_2x_*(r^4-R_0^4) + B_1(r^2+2x_*^2) + B_22x_*y+C_2y \\
