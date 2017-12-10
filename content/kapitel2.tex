@@ -20,7 +20,7 @@ Fig. 1. Processing chain
 
 % subflowchart-preprocessing of input data
 
-\subsubsection{Aerial Images}
+\paragraph{Aerial Images}
 
 For real-time mapping applications during disasters, mass events and traffic monitoring scenarios, the German Aerospace Center (DLR) has developed a new optical sensor system-- the 4k system-- on a helicopter. %[F. Kurz et al.]
 The low-oblique aerial images used in this work are acquired from Canon EOS 1D-X, one of the non-metric cameras in 4k system, with an oblique viewing angle of 15$\degree$.
@@ -89,9 +89,9 @@ The images are acquired with a special flight configuration at both sides of the
 \end{figure}
 
 
-\subsubsection{Image Orientations}
+\paragraph{Image Orientations}
 The image orientations are refined by GPS-assisted self-calibrating bundle adjustment.
-achieved accuracy:...
+The achieved accuracies are shown in~\cref{tab:EOaccuracy} and~\cref{tab:IOaccuracy}.
 
 % table here!!! 
 \begin{table}[!h]
@@ -132,15 +132,15 @@ achieved accuracy:...
 
 % The undistorted images can be further derived with the calibrated lens distortion parameters.
 
-\subsubsection{\gls{dsm}}
+\paragraph{\gls{dsm}}
 A disparity map is firstly generated from the aerial images using \gls{sgm} algorithm and then reprojected into a DSM of 0.2 m grid spacing with the bundle-adjusted orientations.
 
-\subsubsection{Orthorectified Images}
+\paragraph{Orthorectified Images}
 With the bundle-adjusted image orientations, the original images are pixel-wise reprojected onto DSM model to generate the orthorectified images, as shown in~\cref{fig:OrthoImg}.
 orthophoto characteristics:
 georeferenced
 
-\subsubsection{Road Masks}
+\paragraph{Road Masks}
 Road segments are masked out from original images based on \gls{osm} data: Firstly, OSM data is written into orthorectified images. Road regions are then extracted with 20 meter buffer width around road axes. By back-projecting the mask from orthorectified image to original image, it can then be used to mask out the road regions on the original images, as shown in~\cref{fig:MaskedImg}.
 
 \begin{figure}[!h]
@@ -171,7 +171,8 @@ Road segments are masked out from original images based on \gls{osm} data: First
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Lane markings Extraction}
 \label{sec:LineExtraction}
-[This is done with Halcon11/C...]
+
+The extraction is done by using partial derivatives of a Gaussian smoothing kernel to determine the parameters of a quadratic polynomial in x and y for each point of the image. The parameter Sigma determines the amount of smoothing to be performed. Larger values of Sigma lead to a larger smoothing of the image, but can lead to worse localization of the line. Generally, the localization will be much better than that of lines returned by lines_facet with comparable parameters. The parameters of the polynomial are used to calculate the line direction for each pixel. Pixels which exhibit a local maximum in the second directional derivative perpendicular to the line direction are marked as line points. The line points found in this manner are then linked to contours. This is done by immediately accepting line points that have a second derivative larger than High. Points that have a second derivative smaller than Low are rejected. All other line points are accepted if they are connected to accepted points by a connected path. This is similar to a hysteresis threshold operation with infinite path length (see hysteresis_threshold). However, this function is not used internally since it does not allow the extraction of subpixel precise contours. 
 
 apply standard line detection algorithms for automatic lane marking detection
 with subpixel precision
