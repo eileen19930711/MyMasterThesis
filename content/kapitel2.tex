@@ -5,9 +5,9 @@
 
 The following sections introduce the principles of 3D lane marking reconstruction method as well the materials used in this work.% sorting with respect to their position in the processing chain (Fig.1.).
 
-~\cref{sec:Materials} gives the information of the input dataset and some preprocessing applied in this work.~\cref{sec:LineExtraction} describes the standard line detection algorithm for automatic lane marking extraction.~\cref{sec:Geometry} introduces the geometric properties of aerial images and their mathematical models, including collinearity equation and lens distortion correction.
+\cref{sec:Materials} gives the information of the input dataset and some preprocessing applied in this work. \cref{sec:LineExtraction} describes the standard line detection algorithm for automatic lane marking extraction. \cref{sec:Geometry} introduces the geometric properties of aerial images and their mathematical models, including collinearity equation and lens distortion correction.
 
-~\cref{sec:LineFitting} presents the principle of line fitting and further derives the non-linear LS model for line equations in two-points form.~\cref{sec:LSadj} elaborates the usage of line fitting on 3D lane marking reconstruction, where the observations are in image space yet the unknowns in object space. It is the key approach to solve non-textured-neighborings quasi-infinite line reconstruction problem. As initial values of unknown quantities are required in non-linear LS model, the extracted line features are projected onto DSM to provide 3D lane marking approximations in ~\cref{sec:LineProjectionOnDSM}.
+\cref{sec:LineFitting} presents the principle of line fitting and further derives the non-linear LS model for line equations in two-points form. \cref{sec:LSadj} elaborates the usage of line fitting on 3D lane marking reconstruction, where the observations are in image space yet the unknowns in object space. It is the key approach to solve non-textured-neighborings quasi-infinite line reconstruction problem. As initial values of unknown quantities are required in non-linear LS model, the extracted line features are projected onto DSM to provide 3D lane marking approximations in \cref{sec:LineProjectionOnDSM}.
 
 % mainflowchart [!hb]
 Fig. 1. Work flow
@@ -25,7 +25,7 @@ Fig. 1. Work flow
 For real-time mapping applications during disasters, mass events and traffic monitoring scenarios, the German Aerospace Center (DLR) has developed a new optical sensor system-- the 4k system-- on a helicopter. %[F. Kurz et al.]
 The low-oblique aerial images used in this work are acquired from Canon EOS 1D-X, one of the non-metric cameras in 4k system, with an oblique viewing angle of 15$\degree$ and around 500m flying height above ground.
 
-An example aerial image is shown in~\cref{fig:OriImg}.~\cref{tab:CameraProperties} lists the properties of this camera, and~\cref{tab:SensorViewingGeometry} provides the viewing geometry information.
+An example aerial image is shown in \cref{fig:OriImg}. \cref{tab:CameraProperties} lists the properties of this camera, and \cref{tab:SensorViewingGeometry} provides the viewing geometry information.
 \newline
 
 \begin{table}[!h]
@@ -78,7 +78,7 @@ An example aerial image is shown in~\cref{fig:OriImg}.~\cref{tab:CameraPropertie
 
 \clearpage
 
-The images are acquired with a special flight configuration at both sides of the motorway which guarantees a stereo view perpendicular to the lane marking direction. This is realized by flying at the right-hand side with respect to flying direction along the motorway, with the left oblique camera looking left-down to the motorway, in both forward and backward trip. The flight configuration is shown in~\cref{fig:FlightTrajectory} on Google Earth platform.
+The images are acquired with a special flight configuration at both sides of the motorway which guarantees a stereo view perpendicular to the lane marking direction. This is realized by flying at the right-hand side with respect to flying direction along the motorway, with the left oblique camera looking left-down to the motorway, in both forward and backward trip. The flight configuration is shown in \cref{fig:FlightTrajectory} on Google Earth platform.
 
 \begin{figure}%[!h]
   \centering
@@ -91,7 +91,7 @@ The images are acquired with a special flight configuration at both sides of the
 
 \paragraph{Image Orientations}
 The image orientations are refined by GPS-assisted self-calibrating bundle adjustment.
-The achieved accuracies are shown in~\cref{tab:EOaccuracy} and~\cref{tab:IOaccuracy}.
+The achieved accuracies are shown in \cref{tab:EOaccuracy} and \cref{tab:IOaccuracy}.
 
 % table here!!! 
 \begin{table}[!h]
@@ -136,12 +136,12 @@ The achieved accuracies are shown in~\cref{tab:EOaccuracy} and~\cref{tab:IOaccur
 A disparity map is firstly generated from the aerial images using \gls{sgm} algorithm and then reprojected into a DSM of 0.2 m grid spacing with the bundle-adjusted orientations.
 
 \paragraph{Orthorectified Images}
-With the bundle-adjusted image orientations, the original images are pixel-wise reprojected onto DSM model to generate the orthorectified images, as shown in~\cref{fig:OrthoImg}.
+With the bundle-adjusted image orientations, the original images are pixel-wise reprojected onto DSM model to generate the orthorectified images, as shown in \cref{fig:OrthoImg}.
 orthophoto characteristics:
 georeferenced
 
 \paragraph{Road Masks}
-Road segments are masked out from original images based on \gls{osm} data: Firstly, OSM data is written into orthorectified images. Road regions are then extracted with 25 meter buffer width around road axes. By back-projecting the mask from orthorectified image to original image, it can then be used to mask out the road regions on the original images, as shown in~\cref{fig:MaskedImg}.
+Road segments are masked out from original images based on \gls{osm} data: Firstly, OSM data is written into orthorectified images. Road regions are then extracted with 25 meter buffer width around road axes. By back-projecting the mask from orthorectified image to original image, it can then be used to mask out the road regions on the original images, as shown in \cref{fig:MaskedImg}.
 
 \begin{figure}%[!h]
   \parbox{.45\linewidth}{
@@ -174,7 +174,7 @@ Road segments are masked out from original images based on \gls{osm} data: First
 
 The principle to extract line features is to firstly derive the line direction for each pixel by using partial derivatives of a Gaussian smoothing kernel. Pixels that have a local maximum in the second directional derivative perpendicular to the line direction are marked as line points which are then linked and connected.
 
-The $\sigma$ value for Gaussian smoothing is set to be 1.8 in this work to slightly suppress the noise. The extracted lines of length less than 30 pixels are rejected. Each accepted extracted line is rasterized as a set of points in image coordinates with sub-pixel precision.~\cref{fig:LineExtraction} shows the extracted lines on the original image.
+The $\sigma$ value for Gaussian smoothing is set to be 1.8 in this work to slightly suppress the noise. The extracted lines of length less than 30 pixels are rejected. Each accepted extracted line is rasterized as a set of points in image coordinates with sub-pixel precision.\cref{fig:LineExtraction} shows the extracted lines on the original image.
 % http://www.mvtec.com/doc/halcon/11/en/lines_gauss.html
 \begin{figure}
   \centering
@@ -187,7 +187,7 @@ The $\sigma$ value for Gaussian smoothing is set to be 1.8 in this work to sligh
 \section{Geometric Properties of Aerial Photographs}
 \label{sec:Geometry}
 
-This section describes the geometric model of the projection of 3D points into the image generated by a real camera. We first restrict the discussion in~\cref{subsec:Collinearity} to central perspective projection where the collinearity equation originate from. We then model deviations from this model, addressing real cameras with imperfect lenses, in~\cref{subsec:LensDistortion}.
+This section describes the geometric model of the projection of 3D points into the image generated by a real camera. We first restrict the discussion in \cref{subsec:Collinearity} to central perspective projection where the collinearity equation originate from. We then model deviations from this model, addressing real cameras with imperfect lenses, in \cref{subsec:LensDistortion}.
 
 \subsection{Collinearity Equations}
 \label{subsec:Collinearity}
@@ -235,9 +235,9 @@ with $r=\sqrt{x_*^2+y^2}$ and $x_*=\dfrac{x}{C_1}$. The undistorted image coordi
 Line fitting is the process of constructing a infinite straight line that has the best fit to a 2D dataset. One of the approaches is linear regression which attempts to model the relationship between two variables by fitting a linear equation to observed data. % [www.stat.yale.edu/Courses/1997-98/101/linreg.htmf]
 Additional least-squares (LS) models are commonly used for regression by means of minimization of sum of squared residuals.
 
-In the case of simple linear regression as presented in~\cref{subsec:LinearRegression}, the independent variable $x$ is error free, inconsistencies are only for the dependent variable $y$. Geometrically it means that the vertical distances from observed data to the fitted line is minimized. To minimize the sum of squared perpendicular distances from the data points to the regression line, a LS mixed model is derived in ~\cref{subsec:MixedModel} to perform orthogonal regression.
+In the case of simple linear regression as presented in \cref{subsec:LinearRegression}, the independent variable $x$ is error free, inconsistencies are only for the dependent variable $y$. Geometrically it means that the vertical distances from observed data to the fitted line is minimized. To minimize the sum of squared perpendicular distances from the data points to the regression line, a LS mixed model is derived in \cref{subsec:MixedModel} to perform orthogonal regression.
 
-For a later combination with collinearity equations \eqref{eq:collinearity}, we aim to fit the line equation in two-point form to the extracted lines produced in~\cref{sec:LineExtraction} (in forms of sets of points in image coordinates). For such purpose, a non-linear LS adjustment model is derived in~\cref{subsec:NonLinear}. 
+For a later combination with collinearity equations \eqref{eq:collinearity}, we aim to fit the line equation in two-point form to the extracted lines produced in \cref{sec:LineExtraction} (in forms of sets of points in image coordinates). For such purpose, a non-linear LS adjustment model is derived in \cref{subsec:NonLinear}. 
 
 
 \subsection{Linear Regression}
@@ -294,18 +294,35 @@ y_i - e_{y_i}= (y_1-\dfrac{(y_2-y_1)}{(x_2-x_1)}\times x_1) + \dfrac{(y_2-y_1)}{
 \section{LS Adjustment for 3D lane markings reconstruction}
 \label{sec:LSadj}
 
-In this section, we aim to recover the position of the 3D line in object space whose back-projections in each covering images can best fit the extracted line.
+In this section, we aim to refine the position of a 3D line so that its back-projection in each covering image has a best-fit to the extracted line.
+
+In \cref{subsec:LSwithConstraints} we firstly set-up a model which transforms a line from object space to image space through collinearity equation, and this model in the same time describes the fitting of these lines to the measurements on all covering images. A line segment is represented by a pair of end-points regarding the fact that the collinearity is a point-wise condition. However, as mentioned in \cref{sec:LineFitting}, line fitting 
+
+so constraint needed and measurement collected specifically. 
+
+\cref{subsec:Constraints}
+
+this line in image space has a best fit to the extracted line.
+, through collinearity (\cref{eq:collinearity}),
+
+
+describes: the collinearity of a line (from object space to image space), and the fitting of the line (to the measurements), and , in the same time.
+
+collinearity p2p, endpoint of a line
+where the end-points of a 3D line segment in object coordinates are unknowns, and their image coordinates transformed through collinearity equation
+which describes the the 
+approximation is  described by collinearity 
 the measurements.
 
 \subsection{constraints}
-\label{subsec:}
+\label{subsec:Constraints}
 
 % % %
 C matrix
 D matrix
 
 \subsection{LS Adjustment with Constraints}
-\label{sec:}
+\label{subsec:LSwithConstraints}
 Line fitting in image space with unknowns in object coordinates
 
 
