@@ -10,7 +10,7 @@ The following sections introduce the principles of 3D lane marking reconstructio
 ~\cref{sec:LineFitting} presents the principle of line fitting and further derives the non-linear LS model for line equations in two-points form.~\cref{sec:} elaborates the usage of line fitting on 3D lane marking reconstruction, where the observations are in image space yet the unknowns in object space. It is the key approach to solve non-textured-neighborings quasi-infinite line reconstruction problem. As initial values of unknown quantities are required in non-linear LS model, the extracted line features are projected onto DSM to provide 3D lane marking approximations in ~\cref{sec:LineProjectionOnDSM}.
 
 % mainflowchart [!hb]
-Fig. 1. Processing chain
+Fig. 1. Work flow
 
 \clearpage
 
@@ -78,7 +78,7 @@ An example aerial image is shown in~\cref{fig:OriImg}.~\cref{tab:CameraPropertie
 
 \clearpage
 
-The images are acquired with a special flight configuration at both sides of the motorway which guarantees a stereo view perpendicular to the lane marking direction. This is realized by flying at the right-hand side along the motorway with the left oblique camera looking left to the motorway. The flight configuration is shown in~\cref{fig:FlightTrajectory} on Google Earth platform.
+The images are acquired with a special flight configuration at both sides of the motorway which guarantees a stereo view perpendicular to the lane marking direction. This is realized by flying at the right-hand side with respect to flying direction along the motorway, with the left oblique camera looking left-down to the motorway, in both forward and backward trip. The flight configuration is shown in~\cref{fig:FlightTrajectory} on Google Earth platform.
 
 \begin{figure}%[!h]
   \centering
