@@ -256,14 +256,14 @@ where $a_0$ and $a_1$ are the regression coefficients.
 \label{subsec:MixedModel}
 
 In the case with inconsistencies $e_{x_i}$ and $e_{y_i}$ in both observations $x_i$ and $y_i$, A-model with pseudo observation equations can be adopted and is formulated:
-\begin{equation} \label{eq:MixModel1}
+\begin{equation} \label{eq:MixModel1-1}
 y_i - e_{y_i} = a_0 + a_1(x_i-e_{x_i}) = a_0 + a_1\bar{x_i}
 \end{equation}
-\begin{equation} \label{eq:MixModel2}
+\begin{equation} \label{eq:MixModel1-2}
 x_i-e_{x_i} = \bar{x_i}
 \end{equation}
 
-In the A-model, every observation is either a linear or a non-linear function of all unknown quantities. In contrast, in the B-model no unknown parameter exist and there are linear or non-linear relationships between the observations [F. Krumm]. As \eqref{eq:MixModel1} describes the relationship between observations and unknowns and \eqref{eq:MixModel2} describes the relationship between observations, the whole set is known as the mixed model or Gauss-Helmert model.
+In the A-model, every observation is either a linear or a non-linear function of all unknown quantities. In contrast, in the B-model no unknown parameter exist and there are linear or non-linear relationships between the observations [F. Krumm]. As \eqref{eq:MixModel1-1} describes the relationship between observations and unknowns and \eqref{eq:MixModel1-2} describes the relationship between observations, this model is known as the mixed model or Gauss-Helmert model.
 
 
 
@@ -275,11 +275,15 @@ Line Equation in two-point form:
 \begin{equation} \label{eq:LineInTwoPointForm}
 y-y_1 = \dfrac{(y_2-y_1)}{(x_2-x_1)}\times(x-x_1)
 \end{equation}
-where two points $(x_1,y_1)$ and $(x_2,y_2)$ define the infinite line with $x_2\neq x_1$ and $(x,y)$ is any point on the line.
+where two points $(x_1,y_1)$ and $(x_2,y_2)$ define the infinite line with $x_2\neq x_1$, and $(x,y)$ is any point on the line.
 
-Let the unknown image coordinates of the start- and endpoints of a line be $(x_1,y_1)$ and $(x_2,y_2)$, and the observations $\{x_i,y_i\}^n_{i=1}$. Rewriting \eqref{eq:LineInTwoPointForm} in the form of \eqref{eq:MixModel1} gives:
-\begin{equation} %\label{eq:2.3}
-y_i - e_{y_i}= (y_1-\dfrac{(y_2-y_1)}{(x_2-x_1)}\times x_1) + \dfrac{(y_2-y_1)}{(x_2-x_1)}\times x_i
+Let the unknown image coordinates of the endpoints of a line be $(x_1,y_1)$ and $(x_2,y_2)$, and the inconsistent observations $\{x_i,y_i\}^n_{i=1}$. The observation equations \eqref{eq:MixModel1-1} and \eqref{eq:MixModel1-2} of the mixed model now take the form: 
+
+\begin{equation} \label{eq:MixModel2-1}
+y_i - e_{y_i}= (y_1-\dfrac{(y_2-y_1)}{(x_2-x_1)}\times x_1) + \dfrac{(y_2-y_1)}{(x_2-x_1)}\times \bar{x_i}
+\end{equation}
+\begin{equation} \tag{\ref{eq:MixModel1-2} revisited}
+x_i-e_{x_i} = \bar{x_i}
 \end{equation}
 % which can be further rewritten:
 
@@ -296,23 +300,12 @@ y_i - e_{y_i}= (y_1-\dfrac{(y_2-y_1)}{(x_2-x_1)}\times x_1) + \dfrac{(y_2-y_1)}{
 
 In this section, we aim to refine the position of a 3D line so that its back-projection in each covering image has a best-fit to the extracted line.
 
-In \cref{subsec:LSwithConstraints} we firstly set-up a model which transforms a line from object space to image space through collinearity equation, and this model in the same time describes the fitting of these lines to the measurements on all covering images. A line segment is represented by a pair of end-points regarding the fact that the collinearity is a point-wise condition. However, as mentioned in \cref{sec:LineFitting}, line fitting 
+In \cref{subsec:LSwithConstraints} we firstly set-up a model which transforms a line from object space to image space through collinearity equations, and this model in the same time describes the fitting of these lines to the measurements on all covering images. A line segment is represented by a pair of end-points regarding the fact that the collinearity is a point-wise condition. However, a line equation is mathematically of infinite length as mentioned in \cref{sec:LineFitting}, a line equation hasline fitting constructs a 
 
+collinearity p2p, endpoint of a line
 so constraint needed and measurement collected specifically. 
 
 \cref{subsec:Constraints}
-
-this line in image space has a best fit to the extracted line.
-, through collinearity (\cref{eq:collinearity}),
-
-
-describes: the collinearity of a line (from object space to image space), and the fitting of the line (to the measurements), and , in the same time.
-
-collinearity p2p, endpoint of a line
-where the end-points of a 3D line segment in object coordinates are unknowns, and their image coordinates transformed through collinearity equation
-which describes the the 
-approximation is  described by collinearity 
-the measurements.
 
 \subsection{constraints}
 \label{subsec:Constraints}
