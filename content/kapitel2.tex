@@ -7,7 +7,12 @@ The following sections introduce the principles of 3D lane marking reconstructio
 
 ~\cref{sec:Materials} gives the information of the input dataset and some preprocessing applied in this work.~\cref{sec:LineExtraction} describes the standard line detection algorithm for automatic lane marking extraction.~\cref{sec:Geometry} introduces the geometric properties of aerial images and their mathematical models, including collinearity equation and lens distortion correction.
 
-~\cref{sec:LineFitting} presents the principle of line fitting and further derives the non-linear LS model for line equations in two-points form.~\cref{sec:LSadj} elaborates the usage of line fitting on 3D lane marking reconstruction, where the observations are in image space yet the unknowns in object space. It is the key approach to solve non-textured-neighborings quasi-infinite line reconstruction problem. As initial values of unknown quantities are required in non-linear LS model, the extracted line features are projected onto DSM to provide 3D lane marking approximations in ~\cref{sec:LineProjectionOnDSM}.
+~\cref{sec:LineFitting} presents the principle of line fitting and further derives the non-linear LS model for line equations in two-points form.
+
+
+At the moment an aerial image was taken, a bundle of rays travel from a lane marking on the ground to the sensor plate.
+
+~\cref{sec:LSadj} elaborates the usage of line fitting on 3D lane marking reconstruction, where the observations are in image space yet the unknowns in object space. It is the key approach to solve non-textured-neighborings quasi-infinite line reconstruction problem. As initial values of unknown quantities are required in non-linear LS model, the extracted line features are projected onto DSM to provide 3D lane marking approximations in ~\cref{sec:LineProjectionOnDSM}.
 
 % mainflowchart [!hb]
 Fig. 1. Work flow
@@ -293,9 +298,9 @@ y_i - e_{y_i}= (y_1-\dfrac{(y_2-y_1)}{(x_2-x_1)}\times x_1) + \dfrac{(y_2-y_1)}{
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{LS Adjustment for 3D lane markings reconstruction}
 \label{sec:LSadj}
-
-At the moment an aerial image ...
-In this section, the
+As the same concept of a ray the moment an aerial image ...
+In this section, we aim to recover the position of the 3D line in object space whose back-projections in each covering images can best fit the extracted line.
+the measurements.
 
 \subsection{constraints}
 \label{subsec:}
