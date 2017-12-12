@@ -96,8 +96,8 @@ The image orientations are refined by GPS-assisted self-calibrating bundle adjus
 
 The quality of this orientation parameters set would have an impact in object space for around 15 [cm] in X,Y-direction:
 \begin{itemize}
-      \item caused by inaccurate position of the perspective center: $\sqrt{\sigma_{north}^2+\sigma_{east}^2}\approx0.058$ [m]
-      \item caused by inaccurate orientation of the image: $\sqrt{\sigma_{Roll}^2+\sigma_{Pitch}^2}\times H_{flight height}\approx0.020$ [m]
+      \item caused by inaccurate camera position: $\sqrt{\sigma_{north}^2+\sigma_{east}^2}\approx0.058$ [m]
+      \item caused by inaccurate camera orientation: $\sqrt{\sigma_{Roll}^2+\sigma_{Pitch}^2}\times H_{flight height}\approx0.020$ [m]
       \item caused by inaccurate interior orientations: $1$[pixel]$\times GSD=0.069$ [m]
 \end{itemize}
 
@@ -132,8 +132,6 @@ The quality of this orientation parameters set would have an impact in object sp
     \label{tab:IOaccuracy}
 \end{table}
 
-
-% The undistorted images can be further derived with the calibrated lens distortion parameters.
 
 \paragraph{\gls{dsm}}
 For each pair of stereo images, a disparity map is generated using \gls{sgm} algorithm. With the fact that disparity is inversely proportional to depth, they can be used to generate DSM. In most of the cases, a point in object space is covered by more than two aerial images, where more than one disparity maps would be produced. This leads to ambiguities on height decision during DSM generation.
@@ -318,7 +316,7 @@ Regarding the fact that the collinearity is a point-wise condition, a line segme
 
 %infinitely many solutions.
 
-\subsection{Model of Observation equations}
+\subsection{Model of Observation Equations}
 \label{subsec:ObsEqua}
 
 Let the endpoints of a line segment in object space be $(X_1,Y_1,Z_1)$ and $(X_2,Y_2,Z_2)$. 
@@ -333,17 +331,17 @@ derive matrices
 extended normal equation matrix N*
 
 
-\cref{subsec:Constraints}
+\cref{subsec:Model of Constraint Equations}
 
 \subsection{constraints}
-\label{subsec:Constraints}
+\label{subsec:ConEqua}
 
 % % %
 C matrix
 D matrix
 
-\subsection{Model of Observation equations}
-\label{subsec:ObsEqua}
+\subsection{LS Adjustment of Non-linear, Mixed Model with constraints}
+\label{subsec:LSadj}
 
 
 
