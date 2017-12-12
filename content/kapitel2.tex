@@ -301,8 +301,10 @@ Each observation $y_i$ in \eqref{eq:MixModel2-1} is a non-linear function of all
 
 In this section, we aim to refine the position of a 3D line so that its back-projection in each covering image has a best-fit to the extracted line.
 
-In \cref{subsec:LSwithConstraints} we firstly set-up a model which transforms a line from object space to image space through collinearity equations, and this model in the same time describes the fitting of a line to the measurements on all covering images. Regarding the fact that the collinearity is a point-wise condition, a line segment is represented by its two end-points. The object coordinates of a pair of end-points are the six unknown quantities in our LS model. 
-However, a line equation has a mathematical meaning of infinite length, as mentioned in \cref{sec:LineFitting}. Some constraints are necessary to somehow fix one of the end-points' position is necessary to avoid infinitely many solutions.
+In \cref{subsec:LSwithConstraints} we firstly set-up a model which describes the fitting of a line to the measurements in all covering image space, and in which the fitting line is transformed from object space through collinearity equations. 
+
+Regarding the fact that the collinearity is a point-wise condition, a line segment is represented by its two end-points whose object coordinates are the six unknowns in our LS model. 
+Correspondingly, the observation equations in the LS model are line equations in two-point form. Such line equations has however a mathematical meaning of infinite length. Therefore, some constraints are necessary to avoid infinitely many solutions along a , arbitrary shift.
 
 so constraint needed and measurement collected specifically. 
 
