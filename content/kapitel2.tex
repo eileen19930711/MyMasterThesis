@@ -90,23 +90,28 @@ The images are acquired with a special flight configuration at both sides of the
   \label{fig:FlightTrajectory}
 \end{figure}
 
-
+\clearpage %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \paragraph{Image Orientations}
 The image orientations are refined by GPS-assisted self-calibrating bundle adjustment. The accuracies of the EO parameters are shown in \cref{tab:EOaccuracy}. The calibrated IO parameters and their accuracies are shown in \cref{tab:IOaccuracy}. To provide an overall quality on the Interior Orientations: from the calibration result of interior orientations (involving lens distortion), the residuals appear non-systematic and the biggest one is around one pixel.
 
-The quality of this orientation parameters set would have an impact in object space for around 15 [cm] in X,Y-direction:
+The quality of this orientation parameters set would have a maximum impact in object space for around 15 [cm] in X,Y-direction:
 \begin{itemize}
       \item caused by inaccurate camera position: $\sqrt{\sigma_{north}^2+\sigma_{east}^2}\approx0.058$ [m]
-      \item caused by inaccurate camera orientation: $\sqrt{\sigma_{Roll}^2+\sigma_{Pitch}^2}\times H_{flight height}\approx0.020$ [m]
-      \item caused by inaccurate interior orientations: $1$[pixel]$\times GSD=0.069$ [m]
+      \item caused by inaccurate camera attitude: $\sqrt{\sigma_{Roll}^2+\sigma_{Pitch}^2}\times H_{flight height}\approx0.020$ [m]
+      \item caused by inaccurate IOs: $1_{[pixel]}\times GSD\div\cos^2(oblique\ angle)\approx0.074$ [m]
 \end{itemize}
-
+and arond ??? [cm] in Z-direction:
+\begin{itemize}
+      \item caused by inaccurate camera position: $\sigma_{altitude}\approx0.060$ [m]
+      \item caused by inaccurate camera attitude: $\sqrt{\sigma_{Roll}^2+\sigma_{Pitch}^2}\times H_{flight height}\approx0.020$ [m]
+      \item caused by inaccurate IOs: $1_{[pixel]}\times GSD\times\dfrac{\sin(oblique\ angle)}{\cos(oblique\ angle)}\approx0.018$ [m]
+\end{itemize}
 
 \begin{table}%[!h]
     \centering
     \begin{tabular}{ll|ll}
     \toprule
-                &[meter] &                  & [degree]\\
+    position accuracies  &[meter]  & attitude accuracies & [degree]\\
     \midrule
     $\sigma_{north}$     & 0.05    & $\sigma_{Roll}$  & 0.002\\
     $\sigma_{east}$      & 0.03    & $\sigma_{Pitch}$ & 0.002\\
@@ -132,12 +137,13 @@ The quality of this orientation parameters set would have an impact in object sp
     \label{tab:IOaccuracy}
 \end{table}
 
-
+\clearpage
 \paragraph{\gls{dsm}}
-For each pair of stereo images, a disparity map is generated using \gls{sgm} algorithm. With the fact that disparity is inversely proportional to depth, they can be used to generate DSM. In most of the cases, a point in object space is covered by more than two aerial images, where more than one disparity maps would be produced. This leads to ambiguities on height decision during DSM generation.
+For each pair of stereo images, a disparity map is generated using \gls{sgm} algorithm. Because disparity is inversely proportional to depth, the disparity maps can be used to derive DSM. In most of the cases, a point in object space is covered by more than two aerial images, where more than one disparity maps would be produced. This leads to ambiguities on height decision during DSM generation.
 
-The height value is decided by simply taking the medium value
- from the aerial images  and then reprojected into a DSM of 0.2 m grid spacing with the bundle-adjusted orientations.
+The height value of the DSM used in this work is decided by simply taking the median value derived from disparity maps in odd number of disparity maps cases, or the one lower than the median value in even number cases. This results in systematic errors of having lower height value in some parts of DSM.
+
+The DSM has 0.2 m grid spacing.
 
 
 
@@ -145,9 +151,9 @@ The height value is decided by simply taking the medium value
 
 
 \paragraph{Orthorectified Images}
-With the bundle-adjusted image orientations, the original images are pixel-wise reprojected onto DSM model to generate the orthorectified images, as shown in \cref{fig:OrthoImg}.
-orthophoto characteristics:
-georeferenced
+The orthorectified images are derived from the bundle adjusted image orientations and the DSM. They have been georeferenced and the scale is uniform. One of the orthorectified image is shown in \cref{fig:OrthoImg}.
+% With the bundle-adjusted image orientations, the original images are pixel-wise reprojected onto DSM model to generate the orthorectified images,.
+%orthophoto characteristics:
 
 \paragraph{Road Masks}
 Road segments are masked out from original images based on \gls{osm} data: Firstly, OSM data is written into orthorectified images. Road regions are then extracted with 25 meter buffer width around road axes. By back-projecting the mask from orthorectified image to original image, it can then be used to mask out the road regions on the original images, as shown in \cref{fig:MaskedImg}.
