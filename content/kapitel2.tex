@@ -311,9 +311,9 @@ x_i-e_{x_i} = \bar{x_i}
 \end{equation}
 Each observation $y_i$ in \eqref{eq:MixModel2-1} is a non-linear function of all unknown quantities.
 
-A functions $\mathcal{F}$ which takes two points $\mathbf{u}$ and $\mathbf{v}$ that define an infinite line, and takes the independent x coordinate of an image point $\mathbf{p_x}$, and returns the predicted y coordinate $(x,y)$ in the image, can be shortly expressed by
+A functions $\mathcal{F}$ which takes two points $\mathbf{u}$ and $\mathbf{v}$ that define an infinite line, and takes the measured x coordinate of an image point $\mathbf{p_x}$, and returns the estimated image coordinates $\mathbf{\hat{p}}(x,y)$ which lies on the infinite line $\overline{\mathbf{u}\mathbf{v}}$, can be shortly expressed by
 \begin{equation} \label{eq:Ffunction}
-(x,y) = \mathcal{F}(\mathbf{u},\mathbf{v},\mathbf{p}) 
+\mathbf{\hat{p}}(x,y) = \mathcal{F}(\mathbf{u},\mathbf{v},\mathbf{p_x}) 
 \end{equation}
 
 
