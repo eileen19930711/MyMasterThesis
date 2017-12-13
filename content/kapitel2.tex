@@ -25,7 +25,7 @@ Fig. 1. Work flow
 \paragraph{Aerial Images}
 
 For real-time mapping applications during disasters, mass events and traffic monitoring scenarios, the German Aerospace Center (DLR) has developed a new optical sensor system-- the 4k system-- on a helicopter. %[F. Kurz et al.]
-The low-oblique aerial images used in this work are acquired from Canon EOS 1D-X, one of the non-metric cameras in 4k system, with an oblique viewing angle of 15$\degree$ and around 500m flying height above ground.
+The low-oblique aerial images used in this work are acquired from Canon EOS 1D-X, one of the non-metric cameras in 4k system, with an oblique viewing angle $\tau$ of 15$\degree$ and around 500m flying height $H_{flight height}$ above ground.
 
 An example aerial image is shown in \cref{fig:OriImg}. \cref{tab:CameraProperties} lists the properties of this camera, and \cref{tab:SensorViewingGeometry} provides the viewing geometry information.
 \newline
@@ -92,24 +92,30 @@ Besides, the forward overlap is around 70\%, and all the lane markings are cover
   \label{fig:FlightTrajectory}
 \end{figure}
 
-\clearpage %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Image Orientations}
-The image orientations are refined by GPS-assisted self-calibrating bundle adjustment. The accuracies of the EO parameters are shown in \cref{tab:EOaccuracy}. The calibrated IO parameters and their accuracies are shown in \cref{tab:IOaccuracy}. To provide an overall quality on the Interior Orientations: from the calibration result of interior orientations (involving lens distortion), the residuals appear non-systematic and the biggest one is around one pixel.
 
-The quality of this orientation parameters set would have a maximum impact in object space for around 15 [cm] in X,Y-direction:
+\paragraph{Image Orientations}
+The image orientations are refined by GPS-assisted self-calibrating bundle adjustment. The accuracies of the EO parameters are shown in \cref{tab:EOaccuracy}. The calibrated IO parameters and their accuracies are shown in \cref{tab:IOaccuracy}. To provide an overall quality on the Interior Orientations: from the calibration result of interior orientations (involving lens distortion), the residuals appear non-systematic and the biggest residual $r_{max, IO}$ is around $1$ pixel.
+\clearpage %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The quality of this orientation parameters set would have a maximum impact in object space for around $16.5$ [cm] in X,Y-direction:
 \begin{itemize}
       \item caused by inaccurate camera position: 
       \item [] $\sqrt{\sigma_{north}^2+\sigma_{east}^2}=\sqrt{0.055^2+0.035^2}\approx0.065$ [meter]
       \item caused by inaccurate camera attitude:
-      \item [] $\sqrt{\sigma_{Roll}^2+\sigma_{Pitch}^2}\times H_{flight height}=\sqrt{0.002^2+0.002^2}\times\dfrac{\pi}{180}\times 500\approx0.024$ [meter]
+      \item [] $\tan(\sqrt{\sigma_{roll}^2+\sigma_{pitch}^2})\times H_{flight height}\times\dfrac{1}{\cos^2\tau}$
+      \item [] $=\tan(\sqrt{0.002^2+0.002^2})\times 500\times\dfrac{1}{\cos^215\degree}\approx0.026$ [meter]
       \item caused by inaccurate Interior Orientations:
-      \item [] $1_{[pixel]}\times GSD\div\cos^2(oblique\ angle)\approx0.074$ [meter]
+      \item [] $r_{max, IO}\times GSD\times\dfrac{1}{\cos^2\tau}=1\times0.069\times\dfrac{1}{\cos^215\degree}\approx0.074$ [meter]
 \end{itemize}
-and arond ??? [cm] in Z-direction:
+and around $9.4$ [cm] in Z-direction:
 \begin{itemize}
-      \item caused by inaccurate camera position: $\sigma_{altitude}\approx0.060$ [meter]
-      \item caused by inaccurate camera attitude: $\sqrt{\sigma_{Roll}^2+\sigma_{Pitch}^2}\times H_{flight height}\approx0.020$ [meter]
-      \item caused by inaccurate IOs: $1_{[pixel]}\times GSD\times\dfrac{\sin(oblique\ angle)}{\cos(oblique\ angle)}\approx0.018$ [meter]
+      \item caused by inaccurate camera position:
+      \item [] $\sigma_{altitude}\approx0.069$ [meter]
+      \item caused by inaccurate camera attitude:
+      \item [] $\tan(\sqrt{\sigma_{roll}^2+\sigma_{pitch}^2})\times H_{flight height}\times\dfrac{\sin\tau}{\cos\tau}$
+      \item [] $=\tan(\sqrt{0.002^2+0.002^2})\times 500\times\dfrac{\sin15\degree}{\cos15\degree}\approx0.007$ [meter]
+      \item caused by inaccurate Interior Orientations:
+      \item [] $r_{max, IO}\times GSD\times\dfrac{\sin\tau}{\cos\tau}=1\times0.069\times\dfrac{\sin15\degree}{\cos15\degree}\approx0.018$ [meter]
 \end{itemize}
 
 
@@ -147,17 +153,15 @@ and arond ??? [cm] in Z-direction:
 \paragraph{\gls{dsm}}
 For each pair of stereo images, a disparity map is generated using \gls{sgm} algorithm. Because disparity is inversely proportional to depth, the disparity maps can be used to derive DSM. In most of the cases, a point in object space is covered by more than two aerial images, where more than one disparity maps would be produced. This leads to ambiguities on height decision during DSM generation.
 
-The height value of the DSM used in this work is decided by simply taking the median value derived from disparity maps in odd number of disparity maps cases, or the one lower than the median value in even number cases. This results in systematic errors of having lower height value in some parts of DSM.
+The height value of the DSM used in this work is decided by simply taking the median value derived from disparity maps in odd number of disparity maps cases, and the value just lower than the median in even number cases. This results in systematic errors of having lower height value in some parts of DSM.
 
-The DSM has 0.2 m grid spacing.
-
-
+The DSM has 0.2 m grid spacing..... [a figure maybe. To be completed...]
 
 
 
 
 \paragraph{Orthorectified Images}
-The orthorectified images are derived from the bundle adjusted image orientations and the DSM. They have been georeferenced and the scale is uniform. One of the orthorectified image is shown in \cref{fig:OrthoImg}.
+The orthorectified images are derived from the bundle adjusted image orientations and the DSM. They are georeferenced and the scale is uniform. One of the orthorectified image is shown in \cref{fig:OrthoImg}.
 % With the bundle-adjusted image orientations, the original images are pixel-wise reprojected onto DSM model to generate the orthorectified images,.
 %orthophoto characteristics:
 
@@ -322,7 +326,7 @@ In this section, we aim to refine the position of a 3D line so that its back-pro
 
 In \cref{subsec:ObsEqua} we firstly set-up a model of observation equations. It describes the fitting of a line to the measurements on each covering images, where the fitting lines on different images are transformed from a single 3D line segment through collinearity equations. 
 
-Regarding the fact that the collinearity is a point-wise condition, a line segment is represented by its two end-points whose object coordinates are the six unknown parameters in our LS model. Correspondingly, the observation equations in the LS model are line equations in two-point form. A Line equation has however a mathematical meaning of infinite length. Therefore, some constraints on the unknowns are necessary to avoid arbitrary locations of the two points on the infinite reconstructed 3D line. The constraint equations are modeled in \cref{subsec:Constraints}. 
+Regarding the fact that the collinearity is a point-wise condition, a line segment is represented by its two endpoints whose object coordinates are the six unknown parameters in our LS model. Correspondingly, the observation equations in the LS model are line equations in two-point form. A Line equation has however a mathematical meaning of infinite length. Therefore, some constraints on the unknowns are necessary to avoid arbitrary locations of the two points on the infinite reconstructed 3D line. The constraint equations are modeled in \cref{subsec:ConEqua}.
 
 %Additionally, the measurements should also be collected accordingly.
 
@@ -331,7 +335,7 @@ Regarding the fact that the collinearity is a point-wise condition, a line segme
 \subsection{Model of Observation Equations}
 \label{subsec:ObsEqua}
 
-Let the endpoints of a line segment in object space be $(X_1,Y_1,Z_1)$ and $(X_2,Y_2,Z_2)$. 
+Let the two endpoints of a line segment in object space be: a start-point $(X_1,Y_1,Z_1)$ and an end-point $(X_2,Y_2,Z_2)$. 
 Consider the case where there are $s$ images covering the static scene (the stable motorway, in our case),
 
 the measurement of the projection of line feature $i$ in image $j$
@@ -346,6 +350,11 @@ extended normal equation matrix N*
 
 \subsection{Model of Constraint Equations}
 \label{subsec:ConEqua}
+Two constraints are needed to fix rank defect in A matrix, they are set to be:
+\begin{itemize}
+\item The object coordinates of the start-point
+\end{itemize}
+
 
 % % %
 C matrix
