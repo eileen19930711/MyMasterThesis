@@ -80,7 +80,9 @@ An example aerial image is shown in \cref{fig:OriImg}. \cref{tab:CameraPropertie
 
 \clearpage
 
-The images are acquired with a special flight configuration at both sides of the motorway which guarantees a stereo view perpendicular to the lane marking direction. This is realized by flying at the right-hand side with respect to flying direction along the motorway, with the left oblique camera looking left-down to the motorway, in both forward and backward trip. Besides, the forward overlap is around 70\% ???. The flight configuration is shown in \cref{fig:FlightTrajectory} on Google Earth platform.
+The images are acquired with a special flight configuration at both sides of the motorway which guarantees a stereo view perpendicular to the lane marking direction. This is realized by flying at the right-hand side with respect to flying direction along the motorway, with the left oblique camera looking left-down to the motorway, in both forward and backward trip. The flight configuration is shown in \cref{fig:FlightTrajectory} on Google Earth platform.
+
+Besides, the forward overlap is around 70\%, and all the lane markings are covered by both strips. This results in approximately 8-image coverage in road areas.
 
 \begin{figure}%[!h]
   \centering
@@ -96,16 +98,20 @@ The image orientations are refined by GPS-assisted self-calibrating bundle adjus
 
 The quality of this orientation parameters set would have a maximum impact in object space for around 15 [cm] in X,Y-direction:
 \begin{itemize}
-      \item caused by inaccurate camera position: $\sqrt{\sigma_{north}^2+\sigma_{east}^2}\approx0.058$ [m]
-      \item caused by inaccurate camera attitude: $\sqrt{\sigma_{Roll}^2+\sigma_{Pitch}^2}\times H_{flight height}\approx0.020$ [m]
-      \item caused by inaccurate IOs: $1_{[pixel]}\times GSD\div\cos^2(oblique\ angle)\approx0.074$ [m]
+      \item caused by inaccurate camera position: 
+      \item [] $\sqrt{\sigma_{north}^2+\sigma_{east}^2}=\sqrt{0.055^2+0.035^2}\approx0.065$ [meter]
+      \item caused by inaccurate camera attitude:
+      \item [] $\sqrt{\sigma_{Roll}^2+\sigma_{Pitch}^2}\times H_{flight height}=\sqrt{0.002^2+0.002^2}\times\dfrac{\pi}{180}\times 500\approx0.024$ [meter]
+      \item caused by inaccurate Interior Orientations:
+      \item [] $1_{[pixel]}\times GSD\div\cos^2(oblique\ angle)\approx0.074$ [meter]
 \end{itemize}
 and arond ??? [cm] in Z-direction:
 \begin{itemize}
-      \item caused by inaccurate camera position: $\sigma_{altitude}\approx0.060$ [m]
-      \item caused by inaccurate camera attitude: $\sqrt{\sigma_{Roll}^2+\sigma_{Pitch}^2}\times H_{flight height}\approx0.020$ [m]
-      \item caused by inaccurate IOs: $1_{[pixel]}\times GSD\times\dfrac{\sin(oblique\ angle)}{\cos(oblique\ angle)}\approx0.018$ [m]
+      \item caused by inaccurate camera position: $\sigma_{altitude}\approx0.060$ [meter]
+      \item caused by inaccurate camera attitude: $\sqrt{\sigma_{Roll}^2+\sigma_{Pitch}^2}\times H_{flight height}\approx0.020$ [meter]
+      \item caused by inaccurate IOs: $1_{[pixel]}\times GSD\times\dfrac{\sin(oblique\ angle)}{\cos(oblique\ angle)}\approx0.018$ [meter]
 \end{itemize}
+
 
 \begin{table}%[!h]
     \centering
@@ -113,9 +119,9 @@ and arond ??? [cm] in Z-direction:
     \toprule
     position accuracies  &[meter]  & attitude accuracies & [degree]\\
     \midrule
-    $\sigma_{north}$     & 0.05    & $\sigma_{Roll}$  & 0.002\\
-    $\sigma_{east}$      & 0.03    & $\sigma_{Pitch}$ & 0.002\\
-    $\sigma_{altitude}$  & 0.06    & $\sigma_{Yaw}$   & 0.005\\
+    $\sigma_{north}$     & $0.055$ & $\sigma_{Roll}$  & $0.002$\\
+    $\sigma_{east}$      & $0.035$ & $\sigma_{Pitch}$ & $0.002$\\
+    $\sigma_{altitude}$  & $0.069$ & $\sigma_{Yaw}$   & $0.005$\\
     \bottomrule
     \end{tabular}
     \caption{Accuracies of Exterior Orientations}
@@ -124,13 +130,13 @@ and arond ??? [cm] in Z-direction:
 
 \begin{table}%[!h]
     \centering
-    \begin{tabular}{ll|ll|l}
+    \begin{tabular}{lr|lr|l}
     \toprule
     \multicolumn{2}{c|}{Interior Orientations}  & \multicolumn{2}{c|}{accuracies} & unit\\
     \midrule
-    focal length $c$            &   0.051 & $\sigma_c$      & 0.00 & [meter]\\
-    x coord. of principal point $pp_x$ &  72.707 & $\sigma_{pp_x}$ & 0.17 &[$\mu$m]\\
-    x coord. of principal point $pp_y$ & 152.152 & $\sigma_{pp_y}$ & 0.80 &[$\mu$m]\\
+    focal length $c$                       &   $0.051$ & $\sigma_c$      & $6.9\mathrm{e}{-7}$ & [meter]\\
+    x coordinate of principal point $pp_x$ & $-42.259$ & $\sigma_{pp_x}$ & $0.167$             &[$\mu$m]\\
+    x coordinate of principal point $pp_y$ & $115.384$ & $\sigma_{pp_y}$ & $0.799$             &[$\mu$m]\\
     \bottomrule
     \end{tabular}
     \caption{Interior Orientations and their accuracies}
