@@ -88,7 +88,7 @@ Besides, the forward overlap is around 70\%, and all the lane markings are cover
   \centering
   \subfloat[]{\includegraphics[height=0.45\textwidth]{FlightTrajectory5.png} \label{fig:trajectory1}}
   \subfloat[]{\includegraphics[height=0.45\textwidth]{FlightTrajectory3.png} \label{fig:trajectory2}}
-  \caption{Flight Trajectory on Google Earth platform. The green polyline shows the flight trajectory.}
+  \caption{Flight Trajectory on Google Earth platform. The green polyline shows the flight trajectory. \textit{Source:\textbf{Google Earth} 04/01/2017}}
   \label{fig:FlightTrajectory}
 \end{figure}
 
@@ -151,13 +151,19 @@ and around $9.4$ [cm] in Z-direction:
 
 \clearpage
 \paragraph{\gls{dsm}}
-For each pair of stereo images, a disparity map is generated using \gls{sgm} algorithm. Because disparity is inversely proportional to depth, the disparity maps can be used to derive DSM. In most of the cases, a point in object space is covered by more than two aerial images, where more than one disparity maps would be produced. This leads to ambiguities on height decision during DSM generation.
+For each pair of stereo images, a disparity map is generated using \gls{sgm} algorithm. With disparity's property of being inversely proportional to depth, the disparity maps can be used to derive DSM. In most of the cases, a point in object space is covered by more than two aerial images, where more than one disparity maps would be produced. This leads to ambiguities on height decision during DSM generation.
 
 The height value of the DSM used in this work is decided by simply taking the median value derived from disparity maps in odd number of disparity maps cases, and the value just lower than the median in even number cases. This results in systematic errors of having lower height value in some parts of DSM.
 
-The DSM has 0.2 m grid spacing..... [a figure maybe. To be completed...]
+The DSM has 0.2 m grid spacing. \cref{fig:DSMnumber} shows the image coverage on the DSM
 
-
+\begin{figure}%[!h]
+  \centering
+  \subfloat[]{\includegraphics[height=0.45\textwidth]{DEM_A9_NUM_scaled.png} \label{fig:DSMstd}}
+  \subfloat[]{\includegraphics[height=0.45\textwidth]{DEM_A9_NUM_scaled.png} \label{fig:DSMnumber}}
+  \caption{DSM information}
+  \label{fig:DSM}
+\end{figure}
 
 
 \paragraph{Orthorectified Images}
