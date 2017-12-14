@@ -155,14 +155,23 @@ For each pair of stereo images, a disparity map is generated using \gls{sgm} alg
 
 The height value of the DSM used in this work is decided by simply taking the median value derived from disparity maps in odd number of disparity maps cases, and the value just lower than the median in even number cases. This results in systematic errors of having lower height value in some parts of DSM.
 
-The DSM has 20 cm grid spacing. \cref{fig:DSMnumber} shows the distribution of stereo pairs used for DSM generation.
+Standard deviations of the height value in a part of the DSM is shown in \cref{fig:DSMstd}.
+
+The DSM has 20 cm grid spacing. \cref{fig:DSM} shows a part of the DSM and the number of stereo image pairs used for each part on this part of DSM.
 
 \begin{figure}%[!h]
   \centering
-  \subfloat[Standard Deviation]{\includegraphics[height=0.8\textwidth]{DEM_A9_NUM_scaled_s.png} \label{fig:DSMstd}}
-  \subfloat[Distribution of stereo pairs. Lighter color indicates more stereo pairs are used for DSM generation in that area. The maximum number of stereo pairs used in this DSM is 27.]{\includegraphics[width=0.4\textwidth]{DEM_A9_NUM_scaled_s.png} \label{fig:DSMnumber}}
-  \caption{DSM information}
+  \subfloat[Part of the DSM in road area. It is noisy in the center of motorway.]{\includegraphics[width=0.5\textwidth]{DEM_A9_FINAL_PART_small_shaded.png} \label{fig:DSM}}
+  \subfloat[Standard deviations of the height value of the DSM in road area. It is higher in the center of motorway.]{\includegraphics[width=0.5\textwidth]{DEM_A9_STD_small_terrain.png} \label{fig:DSMstd}}
+  \caption{A part of the DSM and its standard deviation of height value}
   \label{fig:DSM}
+%\end{figure}
+%
+%\begin{figure}%[!h]
+  \centering
+  \includegraphics[width=0.34\textwidth]{DEM_A9_NUM_scaled_s.png}
+  \caption{Distribution of stereo pairs used for DSM generation. Lighter color indicates more stereo pairs are used in that area. Maximum 27 stereo pairs are used in this DSM.}
+  \label{fig:DSMnumber}
 \end{figure}
 
 
