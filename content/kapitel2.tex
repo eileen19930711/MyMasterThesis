@@ -30,7 +30,7 @@ The low-oblique aerial images used in this work are acquired from Canon EOS 1D-X
 An example aerial image is shown in \cref{fig:OriImg}. \cref{tab:CameraProperties} lists the properties of this camera, and \cref{tab:SensorViewingGeometry} provides the viewing geometry information.
 \newline
 
-\begin{table}[!h]
+\begin{table}%[!h]
   \centering
   \begin{tabular}{ll}
   \toprule
@@ -58,7 +58,7 @@ An example aerial image is shown in \cref{fig:OriImg}. \cref{tab:CameraPropertie
 
 \vspace*{1 cm}
 
-\begin{table}[!h]
+\begin{table}%[!h]
   \centering
   \begin{tabular}{lll}
   \toprule
@@ -88,7 +88,7 @@ Besides, the forward overlap is around 70\%, and all the lane markings are cover
   \centering
   \subfloat[]{\includegraphics[height=0.45\textwidth]{FlightTrajectory5.png} \label{fig:trajectory1}}
   \subfloat[]{\includegraphics[height=0.45\textwidth]{FlightTrajectory3.png} \label{fig:trajectory2}}
-  \caption{Flight Trajectory on Google Earth platform. The green polyline shows the flight trajectory. \textit{Source:\textbf{Google Earth} 04/01/2017}}
+  \caption{Flight Trajectory on Google Earth platform. The green polyline shows the flight trajectory. \textit{Source: \textbf{Google Earth} 04/01/2017}}
   \label{fig:FlightTrajectory}
 \end{figure}
 
@@ -155,21 +155,25 @@ For each pair of stereo images, a disparity map is generated using \gls{sgm} alg
 
 The height value of the DSM used in this work is decided by simply taking the median value derived from disparity maps in odd number of disparity maps cases, and the value just lower than the median in even number cases. This results in systematic errors of having lower height value in some parts of DSM.
 
-Standard deviations of the height value in a part of the DSM is shown in \cref{fig:DSMstd}.
-
-The DSM has 20 cm grid spacing. \cref{fig:DSM} shows a part of the DSM and the number of stereo image pairs used for each part on this part of DSM.
+Standard deviations of the height value in a part of the DSM is shown in \cref{fig:DSMstd}. The DSM has 20 cm grid spacing. \cref{fig:DSM} shows a part of the DSM and the number of stereo image pairs used for each part on this part of DSM.
 
 \begin{figure}%[!h]
   \centering
-  \subfloat[Part of the DSM in road area. It is noisy in the center of motorway.]{\includegraphics[width=0.5\textwidth]{DEM_A9_FINAL_PART_small_shaded.png} \label{fig:DSM}}
-  \subfloat[Standard deviations of the height value of the DSM in road area. It is higher in the center of motorway.]{\includegraphics[width=0.5\textwidth]{DEM_A9_STD_small_terrain.png} \label{fig:DSMstd}}
-  \caption{A part of the DSM and its standard deviation of height value}
+  \includegraphics[width=0.52\textwidth]{DEM_A9_FINAL_PART_small_shaded.png}
+  \caption{Part of the DSM in road area. It is noisy in the center of motorway.}
   \label{fig:DSM}
-%\end{figure}
-%
-%\begin{figure}%[!h]
+\end{figure}
+
+\begin{figure}%[!h]
   \centering
-  \includegraphics[width=0.34\textwidth]{DEM_A9_NUM_scaled_s.png}
+  \includegraphics[width=0.52\textwidth]{DEM_A9_STD_small_terrain.png}
+  \caption{Standard deviations of the height value of the DSM in road area. It has higher value in the center of motorway.}
+  \label{fig:DSMstd}
+\end{figure}
+
+\begin{figure}%[!h]
+  \centering
+  \includegraphics[width=0.45\textwidth]{DEM_A9_NUM_scaled_s.png}
   \caption{Distribution of stereo pairs used for DSM generation. Lighter color indicates more stereo pairs are used in that area. Maximum 27 stereo pairs are used in this DSM.}
   \label{fig:DSMnumber}
 \end{figure}
@@ -326,9 +330,9 @@ x_i-e_{x_i} = \bar{x_i}
 \end{equation}
 Each observation $y_i$ in \eqref{eq:MixModel2-1} is a non-linear function of all unknown quantities.
 
-A functions $\mathcal{F}$ which takes two points $\mathbf{u}$ and $\mathbf{v}$ that define an infinite line, and takes the measured x coordinate of an image point $\mathbf{p_x}$, and returns the estimated image coordinates $\mathbf{\hat{p}}(x,y)$ which lies on the infinite line $\overline{\mathbf{u}\mathbf{v}}$, can be shortly expressed by
+A functions $\mathcal{F}$ which takes two points $\mathbf{u}$ and $\mathbf{v}$ that define an infinite line, and takes the measured x coordinate $\mathbf{p_x}$ of an image point $\mathbf{p}$, and returns the estimated image coordinates $\mathbf{\hat{p}}$ which lies on the infinite line $\overline{\mathbf{u}\mathbf{v}}$, can be shortly expressed by
 \begin{equation} \label{eq:Ffunction}
-\mathbf{\hat{p}}(x,y) = \mathcal{F}(\mathbf{u},\mathbf{v},\mathbf{p_x}) 
+\mathbf{\hat{p}} = \mathcal{F}(\mathbf{u},\mathbf{v},\mathbf{p_x}) 
 \end{equation}
 
 
@@ -359,33 +363,35 @@ Regarding the fact that the collinearity is a point-wise condition, a line segme
 \subsection{Model of Observation Equations}
 \label{subsec:ObsEqua}
 
-Given the start-point $\mathbf{P_s}(X_s,Y_s,Z_s)$ and the end-point $\mathbf{P_e}(X_e,Y_e,Z_e)$ of a line segment in object space. Consider the case where there are $J$ images covering this line segment. With \cref{eq:Gfunction}, the start- and end-points of this line segment's back-projection in image $j$ have the image coordinates $\mathbf{p_s}(x^j_s,y^j_s)$ and $\mathbf{p_e}(x^j_e,y^j_e)$:
+Given the start-point $P_s(X_s,Y_s,Z_s)$ and the end-point $P_e(X_e,Y_e,Z_e)$ of a line segment in object space. Consider the case where there are $J$ images covering this line segment. With \cref{eq:Gfunction}, the start- and end-points of this line segment's back-projection in image $j$ have the image coordinates $p^j_s(x^j_s,y^j_s)$ and $p^j_e(x^j_e,y^j_e)$:
 \begin{equation} \label{eq:obsmodel-collinearity}
 \begin{split}
-\mathbf{p_s} = \mathcal{G}(\mathbf{q^j},\mathbf{P_s})\\
-\mathbf{p_e} = \mathcal{G}(\mathbf{q^j},\mathbf{P_e})\\
+p^j_s = \mathcal{G}(q^j,P_s)\\
+p^j_e = \mathcal{G}(q^j,P_e)
+\end{split}
+\qquad
+\begin{split}
 \forall j=1,2,...J
 \end{split}
 \end{equation}
 
+Let $l^j$ be an extracted line on image $j$ where there are $L^j$ extracted lines in this image, and $n^j_{l,i}$ be a point in line $l^j$ where this line consists of $N^j_l$ points. Given a measured x coordinate $n^j_{l,i,x}$ of a point $n^j_{l,i}$, the estimated image coordinates $\hat{n}^j_{l,i}(\hat{x}^j_{l,i},\hat{y}^j_{l,i})$ on the infinite line $\overline{p^j_s,p^j_e}$ computed from \cref{eq:Ffunction} is:
+\begin{equation} \label{eq:obsmodel-linefitting}
+\hat{n}^j_{l,i} = \mathcal{F}(p^j_s,p^j_e,n^j_{l,i,x})
+\qquad
+\forall i=1,2,...N^j_l
+\end{equation}
 
+Writing \eqref{eq:obsmodel-collinearity} into \eqref{eq:obsmodel-linefitting} gives a combination function $\mathcal{H}$:
+\begin{equation} \label{eq:obsmodel}
+\begin{split}
+\hat{n}^j_{l,i} &= \mathcal{F}(\mathcal{G}(q^j,P_s),\mathcal{G}(q^j,P_e),n^j_{l,i,x})\\
+&=\mathcal{H}(q^j,P_s,P_e,n^j_{l,i,x})
+\qquad
+\forall i=1,2,...N^j_l,\quad\forall l=1,2,...L^j,\quad\forall j=1,2,...J
+\end{split}
+\end{equation}
 
-
-
-
-
-consist of $\{x^j_i,y^j_i\}^{n^j}_{i=1}$
-
- static object (the motorway, in our case), and each image $j$ contains $n^j$ straight line features
-
-
-the measurement of the projection of line feature $i$ in image $j$
-
-$j=1,2,...J$the inconsistent observations $\{x_i,y_i\}^n_{i=1}$. The model of observation equations \eqref{eq:MixModel1-1} and \eqref{eq:MixModel1-2} now takes the form: 
-
-% % %
-derive matrices
-extended normal equation matrix N*
 
 
 
@@ -421,7 +427,11 @@ D matrix
 % 2.5.3.2 The Solution of the linearized problem
 
 
-\clearpage
+% % %
+derive matrices
+extended normal equation matrix N*
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Line Projection on DSM}
 \label{sec:LineProjectionOnDSM}
