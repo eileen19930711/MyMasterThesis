@@ -282,7 +282,7 @@ Additional least-squares (LS) models are commonly used for regression by means o
 
 In the case of simple linear regression as presented in \cref{subsec:LinearRegression}, the independent variable $x$ is error free, inconsistencies are only for the dependent variable $y$. Geometrically it means that the vertical distances from observed data to the fitted line is minimized. To minimize the sum of squared perpendicular distances from the data points to the regression line, a LS mixed model is derived in \cref{subsec:MixedModel} to perform orthogonal regression.
 
-For a later combination with point-wise collinearity equations \eqref{eq:collinearity}, we aim to fit the line equation in two-point form to the extracted lines produced in \cref{sec:LineExtraction} (in forms of sets of points in image coordinates). For such purpose, a non-linear mixed model is derived in \cref{subsec:NonLinear}. 
+For a later combination with point-wise extended collinearity equation \eqref{eq:Gfunction} in next section, we aim to fit the line equation in two-point form to the extracted lines produced in \cref{sec:LineExtraction} (in forms of sets of points in image coordinates). For such purpose, a non-linear mixed model is derived in \cref{subsec:NonLinear}. 
 
 
 \subsection{Linear Regression}
@@ -311,8 +311,6 @@ x_i-e_{x_i} = \bar{x_i}
 In the A-model, every observation is either a linear or a non-linear function of all unknown quantities. In contrast, in the B-model no unknown parameter exist and there are linear or non-linear relationships between the observations [F. Krumm]. As \eqref{eq:MixModel1-1} describes the relationship between observations and unknowns and \eqref{eq:MixModel1-2} describes the relationship between observations, this model is known as the mixed model or Gauss-Helmert model.
 
 
-
-
 \subsection{Non-linear Mixed Model}
 \label{subsec:NonLinear}
 
@@ -331,7 +329,7 @@ x_i-e_{x_i} = \bar{x_i}
 \end{equation}
 Each observation $y_i$ in \eqref{eq:MixModel2-1} is a non-linear function of all unknown quantities.
 
-A functions $\mathcal{F}$ which takes two points $\mathbf{u}$ and $\mathbf{v}$ that define an infinite line, and takes the measured x coordinate $\mathbf{p_x}$ of an image point $\mathbf{p}$, and returns the estimated image coordinates $\mathbf{\hat{p}}$ which lies on the infinite line $\overline{\mathbf{u}\mathbf{v}}$, can be shortly expressed by
+A functions $\mathcal{F}$ which takes two image points $\mathbf{u}$ and $\mathbf{v}$ that define an infinite line, and takes the measured x coordinate $\mathbf{p_x}$ of an image point $\mathbf{p}$, and returns the estimated image coordinates $\mathbf{\hat{p}}$ which lies on the infinite line $\overline{\mathbf{u}\mathbf{v}}$, can be shortly expressed by
 \begin{equation} \label{eq:Ffunction}
 \mathbf{\hat{p}} = \mathcal{F}(\mathbf{u},\mathbf{v},\mathbf{p_x})
 \end{equation}
@@ -415,29 +413,29 @@ For an image $j=1$ there are $2\times N^j$ observation equations:
 
 \begin{equation} \label{eq:obs-camera1}
 \begin{bmatrix}
-n^1_{l,1,y}\\[0.3em]
-n^1_{l,2,y}\\[0.3em]
+n^1_{1,y}\\[0.3em]
+n^1_{2,y}\\[0.3em]
 ...\\[0.3em]
-n^1_{l,N^1,y}\\[0.5em]
-n^1_{l,1,x}\\[0.3em]
-n^1_{l,2,x}\\[0.3em]
+n^1_{N^1,y}\\[0.5em]
+n^1_{1,x}\\[0.3em]
+n^1_{2,x}\\[0.3em]
 ...\\[0.3em]
-n^1_{l,N^1,x}
+n^1_{N^1,x}
 \end{bmatrix}
 \doteq % dot equal indicates inconsistency
 \begin{bmatrix}
-\mathcal{H}^y(q^1,P_s,P_e,n^1_{l,1,x})\\[0.3em]
-\mathcal{H}^y(q^1,P_s,P_e,n^1_{l,2,x})\\[0.3em]
+\mathcal{H}^y(q^1,P_s,P_e,n^1_{1,x})\\[0.3em]
+\mathcal{H}^y(q^1,P_s,P_e,n^1_{2,x})\\[0.3em]
 ...\\[0.3em]
-\mathcal{H}^y(q^1,P_s,P_e,n^1_{l,N^1,x})\\[0.5em]
-\mathcal{H}^x(q^1,P_s,P_e,n^1_{l,1,x})\\[0.3em]
-\mathcal{H}^x(q^1,P_s,P_e,n^1_{l,2,x})\\[0.3em]
+\mathcal{H}^y(q^1,P_s,P_e,n^1_{N^1,x})\\[0.5em]
+\mathcal{H}^x(q^1,P_s,P_e,n^1_{1,x})\\[0.3em]
+\mathcal{H}^x(q^1,P_s,P_e,n^1_{2,x})\\[0.3em]
 ...\\[0.3em]
-\mathcal{H}^x(q^1,P_s,P_e,n^1_{l,N^1,x})
+\mathcal{H}^x(q^1,P_s,P_e,n^1_{N^1,x})
 \end{bmatrix}
 \end{equation}
 
-
+Note that dot equal indicates inconsistency between the measured value, $n^j_i$, and the computed value, $\mathcal{H}^y(q^j,P_s,P_e,n^j_i)$.
 
 For all covering image $j=1,2,...J$ there are $2\times\displaystyle\sum_{j=1}^{J}N^j$ observation equations.
 
@@ -466,7 +464,7 @@ For all covering image $j=1,2,...J$ there are $2\times\displaystyle\sum_{j=1}^{J
 
 \subsection{Model of Constraint Equations}
 \label{subsec:ConEqua}
-At least two constraints are needed to fix rank deficiency in A matrix. The constraints used in this work are:
+At least two constraints are needed to fix rank deficiency???. There are three constraints used in this work:
 \begin{itemize}
 \item Fixing the X, Y coordinates of the start-point:
 \item [] \begin{equation} \label{eq:constraint1}
@@ -482,33 +480,31 @@ At least two constraints are needed to fix rank deficiency in A matrix. The cons
 \end{itemize}
 
 
-% % %
-C matrix
-D matrix
 
 \subsection{Non-linear Mixed Model with constraints}
 \label{subsec:LSadj}
 
+By assuming a non-linear function being locally linear with small step size of the unknown quantities, a non-linear LS system becomes linear by changing the unknowns to their increasements.  through Taylor' polynomial, expansion, and is thus solvable
+
+Function $\mathcal{H}$ actually do line fitting in all covering image spaces where the lines to be fitted come from a single line segment in object space. $\mathcal{H}^y$ is non-linear, thus we first have to do linearization.
 
 
 
+As the equation system may exhibit multiple local minimum, local linear, an initial estimate is required for convergence to the correct solution. 
 
 
-Function $\mathcal{H}$ actually do line fitting in all covering image spaces where the lines to be fitted come from single 3D line segment. 
-
-
-the unknown endpoints of a line segment  in object coordinate, 
-
-
-
-
-
+Fixing the X, Y coordinates of the start-point would barely do harm to the result, regarding the fact that our DSM is noisy in Z-direction.
 
 % 2.5.3 non-linear mixed model with constraints...
 % 2.5.3.1 The Model and Its Linearization
 % local linear
 % combine the obs & con model, linearization
 % 2.5.3.2 The Solution of the linearized problem
+
+% system solvable when J>1 and well distributed, 
+
+
+
 
 
 % % %
@@ -519,8 +515,6 @@ extended normal equation matrix N*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Line Projection on DSM}
 \label{sec:LineProjectionOnDSM}
-
-As the equation system may exhibit multiple local minimum, local linear, an initial estimate is required for convergence to the correct solution. 
 
 Given image coordinates $(x,y)$ of a point and the (bundle-adjusted) image orientations, there is still one degree of freedom in collinearity equation system Equa. on solving object coordinates $(X,Y,Z)$. Combined with the usage of DSM, who provides an initial height information given a position $(X,Y)$, the corresponding object coordinates can be solved iteratively.
 
