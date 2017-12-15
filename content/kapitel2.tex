@@ -282,7 +282,7 @@ Additional least-squares (LS) models are commonly used for regression by means o
 
 In the case of simple linear regression as presented in \cref{subsec:LinearRegression}, the independent variable $x$ is error free, inconsistencies are only for the dependent variable $y$. Geometrically it means that the vertical distances from observed data to the fitted line is minimized. To minimize the sum of squared perpendicular distances from the data points to the regression line, a LS mixed model is derived in \cref{subsec:MixedModel} to perform orthogonal regression.
 
-For a later combination with point-wise extended collinearity equation \eqref{eq:Gfunction} in next section, we aim to fit the line equation in two-point form to the extracted lines produced in \cref{sec:LineExtraction} (in forms of sets of points in image coordinates). For such purpose, a non-linear mixed model is derived in \cref{subsec:NonLinear}. 
+For a later combination with point-wise extended collinearity equation \eqref{eq:Gfunction} in next section, we aim to fit the line equation in two-point form to the extracted lines produced in \cref{sec:LineExtraction} (in forms of sets of points in image coordinates). For such non-linear least squares fitting purpose, a non-linear mixed model is derived in \cref{subsec:NonLinear}. 
 
 
 \subsection{Linear Regression}
@@ -349,10 +349,12 @@ Note that as a combination of \eqref{eq:MixModel2-1} and \eqref{eq:MixModel1-2},
 
 \clearpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{LS Adjustment for 3D lane markings reconstruction}
+\section{3D line reconstruction through non-linear LS Adjustment}
 \label{sec:LSadj}
 
-In this section, we aim to refine the position of a 3D line segment so that its back-projection in each covering image has a best-fit to the extracted line. To simplify the problem, a long curved lane-line is partially reconstructed through a sliding window. It is approximated by a straight line of maximum 9 meters in length, taking into account the maximum curvature of the highway.
+In this section, we aim to refine the position of a 3D line segment so that its back-projection in each covering image has a best-fit to the extracted line. To simplify the problem, a long curved lane-line is partially reconstructed through a sliding window. It is approximated by a straight line of 9 meters in length, taking into account the maximum curvature of the highway.
+
+In a sliding window of 9 meters length, a line segment is reconstructed with the measurements collected in the corresponding regions (with buffer width 5 pixels) on all covering images. Only the middle point of this reconstructed 3D line is recorded. The sliding window then moves 4.5 meters forward, started from the recorded middle point of the previous line segment. Another line segment is then reconstructed, with its middle point being recorded... and so on. These recorded middle points are in the end the nodes of the reconstructed line. The reconsideration in overlapping region makes the reconstruction more robust.
 
 In \cref{subsec:ObsEqua} we firstly set-up a model of observation equations. It describes the fitting of a straight line to the measurements on each covering images, where the fitting lines on different images are transformed from a single 3D straight line segment through extended collinearity equation.
 
@@ -360,7 +362,8 @@ Regarding the fact that the collinearity is a point-wise condition, a line segme
 
 
 
-%Additionally, the measurements should also be collected accordingly.
+
+%Additionally, the measurements are collected accordingly.
 
 %infinitely many solutions.
 
@@ -397,7 +400,6 @@ Writing \eqref{eq:obsmodel-collinearity} into \eqref{eq:obsmodel-linefitting} gi
 \end{equation}
 where $n^j_{l,i,x}\quad\forall i=1,2,...N^j_l$ are the measurements, $P_s$ and $P_e$ are the unknowns, $q^j\quad\forall j=1,2,...J$ includes the known interior and exterior orientations of camera $j$.\newline
 
-\clearpage
 Correspond to \cref{eq:Ffunction_xy}, function $\mathcal{H}$ is composed of
 \begin{equation}
 \begin{split}
@@ -406,8 +408,7 @@ Correspond to \cref{eq:Ffunction_xy}, function $\mathcal{H}$ is composed of
 \end{split}
 \end{equation}
 
-
-Since our aim is to reconstruct line segments taking into consideration of their position on all of the covering image, the adjustment will be done "line-wise"--- for a pair of $P_s$ and $P_e$, the measurements are collected correspondingly. Thus the subscription $l$ representing specific line segment will be left out in the followings.
+Since the adjustment is done "line-wise"--- for a pair of $P_s$ and $P_e$, the measurements are collected correspondingly. Thus the subscription $l$ representing specific line segment will be left out in the followings.
 
 For an image $j=1$ there are $2\times N^j$ observation equations:
 
@@ -464,7 +465,8 @@ For all covering image $j=1,2,...J$ there are $2\times\displaystyle\sum_{j=1}^{J
 
 \subsection{Model of Constraint Equations}
 \label{subsec:ConEqua}
-At least two constraints are needed to fix rank deficiency???. There are three constraints used in this work:
+%At least two constraints are needed to fix rank deficiency???. 
+There are three constraints used in this work:
 \begin{itemize}
 \item Fixing the X, Y coordinates of the start-point:
 \item [] \begin{equation} \label{eq:constraint1}
@@ -479,21 +481,19 @@ At least two constraints are needed to fix rank deficiency???. There are three c
 \end{equation}
 \end{itemize}
 
+Note that only in the first line segment reconstruction of a long lane marking, the fixed $X_s$ and $Y_s$ values are from the approximated initial value derived from \cref{sec:LineProjectionOnDSM}. From the second line segment on, the fixed values $X_s$ and $Y_s$ are from the previously determined values.
 
 
-\subsection{Non-linear Mixed Model with constraints}
+\subsection{Non-linear LS Adjustment with Constraints}
 \label{subsec:LSadj}
 
-By assuming a non-linear function being locally linear with small step size of the unknown quantities, a non-linear LS system becomes linear by changing the unknowns to their increasements.  through Taylor' polynomial, expansion, and is thus solvable
-
-Function $\mathcal{H}$ actually do line fitting in all covering image spaces where the lines to be fitted come from a single line segment in object space. $\mathcal{H}^y$ is non-linear, thus we first have to do linearization.
+A non-linear equation system is approximated to be locally linear with small step size of the unknown quantities. Through a linearized form of the equation system, for example Taylor's polynomial expansion, it turns to solve for the increments of unknowns instead of the unknowns themselves, where linear LS adjustment is applied iteratively until convergence is achieved. Depending on the configuration and initial parameters chosen, the nonlinear fit may have good or poor convergence properties.
 
 
 
-As the equation system may exhibit multiple local minimum, local linear, an initial estimate is required for convergence to the correct solution. 
+% In this work, both the observation equations and constraint equations are linearized, i.e. all equations are expanded to Taylor's polynomials.
 
 
-Fixing the X, Y coordinates of the start-point would barely do harm to the result, regarding the fact that our DSM is noisy in Z-direction.
 
 % 2.5.3 non-linear mixed model with constraints...
 % 2.5.3.1 The Model and Its Linearization
@@ -508,19 +508,24 @@ Fixing the X, Y coordinates of the start-point would barely do harm to the resul
 
 
 % % %
-derive matrices
-extended normal equation matrix N*
+% derive matrices
+% extended normal equation matrix N*
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Line Projection on DSM}
 \label{sec:LineProjectionOnDSM}
 
-Given image coordinates $(x,y)$ of a point and the (bundle-adjusted) image orientations, there is still one degree of freedom in collinearity equation system Equa. on solving object coordinates $(X,Y,Z)$. Combined with the usage of DSM, who provides an initial height information given a position $(X,Y)$, the corresponding object coordinates can be solved iteratively.
+As the equation system in \cref{sec:LSadj} may exhibit multiple local minimum, a "correct" initial approximation of the unknowns is required for convergence to the correct solution. To provide such initial 3D line segment, the extracted line features derived in \cref{sec:LineExtraction} can be projected onto DSM with the bundle adjusted camera orientations.
 
-With the following work flow:
+Given image coordinates $\mathbf{p}(x,y)$ of a point and (bundle-adjusted) image orientations $\mathbf{q}$, there is still one degree of freedom in extended collinearity equation \eqref{eq:Gfunction} on solving object coordinates $\mathbf{P}(X,Y,Z)$. Combined with the usage of DSM, which provides the height information $Z$ given a position $(X,Y)$, the corresponding object coordinates can be solved iteratively until the increment $\Delta Z$ small enough, i.e. convergence achieved.
 
-pseudo code:
+Considering that the DSM is raster (discrete) whereas $X$ and $Y$ have continuous numerical values, DSM height is bilinear interpolated.
+
+%Given image coordinates of an image point and an initial Z-value $Z_{initial}$, the 
+%With the following work flow:
+
+%pseudo code:
 
 %x,y = a set of points (detected line);		// unit: [pixel], in image coordinates
 %Z_ini = 500;						// unit: [meter], in world coordinates
@@ -553,27 +558,15 @@ pseudo code:
 
 
 
-
-
-
-
-
-
-
-
-
-Considering that X,Y have continuous numerical values whereas the DSM is raster (discrete), bilinear interpolation is adopted in this work.
-
 % % %
-to provide the initial approximation for non-linear LS adj
 
 
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Line Grouping}
-\label{sec:}
+%\section{Line Grouping}
+%\label{sec:}
 
 
 
