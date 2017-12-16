@@ -308,10 +308,10 @@
   %
 
   \vskip 20mm\relax %%%
-
+%%%%%%%%%%%%%%%%%%%%%%%%% CHANGE HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \vbox to 70mm{
   \begin{center}%
-    \includegraphics[width=0.6\textwidth]{unistuttgart_logo_deutsch_cmyk-01.png} %Universität%\@labelInstitute
+    \includegraphics[width=\textwidth]{unistuttgart_logo_deutsch.pdf} %\@labelInstitute
   \end{center}
   \vfill}%
 
@@ -320,24 +320,26 @@
   %%% Die Box kann max. 100mm breit und 60mmm hoch sein,
   %%% au"serdem wird noch ein Rand von mind. 2.5mm gelassen
   %%% Even if \centering is not recommended (see l2tabu or nag package), just replacing it with {\centering{...}} doesn't work as \centering doesn't center on the complete page
+%%%%%%%%%%%%%%%%%%%%%%%%% CHANGE HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \centerline{\fboxsep=0pt
     \@USCCover@umrandet{\hbox to 100mm{\hfil
     \vbox to 60mm{\hsize=95mm\parindent=0pt
       \vskip 10mm plus 30mm minus 7.5mm
       \begin{center}\@setsize\large{14pt}\xiipt\@xiipt %%\large
-				\ifx\MCS@number\empty
-					\@labelType
-				\else
-					\@labelType\ Nr.\,\MCS@number
-				\fi
+				Master Thesis
+                %\ifx\MCS@number\empty
+				%	\@labelType
+				%\else
+				%	\@labelType\ Nr.\,\MCS@number
+				%\fi
       \end{center}%
       \vskip 12.5mm plus 12.5mm minus 10mm
       \begin{center}\@setsize\LARGE{22pt}\xviipt\@xviipt %%\LARGE
-        \textbf{ \MCS@title}
+        \textbf{ Automatic 3D lane marking reconstruction using multi-view aerial imagery }%\MCS@title}
       \end{center}%
       \vskip 10mm plus 10mm minus 7.5mm
       \begin{center}\@setsize\large{14pt}\xiipt\@xiipt %%\large
-        \MCS@author
+        Chun-Yu Sheu%\MCS@author
       \end{center}%
       \vskip 17.5mm plus 35mm minus 12.5mm}\hfil}}}%
   \vskip 20mm %%%%%
