@@ -179,29 +179,29 @@ keywords: line reconstruction, linear regression, least-squares adjustment
 % \addtocontents{toc}{\protect\newpage}
 % an der passenden Stelle im Fließtext erzwungen werden.
 
-\listoffigures
-\listoftables
+%\listoffigures%%%%%%%% HERE %%%%%%%%%%%%%%%%%%%%%%%%
+%\listoftables%%%%%%%% HERE %%%%%%%%%%%%%%%%%%%%%%%%
 
 %Wird nur bei Verwendung von der lstlisting-Umgebung mit dem "caption"-Parameter benoetigt
 %\lstlistoflistings 
 %ansonsten:
-\ifdeutsch
-\listof{Listing}{Verzeichnis der Listings}
-\else
-\listof{Listing}{List of Listings}
-\fi
+%\ifdeutsch%%%%%%%% HERE %%%%%%%%%%%%%%%%%%%%%%%%
+%\listof{Listing}{Verzeichnis der Listings}
+%\else
+%\listof{Listing}{List of Listings}
+%\fi
 
 %mittels \newfloat wurde die Algorithmus-Gleitumgebung definiert.
 %Mit folgendem Befehl werden alle floats dieses Typs ausgegeben
-\ifdeutsch
-\listof{Algorithmus}{Verzeichnis der Algorithmen}
-\else
-\listof{Algorithmus}{List of Algorithms}
-\fi
+%\ifdeutsch%%%%%%%% HERE %%%%%%%%%%%%%%%%%%%%%%%%
+%\listof{Algorithmus}{Verzeichnis der Algorithmen}
+%\else
+%\listof{Algorithmus}{List of Algorithms}
+%\fi
 %\listofalgorithms %Ist nur für Algorithmen, die mittels \begin{algorithm} umschlossen werden, nötig
 
 % Abkürzungsverzeichnis
-\printnoidxglossaries
+%\printnoidxglossaries%%%%%%%% HERE %%%%%%%%%%%%%%%%%%%%%%%%
 
 \iftex4ht
 \else
@@ -219,8 +219,7 @@ keywords: line reconstruction, linear regression, least-squares adjustment
 %
 % ** Hier wird der Text eingebunden **
 %
-\input{content/einleitung}
-%\input{...weitere Kapitel...}
+\input{content/einleitung}%%%%%% HERE %%%%%%%%%%%%
 \input{content/kapitel2}
 \input{content/kapitel3}
 \input{content/zusammenfassung_und_ausblick}
@@ -230,7 +229,7 @@ keywords: line reconstruction, linear regression, least-squares adjustment
 %\renewcommand{\appendixname}{Anhang}
 %\renewcommand{\appendixpagename}{Anhang}
 \appendix
-\input{content/latex-tipps}
+%\input{content/latex-tipps}%%%%% HERE %%%%%%%%%%%
 
 \clearpage
 
