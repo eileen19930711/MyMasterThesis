@@ -3,20 +3,23 @@
 \chapter{Methodologies}
 \label{chap:k2}
 
-The following sections introduce the principles of 3D lane marking reconstruction methods as well the materials used in this work. The work flow is shown in \cref{}.
+The following sections introduce the principles of 3D lane marking reconstruction methods as well the materials used in this work, with the work flow shown in \cref{fig:FlowChart}.
 
-\cref{sec:Materials} provides information about input dataset and some preprocessing steps applied in this work. \cref{sec:LineExtraction} describes the applied standard line detection algorithm for labeling the lane markings. \cref{sec:Geometry} introduces the imaging properties of aerial images and their mathematical models, including the collinearity equation and lens distortion correction.
+\cref{sec:Materials} provides information about input dataset and some applied preprocessing steps. \cref{sec:LineExtraction} describes the applied standard line detection algorithm for labeling the lane markings.
+
+To relate a point in object space 
+\cref{sec:Geometry} introduces the imaging properties of aerial images and their mathematical models, including the collinearity equation and lens distortion correction.
 
 \cref{sec:LineFitting} presents the principle of line fitting and further derives the non-linear \gls{ls} model for line equations in two-point form. \cref{sec:LSadj} elaborates the usage of line fitting for the 3D lane marking reconstruction. The key challenge is to solve the line fitting problem given weakly-textured environments around lane markings and to solve the quasi-infinite line reconstruction problem.
 
-In \cref{sec:LineProjectionOnDSM} the problem of acquiring initial values is described, as initial values of unknown quantities are required in non-linear LS model.
+In \cref{sec:LineProjectionOnDSM} the problem of acquiring initial values is described, as initial values of unknown quantities are required in non-linear LS model. Section2.7??? demonstrates how the corresponding measurements in image space are collected given the initial values in object space.
 
 % flowchart [!hb]
 %% describe the workflow in the paragraphs, more details
 \begin{figure}
   \centering
-  \includegraphics[width=\textwidth]{DEM_A9_NUM_scaled_s.png}
-  \caption{The work flow.}%%%%%%%%
+  \includegraphics[width=\textwidth]{workflow.pdf}
+  \caption{The work flow}%%%%%%%%
   \label{fig:FlowChart}
 \end{figure}
 
