@@ -14,7 +14,7 @@ In \cref{sec:LineProjectionOnDSM} the problem of acquiring initial values is des
 \begin{figure}
   \centering
   \includegraphics[width=\textwidth]{workflow.pdf}
-  \caption{The work flow}
+  \caption{\small The work flow}
   \label{fig:FlowChart}
 \end{figure}
 
@@ -29,26 +29,34 @@ The principle to extract line features is to firstly derive the line direction f
 
 The $\sigma$ value for Gaussian smoothing is set to be 1.8 in this work to slightly suppress the noise. The extracted lines of length less than 30 pixels are rejected. Each accepted extracted line is rasterized as a set of points in image coordinates with sub-pixel precision.\cref{fig:LineExtraction} shows the extracted lines on the original image.
 % http://www.mvtec.com/doc/halcon/11/en/lines_gauss.html
-\begin{figure}
-  \centering
-  \includegraphics[width=\textwidth, trim=500 200 100 200,clip]{ML1234_extlines_rsz.png}
-  \caption{Lane markings Extraction. The extracted long lane-lines are marked in green and the dashed ones are in yellow.  Note that both cases are reconstructed into 3D with the same approach in the following sections; different colors here are only for illustration.}
-  \label{fig:LineExtraction}
-\end{figure}
 
 \begin{figure}
 \centering
-\subfloat[]{\includegraphics[width=0.3\textwidth]{unistuttgart_logo_deutsch_cmyk-01.png} \label{fig:longline}}
-{\includegraphics[width=0.3\textwidth]{unistuttgart_logo_deutsch_cmyk-01.png} \label{fig:dashedline}}
-\caption{Flight trajectory of DLR helicopter visualized on the Google Earth platform. The green polyline shows the flight trajectory.}
-\label{fig:FlightTrajectory}
+\subfloat[\small Continuous line]{\fbox{\includegraphics[width=0.3\textwidth]{Laengsmarkierung_durchgehend.pdf}}}
+\quad
+\subfloat[\small Dashed line]{\fbox{\includegraphics[width=0.3\textwidth]{Laengsmarkierung_unterbrochen.pdf}}}
+\newline
+\subfloat[\small Continuous and dashed double lines]{\fbox{\includegraphics[width=0.3\textwidth]{Laengsmarkierung_unterbrochen_durchgehend.pdf}}}
+\quad
+\subfloat[\small Continuous double lines]{\fbox{\includegraphics[width=0.3\textwidth]{Laengsmarkierung_durchgehend_doppelt.pdf}}}
+\quad
+\subfloat[\small Dashed double lines]{\fbox{\includegraphics[width=0.3\textwidth]{Laengsmarkierung_unterbrochen_doppelt.pdf}}}
+% Pre-warning line
+\caption{\small Line type and line width of lane markings [source Wikipedia].}
+\label{fig:Germanlane-markings}
 \end{figure}
-Continuous line
-Dashed line 
-Continuous and dashed double lines
-Continuous double lines
-Dashed double lines
-Pre-warning line
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\textwidth, trim=500 200 100 200,clip]{ML1234_extlines_rsz.png}
+  \caption{\small Lane markings Extraction. The extracted long lane-lines are marked in green and the dashed ones are in yellow.  Note that both cases are reconstructed into 3D with the same approach in the following sections; different colors here are only for illustration.}
+  \label{fig:LineExtraction}
+\end{figure}
+
+
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Imaging Properties of Aerial Photographs}
 \label{sec:Geometry}
