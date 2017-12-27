@@ -24,27 +24,51 @@ In \cref{sec:LineProjectionOnDSM} the problem of acquiring initial values is des
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Lane markings Properties and Automatic Extraction}
 \label{sec:LineExtraction}
+% Missing some small review about alternative methods?
+% This chapter should be much more detailled.
+The appearance of lane markings on German roads including the line type, color and width is specified depending on the road type, …[source: Wikipedia]
+
+Because of the appearance, the problem of lane marking detection can be treated as a line detection problem. …
+We restrict the proposed framework to lane markings with single lines (dashed or continuous), other types like in keepout areas, double lines, parking areas, yellow lines in construction zones, are excluded….
 
 The principle to extract line features is to firstly derive the line direction for each pixel by using partial derivatives of a Gaussian smoothing kernel. Pixels that have a local maximum in the second directional derivative perpendicular to the line direction are marked as line points which are then linked and connected.
+% C. Steger: “An Unbiased Detector of Curvilinear Structures”. IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 20, no. 2, pp. 113-125, 1998
 
 The $\sigma$ value for Gaussian smoothing is set to be 1.8 in this work to slightly suppress the noise. The extracted lines of length less than 30 pixels are rejected. Each accepted extracted line is rasterized as a set of points in image coordinates with sub-pixel precision.\cref{fig:LineExtraction} shows the extracted lines on the original image.
 % http://www.mvtec.com/doc/halcon/11/en/lines_gauss.html
 
 \begin{figure}
 \centering
-\subfloat[\small Continuous line]{\fbox{\includegraphics[width=0.3\textwidth]{Laengsmarkierung_durchgehend.pdf}}}
+\subfloat[\small Continuous line]{\fbox{\includegraphics[width=0.3\textwidth, trim=0 100 0 100,clip]{Laengsmarkierung_durchgehend.pdf}}}
 \quad
-\subfloat[\small Dashed line]{\fbox{\includegraphics[width=0.3\textwidth]{Laengsmarkierung_unterbrochen.pdf}}}
+\subfloat[\small Dashed line]{\fbox{\includegraphics[width=0.3\textwidth, trim=0 100 0 100,clip]{Laengsmarkierung_unterbrochen.pdf}}}
 \newline
-\subfloat[\small Continuous and dashed double lines]{\fbox{\includegraphics[width=0.3\textwidth]{Laengsmarkierung_unterbrochen_durchgehend.pdf}}}
+\subfloat[\small Continuous and dashed double lines]{\fbox{\includegraphics[width=0.3\textwidth, trim=0 100 0 100,clip]{Laengsmarkierung_unterbrochen_durchgehend.pdf}}}
 \quad
-\subfloat[\small Continuous double lines]{\fbox{\includegraphics[width=0.3\textwidth]{Laengsmarkierung_durchgehend_doppelt.pdf}}}
+\subfloat[\small Continuous double lines]{\fbox{\includegraphics[width=0.3\textwidth, trim=0 100 0 100,clip]{Laengsmarkierung_durchgehend_doppelt.pdf}}}
 \quad
-\subfloat[\small Dashed double lines]{\fbox{\includegraphics[width=0.3\textwidth]{Laengsmarkierung_unterbrochen_doppelt.pdf}}}
+\subfloat[\small Dashed double lines]{\fbox{\includegraphics[width=0.3\textwidth, trim=0 100 0 100,clip]{Laengsmarkierung_unterbrochen_doppelt.pdf}}}
 % Pre-warning line
 \caption{\small Line type and line width of lane markings [source Wikipedia].}
+% https://de.wikipedia.org/wiki/Fahrbahnmarkierung
 \label{fig:Germanlane-markings}
 \end{figure}
+\setlength{\floatsep}{20pt plus 1.0pt minus 2.0pt}
+\begin{table}
+    \centering
+    \begin{tabular}{l|cc}
+    \toprule
+           & motorways  & other roads\\
+    \midrule
+    narrow lines & $0.15$ [m] & $0.12$ [m] \\
+    wide lines   & $0.30$ [m] & $0.25$ [m] \\
+    \bottomrule
+    \end{tabular}
+    \caption{\small Line type and line width of lane markings[source Wikipedia]}
+    \label{tab:EOaccuracy}
+% https://de.wikipedia.org/wiki/Fahrbahnmarkierung
+\end{table}
+
 
 \begin{figure}
   \centering
@@ -65,7 +89,7 @@ This section describes the geometric model of the projection of 3D points into t
 
 \subsection{Collinearity Equations}
 \label{subsec:Collinearity}
-We assume frame photography, i.e. photographs exposed in one instant, and assume central projection model, i.e. cameras who have a single viewpoint and a planar sensor and being straight line-preserving. Collinearity indicates the condition that the image point (on the sensor plate of the camera), the observed point (on the object) and the projection center of the camera were aligned at the moment the picture was taken. Every measured point leads to two collinearity equations, describing transformations from object space to image coordinates:
+We assume frame photography, i.e. photographs exposed on a frame chip in one instant, and assume central projection model with cameras that have a single viewpoint and a planar sensor and being straight line-preserving. Collinearity indicates the condition that the image point (on the sensor plate of the camera), the observed point (on the object) and the projection center of the camera were aligned at the moment the picture was taken. Every measured point leads to two collinearity equations, describing transformations from object space to image coordinates:
 \begin{equation} \label{eq:collinearity}
 \begin{split}
 x = x_0 -c \dfrac {R_{11}(X-X_0) + R_{21}(Y-Y_0) + R_{31}(Z-Z_0)} {R_{13}(X-X_0) + R_{23}(Y-Y_0) + R_{33}(Z-Z_0)} \\
@@ -83,9 +107,8 @@ $R_{11},...,R_{33}$: elements of the rotation matrix R (orthogonal 3$\times$3-ma
 \subsection{Lens Distortion Correction}
 \label{subsec:LensDistortion}
 
-As real cameras generally only approximate the perspective camera model, lens distortion correction can be additionally included in the collinearity model, attempting to correct the position of image features such that they obey the perspective model with sufficient accuracy.[W. Förstner et al. 2016] 
-%(Varies models for lens distortion ...)
-%A subset of a physical distortion model[] is chosen for...
+As real cameras generally only approximate the perspective camera model, lens distortion correction can be additionally included in the collinearity model, attempting to correct the pixel position such that they obey the perspective model with sufficient accuracy.[W. Förstner et al. 2016] 
+% The reference is not the original one
 
 A 6-parameter lens distortion model is chosen, with two radial symmetric distortion parameters $A_1$ and $A_2$, two asymmetric parameters $B_1$ and $B_2$, and a scaling $C1$ and an affine shearing parameter $C_2$. Assuming $x$ and $y$ to be the distorted image coordinates, the corrections $\Delta x$ and $\Delta y$ are then calculated by the following equations:
 \begin{equation} \label{eq:LensDistortion}
@@ -95,13 +118,16 @@ A 6-parameter lens distortion model is chosen, with two radial symmetric distort
 \end{split}
 \end{equation}
 with $r=\sqrt{x_*^2+y^2}$ and $x_*=\dfrac{x}{C_1}$. The undistorted image coordinates $x\prime$ and $y\prime$ are then calculated by $x\prime=x+\Delta x$ and $y\prime=y+\Delta y$. [F. Kurz et al. 2012] 
+% The reference is not the original one
 
 \subsection{Extended Collinearity Equation}
 \label{subsec:ExtendedCollinearity}
+
 A function $\mathcal{G}$ which takes the interior and exterior orientations of a camera $\mathbf{q}$ and the position of a 3D point $\mathbf{P}$, and returns a presentation for the corresponding point $\mathbf{p}$ in the image, can be shortly expressed by
 \begin{equation} \label{eq:Gfunction}
 \mathbf{p} = \mathcal{G}(\mathbf{q},\mathbf{P}) 
 \end{equation}
+% To make it clearer, describe P,q,p more detailled
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Line Fitting}

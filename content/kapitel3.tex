@@ -71,8 +71,6 @@ An example aerial image is shown in \cref{fig:OriImg}. \cref{tab:CameraPropertie
   \label{tab:SensorViewingGeometry}
 \end{table}
 
-\clearpage
-
 The images used in this work are acquired with a special flight configuration at both sides of the motorway which guarantees a continuous stereo view perpendicular to the lane marking direction.\footnote{The classical photogrammetric approach on flight planning is to have several straight flight lines which cover the whole motorway in a stereo view. This would be possible in this project yet would require more flight costs and would produce many more images.} This is realized by flying at the right-hand side with respect to flying direction along the motorway, with the left oblique camera looking left-down to the motorway, in both forward and backward trip. The flight configuration is shown in \cref{fig:FlightTrajectory} on the Google Earth platform.
 
 Besides, the forward overlap is around 70\%, and all the lane markings are covered by both strips, whereas the side overlap depends on the distance of flight strips, which are a result of the pilots navigation ability and other influences, like wind. Nevertheless, the motorway in its entire width was covered by the two flight strips. Altogether, this results in approximately 8-image coverage in road areas. 
@@ -89,7 +87,7 @@ Besides, the forward overlap is around 70\%, and all the lane markings are cover
 \paragraph{Exterior and Interior Orientations}
 The \gls{eo} of the images are directly measured by a GNSS/Inertial system IGI IId.% Missing: specification of the system, improvements by SAPOS correction,….
 The EO parameters are then refined by a self-calibrating bundle adjustment. The accuracies of the exterior orientation (EO) parameters are shown in \cref{tab:EOaccuracy}. The calibrated \gls{io} parameters and their accuracies are shown in \cref{tab:IOaccuracy}. To provide an overall quality on the interior orientations: from the calibration result of interior orientations (involving lens distortion), the residuals appear non-systematic and the biggest residual $r_{max, IO}$ is around $1$ pixel.
-\clearpage %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 To judge the influence of exterior and interior parameters on positioning accuracy in object space, the maximum values for each component based on the flight configuration was calculated.
 The quality of interior and exterior orientation parameters set would have a maximum impact in object space for around $16.5$ [cm] in X,Y-direction:
 \begin{itemize}
@@ -159,7 +157,7 @@ The DSM has 20 cm grid spacing. \cref{fig:DSM} shows a part of the DSM. Standard
   \caption{\small Part of the DSM in road area. It is noisy in the center of motorway.}
   \label{fig:DSM}
 %\end{figure}
-\vspace{1cm}
+\vspace{0.5cm}
 %\begin{figure}%[!h]
   \centering
   \includegraphics[width=0.8\textwidth]{DEM_A9_STD_small_terrain.png}
@@ -183,26 +181,25 @@ The orthorectified images are processed using the DSM and the interior and exter
 Road segments are masked out from original images based on \gls{osm} data: Firstly, the rasterized road segments from OSM data are written with 25 meter buffer width around road axes into orthorectified images. By back-projecting the mask from orthorectified image to original image using the 3D information from the DSM, it can then be used to mask out the road regions on the original images, as shown in \cref{fig:MaskedImg}.
 
 \begin{figure}%[!h]
-  \parbox{.45\linewidth}{
+  \parbox{.475\linewidth}{
     \centering
     \includegraphics[width=0.45\textwidth]{L1234_rsz.png}
     \caption{\small Original Image}
     \label{fig:OriImg}
   }
-  \hfill
-  \parbox{.45\linewidth}{
+  \quad
+  \parbox{.475\linewidth}{
     \centering
     \includegraphics[width=0.45\textwidth]{OL1234_rsz.png}
     \caption{\small Orthorectified Image}
     \label{fig:OrthoImg}
   }
-%  \hfill
-%  \parbox{.3\linewidth}{
-    \centering
+  \centering
+  \parbox{.7\linewidth}{
     \includegraphics[width=0.7\textwidth]{ML1234_rsz.png}
     \caption{\small Masked Image}
     \label{fig:MaskedImg}
-%  }
+  }
 \end{figure}
 
 \clearpage
