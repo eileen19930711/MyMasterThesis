@@ -26,16 +26,17 @@ In \cref{sec:LineProjectionOnDSM} the problem of acquiring initial values is des
 \label{sec:LineExtraction}
 % Missing some small review about alternative methods?
 % This chapter should be much more detailled.
-The appearance of lane markings on German roads including line type, color and width is specified depending on the road type. Different line types of lane markings are shown in \cref{fig:LaneMarkingTypes} and their line widths are defined in \cref{tab:LaneMarkingWidths}. %[source: Wikipedia, https://de.wikipedia.org/wiki/Fahrbahnmarkierung#Eigenschaften]
+The appearance of lane markings on German roads including line type, color and width is specified depending on the road type. Different line types of lane markings are shown in \cref{fig:LaneMarkingTypes} and their line widths are defined in \cref{tab:LaneMarkingWidths}.
+% https://de.wikipedia.org/wiki/Fahrbahnmarkierung#Eigenschaften
+% Richtlinien für die Markierung von Straßen (RMS) Teil 1
 
-Because of lane marking's appearance, the problem of lane marking detection can be treated as a line detection problem. We restrict the proposed framework to lane markings with single white lines (dashed or continuous) of 0.3 meter width. Other types like in restricted zone, double lines, parking areas, temporal yellow lines in construction sites, are excluded. % https://www.transchool.lee.army.mil/adso/documents/zeichen.pdf
+Because of the appearance, the problem of lane marking detection can be treated as a line detection problem. We restrict the proposed framework to lane markings with single white lines (dashed or continuous) of 0.3 meter width. Other types like in restricted zone, double lines, parking areas, temporal yellow lines in construction sites etc, are excluded. % https://www.transchool.lee.army.mil/adso/documents/zeichen.pdf
 
-The principle to extract line features is to firstly derive the line direction for each pixel by using partial derivatives of a Gaussian smoothing kernel. Pixels that have a local maximum in the second directional derivative perpendicular to the line direction are marked as line points which are then linked and connected.
+The principle to extract line features is to firstly derive the line direction for each pixel by using partial derivatives of a Gaussian smoothing kernel. Pixels that have a local maximum in the second directional derivative perpendicular to the line direction are marked as line points. By thresholding their second directional derivative values, the accepted line points are then linked and connected.
+% C. Steger: “Extracting Curvilinear Structures: A Differential Geometric Approach”. In B. Buxton, R. Cipolla, eds., “Fourth European Conference on Computer Vision”, Lecture Notes in Computer Science, Volume 1064, Springer Verlag, pp. 630-641, 1996. 
+% C. Steger: “Extraction of Curved Lines from Images”. In “13th International Conference on Pattern Recognition”, Volume II, pp. 251-255, 1996. 
 % C. Steger: “An Unbiased Detector of Curvilinear Structures”. IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 20, no. 2, pp. 113-125, 1998
-
-The $\sigma$ value for Gaussian smoothing is set to be 1.8 % From HALCON Referenz: For the choice of the thresholds High and Low one has to keep in mind that the second directional derivative depends on the amplitude and width of the line as well as the choice of Sigma. Thus: you must set this value depending on the lane marking width?
-in this work to slightly suppress the noise. The extracted lines of length less than 30 pixels % why
-are rejected. Each accepted extracted line is rasterized as a set of points in image coordinates with sub-pixel precision.\cref{fig:LineExtraction} shows the extracted lines on the original image.
+The resultant connected points which compose a line are of sub-pixel precision. \cref{fig:LineExtraction} shows the extracted lines on the original image.
 % http://www.mvtec.com/doc/halcon/11/en/lines_gauss.html
 
 \begin{figure}
@@ -49,9 +50,10 @@ are rejected. Each accepted extracted line is rasterized as a set of points in i
 \subfloat[\small Continuous double lines]{\fbox{\includegraphics[width=0.3\textwidth, trim={0 150 0 150},clip=true]{Laengsmarkierung_durchgehend_doppelt.pdf}}}
 \quad
 \subfloat[\small Dashed double lines]{\fbox{\includegraphics[width=0.3\textwidth, trim={0 150 0 150},clip=true]{Laengsmarkierung_unterbrochen_doppelt.pdf}}}
-% Pre-warning line
-\caption{\small Line types of lane markings [source Wikipedia].}
+\caption{\small Line types of lane markings [source RMS Teil 1]}
 % https://de.wikipedia.org/wiki/Fahrbahnmarkierung
+% Richtlinien für die Markierung von Straßen (RMS) Teil 1
+
 \label{fig:LaneMarkingTypes}
 \end{figure}
 \setlength{\floatsep}{20pt plus 1.0pt minus 2.0pt}
@@ -59,15 +61,17 @@ are rejected. Each accepted extracted line is rasterized as a set of points in i
     \centering
     \begin{tabular}{l|cc}
     \toprule
-           & motorways  & other roads\\
+           & motorways\footnote{and corresponding roads in the sense of the VwV-StVO to § 42 to mark 330 (motorway) II}  & other roads\\
     \midrule
     narrow lines & $0.15$ [m] & $0.12$ [m] \\
     wide lines   & $0.30$ [m] & $0.25$ [m] \\
     \bottomrule
     \end{tabular}
-    \caption{\small Line widths of lane markings [source Wikipedia]}
+    \caption{\small Line widths of lane markings [source RMS Teil 1]}
     \label{tab:LaneMarkingWidths}
-% https://de.wikipedia.org/wiki/Fahrbahnmarkierung
+% Der Deutsche Verkehrssicherheitsrat
+% https://www.dvr.de/download/publikationen-schriftenreihe-17.pdf
+% Richtlinien für die Markierung von Straßen (RMS) Teil 1
 \end{table}
 
 
@@ -88,7 +92,7 @@ This section describes the geometric model of the projection of 3D points into t
 
 \subsection{Collinearity Equations}
 \label{subsec:Collinearity}
-We assume frame photography, i.e. photographs exposed on a frame chip in one instant, and assume central projection model with cameras that have a single viewpoint and a planar sensor and being straight line-preserving. Collinearity indicates the condition that the image point (on the sensor plate of the camera), the observed point (on the object) and the projection center of the camera were aligned at the moment the picture was taken. Every measured point leads to two collinearity equations, describing transformations from object space to image coordinates:
+We assume frame photography, i.e. photographs exposed on a frame chip in one instant, and assume central projection model with cameras that have a single viewpoint and a planar sensor and being straight line-preserving. Collinearity indicates the condition that the image point (on the sensor plate of the camera), the observed point (in object space) and the projection center of the camera were aligned at the moment the picture was taken. Every measured point leads to two collinearity equations, describing transformations from object space to image coordinates:
 \begin{equation} \label{eq:collinearity}
 \begin{split}
 x = x_0 -c \dfrac {R_{11}(X-X_0) + R_{21}(Y-Y_0) + R_{31}(Z-Z_0)} {R_{13}(X-X_0) + R_{23}(Y-Y_0) + R_{33}(Z-Z_0)} \\
@@ -106,9 +110,8 @@ $R_{11},...,R_{33}$: elements of the rotation matrix R (orthogonal 3$\times$3-ma
 \subsection{Lens Distortion Correction}
 \label{subsec:LensDistortion}
 
-As real cameras generally only approximate the perspective camera model, lens distortion correction can be additionally included in the collinearity model, attempting to correct the pixel position such that they obey the perspective model with sufficient accuracy.[W. Förstner et al. 2016] 
-% The reference is not the original one
-
+An original image appears to have some degree of deviations from perspective mapping due to lens distortion, lens refraction or non-planarity of the sensor surface. There are several models to describe these perturbing effects and can be used to undistort the images, resulting in rectified images which are now straight line-preserving.
+ 
 A 6-parameter lens distortion model is chosen, with two radial symmetric distortion parameters $A_1$ and $A_2$, two asymmetric parameters $B_1$ and $B_2$, and a scaling $C1$ and an affine shearing parameter $C_2$. Assuming $x$ and $y$ to be the distorted image coordinates, the corrections $\Delta x$ and $\Delta y$ are then calculated by the following equations:
 \begin{equation} \label{eq:LensDistortion}
 \begin{split}
@@ -116,17 +119,37 @@ A 6-parameter lens distortion model is chosen, with two radial symmetric distort
 \Delta y &= y_p + A_1y  (r^2-R_0^2) + A_2y  (r^4-R_0^4) + B_1(r^2+2y^2)   + B_22x_*y
 \end{split}
 \end{equation}
-with $r=\sqrt{x_*^2+y^2}$ and $x_*=\dfrac{x}{C_1}$. The undistorted image coordinates $x\prime$ and $y\prime$ are then calculated by $x\prime=x+\Delta x$ and $y\prime=y+\Delta y$. [F. Kurz et al. 2012] 
+with $r=\sqrt{x_*^2+y^2}$ and $x_*=\dfrac{x}{C_1}$.
+
+The undistorted image coordinates $x\prime$ and $y\prime$ are then calculated by
+\begin{equation} \label{eq:undistortedimgcoord}
+\begin{split}
+x\prime=x+\Delta x \\
+y\prime=y+\Delta y
+\end{split}
+\end{equation}
+ [F. Kurz et al. 2012] 
 % The reference is not the original one
 
 \subsection{Extended Collinearity Equation}
 \label{subsec:ExtendedCollinearity}
+As real cameras generally only approximate the perspective camera model, lens distortion correction can be additionally included in the collinearity model, attempting to correct the pixel position so that they obey the perspective model with sufficient accuracy.[W. Förstner et al. 2016] 
+% The reference is not the original one
 
-A function $\mathcal{G}$ which takes the interior and exterior orientations of a camera $\mathbf{q}$ and the position of a 3D point $\mathbf{P}$, and returns a presentation for the corresponding point $\mathbf{p}$ in the image, can be shortly expressed by
+By inserting \cref{eq:collinearity} and \cref{eq:LensDistortion} into \cref{eq:undistortedimgcoord} , the relationship between a 3D point $\mathbf{P}(X, Y, Z)$ and its corresponding distorted image coordinates $\mathbf{p}(x\prime,y\prime)$ can be described as
+\begin{equation} \label{eq:expandedcollinearity}
+\begin{split}
+x =& x_0-c\dfrac{R_{11}(X-X_0)+R_{21}(Y-Y_0)+R_{31}(Z-Z_0)}{R_{13}(X-X_0)+R_{23}(Y-Y_0)+R_{33}(Z-Z_0)} \\
+&-(x_p + A_1x_*(r^2-R_0^2) + A_2x_*(r^4-R_0^4) + B_1(r^2+2x_*^2) + B_22x_*y+C_2y)\\
+y =& y_0-c\dfrac{R_{12}(X-X_0)+R_{22}(Y-Y_0)+R_{32}(Z-Z_0)}{R_{13}(X-X_0)+R_{23}(Y-Y_0)+R_{33}(Z-Z_0)} \\
+&-(y_p + A_1y  (r^2-R_0^2) + A_2y  (r^4-R_0^4) + B_1(r^2+2y^2)   + B_22x_*y)
+\end{split}
+\end{equation}
+
+To simplify the representation: a function $\mathcal{G}$ which takes the interior and exterior orientations as well as the lens distortion parameters of a camera $\mathbf{q}(x_0,y_0,c,X_0,Y_0,Z_0,R_{11},...,R_{33},A_1,A_2,B_1,B_2,C_1,C_2)$ and takes the position of a 3D point $\mathbf{P}(X, Y, Z)$, and returns the corresponding distorted image coordinates $\mathbf{p}(x,y)$, can be shortly expressed by
 \begin{equation} \label{eq:Gfunction}
 \mathbf{p} = \mathcal{G}(\mathbf{q},\mathbf{P}) 
 \end{equation}
-% To make it clearer, describe P,q,p more detailled
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Line Fitting}

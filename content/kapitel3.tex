@@ -202,7 +202,15 @@ Road segments are masked out from original images based on \gls{osm} data: First
 \end{figure}
 
 \clearpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Preprocessing}
+\label{sec:preprocessing}
 
+In lane marking extraction step, the $\sigma$ value for Gaussian smoothing is set to be 1.8 % From HALCON Referenz: For the choice of the thresholds High and Low one has to keep in mind that the second directional derivative depends on the amplitude and width of the line as well as the choice of Sigma. Thus: you must set this value depending on the lane marking width?
+to slightly suppress the noise in images. The extracted lines of length less than 30 pixels are rejected % why
+regarding the fact that a dashed lane-line is no longer than 6 meter which is correspondingly 100 pixels considering the GSD of 6.9 cm.
+% http://www.mvtec.com/doc/halcon/11/en/lines_gauss.html
+% https://www.dvr.de/download/publikationen-schriftenreihe-17.pdf
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{The Correctness of the derived LS model}
