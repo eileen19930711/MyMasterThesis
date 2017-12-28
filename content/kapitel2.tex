@@ -26,32 +26,33 @@ In \cref{sec:LineProjectionOnDSM} the problem of acquiring initial values is des
 \label{sec:LineExtraction}
 % Missing some small review about alternative methods?
 % This chapter should be much more detailled.
-The appearance of lane markings on German roads including the line type, color and width is specified depending on the road type, …[source: Wikipedia]
+The appearance of lane markings on German roads including line type, color and width is specified depending on the road type. Different line types of lane markings are shown in \cref{fig:LaneMarkingTypes} and their line widths are defined in \cref{tab:LaneMarkingWidths}. %[source: Wikipedia, https://de.wikipedia.org/wiki/Fahrbahnmarkierung#Eigenschaften]
 
-Because of the appearance, the problem of lane marking detection can be treated as a line detection problem. …
-We restrict the proposed framework to lane markings with single lines (dashed or continuous), other types like in keepout areas, double lines, parking areas, yellow lines in construction zones, are excluded….
+Because of lane marking's appearance, the problem of lane marking detection can be treated as a line detection problem. We restrict the proposed framework to lane markings with single white lines (dashed or continuous) of 0.3 meter width. Other types like in restricted zone, double lines, parking areas, temporal yellow lines in construction sites, are excluded. % https://www.transchool.lee.army.mil/adso/documents/zeichen.pdf
 
 The principle to extract line features is to firstly derive the line direction for each pixel by using partial derivatives of a Gaussian smoothing kernel. Pixels that have a local maximum in the second directional derivative perpendicular to the line direction are marked as line points which are then linked and connected.
 % C. Steger: “An Unbiased Detector of Curvilinear Structures”. IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 20, no. 2, pp. 113-125, 1998
 
-The $\sigma$ value for Gaussian smoothing is set to be 1.8 in this work to slightly suppress the noise. The extracted lines of length less than 30 pixels are rejected. Each accepted extracted line is rasterized as a set of points in image coordinates with sub-pixel precision.\cref{fig:LineExtraction} shows the extracted lines on the original image.
+The $\sigma$ value for Gaussian smoothing is set to be 1.8 % From HALCON Referenz: For the choice of the thresholds High and Low one has to keep in mind that the second directional derivative depends on the amplitude and width of the line as well as the choice of Sigma. Thus: you must set this value depending on the lane marking width?
+in this work to slightly suppress the noise. The extracted lines of length less than 30 pixels % why
+are rejected. Each accepted extracted line is rasterized as a set of points in image coordinates with sub-pixel precision.\cref{fig:LineExtraction} shows the extracted lines on the original image.
 % http://www.mvtec.com/doc/halcon/11/en/lines_gauss.html
 
 \begin{figure}
 \centering
-\subfloat[\small Continuous line]{\fbox{\includegraphics[width=0.3\textwidth, trim={0 100 0 100},clip=true]{Laengsmarkierung_durchgehend.pdf}}}
+\subfloat[\small Continuous line]{\fbox{\includegraphics[width=0.3\textwidth, trim={0 150 0 150},clip=true]{Laengsmarkierung_durchgehend.pdf}}}
 \quad
-\subfloat[\small Dashed line]{\fbox{\includegraphics[width=0.3\textwidth, trim={0 100 0 100},clip=true]{Laengsmarkierung_unterbrochen.pdf}}}
+\subfloat[\small Dashed line]{\fbox{\includegraphics[width=0.3\textwidth, trim={0 150 0 150},clip=true]{Laengsmarkierung_unterbrochen.pdf}}}
 \newline
-\subfloat[\small Continuous and dashed double lines]{\fbox{\includegraphics[width=0.3\textwidth, trim={0 100 0 100},clip=true]{Laengsmarkierung_unterbrochen_durchgehend.pdf}}}
+\subfloat[\small Continuous and dashed double lines]{\fbox{\includegraphics[width=0.3\textwidth, trim={0 150 0 150},clip=true]{Laengsmarkierung_unterbrochen_durchgehend.pdf}}}
 \quad
-\subfloat[\small Continuous double lines]{\fbox{\includegraphics[width=0.3\textwidth, trim={0 100 0 100},clip=true]{Laengsmarkierung_durchgehend_doppelt.pdf}}}
+\subfloat[\small Continuous double lines]{\fbox{\includegraphics[width=0.3\textwidth, trim={0 150 0 150},clip=true]{Laengsmarkierung_durchgehend_doppelt.pdf}}}
 \quad
-\subfloat[\small Dashed double lines]{\fbox{\includegraphics[width=0.3\textwidth, trim={0 100 0 100},clip=true]{Laengsmarkierung_unterbrochen_doppelt.pdf}}}
+\subfloat[\small Dashed double lines]{\fbox{\includegraphics[width=0.3\textwidth, trim={0 150 0 150},clip=true]{Laengsmarkierung_unterbrochen_doppelt.pdf}}}
 % Pre-warning line
-\caption{\small Line type and line width of lane markings [source Wikipedia].}
+\caption{\small Line types of lane markings [source Wikipedia].}
 % https://de.wikipedia.org/wiki/Fahrbahnmarkierung
-\label{fig:Germanlane-markings}
+\label{fig:LaneMarkingTypes}
 \end{figure}
 \setlength{\floatsep}{20pt plus 1.0pt minus 2.0pt}
 \begin{table}
@@ -64,20 +65,18 @@ The $\sigma$ value for Gaussian smoothing is set to be 1.8 in this work to sligh
     wide lines   & $0.30$ [m] & $0.25$ [m] \\
     \bottomrule
     \end{tabular}
-    \caption{\small Line type and line width of lane markings[source Wikipedia]}
-    \label{tab:EOaccuracy}
+    \caption{\small Line widths of lane markings [source Wikipedia]}
+    \label{tab:LaneMarkingWidths}
 % https://de.wikipedia.org/wiki/Fahrbahnmarkierung
 \end{table}
 
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.7\textwidth, trim=500 200 100 200,clip]{ML1234_extlines_rsz.png}
-  \caption{\small Lane markings Extraction. The extracted long lane-lines are marked in green and the dashed ones are in yellow.  Note that both cases are reconstructed into 3D with the same approach in the following sections; different colors here are only for illustration.}
+  \includegraphics[width=0.7\textwidth, trim=750 250 200 320,clip]{ML1234_extlines_rsz.png}
+  \caption{\small Lane markings Extraction. The extracted long lane-lines are marked in green and the dashed ones are in yellow.  Note that both cases are reconstructed into 3D with the same framework; different colors here are only for illustration.}
   \label{fig:LineExtraction}
 \end{figure}
-
-
 
 
 
