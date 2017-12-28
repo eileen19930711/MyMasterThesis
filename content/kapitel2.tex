@@ -112,14 +112,14 @@ $R_{11},...,R_{33}$: elements of the rotation matrix R (orthogonal 3$\times$3-ma
 
 An original image appears to have some degree of deviations from perspective mapping due to lens distortion, lens refraction or non-planarity of the sensor surface. There are several models to describe these perturbing effects and can be used to undistort the images, resulting in rectified images which are now straight line-preserving.
  
-A 6-parameter lens distortion model is chosen, with two radial symmetric distortion parameters $A_1$ and $A_2$, two asymmetric parameters $B_1$ and $B_2$, and a scaling $C1$ and an affine shearing parameter $C_2$. Assuming $x$ and $y$ to be the distorted image coordinates, the corrections $\Delta x$ and $\Delta y$ are then calculated by the following equations:
+A subset of physical distortion model [Fraser 1997] is chosen, with two radial symmetric distortion parameters $A_1$ and $A_2$, two asymmetric parameters $B_1$ and $B_2$, and a scaling $C1$ and an affine shearing parameter $C_2$. Assuming $x$ and $y$ to be the distorted image coordinates, the corrections $\Delta x$ and $\Delta y$ are then calculated by the following equations:
 \begin{equation} \label{eq:LensDistortion}
 \begin{split}
 \Delta x &= x_p + A_1x_*(r^2-R_0^2) + A_2x_*(r^4-R_0^4) + B_1(r^2+2x_*^2) + B_22x_*y+C_2y \\
 \Delta y &= y_p + A_1y  (r^2-R_0^2) + A_2y  (r^4-R_0^4) + B_1(r^2+2y^2)   + B_22x_*y
 \end{split}
 \end{equation}
-with $r=\sqrt{x_*^2+y^2}$ and $x_*=\dfrac{x}{C_1}$.
+with $r=\sqrt{x_*^2+y^2}$, $x_*=\dfrac{x}{C_1}$ and radius $R_0$ being set to 0.014m which corresponds to a third of the sensor diagonal\footnote{At the radius $R_0$ the radial symmetric distortion is zero by definition, which avoids too high distortion values at the edges and reduces the correlation with the focal length.}.
 
 The undistorted image coordinates $x\prime$ and $y\prime$ are then calculated by
 \begin{equation} \label{eq:undistortedimgcoord}
@@ -128,15 +128,13 @@ x\prime=x+\Delta x \\
 y\prime=y+\Delta y
 \end{split}
 \end{equation}
- [F. Kurz et al. 2012] 
-% The reference is not the original one
 
 \subsection{Extended Collinearity Equation}
 \label{subsec:ExtendedCollinearity}
 As real cameras generally only approximate the perspective camera model, lens distortion correction can be additionally included in the collinearity model, attempting to correct the pixel position so that they obey the perspective model with sufficient accuracy.[W. Förstner et al. 2016] 
 % The reference is not the original one
 
-By inserting \cref{eq:collinearity} and \cref{eq:LensDistortion} into \cref{eq:undistortedimgcoord} , the relationship between a 3D point $\mathbf{P}(X, Y, Z)$ and its corresponding distorted image coordinates $\mathbf{p}(x\prime,y\prime)$ can be described as
+By inserting \eqref{eq:collinearity} and \eqref{eq:LensDistortion} into \eqref{eq:undistortedimgcoord} , the relationship between a 3D point $\mathbf{P}(X, Y, Z)$ and its corresponding distorted image coordinates $\mathbf{p}(x,y)$ can be described as
 \begin{equation} \label{eq:expandedcollinearity}
 \begin{split}
 x =& x_0-c\dfrac{R_{11}(X-X_0)+R_{21}(Y-Y_0)+R_{31}(Z-Z_0)}{R_{13}(X-X_0)+R_{23}(Y-Y_0)+R_{33}(Z-Z_0)} \\
@@ -146,10 +144,14 @@ y =& y_0-c\dfrac{R_{12}(X-X_0)+R_{22}(Y-Y_0)+R_{32}(Z-Z_0)}{R_{13}(X-X_0)+R_{23}
 \end{split}
 \end{equation}
 
-To simplify the representation: a function $\mathcal{G}$ which takes the interior and exterior orientations as well as the lens distortion parameters of a camera $\mathbf{q}(x_0,y_0,c,X_0,Y_0,Z_0,R_{11},...,R_{33},A_1,A_2,B_1,B_2,C_1,C_2)$ and takes the position of a 3D point $\mathbf{P}(X, Y, Z)$, and returns the corresponding distorted image coordinates $\mathbf{p}(x,y)$, can be shortly expressed by
+To express \eqref{eq:expandedcollinearity} shortly, a function $\mathcal{G}$ is defined as
+
 \begin{equation} \label{eq:Gfunction}
 \mathbf{p} = \mathcal{G}(\mathbf{q},\mathbf{P}) 
 \end{equation}
+
+which takes the interior and exterior orientations as well as the lens distortion parameters of a camera $\mathbf{q}(x_0,y_0,c,X_0,Y_0,Z_0,R_{11},...,R_{33},A_1,A_2,B_1,B_2,C_1,C_2)$ and the position of a 3D point $\mathbf{P}(X, Y, Z)$, and returns the corresponding distorted image coordinates $\mathbf{p}(x,y)$.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Line Fitting}
