@@ -119,7 +119,7 @@ A subset of physical distortion model [Fraser 1997] is chosen, with two radial s
 \Delta y &= y_p + A_1y  (r^2-R_0^2) + A_2y  (r^4-R_0^4) + B_1(r^2+2y^2)   + B_22x_*y
 \end{split}
 \end{equation}
-with $r=\sqrt{x_*^2+y^2}$, $x_*=\dfrac{x}{C_1}$ and radius $R_0$ being set to 0.014m which corresponds to a third of the sensor diagonal\footnote{At the radius $R_0$ the radial symmetric distortion is zero by definition, which avoids too high distortion values at the edges and reduces the correlation with the focal length.}.
+with $r=\sqrt{x_*^2+y^2}$, $x_*=\dfrac{x}{C_1}$ and radius\footnote{At the radius $R_0$ the radial symmetric distortion is zero by definition, which avoids too high distortion values at the edges and reduces the correlation with the focal length.} $R_0$ being set to 0.014m which corresponds to a third of the sensor diagonal.
 
 The undistorted image coordinates $x\prime$ and $y\prime$ are then calculated by
 \begin{equation} \label{eq:undistortedimgcoord}
@@ -131,8 +131,7 @@ y\prime=y+\Delta y
 
 \subsection{Extended Collinearity Equation}
 \label{subsec:ExtendedCollinearity}
-As real cameras generally only approximate the perspective camera model, lens distortion correction can be additionally included in the collinearity model, attempting to correct the pixel position so that they obey the perspective model with sufficient accuracy.[W. Förstner et al. 2016] 
-% The reference is not the original one
+As real cameras generally only approximate the perspective camera model, lens distortion correction can be additionally included in the collinearity model, attempting to correct the pixel position so that they obey the perspective model with sufficient accuracy.[W. Förstner et al. 2016]% The reference is not the original one
 
 By inserting \eqref{eq:collinearity} and \eqref{eq:LensDistortion} into \eqref{eq:undistortedimgcoord} , the relationship between a 3D point $\mathbf{P}(X, Y, Z)$ and its corresponding distorted image coordinates $\mathbf{p}(x,y)$ can be described as
 \begin{equation} \label{eq:expandedcollinearity}
@@ -160,15 +159,21 @@ which takes the interior and exterior orientations as well as the lens distortio
 Line fitting is the process of constructing a infinite straight line that has the best fit to a 2D dataset. One of the approaches is linear regression which attempts to model the relationship between two variables by fitting a linear equation to observed data. % [www.stat.yale.edu/Courses/1997-98/101/linreg.htmf]
 Additional least-squares (LS) models are commonly used for regression by means of minimization of sum of squared residuals.
 
-In the case of simple linear regression as presented in \cref{subsec:LinearRegression}, the independent variable $x$ is error free, inconsistencies are only for the dependent variable $y$. Geometrically it means that the vertical distances from observed data to the fitted line is minimized. To minimize the sum of squared perpendicular distances from the data points to the regression line, a LS mixed model is derived in \cref{subsec:MixedModel} to perform orthogonal regression.
+% regarding the fact of problematic line x=const. (parallel to y-axis) and considering that the dataset (which will be described in more detail) observations in images are mainly in column direction 
 
-For a later combination with point-wise extended collinearity equation \eqref{eq:Gfunction} in next section, we aim to fit the line equation in two-point form to the extracted lines produced in \cref{sec:LineExtraction} (in forms of sets of points in image coordinates). For such non-linear least squares fitting purpose, a non-linear mixed model is derived in \cref{subsec:NonLinear}. 
+In the case of simple linear regression as presented in \cref{subsec:LinearRegression}, the independent variable $x$ is error free, inconsistencies are only for the dependent variable $y$. Geometrically it means that the vertical distances from observed data to the fitted line is minimized. To minimize the 
+%sum of squared 
+perpendicular distances from the data points to the regression line, a LS mixed model is derived in \cref{subsec:MixedModel} to perform orthogonal regression.
+
+For a later combination with point-wise extended collinearity equation \eqref{eq:Gfunction} in next section, we aim to fit the line equation in two-point form to the observed dataset. 
+%extracted lines produced in \cref{sec:LineExtraction} (in forms of sets of points in image coordinates). 
+For such non-linear least squares fitting purpose, a non-linear mixed model is derived in \cref{subsec:NonLinear}. 
 
 
 \subsection{Linear Regression}
 \label{subsec:LinearRegression}
 
-Given a data set $\{x_i,y_i\}^n_{i=1}$ of $n$ points on a 2D plane, a linear regression model assumes that the relationship between the dependent variable $y_i$ and the regressors $x_i$ is linear. This relationship is modeled through a error variable $e_{y_i}$--- an unobserved random variable that adds noise to the linear relationship between the dependent variable and regressors.
+Given a data set $\{x_i,y_i\}^n_{i=1}$ of $n$ points on a 2D plane, a linear regression model assumes that the relationship between the dependent variable $y_i$ and the regressors $x_i$ is linear. This relationship is modeled through an error variable $e_{y_i}$--- an unobserved random variable that adds noise to the linear relationship between the dependent variable and regressors.
 Thus the model takes the form:
 \begin{equation} \label{eq:SimpleLinearRegression}
 y_i - e_{y_i} = a_0 + a_1x_i
@@ -180,7 +185,9 @@ where $a_0$ and $a_1$ are the regression coefficients.
 \subsection{Orthogonal Regression ---Mixed Model}
 \label{subsec:MixedModel}
 
-In the case with inconsistencies $e_{x_i}$ and $e_{y_i}$ in both observations $x_i$ and $y_i$, A-model with pseudo observation equations can be adopted and the observation equations are formulated:
+In the case with inconsistencies $e_{x_i}$ and $e_{y_i}$ in both observations $x_i$ and $y_i$, the A-model 
+% First mentioned here, you should explain what it is before.
+with pseudo observation equations can be adopted and the observation equations are formulated:
 \begin{equation} \label{eq:MixModel1-1}
 y_i - e_{y_i} = a_0 + a_1(x_i-e_{x_i}) = a_0 + a_1\bar{x_i}
 \end{equation}
@@ -188,8 +195,8 @@ y_i - e_{y_i} = a_0 + a_1(x_i-e_{x_i}) = a_0 + a_1\bar{x_i}
 x_i-e_{x_i} = \bar{x_i}
 \end{equation}
 
-In the A-model, every observation is either a linear or a non-linear function of all unknown quantities. In contrast, in the B-model no unknown parameter exist and there are linear or non-linear relationships between the observations [F. Krumm]. As \eqref{eq:MixModel1-1} describes the relationship between observations and unknowns and \eqref{eq:MixModel1-2} describes the relationship between observations, this model is known as the mixed model or Gauss-Helmert model.
-
+In the A-model, every observation is either a linear or a non-linear function of all unknown quantities. In contrast, in the B-model no unknown parameters exist and there are linear or non-linear relationships between the observations [F. Krumm]. As \eqref{eq:MixModel1-1} describes the relationship between observations and unknowns and \eqref{eq:MixModel1-2} describes the relationship between observations, this model is known as the mixed model or Gauss-Helmert model.
+% It will be helpful to write the basic equations of the model.
 
 \subsection{Non-linear Mixed Model}
 \label{subsec:NonLinear}
@@ -220,6 +227,7 @@ Note that as a combination of \eqref{eq:MixModel2-1} and \eqref{eq:MixModel1-2},
 \mathbf{\hat{p}_y} = \mathcal{F}^y(\mathbf{u},\mathbf{v},\mathbf{p_x})
 \end{split}
 \end{equation}
+% Why you change x,y to px and py? Whats the definition of px, py, u,v?
 
 % % %
 % which can be further rewritten:
