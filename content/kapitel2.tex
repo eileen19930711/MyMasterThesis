@@ -119,7 +119,8 @@ A subset of physical distortion model [Fraser 1997] is chosen, with two radial s
 \Delta y &= y_p + A_1y  (r^2-R_0^2) + A_2y  (r^4-R_0^4) + B_1(r^2+2y^2)   + B_22x_*y
 \end{split}
 \end{equation}
-with $r=\sqrt{x_*^2+y^2}$, $x_*=\dfrac{x}{C_1}$ and radius\footnote{At the radius $R_0$ the radial symmetric distortion is zero by definition, which avoids too high distortion values at the edges and reduces the correlation with the focal length.} $R_0$ being set to 0.014m which corresponds to a third of the sensor diagonal.
+with $r=\sqrt{x_*^2+y^2}$, $x_*=\dfrac{x}{C_1}$ and radius\footnote{At the radius $R_0$ the radial symmetric distortion is zero by definition, which avoids too high distortion values at the edges and reduces the correlation with the focal length.} $R_0$ being set %to 0.014m which corresponds 
+to a third of the sensor diagonal.
 
 The undistorted image coordinates $x\prime$ and $y\prime$ are then calculated by
 \begin{equation} \label{eq:undistortedimgcoord}
@@ -156,13 +157,15 @@ which takes the interior and exterior orientations as well as the lens distortio
 \section{Line Fitting}
 \label{sec:LineFitting}
 
-Line fitting is the process of constructing a infinite straight line that has the best fit to a 2D dataset. One of the approaches is linear regression which attempts to model the relationship between two variables by fitting a linear equation to observed data. % [www.stat.yale.edu/Courses/1997-98/101/linreg.htmf]
-Additional least-squares (LS) models are commonly used for regression by means of minimization of sum of squared residuals.
+Line fitting is the process of constructing a infinite straight line that has a best fit to a 2D dataset. One of the approaches is simple linear regression which attempts to find the linear function that, as accurately as possible, predicts the dependent variable values as a function of the independent variables. An additional \gls{ls} model is commonly applied to minimize the sum of squared residuals between the estimated and the measured dependent variable values.
 
-% regarding the fact of problematic line x=const. (parallel to y-axis) and considering that the dataset (which will be described in more detail) observations in images are mainly in column direction 
+%As a function can only have one output for each unique input
+The model is barely solvable when the assumed "dependent" variable is indeed not a function of the independent variables. For example, when a 2D dataset scatters on a vertical line $x=constant$, its $y$ values do not depend on its $x$ values, i.e. $y$ is not a function of $x$. In such cases, however, $x$ is a function of $y$ (which is actually a constant value) and the equation system becomes solvable. Regarding the dataset used in this work (which will be described in \cref{sec:Materials} with more details) where the observation points scatter mainly in column direction in image space, the line fitting model will be setup as the dependent variable $x$ being a function of the independent variable $y$.
+%, i.e. by switching and the line fitting model 
+% that knowledge of X (using your original notation) tells us nothing about Y 
 
-In the case of simple linear regression as presented in \cref{subsec:LinearRegression}, the independent variable $x$ is error free, inconsistencies are only for the dependent variable $y$. Geometrically it means that the vertical distances from observed data to the fitted line is minimized. To minimize the 
-%sum of squared 
+
+In the case of simple linear regression as presented in \cref{subsec:LinearRegression}, the independent variable $y$ is error free, inconsistencies\footnote{The word "inconsistencies" indicates the unobserved random errors, also called as measurement errors.} are only for the dependent variable $x$. Geometrically it means that the horizontal distances from observed data to the fitted line is minimized. To minimize the %sum of squared 
 perpendicular distances from the data points to the regression line, a LS mixed model is derived in \cref{subsec:MixedModel} to perform orthogonal regression.
 
 For a later combination with point-wise extended collinearity equation \eqref{eq:Gfunction} in next section, we aim to fit the line equation in two-point form to the observed dataset. 
@@ -170,10 +173,9 @@ For a later combination with point-wise extended collinearity equation \eqref{eq
 For such non-linear least squares fitting purpose, a non-linear mixed model is derived in \cref{subsec:NonLinear}. 
 
 
-\subsection{Linear Regression}
+\subsection{Simple Linear Regression}
 \label{subsec:LinearRegression}
-
-Given a data set $\{x_i,y_i\}^n_{i=1}$ of $n$ points on a 2D plane, a linear regression model assumes that the relationship between the dependent variable $y_i$ and the regressors $x_i$ is linear. This relationship is modeled through an error variable $e_{y_i}$--- an unobserved random variable that adds noise to the linear relationship between the dependent variable and regressors.
+Simple linear regression is a linear regression model with a single explanatory variable. Given a data set $\{x_i,y_i\}^n_{i=1}$ of $n$ points on a 2D plane, a linear regression model assumes that the relationship between the dependent variable $y_i$ and the regressors $x_i$ is linear. This relationship is modeled through an error variable $e_{y_i}$--- an unobserved random variable that adds noise to the linear relationship between the dependent variable and regressors.
 Thus the model takes the form:
 \begin{equation} \label{eq:SimpleLinearRegression}
 y_i - e_{y_i} = a_0 + a_1x_i
