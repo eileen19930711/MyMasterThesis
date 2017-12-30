@@ -175,29 +175,29 @@ For such non-linear least squares fitting purpose, a non-linear mixed model is d
 
 \subsection{Simple Linear Regression}
 \label{subsec:LinearRegression}
-Simple linear regression is a linear regression model with a single explanatory variable. Given a data set $\{x_i,y_i\}^n_{i=1}$ of $n$ points on a 2D plane, a linear regression model assumes that the relationship between the dependent variable $y_i$ and the regressors $x_i$ is linear. This relationship is modeled through an error variable $e_{y_i}$--- an unobserved random variable that adds noise to the linear relationship between the dependent variable and regressors.
+Simple linear regression is a linear regression model with a single explanatory variable. Given a data set $\{x_i,y_i\}^n_{i=1}$ of $n$ points on a 2D plane, a linear regression model assumes that the relationship between the dependent variable $x_i$ and the regressors $y_i$ is linear. This relationship is modeled through an error variable $e_{x_i}$--- an unobserved random variable that adds noise to the linear relationship between the dependent variable and regressors.
 Thus the model takes the form:
 \begin{equation} \label{eq:SimpleLinearRegression}
-y_i - e_{y_i} = a_0 + a_1x_i
+x_i - e_{x_i} = a_0 + a_1y_i
 \end{equation}
-where $a_0$ and $a_1$ are the regression coefficients.
+where $a_0$ and $a_1$ are the regression coefficients and they are in the same time the unknown parameters to be estimated.
 %https://en.wikipedia.org/wiki/Linear_regression#Assumptions
 
 
 \subsection{Orthogonal Regression ---Mixed Model}
 \label{subsec:MixedModel}
 
-In the case with inconsistencies $e_{x_i}$ and $e_{y_i}$ in both observations $x_i$ and $y_i$, the A-model 
-% First mentioned here, you should explain what it is before.
-with pseudo observation equations can be adopted and the observation equations are formulated:
+In the case with inconsistencies $e_{x_i}$ and $e_{y_i}$ in both variables $x_i$ and $y_i$, an additional pseudo observation equation is introduced into the model which now has the form:
 \begin{equation} \label{eq:MixModel1-1}
-y_i - e_{y_i} = a_0 + a_1(x_i-e_{x_i}) = a_0 + a_1\bar{x_i}
+x_i - e_{x_i} = a_0 + a_1(y_i-e_{y_i}) = a_0 + a_1\bar{y_i}
 \end{equation}
 \begin{equation} \label{eq:MixModel1-2}
-x_i-e_{x_i} = \bar{x_i}
+y_i-e_{y_i} = \bar{y_i}
 \end{equation}
+where $\bar{y_i}$ denotes the true but unobserved regressor. Instead we observe this value with an error in \eqref{eq:MixModel1-2}.
 
-In the A-model, every observation is either a linear or a non-linear function of all unknown quantities. In contrast, in the B-model no unknown parameters exist and there are linear or non-linear relationships between the observations [F. Krumm]. As \eqref{eq:MixModel1-1} describes the relationship between observations and unknowns and \eqref{eq:MixModel1-2} describes the relationship between observations, this model is known as the mixed model or Gauss-Helmert model.
+% !!!
+As \eqref{eq:MixModel1-1} describes the relationship between observations and unknowns and \eqref{eq:MixModel1-2} describes the relationship between observations, this model is known as the mixed model or Gauss-Helmert model.
 % It will be helpful to write the basic equations of the model.
 
 \subsection{Non-linear Mixed Model}
@@ -205,10 +205,11 @@ In the A-model, every observation is either a linear or a non-linear function of
 
 Line Equation in two-point form:
 \begin{equation} \label{eq:LineInTwoPointForm}
-y-y_1 = \dfrac{(y_2-y_1)}{(x_2-x_1)}\times(x-x_1)
+(x-x_1) = \dfrac{(x_2-x_1)}{(y_2-y_1)}\times y-y_1
 \end{equation}
-where two points $(x_1,y_1)$ and $(x_2,y_2)$ define the infinite line with $x_2\neq x_1$, and $(x,y)$ is any point on the line.
+where two points $(x_1,y_1)$ and $(x_2,y_2)$ define the infinite line with $y_2\neq y_1$, and $(x,y)$ is any point on the line.
 
+% ************ From Here!
 Let the unknown image coordinates of the endpoints of a line be $(x_1,y_1)$ and $(x_2,y_2)$, and the inconsistent observations $\{x_i,y_i\}^n_{i=1}$. The model of observation equations \eqref{eq:MixModel1-1} and \eqref{eq:MixModel1-2} now takes the form: 
 \begin{equation} \label{eq:MixModel2-1}
 y_i - e_{y_i}= (y_1-\dfrac{(y_2-y_1)}{(x_2-x_1)}\times x_1) + \dfrac{(y_2-y_1)}{(x_2-x_1)}\times \bar{x_i}
