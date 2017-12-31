@@ -157,9 +157,9 @@ which takes the interior and exterior orientations as well as the lens distortio
 \section{Line Fitting}
 \label{sec:LineFitting}
 
-Line fitting is the process of constructing a infinite straight line that has a best fit to a 2D dataset. One of the approaches is simple linear regression which attempts to find the linear function that "best" predicts the dependent variable values as a function of the independent variable. In this work, "best" predict will be understood as in the \gls{ls} approach: minimization of the sum of squared residuals (differences between the measured and the estimated values of the dependent variable).
+Line fitting is the process of constructing a infinite straight line that has a best fit to a 2D dataset. One of the approaches is linear regression which attempts to find the linear function that "best" predicts the dependent variable values as a function of the independent variable. In this work, "best" predict will be understood as in the \gls{ls} approach: minimization of the sum of squared residuals (differences between the measured and the estimated values of the dependent variable).
 
-A linear regression problem is unsolvable when the assumed "dependent" variable is indeed not a function of the independent variables, i.e. the "dependent" variable is unpredictable given another independent variable. For example, when a 2D dataset scatters on a (nearly) vertical line $x=constant$, its $y$ values have (almost) no dependency on its $x$ values, i.e. knowledge of $x$ tells nothing about $y$. For this dataset, the linear regression model in $y=f(x)$ form is barely solvable as the assumed functional relationship is barely existent. In such cases, however, $x$ is a function of $y$ (which is actually a constant function) and the equation system which models the dependent variable $x$ being a function of the independent variable $y$ becomes solvable. Regarding the dataset used in this work (which will be described with more details in \cref{sec:Materials}) where the 2D points scatter mainly in column direction in image space, the linear relationship between $x$ and $y$ variables will be setup as $x=f(y)$ to avoid weakly solvable equations system.
+A functional model is unsolvable when the assumed "dependent" variable is indeed not a function of the independent variables, i.e. the assumed functional relationship does not really exist. Take an observed set of 2D points with their Cartesian coordinates $\{x_i,y_i\}^n_{i=1}$ on a vertical line $x=constant$ for example. Their $y$ values have no dependency on their $x$ values, i.e. knowledge of $x$ tells nothing about $y$. Therefore, for this dataset, the functional model $y=f(x)$ is barely solvable. In such cases, however, $x$ is a function of $y$ (which is actually a constant function) and the equation system which models the dependent variable $x$ being a function of the independent variable $y$ becomes solvable. Regarding the dataset used in this work (which will be described with more details in \cref{sec:Materials}) where the observed 2D points scatter mainly in column direction in image space, the linear relationship between $x$ and $y$ values will be setup as $x=f(y)$ to avoid weakly solvable equations system.
 
 In the case of simple linear regression as presented in \cref{subsec:LinearRegression}, the independent variable $y$ is error free, inconsistencies\footnote{The word "inconsistencies" indicates the unobserved random errors, also called as measurement errors.} are only for the dependent variable $x$. Geometrically it means that the horizontal distances from observed data to the fitted line is minimized. To minimize the %sum of squared 
 perpendicular distances from the data points to the regression line, a orthogonal regression model is derived in \cref{subsec:OrthogonalRegression}.
@@ -172,30 +172,31 @@ For such non-linear least squares fitting purpose, a non-linear mixed model is d
 \subsection{Simple Linear Regression}
 \label{subsec:LinearRegression}
 
-A simple linear regression model describes the linear relationship between a dependent variable and a regressors (an independent variable). By assuming the regressor being exactly measured without errors, it accounts only for errors in the dependent variable.
+A simple linear regression model describes the linear relationship between a dependent variable and a regressors (an independent variable). By assuming the regressor $y$ being exactly measured without errors, it accounts only for errors $e_x$ in the dependent variable $x$.
 
-Given a data set $\{x_i,y_i\}^n_{i=1}$ of $n$ points on a 2D plane, the model takes the form:
+Given a dataset $\{x_i,y_i\}^n_{i=1}$ of $n$ points on a 2D plane, the model takes the form:
 \begin{equation} \label{eq:SimpleLinearRegression}
 x_i - e_{x_i} = a_0 + a_1y_i
 \end{equation}
-where the regression coefficients $a_0$ and $a_1$ are the unknown parameters to be estimated; the error variable $e_{x}$ is an unobserved random variable that adds noise to the linear relationship between the dependent variable $x$ and regressor $y$.
+where the regression coefficients $a_0$ and $a_1$ are the unknown parameters to be estimated; the error variable $e_x$ is an unobserved random variable that adds noise to the linear relationship between the dependent variable $x$ and regressor $y$.
 %https://en.wikipedia.org/wiki/Linear_regression#Assumptions
 
 
 \subsection{Orthogonal Regression}
 \label{subsec:OrthogonalRegression}
 
-In the case when the regressors have been measured with errors, i.e. inconsistencies $e_{x_i}$ and $e_{y_i}$ in both measurements $x_i$ and $y_i$, a regression model has the form:
+In the case when both dependent variable $x$ and regressor $y$ are measured with errors $e_x$ and $e_y$, a linear regression model takes the form:
 \begin{equation} \label{eq:MixModel1-1}
 x_i - e_{x_i} = a_0 + a_1(y_i-e_{y_i}) = a_0 + a_1\bar{y_i}
 \end{equation}
-where $\bar{y_i}$ denotes the true but unobserved regressor. Instead we observe this value with an error in the pseudo observation equation:
+where $\bar{y_i}$ denotes the true but unobserved regressor. Instead we observe this value with an error $e_{y_i}$ in the pseudo observation equation:
 \begin{equation} \label{eq:MixModel1-2}
 y_i-e_{y_i} = \bar{y_i}
 \end{equation}
-Such regression models, as the combination of \eqref{eq:MixModel1-1} and \eqref{eq:MixModel1-2}, that account for measurement errors in the independent variable are called errors-in-variables models. 
 
-Further more, for the case of equal error variances, i.e. when $\delta=\dfrac{\sigma_{e_x}}{\sigma_{e_y}}=1$, such orthogonal regression model minimizes the sum of squared perpendicular distances from the data points to the regression line.
+Such regression models, as the combination of \eqref{eq:MixModel1-1} and \eqref{eq:MixModel1-2}, that account the measurement errors in both dependent variable and regressor are called errors-in-variables models.
+
+Further more, for the case of equal error variances, i.e. when $\delta=\dfrac{\sigma_{e_x}}{\sigma_{e_y}}=1$, the orthogonal regression model minimizes the sum of squared perpendicular distances from the data points to the regression line.
 
 % !!!
 %As \eqref{eq:MixModel1-1} describes the relationship between observations and unknowns and \eqref{eq:MixModel1-2} describes the relationship between observations, this model is known as the mixed model or Gauss-Helmert model.
