@@ -161,31 +161,29 @@ Line fitting is the process of constructing a infinite straight line that has a 
 
 A functional model is unsolvable when the assumed "dependent" variable is indeed not a function of the independent variables, i.e. the assumed functional relationship does not really exist. Take an observed set of 2D points with their Cartesian coordinates $\{x_i,y_i\}^n_{i=1}$ on a vertical line $x=constant$ for example. Their $y$ values have no dependency on their $x$ values, i.e. knowledge of $x$ tells nothing about $y$. Therefore, for this dataset, the functional model $y=f(x)$ is barely solvable. In such cases, however, $x$ is a function of $y$ (which is actually a constant function) and the equation system which models the dependent variable $x$ being a function of the independent variable $y$ becomes solvable. Regarding the dataset used in this work (which will be described with more details in \cref{sec:Materials}) where the observed 2D points scatter mainly in column direction in image space, the linear relationship between $x$ and $y$ values will be setup as $x=f(y)$ to avoid weakly solvable equations system.
 
-In the case of simple linear regression as presented in \cref{subsec:LinearRegression}, the independent variable $y$ is error free, inconsistencies\footnote{The word "inconsistencies" indicates the unobserved random errors, also called as measurement errors.} are only for the dependent variable $x$. Geometrically it means that the horizontal distances from observed data to the fitted line is minimized. To minimize the %sum of squared 
-perpendicular distances from the data points to the regression line, a orthogonal regression model is derived in \cref{subsec:OrthogonalRegression}.
+In the case of standard linear regression, the regressor $y$ is assumed error free, inconsistencies\footnote{The word "inconsistencies" indicates the unobserved random errors, also called as measurement errors.} are only for the dependent variable $x$. Geometrically it means that the horizontal distances from observed data to the fitted line is minimized. To minimize the perpendicular distances from the data points to the regression line, a orthogonal regression model is derived in \cref{subsec:OrthogonalRegression}.
 
 For a later combination with point-wise extended collinearity equation \eqref{eq:Gfunction} in next section, we aim to fit the line equation in two-point form to the observed dataset. 
 % extracted lines produced in \cref{sec:LineExtraction} (in forms of sets of points in image coordinates). 
 For such non-linear least squares fitting purpose, a non-linear mixed model is derived in \cref{subsec:NonLinear}. % !!!!!!!!!!!!!!!!!
 
 
-\subsection{Simple Linear Regression}
-\label{subsec:LinearRegression}
+%\subsection{Simple Linear Regression}
+%\label{subsec:LinearRegression}
 
-A simple linear regression model describes the linear relationship between a dependent variable and a regressors (an independent variable). By assuming the regressor $y$ being exactly measured without errors, it accounts only for errors $e_x$ in the dependent variable $x$.
+%A simple linear regression model describes the linear relationship between a dependent variable and a regressors (an independent variable). By assuming the regressor $y$ being exactly measured without errors, it accounts only for errors $e_x$ in the dependent variable $x$.
 
-Given a dataset $\{x_i,y_i\}^n_{i=1}$ of $n$ points on a 2D plane, the model takes the form:
-\begin{equation} \label{eq:SimpleLinearRegression}
-x_i - e_{x_i} = a_0 + a_1y_i
-\end{equation}
-where the regression coefficients $a_0$ and $a_1$ are the unknown parameters to be estimated; the error variable $e_x$ is an unobserved random variable that adds noise to the linear relationship between the dependent variable $x$ and regressor $y$.
+%Given a dataset $\{x_i,y_i\}^n_{i=1}$ of $n$ points on a 2D plane, the model takes the form:
+%\begin{equation} \label{eq:SimpleLinearRegression}
+%x_i - e_{x_i} = a_0 + a_1y_i
+%\end{equation}
+%where the regression coefficients $a_0$ and $a_1$ are the unknown parameters to be estimated; the error variable $e_x$ is an unobserved random variable that adds noise to the linear relationship between the dependent variable $x$ and regressor $y$.
 %https://en.wikipedia.org/wiki/Linear_regression#Assumptions
 
 
 \subsection{Orthogonal Regression}
 \label{subsec:OrthogonalRegression}
-
-In the case when both dependent variable $x$ and regressor $y$ are measured with errors $e_x$ and $e_y$, a linear regression model takes the form:
+A linear regression model describes a dependent variable as a function of the regressor (an independent variable). In the case when both dependent variable $x$ and regressor $y$ are measured with errors $e_x$ and $e_y$, a linear regression model takes the form:
 \begin{equation} \label{eq:MixModel1-1}
 x_i - e_{x_i} = a_0 + a_1(y_i-e_{y_i}) = a_0 + a_1\bar{y_i}
 \end{equation}
@@ -196,7 +194,7 @@ y_i-e_{y_i} = \bar{y_i}
 
 Such regression models, as the combination of \eqref{eq:MixModel1-1} and \eqref{eq:MixModel1-2}, that account the measurement errors in both dependent variable and regressor are called errors-in-variables models.
 
-Further more, for the case of equal error variances, i.e. when $\delta=\dfrac{\sigma_{e_x}}{\sigma_{e_y}}=1$, the orthogonal regression model minimizes the sum of squared perpendicular distances from the data points to the regression line.
+Further more, for the case of equal error variances, i.e. when $\delta=\dfrac{\sigma_{e_x}}{\sigma_{e_y}}=1$, it is a orthogonal regression model which minimizes the sum of squared perpendicular distances from the data points to the regression line.
 
 % !!!
 %As \eqref{eq:MixModel1-1} describes the relationship between observations and unknowns and \eqref{eq:MixModel1-2} describes the relationship between observations, this model is known as the mixed model or Gauss-Helmert model.
