@@ -192,15 +192,13 @@ where $\bar{y_i}$ denotes the true but unobserved regressor. Instead we observe 
 y_i-e_{y_i} = \bar{y_i}
 \end{equation}
 
-Such regression models, as the combination of \eqref{eq:MixModel1-1} and \eqref{eq:MixModel1-2}, that account the measurement errors in both dependent variable and regressor are called errors-in-variables models.
-
-Further more, for the case of equal error variances, i.e. when $\delta=\dfrac{\sigma_{e_x}}{\sigma_{e_y}}=1$, it is a orthogonal regression model which minimizes the sum of squared perpendicular distances from the data points to the regression line.
+Such errors-in-variables models, as the combination of \eqref{eq:MixModel1-1} and \eqref{eq:MixModel1-2}, account the measurement errors in both dependent variable and regressor. Further more, for the case of equal error variances, i.e. when $\delta=\dfrac{\sigma_{e_x}}{\sigma_{e_y}}=1$, it is a orthogonal regression model which minimizes the sum of squared perpendicular distances from the data points to the regression line.
 
 % !!!
 %As \eqref{eq:MixModel1-1} describes the relationship between observations and unknowns and \eqref{eq:MixModel1-2} describes the relationship between observations, this model is known as the mixed model or Gauss-Helmert model.
 % It will be helpful to write the basic equations of the model.
 
-\subsection{Non-linear LS Model}
+\subsection{Orthogonal Regression in Two-point Form}
 \label{subsec:NonLinear}
 
 The two-point form of a infinite line in the Cartesian plane passing through the points $(x_1,y_1)$ and $(x_2,y_2)$ is given by:
@@ -209,7 +207,7 @@ The two-point form of a infinite line in the Cartesian plane passing through the
 \end{equation}
 with $y_2\neq y_1$, where $(x,y)$ is any point on the line.
 
-Let the unknown coordinates of two different points on a line in 2D space be $(x_1,y_1)$ and $(x_2,y_2)$ and the observed 2D points be $\{x_i,y_i\}^n_{i=1}$ with measurement errors $e_{x_i}$ and $e_{y_i}$ in both variables. The orthogonal regression model now takes the form: 
+Let the unknown coordinates of two different points on a line in 2D space be $(x_1,y_1)$ and $(x_2,y_2)$ and the observed 2D points be $\{x_i,y_i\}^n_{i=1}$ with measurement errors $e_{x_i}$ and $e_{y_i}$ in both variables. The orthogonal regression model in two-point form: 
 \begin{equation} \label{eq:MixModel2-1}
 x_i - e_{x_i}= (x_1-\dfrac{(x_2-x_1)}{(y_2-y_1)}\times y_1) + \dfrac{(x_2-x_1)}{(y_2-y_1)}\times \bar{y_i}
 \end{equation}
@@ -228,7 +226,7 @@ To express \eqref{eq:MixModel2-1} and \eqref{eq:MixModel1-2} shortly, a function
 \mathbf{\hat{p}} = \mathcal{F}(\mathbf{p_s},\mathbf{p_e},x)
 \end{equation}
 
-which takes 2D coordinates of two points $\mathbf{p_s}(x_s,y_s)$ and $\mathbf{p_e}(x_e,y_e)$ that define an infinite line, and takes the measured x-coordinate $x$ of an image point $\mathbf{p}$, and returns the estimated image coordinates $\mathbf{\hat{p}}(\hat{x},\hat{y})$ which lies on the infinite line $\overline{\mathbf{p_s}\mathbf{p_s}}$
+which takes 2D coordinates of two points $\mathbf{p_s}(x_s,y_s)$ and $\mathbf{p_e}(x_e,y_e)$ that define an infinite line, and takes the measured x-coordinate $x$ of an image point $\mathbf{p}$, and returns the estimated image coordinates $\mathbf{\hat{p}}(\hat{x},\hat{y})$ which lies on the infinite line $\overline{\mathbf{p_s}\mathbf{p_s}}$.
 
 Note that as a combination of \eqref{eq:MixModel2-1} and \eqref{eq:MixModel1-2}, function $\mathcal{F}$ is actually composed of
 \begin{equation} \label{eq:Ffunction_xy}
@@ -237,7 +235,6 @@ Note that as a combination of \eqref{eq:MixModel2-1} and \eqref{eq:MixModel1-2},
 \mathbf{\hat{y}} = \mathcal{F}^y(\mathbf{p_s},\mathbf{p_e},x)
 \end{split}
 \end{equation}
-% Why you change x,y to px and py? Whats the definition of px, py, u,v?
 
 % % %
 % which can be further rewritten:
@@ -245,18 +242,23 @@ Note that as a combination of \eqref{eq:MixModel2-1} and \eqref{eq:MixModel1-2},
 %Taylor expansion...(local linear approximation)
 %the linear equation can also be expanded
 
-\clearpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{3D line reconstruction through non-linear LS Adjustment}
 \label{sec:LSadj}
 
-In this section, we aim to refine the position of a 3D line segment so that its back-projection in each covering image has a best-fit to the extracted line. To simplify the problem, a long curved lane-line is partially reconstructed through a sliding window. It is approximated by a straight line of 9 meters in length, taking into account the maximum curvature of the highway.
+In this section, I describe the process of refining the position of a 3D line segment in the object space so that its back-projection in each image has a best-fit to the extracted line in the image space. To simplify the problem, a lane-marking-segment is partially reconstructed through a sliding window in the object space. Each segment is approximated by a straight line, taking into account the maximum curvature of the highway. 
+The length of the sliding window depends on the expected curvature, and for motorways it was fixed to 9m …
+% What about dashed lane markings in the middle? Why do you choose 9m -> compromise between robustness and minimized systematic errors.
 
-In a sliding window of 9 meters length, a line segment is reconstructed with the measurements collected in the corresponding regions (with buffer width 5 pixels) on all covering images. Only the middle point of this reconstructed 3D line is recorded. The sliding window then moves 4.5 meters forward, started from the recorded middle point of the previous line segment. Another line segment is then reconstructed, with its middle point being recorded... and so on. These recorded middle points are in the end the nodes of the reconstructed line. The reconsideration in overlapping region makes the reconstruction more robust.
+In the sliding window, a line segment is reconstructed taking into account all the measurements (the detected lines) collected in the corresponding regions in all covering images. Only the middle point of the sliding window is then reconstructed by the least-squares estimator (see chapter xx) %!!!
+and is recorded. The sliding window then moves half length forward, and the process of 3D reconstruction started again from the recorded middle point of the previous line segment. Another line segment is then reconstructed, with its middle point being recorded. These recorded middle points are in the end the nodes of the reconstructed line. The reconsideration in overlapping region makes the reconstruction more robust.
+% Maybe make figure to illustrate
 
-In \cref{subsec:ObsEqua} we firstly set-up a model of observation equations. It describes the fitting of a straight line to the measurements on each covering images, where the fitting lines on different images are transformed from a single 3D straight line segment through extended collinearity equation.
+In \cref{subsec:ObsEqua} I firstly set up a model of observation equations. They describe the fitting of a straight line to the measurements in each covering image, where the fitting lines on different images are transformed from a single 3D straight line segment through the extended collinearity equation \eqref{eq:expandedcollinearity}.
 
-Regarding the fact that the collinearity is a point-wise condition, a line segment is represented by its two endpoints whose object coordinates are the six unknown parameters in our LS model. Correspondingly, the observation equations are line equations in two-point form. A Line equation has however a mathematical meaning of infinite length. Therefore, some constraints on unknowns are necessary to avoid arbitrary locations of the two points on the infinite reconstructed 3D line. The constraint equations are modeled in \cref{subsec:ConEqua}.
+Regarding the fact that the collinearity is a point-wise condition, a line segment is represented by its two endpoints whose object coordinates are the six unknown parameters % First mentioned here, what are the six unknowns?
+in the LS model. % Which one? 
+Correspondingly, the observation equations are line equations in two-point form. A line equation has however a mathematical meaning of infinite length. Therefore, some constraints on unknowns are necessary to avoid arbitrary locations of the two points on the infinite reconstructed 3D line. The constraint equations are modeled in \cref{subsec:ConEqua}.
 
 
 
@@ -268,7 +270,7 @@ Regarding the fact that the collinearity is a point-wise condition, a line segme
 \subsection{Model of Observation Equations}
 \label{subsec:ObsEqua}
 
-Given the start-point $P_s(X_s,Y_s,Z_s)$ and the end-point $P_e(X_e,Y_e,Z_e)$ of a line segment in object space. Consider the case where there are $J$ images covering this line segment. With \cref{eq:Gfunction}, the start- and end-points of this line segment's back-projection in image $j$ have the image coordinates $p^j_s(x^j_s,y^j_s)$ and $p^j_e(x^j_e,y^j_e)$:
+Given the start-point $P_s(X_s,Y_s,Z_s)$ and the end-point $P_e(X_e,Y_e,Z_e)$ of a line segment in the object space and considering the case where there are $J$ images covering this line segment,  the start- and end-points of this line segment's back-projection in image $j$ have the image coordinates $p^j_s(x^j_s,y^j_s)$ and $p^j_e(x^j_e,y^j_e)$:
 \begin{equation} \label{eq:obsmodel-collinearity}
 \begin{split}
 p^j_s = \mathcal{G}(q^j,P_s)\\
@@ -280,7 +282,7 @@ p^j_e = \mathcal{G}(q^j,P_e)
 \end{split}
 \end{equation}
 
-Let $l^j$ be an extracted line on image $j$ where there are $L^j$ extracted lines in this image, and $n^j_{l,i}$ be a point in line $l^j$ where this line consists of $N^j_l$ points. Given a measured x coordinate $n^j_{l,i,x}$ of a point $n^j_{l,i}$, the estimated image coordinates $\hat{n}^j_{l,i}(\hat{x}^j_{l,i},\hat{y}^j_{l,i})$ on the infinite line $\overline{p^j_s,p^j_e}$ computed from \cref{eq:Ffunction} is:
+Let $l^j$ be an extracted line on image $j$ where there are $L^j$ extracted lines in this image, and $n^j_{l,i}$ be a point in line $l^j$ where this line consists of $N^j_l$ points. Given a measured x coordinate $n^j_{l,i,x}$ of a point $n^j_{l,i}$, the estimated image coordinates $\hat{n}^j_{l,i}(\hat{x}^j_{l,i},\hat{y}^j_{l,i})$ on the infinite line $\overline{p^j_s,p^j_e}$ computed from \cref{eq:Ffunction} are:
 \begin{equation} \label{eq:obsmodel-linefitting}
 \hat{n}^j_{l,i} = \mathcal{F}(p^j_s,p^j_e,n^j_{l,i,x})
 \qquad
@@ -306,7 +308,7 @@ Correspond to \cref{eq:Ffunction_xy}, function $\mathcal{H}$ is composed of
 \end{split}
 \end{equation}
 
-Since the adjustment is done "line-wise"--- for a pair of $P_s$ and $P_e$, the measurements are collected correspondingly. Thus the subscription $l$ representing specific line segment will be left out in the followings.
+Since the adjustment is done "segment-wise"--- for a pair of $P_s$ and $P_e$, the measurements are collected correspondingly. Thus the subscription $l$ representing specific line segment will be left out in the followings.
 
 For an image $j=1$ there are $2\times N^j$ observation equations:
 
@@ -366,7 +368,7 @@ For all covering image $j=1,2,...J$ there are $2\times\displaystyle\sum_{j=1}^{J
 %At least two constraints are needed to fix rank deficiency???. 
 There are three constraints used in this work:
 \begin{itemize}
-\item Fixing the X, Y coordinates of the start-point:
+\item Fixing the X, Y coordinates of the start-point using the approximate values:
 \item [] \begin{equation} \label{eq:constraint1}
 \hat{X}^s=X^s_0
 \end{equation}
@@ -379,12 +381,13 @@ There are three constraints used in this work:
 \end{equation}
 \end{itemize}
 
-Note that only in the first line segment reconstruction of a long lane marking, the fixed $X_s$ and $Y_s$ values are from the approximated initial value derived from \cref{sec:LineProjectionOnDSM}. From the second line segment on, the fixed values $X_s$ and $Y_s$ are from the previously determined values.
+Note that only in the first line segment reconstruction of a long lane marking, the fixed $X_s$ and $Y_s$ values are from the approximated initial value derived from \cref{sec:LineProjectionOnDSM}. Starting from the second line segment, the fixed values $X_s$ and $Y_s$ depend on the previously determined values.
 
 
 \subsection{Non-linear LS Adjustment with Constraints}
 \label{subsec:LSadj}
-
+% Add the relevant equations
+% This chapter is difficult to read, more detailed!?
 A non-linear equation system is approximated to be locally linear with small step size of the unknown quantities. Through a linearized form of the equation system, for example Taylor's polynomial expansion, it turns to solve for the increments of unknowns instead of the unknowns themselves, where linear LS adjustment is applied iteratively until convergence is achieved. Depending on the configuration and initial parameters chosen, the nonlinear fit may have good or poor convergence properties.
 
 
@@ -411,14 +414,14 @@ A non-linear equation system is approximated to be locally linear with small ste
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Line Projection on DSM}
+\section{Line Projection on the DSM (Determination of approximative values)}
 \label{sec:LineProjectionOnDSM}
 
-As the equation system in \cref{sec:LSadj} may exhibit multiple local minimum, a "correct" initial approximation of the unknowns is required for convergence to the correct solution. To provide such initial 3D line segment, the extracted line features derived in \cref{sec:LineExtraction} can be projected onto DSM with the bundle adjusted camera orientations.
+As the equation system in \cref{sec:LSadj} may exhibit multiple local minimum, a "correct" initial approximation of the unknowns is required for convergence to the correct solution. To provide such initial 3D line segment, the extracted line features derived in \cref{sec:LineExtraction} can be projected onto DSM based on the bundle adjusted exterior and interior orientations.
 
-Given image coordinates $\mathbf{p}(x,y)$ of a point and (bundle-adjusted) image orientations $\mathbf{q}$, there is still one degree of freedom in extended collinearity equation \eqref{eq:Gfunction} on solving object coordinates $\mathbf{P}(X,Y,Z)$. Combined with the usage of DSM, which provides the height information $Z$ given a position $(X,Y)$, the corresponding object coordinates can be solved iteratively until the increment $\Delta Z$ small enough, i.e. convergence achieved.
+Given image coordinates $\mathbf{p}(x,y)$ of a point and (bundle-adjusted) image orientations $\mathbf{q}$, there is still one degree of freedom in extended collinearity equation \eqref{eq:Gfunction} on solving object coordinates $\mathbf{P}(X,Y,Z)$. Combined with the usage of DSM, which provides the height information $Z$ given a position $(X,Y)$, the corresponding object coordinates can be solved iteratively until the increment $\Delta Z$ small enough, i.e. convergence achieved. % Equation for dZ
 
-Considering that the DSM is raster (discrete) whereas $X$ and $Y$ have continuous numerical values, DSM height is bilinear interpolated.
+Considering that the DSM is raster (discrete) whereas $X$ and $Y$ have continuous numerical values, the DSM height is bilinear interpolated during the iterative process.
 
 %Given image coordinates of an image point and an initial Z-value $Z_{initial}$, the 
 %With the following work flow:
