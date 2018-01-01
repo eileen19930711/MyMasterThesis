@@ -159,13 +159,13 @@ which takes the interior and exterior orientations as well as the lens distortio
 
 Line fitting is the process of constructing a infinite straight line that has a best fit to a 2D dataset. One of the approaches is linear regression which attempts to find the linear function that "best" predicts the dependent variable values as a function of the independent variable. In this work, "best" predict will be understood as in the \gls{ls} approach: minimization of the sum of squared residuals (differences between the measured and the estimated values of the dependent variable).
 
-A functional model is unsolvable when the assumed "dependent" variable is indeed not a function of the independent variables, i.e. the assumed functional relationship does not really exist. Take an observed set of 2D points with their Cartesian coordinates $\{x_i,y_i\}^n_{i=1}$ on a vertical line $x=constant$ for example. Their $y$ values have no dependency on their $x$ values, i.e. knowledge of $x$ tells nothing about $y$. Therefore, for this dataset, the functional model $y=f(x)$ is barely solvable. In such cases, however, $x$ is a function of $y$ (which is actually a constant function) and the equation system which models the dependent variable $x$ being a function of the independent variable $y$ becomes solvable. Regarding the dataset used in this work (which will be described with more details in \cref{sec:Materials}) where the observed 2D points scatter mainly in column direction in image space, the linear relationship between $x$ and $y$ values will be setup as $x=f(y)$ to avoid weakly solvable equations system.
-
 In the case of standard linear regression, the regressor $y$ is assumed error free, inconsistencies\footnote{The word "inconsistencies" indicates the unobserved random errors, also called as measurement errors.} are only for the dependent variable $x$. Geometrically it means that the horizontal distances from observed data to the fitted line is minimized. To minimize the perpendicular distances from the data points to the regression line, a orthogonal regression model is derived in \cref{subsec:OrthogonalRegression}.
 
 For a later combination with point-wise extended collinearity equation \eqref{eq:Gfunction} in next section, we aim to fit the line equation in two-point form to the observed dataset. 
 % extracted lines produced in \cref{sec:LineExtraction} (in forms of sets of points in image coordinates). 
 For such non-linear least squares fitting purpose, a non-linear mixed model is derived in \cref{subsec:NonLinear}. % !!!!!!!!!!!!!!!!!
+
+A functional model is unsolvable when the assumed "dependent" variable is indeed not a function of the independent variables, i.e. the assumed functional relationship does not really exist. Take an observed set of 2D points with their Cartesian coordinates $\{x_i,y_i\}^n_{i=1}$ on a vertical line $x=constant$ for example. Their $y$ values have no dependency on their $x$ values, i.e. knowledge of $x$ tells nothing about $y$. Therefore, for this dataset, the functional model $y=f(x)$ is barely solvable. In such cases, however, $x$ is a function of $y$ (which is actually a constant function) and the equation system which models the dependent variable $x$ being a function of the independent variable $y$ becomes solvable. Regarding the dataset used in this work (which will be described with more details in \cref{sec:Materials}) where the observed 2D points scatter mainly in column direction in image space, the linear relationship between $x$ and $y$ values will be setup as $x=f(y)$ to avoid weakly solvable equations system.
 
 
 %\subsection{Simple Linear Regression}
@@ -183,7 +183,7 @@ For such non-linear least squares fitting purpose, a non-linear mixed model is d
 
 \subsection{Orthogonal Regression}
 \label{subsec:OrthogonalRegression}
-A linear regression model describes a dependent variable as a function of the regressor (an independent variable). In the case when both dependent variable $x$ and regressor $y$ are measured with errors $e_x$ and $e_y$, a linear regression model takes the form:
+A linear regression model describes a dependent variable as a linear function of the regressor (an independent variable). In the case when both dependent variable $x$ and regressor $y$ are measured with errors $e_x$ and $e_y$, a linear regression model takes the form:
 \begin{equation} \label{eq:MixModel1-1}
 x_i - e_{x_i} = a_0 + a_1(y_i-e_{y_i}) = a_0 + a_1\bar{y_i}
 \end{equation}
@@ -203,11 +203,11 @@ Further more, for the case of equal error variances, i.e. when $\delta=\dfrac{\s
 \subsection{Non-linear LS Model}
 \label{subsec:NonLinear}
 
-Line equation has two-point form:
+The two-point form of a infinite line in the Cartesian plane passing through the points $(x_1,y_1)$ and $(x_2,y_2)$ is given by:
 \begin{equation} \label{eq:LineInTwoPointForm}
 (x-x_1) = \dfrac{(x_2-x_1)}{(y_2-y_1)}\times y-y_1
 \end{equation}
-where two points $(x_1,y_1)$ and $(x_2,y_2)$ define the infinite line with $y_2\neq y_1$, and $(x,y)$ is any point on the line.
+with $y_2\neq y_1$, where $(x,y)$ is any point on the line.
 
 Let the unknown coordinates of two different points on a line in 2D space be $(x_1,y_1)$ and $(x_2,y_2)$ and the observed 2D points be $\{x_i,y_i\}^n_{i=1}$ with measurement errors $e_{x_i}$ and $e_{y_i}$ in both variables. The orthogonal regression model now takes the form: 
 \begin{equation} \label{eq:MixModel2-1}
@@ -225,21 +225,16 @@ As the observations $y_i$ has non-linear relationships with the unknown quantiti
 To express \eqref{eq:MixModel2-1} and \eqref{eq:MixModel1-2} shortly, a function $\mathcal{F}$ is defined as
 
 \begin{equation} \label{eq:Ffunction}
-\mathbf{\hat{p}} = \mathcal{F}(\mathbf{p_s},\mathbf{p_e},\mathbf{p_x})
+\mathbf{\hat{p}} = \mathcal{F}(\mathbf{p_s},\mathbf{p_e},x)
 \end{equation}
 
-which takes the interior and exterior orientations as well as the lens distortion parameters of a camera $\mathbf{q}(x_0,y_0,c,X_0,Y_0,Z_0,R_{11},...,R_{33},A_1,A_2,B_1,B_2,C_1,C_2)$ and the position of a 3D point $\mathbf{P}(X, Y, Z)$, and returns the corresponding distorted image coordinates $\mathbf{p}(x,y)$.
-
-
-which takes image coordinates of two points $\mathbf{p_s}$ and $\mathbf{p_e}$ that define an infinite line, and 
-
-takes the measured x coordinate $\mathbf{p_x}$ of an image point $\mathbf{p}$, and returns the estimated image coordinates $\mathbf{\hat{p}}$ which lies on the infinite line $\overline{\mathbf{u}\mathbf{v}}$, can be shortly expressed by
+which takes 2D coordinates of two points $\mathbf{p_s}(x_s,y_s)$ and $\mathbf{p_e}(x_e,y_e)$ that define an infinite line, and takes the measured x-coordinate $x$ of an image point $\mathbf{p}$, and returns the estimated image coordinates $\mathbf{\hat{p}}(\hat{x},\hat{y})$ which lies on the infinite line $\overline{\mathbf{p_s}\mathbf{p_s}}$
 
 Note that as a combination of \eqref{eq:MixModel2-1} and \eqref{eq:MixModel1-2}, function $\mathcal{F}$ is actually composed of
 \begin{equation} \label{eq:Ffunction_xy}
 \begin{split}
-\mathbf{\hat{p}_x} = \mathcal{F}^x(\mathbf{u},\mathbf{v},\mathbf{p_x})\\
-\mathbf{\hat{p}_y} = \mathcal{F}^y(\mathbf{u},\mathbf{v},\mathbf{p_x})
+\mathbf{\hat{x}} = \mathcal{F}^x(\mathbf{p_s},\mathbf{p_e},x)\\
+\mathbf{\hat{y}} = \mathcal{F}^y(\mathbf{p_s},\mathbf{p_e},x)
 \end{split}
 \end{equation}
 % Why you change x,y to px and py? Whats the definition of px, py, u,v?
