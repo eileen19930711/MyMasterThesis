@@ -183,16 +183,18 @@ A functional model is unsolvable when the assumed "dependent" variable is indeed
 
 \subsection{Orthogonal Regression}
 \label{subsec:OrthogonalRegression}
-A linear regression model describes a dependent variable as a linear function of the regressor (an independent variable). In the case when both dependent variable $x$ and regressor $y$ are measured with errors $e_x$ and $e_y$, a linear regression model takes the form:
+A linear regression model describes a dependent variable as a linear function of the regressor (an independent variable). Given a dataset $\{x_i,y_i\}^n_{i=1}$ of $n$ points on a 2D plane, in the case when both dependent variable $x_i$ and regressor $y_i$ are measured with errors %$e_x$ and $e_y$
+, a linear regression model takes the form:
 \begin{equation} \label{eq:MixModel1-1}
-x_i - e_{x_i} = a_0 + a_1(y_i-e_{y_i}) = a_0 + a_1\bar{y_i}
+x_i - e_{x_i} = %a_0 + a_1(y_i-e_{y_i}) = 
+a_0 + a_1\bar{y_i}
 \end{equation}
-where $\bar{y_i}$ denotes the true but unobserved regressor. Instead we observe this value with an error $e_{y_i}$ in the pseudo observation equation:
+where the regression coefficients $a_0$ and $a_1$ are the unknown parameters to be estimated, $\bar{y_i}$ denotes the true but unobserved regressor, and the error variable $e_{x_i}$ is an unobserved random variable that adds noise to the linear relationship between the dependent variable $x$ and true regressor $\bar{y_i}$. The true regressor $\bar{y_i}$ is observed with an error $e_{y_i}$ in the pseudo observation equation:
 \begin{equation} \label{eq:MixModel1-2}
 y_i-e_{y_i} = \bar{y_i}
 \end{equation}
-
-Such errors-in-variables models, as the combination of \eqref{eq:MixModel1-1} and \eqref{eq:MixModel1-2}, account the measurement errors in both dependent variable and regressor. Further more, for the case of equal error variances, i.e. when $\delta=\dfrac{\sigma_{e_x}}{\sigma_{e_y}}=1$, it is a orthogonal regression model which minimizes the sum of squared perpendicular distances from the data points to the regression line.
+Such models, as the combination of \eqref{eq:MixModel1-1} and \eqref{eq:MixModel1-2}, that account the measurement errors in both dependent variable and regressor, are errors-in-variables models. Further more, for the case of equal error variances, i.e. when $\delta=\dfrac{\sigma_{e_x}}{\sigma_{e_y}}=1$, it is a orthogonal regression model which minimizes the %sum of squared 
+perpendicular distances from the data points to the regression line.
 
 % !!!
 %As \eqref{eq:MixModel1-1} describes the relationship between observations and unknowns and \eqref{eq:MixModel1-2} describes the relationship between observations, this model is known as the mixed model or Gauss-Helmert model.
@@ -214,25 +216,21 @@ x_i - e_{x_i}= (x_1-\dfrac{(x_2-x_1)}{(y_2-y_1)}\times y_1) + \dfrac{(x_2-x_1)}{
 \begin{equation} \tag{\ref{eq:MixModel1-2} revisited}
 y_i-e_{y_i} = \bar{y_i}
 \end{equation}
-As the observations $y_i$ has non-linear relationships with the unknown quantities, \cref{eq:MixModel2-1} and \cref{eq:MixModel1-2} form a non-linear LS model.
+As the observations are non-linear functions of the unknown parameters, \cref{eq:MixModel2-1} and \cref{eq:MixModel1-2} form a non-linear LS model. % !!!!!!!!!!!!!!!
 
-%of observation equations \eqref{eq:MixModel1-1} and \eqref{eq:MixModel1-2} 
-
-
-% !!!!!!!!!!! here
 To express \eqref{eq:MixModel2-1} and \eqref{eq:MixModel1-2} shortly, a function $\mathcal{F}$ is defined as
 
 \begin{equation} \label{eq:Ffunction}
 \mathbf{\hat{p}} = \mathcal{F}(\mathbf{p_s},\mathbf{p_e},x)
 \end{equation}
 
-which takes 2D coordinates of two points $\mathbf{p_s}(x_s,y_s)$ and $\mathbf{p_e}(x_e,y_e)$ that define an infinite line, and takes the measured x-coordinate $x$ of an image point $\mathbf{p}$, and returns the estimated image coordinates $\mathbf{\hat{p}}(\hat{x},\hat{y})$ which lies on the infinite line $\overline{\mathbf{p_s}\mathbf{p_s}}$.
+which takes 2D coordinates of two points $\mathbf{p_s}(x_s,y_s)$ and $\mathbf{p_e}(x_e,y_e)$ that define an infinite line, and takes the measured x-coordinate $x$ of an image point $\mathbf{p}(x,y)$, and returns the estimated image coordinates $\mathbf{\hat{p}}(\hat{x},\hat{y})$ which lies on the infinite line $\overline{\mathbf{p_s}\mathbf{p_s}}$.
 
 Note that as a combination of \eqref{eq:MixModel2-1} and \eqref{eq:MixModel1-2}, function $\mathcal{F}$ is actually composed of
 \begin{equation} \label{eq:Ffunction_xy}
 \begin{split}
-\mathbf{\hat{x}} = \mathcal{F}^x(\mathbf{p_s},\mathbf{p_e},x)\\
-\mathbf{\hat{y}} = \mathcal{F}^y(\mathbf{p_s},\mathbf{p_e},x)
+\hat{x} = \mathcal{F}^x(\mathbf{p_s},\mathbf{p_e},x)\\
+\hat{y} = \mathcal{F}^y(\mathbf{p_s},\mathbf{p_e},x)
 \end{split}
 \end{equation}
 
@@ -388,6 +386,7 @@ Note that only in the first line segment reconstruction of a long lane marking, 
 \label{subsec:LSadj}
 % Add the relevant equations
 % This chapter is difficult to read, more detailed!?
+% Often these n equations are stacked together and written in vector form as
 A non-linear equation system is approximated to be locally linear with small step size of the unknown quantities. Through a linearized form of the equation system, for example Taylor's polynomial expansion, it turns to solve for the increments of unknowns instead of the unknowns themselves, where linear LS adjustment is applied iteratively until convergence is achieved. Depending on the configuration and initial parameters chosen, the nonlinear fit may have good or poor convergence properties.
 
 
