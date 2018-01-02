@@ -233,7 +233,6 @@ Note that as a combination of \eqref{eq:MixModel2-1} and \eqref{eq:MixModel1-2},
 \end{split}
 \end{equation}
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{3D line reconstruction through non-linear LS Adjustment}
 \label{sec:LSadj}
@@ -261,7 +260,6 @@ Correspondingly, the observation equations are line equations in two-point form.
 
 \subsection{Model of Observation Equations}
 \label{subsec:ObsEqua}
-% As the observations are non-linear functions of the unknown parameters, \cref{eq:MixModel2-1} and \cref{eq:MixModel1-2} form a non-linear LS model. % !!!!!!!!!!!!!!!
 % % %
 % which can be further rewritten:
 %Taylor expansion...(local linear approximation)
@@ -279,13 +277,33 @@ Given a start-point $\mathbf{P}_s(X_s,Y_s,Z_s)$ and an end-point $\mathbf{P}_e(X
 \end{split}
 \end{equation}
 
+%%%%%%%%%%%%%%% !!!!!!!!!!!!!!!!!! %%%%%%%%%%%%%%%%
+%Let $l^j$ be the corresponding line segment of $L$ being extracted (observed) on image $j$. Given a dataset $\{x^j_{l,i},y^j_{l,i}\}^{N^j_l}_{i=1}$ of $N^j_l$ points on line segment $l^j$. Rewriting the orthogonal regression model \cref{eq:MixModel2-1} and \cref{eq:MixModel1-2} in the structure of the Gauss-Markov model gives the observation equations in vector form:
+
+%\begin{equation} \label{eq:Ffunction}
+%\mathbf{l}+\hat{\mathbf{v}}=\mathbf{f}(\hat{\mathbf{x}}):\quad
+%\begin{bmatrix}
+% x^j_{l,i} + \hat{e}_{x^j_{l,i}}\\[0.3em]
+% y^j_{l,i} + \hat{e}_{y^j_{l,i}}\\[0.3em]
+%\end{bmatrix}
+%=
+%\begin{bmatrix}
+%(\hat{x}^j_s-\dfrac{(\hat{x}^j_e-\hat{x}^j_s)}{(\hat{y}^j_e-\hat{y}^j_s)}\times \hat{y}^j_s) + \dfrac{(\hat{x}^j_e-\hat{x}^j_s)}{(\hat{y}^j_e-\hat{y}^j_s)}\times \hat{\bar{y}}_{l,i}\\
+%\hat{\bar{y}}_{l,i}
+%\end{bmatrix}
+%\end{equation}
+%which estimates a start-point $\mathbf{p_s}(x_s,y_s)$ and an end-point $\mathbf{p_e}(x_e,y_e)$ that define a infinite line in image space so that the observed image coordinates $\hat{\mathbf{p}}^j_{l,i}(\hat{x}^j_{l,i},\hat{y}^j_{l,i})$ on defined by . % !!!!!!!!!!!!!!!!!
+
+
+%%%%%%%%%%%%%%% !!!!!!!!!!!!!!!!!! %%%%%%%%%%%%%%%%
+
 Let $l^j$ be the corresponding line segment of $L$ being extracted (observed) on image $j$. Given a dataset $\{x^j_{l,i},y^j_{l,i}\}^{N^j_l}_{i=1}$ of $N^j_l$ points on line segment $l^j$, their estimated image coordinates $\hat{\mathbf{p}}^j_{l,i}(\hat{x}^j_{l,i},\hat{y}^j_{l,i})$ on the infinite line $\overline{\mathbf{p}^j_s,\mathbf{p}^j_e}$ computed from the orthogonal regression model \eqref{eq:Ffunction} are:
 \begin{equation} \label{eq:obsmodel-linefitting}
 \hat{\mathbf{p}}^j_{l,i} = \mathcal{F}(\mathbf{p}^j_s,\mathbf{p}^j_e,y^j_{l,i})
 \qquad
 \forall i=1,2,...N^j_l
 \end{equation}
-
+%%%%%%%%%%%%%%%
 
 Combining \eqref{eq:obsmodel-collinearity} with \eqref{eq:obsmodel-linefitting} gives function $\mathcal{H}$:
 \begin{equation} \label{eq:obsmodel}
@@ -296,14 +314,18 @@ Combining \eqref{eq:obsmodel-collinearity} with \eqref{eq:obsmodel-linefitting} 
 \forall i=1,2,...N^j_l,\quad\forall j=1,2,...J
 \end{split}
 \end{equation}
-%which takes the known camera parameters $\mathbf{q}^j(x_0,y_0,c,X_0,Y_0,Z_0,R_{11},...,R_{33},A_1,A_2,B_1,B_2,C_1,C_2)$, the unknown object coordinates of $\mathbf{P}_s$ and $\mathbf{P}_e$, and the observed y-coordinate of the point $\mathbf{p}^j_{l,i}$ in image space, and returns the estimated image coordinates $\hat{\mathbf{p}}^j_{l,i}$ of point $\mathbf{p}^j_{l,i}$ on the back projected line of $\overline{\mathbf{P}_s,\mathbf{P}_e}$.
+which takes camera parameters $\mathbf{q}^j(x_0,y_0,c,X_0,Y_0,Z_0,R_{11},...,R_{33},A_1,A_2,B_1,B_2,C_1,C_2)$, object coordinates of $\mathbf{P}_s$ and $\mathbf{P}_e$ which define a line $\overline{\mathbf{P}_s,\mathbf{P}_e}$, and the observed y-coordinate of the point $\mathbf{p}^j_{l,i}$ in image space, and returns the estimated image coordinates $\hat{\mathbf{p}}^j_{l,i}$ on the back projected line of $\overline{\mathbf{P}_s,\mathbf{P}_e}$.
 %In \cref{eq:obsmodel}, $y^j_{l,i}, i=1,2,...N^j_l$ are the measurements, $P_s$ and $P_e$ are the unknown quantities, $\mathbf{q}^j, j=1,2,...J$ includes  interior and exterior orientations as well as the lens distortion parameters of camera $j$.\newline
 
 Corresponding to \cref{eq:Ffunction_xy}, function $\mathcal{H}$ is composed of
-\begin{equation}
+\begin{equation} \label{eq:obsmodel2}
 \begin{split}
 \hat{x}^j_{l,i} = \mathcal{H}^x(\mathbf{q}^j,\mathbf{P}_s,\mathbf{P}_e,y^j_{l,i})\\
 \hat{y}^j_{l,i} = \mathcal{H}^y(\mathbf{q}^j,\mathbf{P}_s,\mathbf{P}_e,y^j_{l,i})
+\end{split}
+\qquad
+\begin{split}
+\forall i=1,2,...N^j_l,\quad\forall j=1,2,...J
 \end{split}
 \end{equation}
 
@@ -311,112 +333,145 @@ Since the adjustment will be done "segment-wise"--- for a pair of $P_s$ and $P_e
 Thus the subscription $l$ representing specific line segment will be left out in the followings.
 
 \clearpage
-Each image gives $2\times N^j$ observation equations\footnote{Dot equal indicates inconsistencies between the measured values, $x^j_i$ and $x^j_i$, and the computed values, $\mathcal{H}^x(q^j,P_s,P_e,y^j_i)$ and $\mathcal{H}^y(q^j,P_s,P_e,y^j_i)$.}. Often these equations are stacked together and written in vector form as:
-\begin{equation} \label{eq:obs-camera1}
+Each image gives $2\times N^j$ observation equations\footnote{Dot equal indicates inconsistencies between the measured values, $x^j_i$ and $x^j_i$, and the computed values, $\mathcal{H}^x(q^j,P_s,P_e,y^j_i)$ and $\mathcal{H}^y(q^j,P_s,P_e,y^j_i)$.}. These equations are often stacked together and written in vector form as:
+\begin{equation} \label{eq:Ffunction}
 \begin{bmatrix}
- x^j_{1}\\[0.3em]
- x^j_{2}\\[0.3em]
+ x^j_1\\[0.3em]
+ x^j_2\\[0.3em]
  \vdots\\[0.3em]
  x^j_{N^j}\\[0.5em]
- y^j_{1}\\[0.3em]
- y^j_{2}\\[0.3em]
+ \arrayrulecolor{gray} \hline
+ y^j_1\\[0.3em]
+ y^j_2\\[0.3em]
  \vdots\\[0.3em]
- y^j_{N^j}\\[0.8em]
+ y^j_{N^j}\\[0.5em]
 \end{bmatrix}
-\doteq % dot equal indicates inconsistency
+\doteq
 \begin{bmatrix}
- \mathcal{H}^x(\mathbf{q}^j,\mathbf{P}_s,\mathbf{P}_e,y^j_{1})\\[0.3em]
- \mathcal{H}^x(\mathbf{q}^j,\mathbf{P}_s,\mathbf{P}_e,y^j_{2})\\[0.3em]
+ \mathcal{H}^x(\mathbf{q}^j,\hat{\mathbf{P}}_s,\hat{\mathbf{P}}_e,y^j_{1})\\[0.3em]
+ \mathcal{H}^x(\mathbf{q}^j,\hat{\mathbf{P}}_s,\hat{\mathbf{P}}_e,y^j_{2})\\[0.3em]
  \vdots\\[0.3em]
- \mathcal{H}^x(\mathbf{q}^j,\mathbf{P}_s,\mathbf{P}_e,y^j_{N^j})\\[0.5em]
- \mathcal{H}^y(\mathbf{q}^j,\mathbf{P}_s,\mathbf{P}_e,y^j_{1})\\[0.3em]
- \mathcal{H}^y(\mathbf{q}^j,\mathbf{P}_s,\mathbf{P}_e,y^j_{2})\\[0.3em]
+ \mathcal{H}^x(\mathbf{q}^j,\hat{\mathbf{P}}_s,\hat{\mathbf{P}}_e,y^j_{N^j})\\[0.5em]
+ \arrayrulecolor{gray} \hline
+ \mathcal{H}^y(\mathbf{q}^j,\hat{\mathbf{P}}_s,\hat{\mathbf{P}}_e,y^j_{1})\\[0.3em]
+ \mathcal{H}^y(\mathbf{q}^j,\hat{\mathbf{P}}_s,\hat{\mathbf{P}}_e,y^j_{2})\\[0.3em]
  \vdots\\[0.3em]
- \mathcal{H}^y(\mathbf{q}^j,\mathbf{P}_s,\mathbf{P}_e,y^j_{N^j})\\[0.8em]
+ \mathcal{H}^y(\mathbf{q}^j,\hat{\mathbf{P}}_s,\hat{\mathbf{P}}_e,y^j_{N^j})\\[0.5em]
 \end{bmatrix}
 \begin{array}{@{\kern-\nulldelimiterspace}l@{}}
  \left.\begin{array}{@{}c@{}}\\[0.3em] \\[0.3em] \\[0.3em] \\[0.5em] \end{array}\right\} N^j\\
- \left.\begin{array}{@{}c@{}}\\[0.3em] \\[0.3em] \\[0.3em] \\[0.8em] \end{array}\right\} N^j\\
+ \left.\begin{array}{@{}c@{}}\\[0.3em] \\[0.3em] \\[0.3em] \\[0.5em] \end{array}\right\} N^j\\
 \end{array}
 \end{equation}
 
 
 
-For all covering image $j=1,2,...J$, there are $2\times\displaystyle\sum_{j=1}^{J}N^j$ observation equations:
-\begin{equation} \label{eq:obs-camera1}
+In the structure of the Gauss-Markov model, for all covering image $j=1,2,...J$, there are $2\times\displaystyle\sum_{j=1}^{J}N^j$ observation equations:
+\begin{equation} \label{eq:obsvec-allcam}
+\mathbf{l}+\hat{\mathbf{v}}=\mathbf{f}(\hat{\mathbf{x}}):\quad
 \begin{bmatrix}
- x^1_1\\
+ x^1_1\\[0.3em]
  \vdots\\
- x^1_{N^1}\\
- y^1_1\\
+ x^1_{N^1}\\[0.3em]
+ \arrayrulecolor{gray} \hline
+ y^1_1\\[0.3em]
  \vdots\\
- y^1_{N^1}\\
- x^2_1\\
+ y^1_{N^1}\\[0.3em]
+ \arrayrulecolor{gray} \hline
  \vdots\\
- x^2_{N^2}\\
- y^2_1\\
+ \arrayrulecolor{gray} \hline
+ x^J_1\\[0.3em]
  \vdots\\
- y^2_{N^2}\\
+ x^J_{N^J}\\[0.3em]
+ \arrayrulecolor{gray} \hline
+ y^J_1\\[0.3em]
  \vdots\\
- x^J_1\\
- \vdots\\
- x^J_{N^J}\\
- y^J_1\\
- \vdots\\
- y^J_{N^J}
+ y^J_{N^J}\\[0.3em]
 \end{bmatrix}
-\doteq % dot equal indicates inconsistency
++
 \begin{bmatrix}
- \mathcal{H}^x(\mathbf{q}^1,\mathbf{P}_s,\mathbf{P}_e,y^1_1)\\
+ e_{x^1_1}\\[0.3em]
  \vdots\\
- \mathcal{H}^x(\mathbf{q}^1,\mathbf{P}_s,\mathbf{P}_e,y^1_{N^1})\\
- \mathcal{H}^y(\mathbf{q}^1,\mathbf{P}_s,\mathbf{P}_e,y^1_1)\\
+ e_{x^1_{N^1}}\\[0.3em]
+ \arrayrulecolor{gray} \hline
+ e_{y^1_1}\\[0.3em]
  \vdots\\
- \mathcal{H}^y(\mathbf{q}^1,\mathbf{P}_s,\mathbf{P}_e,y^1_{N^1})\\
- \mathcal{H}^x(\mathbf{q}^2,\mathbf{P}_s,\mathbf{P}_e,y^2_1)\\
+ e_{y^1_{N^1}}\\[0.3em]
+ \arrayrulecolor{gray} \hline
  \vdots\\
- \mathcal{H}^x(\mathbf{q}^2,\mathbf{P}_s,\mathbf{P}_e,y^2_{N^2})\\
- \mathcal{H}^y(\mathbf{q}^2,\mathbf{P}_s,\mathbf{P}_e,y^2_1)\\
+ \arrayrulecolor{gray} \hline
+ e_{x^J_1}\\[0.3em]
  \vdots\\
- \mathcal{H}^y(\mathbf{q}^2,\mathbf{P}_s,\mathbf{P}_e,y^2_{N^2})\\
+ e_{x^J_{N^J}}\\[0.3em]
+ \arrayrulecolor{gray} \hline
+ e_{y^J_1}\\[0.3em]
  \vdots\\
- \mathcal{H}^x(\mathbf{q}^J,\mathbf{P}_s,\mathbf{P}_e,y^J_1)\\
+ e_{y^J_{N^J}}\\[0.3em]
+\end{bmatrix}
+=
+\begin{bmatrix}
+ \mathcal{H}^x(\mathbf{q}^1,\mathbf{P}_s,\mathbf{P}_e,y^1_1)\\[0.3em]
  \vdots\\
- \mathcal{H}^x(\mathbf{q}^J,\mathbf{P}_s,\mathbf{P}_e,y^J_{N^J})\\
- \mathcal{H}^y(\mathbf{q}^J,\mathbf{P}_s,\mathbf{P}_e,y^J_1)\\
+ \mathcal{H}^x(\mathbf{q}^1,\mathbf{P}_s,\mathbf{P}_e,y^1_{N^1})\\[0.3em]
+ \arrayrulecolor{gray} \hline
+ \mathcal{H}^y(\mathbf{q}^1,\mathbf{P}_s,\mathbf{P}_e,y^1_1)\\[0.3em]
  \vdots\\
- \mathcal{H}^y(\mathbf{q}^J,\mathbf{P}_s,\mathbf{P}_e,y^J_{N^J})
+ \mathcal{H}^y(\mathbf{q}^1,\mathbf{P}_s,\mathbf{P}_e,y^1_{N^1})\\[0.3em]
+ \arrayrulecolor{gray} \hline
+ \vdots\\
+ \arrayrulecolor{gray} \hline
+ \mathcal{H}^x(\mathbf{q}^J,\mathbf{P}_s,\mathbf{P}_e,y^J_1)\\[0.3em]
+ \vdots\\
+ \mathcal{H}^x(\mathbf{q}^J,\mathbf{P}_s,\mathbf{P}_e,y^J_{N^J})\\[0.3em]
+ \arrayrulecolor{gray} \hline
+ \mathcal{H}^y(\mathbf{q}^J,\mathbf{P}_s,\mathbf{P}_e,y^J_1)\\[0.3em]
+ \vdots\\
+ \mathcal{H}^y(\mathbf{q}^J,\mathbf{P}_s,\mathbf{P}_e,y^J_{N^J})\\[0.3em]
 \end{bmatrix}
 \begin{array}{@{\kern-\nulldelimiterspace}l@{}}
- \left.\begin{array}{@{}c@{}}\\ \\ \\ \\ \\ \\[8pt] \end{array}\right\}2\times N^1\\
- \left.\begin{array}{@{}c@{}}\\ \\ \\ \\ \\ \\[8pt] \end{array}\right\}2\times N^2\\
+ \left.\begin{array}{@{}c@{}}\\ \\ \\ \\ \\ \\[10pt] \end{array}\right\}2\times N^1\\
  \left.\begin{array}{@{}c@{}}\\                     \end{array}\right. \vdots     \\
- \left.\begin{array}{@{}c@{}}\\ \\ \\ \\ \\ \\[8pt] \end{array}\right\}2\times N^J\\
+ \left.\begin{array}{@{}c@{}}\\ \\ \\ \\ \\ \\[10pt] \end{array}\right\}2\times N^J\\
 \end{array}
 \end{equation}
-
+\clearpage
 
 
 
 \subsection{Model of Constraint Equations}
 \label{subsec:ConEqua}
 %At least two constraints are needed to fix rank deficiency???. 
-There are three constraints used in this work:
+There are three constraints on the unknown parameters used in this work:
 \begin{itemize}
-\item Fixing the X, Y coordinates of the start-point using the approximate values:
+\item Fixing the X-, Y-coordinates of the start-point using the approximate values:
 \item [] \begin{equation} \label{eq:constraint1}
-\hat{X}^s=X^s_0
+\hat{X}_s-{X_s}^0=0
 \end{equation}
 \begin{equation} \label{eq:constraint2}
-\hat{Y}^s=Y^s_0
+\hat{Y}_s-{Y_s}^0=0
 \end{equation}
 \item Fixing the length of the line segment (i.e. constraining the relative location of the end-point):
 \begin{equation} \label{eq:constraint3}
-\sqrt{(\hat{X}^s-\hat{X}^e)^2+(\hat{Y}^s-\hat{Y}^e)^2+(\hat{Z}^s-\hat{Z}^e)^2}=S
+\sqrt{(\hat{X}_s-\hat{X}_e)^2+(\hat{Y}_s-\hat{Y}_e)^2+(\hat{Z}_s-\hat{Z}_e)^2}-S=0
 \end{equation}
 \end{itemize}
 
-Note that only in the first line segment reconstruction of a long lane marking, the fixed $X_s$ and $Y_s$ values are from the approximated initial value derived from \cref{sec:LineProjectionOnDSM}. Starting from the second line segment, the fixed values $X_s$ and $Y_s$ depend on the previously determined values.
+Only in the first line segment reconstruction of a long lane marking, the fixed $X_s$ and $Y_s$ values are from the initial parameter estimates derived in \cref{sec:LineProjectionOnDSM}. Starting from the second line segment, the fixed values ${X_s}^0$ and ${Y_s}^0$ depend on the previously determined values.
+
+The constraint equations \eqref{eq:constraint1}, \eqref{eq:constraint2} and \eqref{eq:constraint3} can be stacked together and have the vector form:
+\begin{equation} \label{eq:convec}
+\begin{bmatrix}
+ 0\\[0.3em]
+ 0\\[0.3em]
+ 0\\[0.5em]
+\end{bmatrix}
+=
+\begin{bmatrix}
+ \hat{X}_s-{X_s}^0\\[0.3em]
+ \hat{Y}_s-{Y_s}^0\\[0.3em]
+ \sqrt{(\hat{X}_s-\hat{X}_e)^2+(\hat{Y}_s-\hat{Y}_e)^2+(\hat{Z}_s-\hat{Z}_e)^2}-S\\[0.3em]
+\end{bmatrix}
+\end{equation}
 
 
 \subsection{Non-linear LS Adjustment with Constraints}
@@ -450,7 +505,7 @@ A non-linear equation system is approximated to be locally linear with small ste
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Line Projection on the DSM (Determination of approximative values)}
+\section{Line Projection on the DSM (Determination of Initial Parameter Estimates)}
 \label{sec:LineProjectionOnDSM}
 
 As the equation system in \cref{sec:LSadj} may exhibit multiple local minimum, a "correct" initial approximation of the unknowns is required for convergence to the correct solution. To provide such initial 3D line segment, the extracted line features derived in \cref{sec:LineExtraction} can be projected onto DSM based on the bundle adjusted exterior and interior orientations.
