@@ -223,7 +223,7 @@ To express \eqref{eq:MixModel2-1} and \eqref{eq:MixModel1-2} shortly, a function
 \hat{\mathbf{p}} = \mathcal{F}(\mathbf{p}_s,\mathbf{p}_e,y)
 \end{equation}
 
-which takes 2D coordinates of two points $\mathbf{p_s}(x_s,y_s)$ and $\mathbf{p_e}(x_e,y_e)$ that define an infinite line, and takes the measured y-coordinate $y$ of an image point $\mathbf{p}(x,y)$, and returns the estimated image coordinates $\mathbf{\hat{p}}(\hat{x},\hat{y})$ which lies on the infinite line $\overline{\mathbf{p_s}\mathbf{p_s}}$.
+which takes 2D coordinates of a start-point $\mathbf{p_s}(x_s,y_s)$ and an end-point $\mathbf{p_e}(x_e,y_e)$ that define an infinite line, and takes the measured y-coordinate $y$ of an image point $\mathbf{p}(x,y)$, and returns the estimated image coordinates $\mathbf{\hat{p}}(\hat{x},\hat{y})$ which lies on the infinite line $\overline{\mathbf{p_s}\mathbf{p_s}}$.
 
 Note that as a combination of \eqref{eq:MixModel2-1} and \eqref{eq:MixModel1-2}, function $\mathcal{F}$ is actually composed of
 \begin{equation} \label{eq:Ffunction_xy}
@@ -267,9 +267,7 @@ Correspondingly, the observation equations are line equations in two-point form.
 %Taylor expansion...(local linear approximation)
 %the linear equation can also be expanded
 
-Given the start-point $\mathbf{P}_s(X_s,Y_s,Z_s)$ and the end-point $\mathbf{P}_e(X_e,Y_e,Z_e)$ of a line segment $L$ in the object space. Consider the case where there are $J$ images covering this line segment.
-
-With the expanded collinearity model \eqref{eq:expandedcollinearity}, the start- and end-points of this line segment's back-projection in image $j$ have the image coordinates $\mathbf{p}^j_s(x^j_s,y^j_s)$ and $\mathbf{p}^j_e(x^j_e,y^j_e)$:
+Given a start-point $\mathbf{P}_s(X_s,Y_s,Z_s)$ and an end-point $\mathbf{P}_e(X_e,Y_e,Z_e)$ of a line segment $L$ in the object space and the camera parameters $\mathbf{q}^j$ of camera $j$. Consider the case where there are $J$ images covering this line segment. With the expanded collinearity model \eqref{eq:expandedcollinearity}, the start- and end-points of this line segment's back-projection in image $j$ have the image coordinates $\mathbf{p}^j_s(x^j_s,y^j_s)$ and $\mathbf{p}^j_e(x^j_e,y^j_e)$:
 \begin{equation} \label{eq:obsmodel-collinearity}
 \begin{split}
 \mathbf{p}^j_s = \mathcal{G}(\mathbf{q}^j,\mathbf{P}_s)\\
@@ -312,7 +310,8 @@ Corresponding to \cref{eq:Ffunction_xy}, function $\mathcal{H}$ is composed of
 Since the adjustment will be done "segment-wise"--- for a pair of $P_s$ and $P_e$, the measurements will be collected correspondingly. % see section ???
 Thus the subscription $l$ representing specific line segment will be left out in the followings.
 
-Each image gives $2\times N^j$ observation equations:
+\clearpage
+Each image gives $2\times N^j$ observation equations\footnote{Dot equal indicates inconsistencies between the measured values, $x^j_i$ and $x^j_i$, and the computed values, $\mathcal{H}^x(q^j,P_s,P_e,y^j_i)$ and $\mathcal{H}^y(q^j,P_s,P_e,y^j_i)$.}. Often these equations are stacked together and written in vector form as:
 \begin{equation} \label{eq:obs-camera1}
 \begin{bmatrix}
  x^j_{1}\\[0.3em]
@@ -326,111 +325,77 @@ Each image gives $2\times N^j$ observation equations:
 \end{bmatrix}
 \doteq % dot equal indicates inconsistency
 \begin{bmatrix}
- \mathcal{H}^x(q^1,P_s,P_e,y^j_{1})\\[0.3em]
- \mathcal{H}^x(q^1,P_s,P_e,y^j_{2})\\[0.3em]
+ \mathcal{H}^x(\mathbf{q}^j,\mathbf{P}_s,\mathbf{P}_e,y^j_{1})\\[0.3em]
+ \mathcal{H}^x(\mathbf{q}^j,\mathbf{P}_s,\mathbf{P}_e,y^j_{2})\\[0.3em]
  \vdots\\[0.3em]
- \mathcal{H}^x(q^1,P_s,P_e,y^j_{N^j})\\[0.5em]
- \mathcal{H}^y(q^1,P_s,P_e,y^j_{1})\\[0.3em]
- \mathcal{H}^y(q^1,P_s,P_e,y^j_{2})\\[0.3em]
+ \mathcal{H}^x(\mathbf{q}^j,\mathbf{P}_s,\mathbf{P}_e,y^j_{N^j})\\[0.5em]
+ \mathcal{H}^y(\mathbf{q}^j,\mathbf{P}_s,\mathbf{P}_e,y^j_{1})\\[0.3em]
+ \mathcal{H}^y(\mathbf{q}^j,\mathbf{P}_s,\mathbf{P}_e,y^j_{2})\\[0.3em]
  \vdots\\[0.3em]
- \mathcal{H}^y(q^1,P_s,P_e,y^j_{N^j})\\[0.8em]
+ \mathcal{H}^y(\mathbf{q}^j,\mathbf{P}_s,\mathbf{P}_e,y^j_{N^j})\\[0.8em]
 \end{bmatrix}
 \begin{array}{@{\kern-\nulldelimiterspace}l@{}}
- \left.\begin{array}{@{}c@{}}\\[0.3em] \\[0.3em] \\[0.3em] \\[0.5em] \end{array}\right\}2\times N^j\\
- \left.\begin{array}{@{}c@{}}\\[0.3em] \\[0.3em] \\[0.3em] \\[0.8em] \end{array}\right\}2\times N^j\\
+ \left.\begin{array}{@{}c@{}}\\[0.3em] \\[0.3em] \\[0.3em] \\[0.5em] \end{array}\right\} N^j\\
+ \left.\begin{array}{@{}c@{}}\\[0.3em] \\[0.3em] \\[0.3em] \\[0.8em] \end{array}\right\} N^j\\
 \end{array}
 \end{equation}
-\footnote{Dot equal indicates inconsistencies between the measured values, $x^j_i$ and $x^j_i$, and the computed values, $\mathcal{H}^y(q^j,P_s,P_e,y^j_i)$.}
 
 
-For all covering image $j=1,2,...J$, there are $2\times\displaystyle\sum_{j=1}^{J}N^j$ observation equations. Often these equations are stacked together and written in vector form as:
 
+For all covering image $j=1,2,...J$, there are $2\times\displaystyle\sum_{j=1}^{J}N^j$ observation equations:
 \begin{equation} \label{eq:obs-camera1}
 \begin{bmatrix}
- x^1_{1}\\[0.3em]
- x^1_{2}\\[0.3em]
- \vdots\\[0.3em]
- x^1_{N^1}\\[0.5em]
- y^1_{1}\\[0.3em]
- y^1_{2}\\[0.3em]
- \vdots\\[0.3em]
- y^1_{N^1}\\[0.8em]
- x^2_{1}\\[0.3em]
- x^2_{2}\\[0.3em]
- \vdots\\[0.3em]
- x^2_{N^1}\\[0.5em]
- y^2_{1}\\[0.3em]
- y^2_{2}\\[0.3em]
- \vdots\\[0.3em]
- y^2_{N^1}\\[0.8em]
- \vdots\\[0.3em]
- x^J_{1}\\[0.3em]
- x^J_{2}\\[0.3em]
- \vdots\\[0.3em]
- x^J_{N^1}\\[0.5em]
- y^J_{1}\\[0.3em]
- y^J_{2}\\[0.3em]
- \vdots\\[0.3em]
- y^J_{N^1}
+ x^1_1\\
+ \vdots\\
+ x^1_{N^1}\\
+ y^1_1\\
+ \vdots\\
+ y^1_{N^1}\\
+ x^2_1\\
+ \vdots\\
+ x^2_{N^2}\\
+ y^2_1\\
+ \vdots\\
+ y^2_{N^2}\\
+ \vdots\\
+ x^J_1\\
+ \vdots\\
+ x^J_{N^J}\\
+ y^J_1\\
+ \vdots\\
+ y^J_{N^J}
 \end{bmatrix}
 \doteq % dot equal indicates inconsistency
 \begin{bmatrix}
- \mathcal{H}^x(q^1,P_s,P_e,y^1_{1})\\[0.3em]
- \mathcal{H}^x(q^1,P_s,P_e,y^1_{2})\\[0.3em]
- \vdots\\[0.3em]
- \mathcal{H}^x(q^1,P_s,P_e,y^1_{N^1})\\[0.5em]
- \mathcal{H}^y(q^1,P_s,P_e,y^1_{1})\\[0.3em]
- \mathcal{H}^y(q^1,P_s,P_e,y^1_{2})\\[0.3em]
- \vdots\\[0.3em]
- \mathcal{H}^y(q^1,P_s,P_e,y^1_{N^1})\\[0.8em]
- \mathcal{H}^x(q^2,P_s,P_e,y^2_{1})\\[0.3em]
- \mathcal{H}^x(q^2,P_s,P_e,y^2_{2})\\[0.3em]
- \vdots\\[0.3em]
- \mathcal{H}^x(q^2,P_s,P_e,y^2_{N^1})\\[0.5em]
- \mathcal{H}^y(q^2,P_s,P_e,y^2_{1})\\[0.3em]
- \mathcal{H}^y(q^2,P_s,P_e,y^2_{2})\\[0.3em]
- \vdots\\[0.3em]
- \mathcal{H}^y(q^2,P_s,P_e,y^2_{N^1})\\[0.8em]
- \vdots\\[0.3em]
- \mathcal{H}^x(q^J,P_s,P_e,y^J_{1})\\[0.3em]
- \mathcal{H}^x(q^J,P_s,P_e,y^J_{2})\\[0.3em]
- \vdots\\[0.3em]
- \mathcal{H}^x(q^J,P_s,P_e,y^J_{N^1})\\[0.5em]
- \mathcal{H}^y(q^J,P_s,P_e,y^J_{1})\\[0.3em]
- \mathcal{H}^y(q^J,P_s,P_e,y^J_{2})\\[0.3em]
- \vdots\\[0.3em]
- \mathcal{H}^y(q^J,P_s,P_e,y^J_{N^1})
+ \mathcal{H}^x(\mathbf{q}^1,\mathbf{P}_s,\mathbf{P}_e,y^1_1)\\
+ \vdots\\
+ \mathcal{H}^x(\mathbf{q}^1,\mathbf{P}_s,\mathbf{P}_e,y^1_{N^1})\\
+ \mathcal{H}^y(\mathbf{q}^1,\mathbf{P}_s,\mathbf{P}_e,y^1_1)\\
+ \vdots\\
+ \mathcal{H}^y(\mathbf{q}^1,\mathbf{P}_s,\mathbf{P}_e,y^1_{N^1})\\
+ \mathcal{H}^x(\mathbf{q}^2,\mathbf{P}_s,\mathbf{P}_e,y^2_1)\\
+ \vdots\\
+ \mathcal{H}^x(\mathbf{q}^2,\mathbf{P}_s,\mathbf{P}_e,y^2_{N^2})\\
+ \mathcal{H}^y(\mathbf{q}^2,\mathbf{P}_s,\mathbf{P}_e,y^2_1)\\
+ \vdots\\
+ \mathcal{H}^y(\mathbf{q}^2,\mathbf{P}_s,\mathbf{P}_e,y^2_{N^2})\\
+ \vdots\\
+ \mathcal{H}^x(\mathbf{q}^J,\mathbf{P}_s,\mathbf{P}_e,y^J_1)\\
+ \vdots\\
+ \mathcal{H}^x(\mathbf{q}^J,\mathbf{P}_s,\mathbf{P}_e,y^J_{N^J})\\
+ \mathcal{H}^y(\mathbf{q}^J,\mathbf{P}_s,\mathbf{P}_e,y^J_1)\\
+ \vdots\\
+ \mathcal{H}^y(\mathbf{q}^J,\mathbf{P}_s,\mathbf{P}_e,y^J_{N^J})
 \end{bmatrix}
 \begin{array}{@{\kern-\nulldelimiterspace}l@{}}
- \left.\begin{array}{@{}c@{}}\\[0.3em] \\[0.3em] \\[0.3em] \\[0.5em] \\[0.3em] \\[0.3em] \\[0.3em] \\[0.8em] \end{array}\right\}2\times N^1\\
- \left.\begin{array}{@{}c@{}}\\[0.3em] \\[0.3em] \\[0.3em] \\[0.5em] \\[0.3em] \\[0.3em] \\[0.3em] \\[0.8em] \end{array}\right\}2\times N^2\\
- \left.\begin{array}{@{}c@{}}\\[0.3em]                              \end{array}\right\}     \\
- \left.\begin{array}{@{}c@{}}\\[0.3em] \\[0.3em] \\[0.3em] \\[0.5em] \\[0.3em] \\[0.3em] \\[0.3em] \\[0.8em] \end{array}\right\}2\times N^J\\
+ \left.\begin{array}{@{}c@{}}\\ \\ \\ \\ \\ \\[8pt] \end{array}\right\}2\times N^1\\
+ \left.\begin{array}{@{}c@{}}\\ \\ \\ \\ \\ \\[8pt] \end{array}\right\}2\times N^2\\
+ \left.\begin{array}{@{}c@{}}\\                     \end{array}\right. \vdots     \\
+ \left.\begin{array}{@{}c@{}}\\ \\ \\ \\ \\ \\[8pt] \end{array}\right\}2\times N^J\\
 \end{array}
 \end{equation}
 
 
-%\begin{equation} \label{eq:obs-cameraJ}
-%\begin{bmatrix}
-%n^1_{l,i,y}\\[0.3em]
-%n^1_{l,i,x}\\[0.3em]
-%n^2_{l,i,y}\\[0.3em]
-%n^2_{l,i,x}\\[0.3em]
-%...\\[0.3em]
-%n^J_{l,N^1,y}\\[0.3em]
-%n^J_{l,N^1,x}
-%\end{bmatrix}
-%\doteq % dot equal indicates inconsistency
-%\begin{bmatrix}
-%\mathcal{H}(q^1,P_s,P_e,n^1_{l,i,y})\\[0.3em]
-%\mathcal{H}(q^1,P_s,P_e,n^1_{l,i,x})\\[0.3em]
-%\mathcal{H}(q^2,P_s,P_e,n^2_{l,i,y})\\[0.3em]
-%\mathcal{H}(q^2,P_s,P_e,n^2_{l,i,x})\\[0.3em]
-%...\\[0.3em]
-%\mathcal{H}(q^J,P_s,P_e,n^J_{l,i,y})\\[0.3em]
-%\mathcal{H}(q^J,P_s,P_e,n^J_{l,i,x})
-%\end{bmatrix}
-%\end{equation}
 
 
 \subsection{Model of Constraint Equations}
