@@ -145,7 +145,6 @@ y =& y_0-c\dfrac{R_{12}(X-X_0)+R_{22}(Y-Y_0)+R_{32}(Z-Z_0)}{R_{13}(X-X_0)+R_{23}
 \end{equation}
 
 To express \eqref{eq:expandedcollinearity} shortly, a function $\mathcal{G}$ is defined as
-
 \begin{equation} \label{eq:Gfunction}
 \mathbf{p} = \mathcal{G}(\mathbf{q},\mathbf{P}) 
 \end{equation}
@@ -364,9 +363,7 @@ Each image gives $2\times N^j$ observation equations\footnote{Dot equal indicate
 \end{array}
 \end{equation}
 
-
-
-In the structure of the Gauss-Markov model, for all covering image $j=1,2,...J$, there are $2\times\displaystyle\sum_{j=1}^{J}N^j$ observation equations:
+For all covering image $j=1,2,...J$, there are $2\times\displaystyle\sum_{j=1}^{J}N^j$ observation equations (being written in the structure of the Gauss-Markov model):
 \begin{equation} \label{eq:obsvec-allcam}
 \mathbf{l}+\hat{\mathbf{v}}=\mathbf{f}(\hat{\mathbf{x}}):\quad
 \begin{bmatrix}
@@ -390,48 +387,48 @@ In the structure of the Gauss-Markov model, for all covering image $j=1,2,...J$,
 \end{bmatrix}
 +
 \begin{bmatrix}
- e_{x^1_1}\\[0.3em]
+ \hat{e}_{x^1_1}\\[0.3em]
  \vdots\\
- e_{x^1_{N^1}}\\[0.3em]
+ \hat{e}_{x^1_{N^1}}\\[0.3em]
  \arrayrulecolor{gray} \hline
- e_{y^1_1}\\[0.3em]
+ \hat{e}_{y^1_1}\\[0.3em]
  \vdots\\
- e_{y^1_{N^1}}\\[0.3em]
+ \hat{e}_{y^1_{N^1}}\\[0.3em]
  \arrayrulecolor{gray} \hline
  \vdots\\
  \arrayrulecolor{gray} \hline
- e_{x^J_1}\\[0.3em]
+ \hat{e}_{x^J_1}\\[0.3em]
  \vdots\\
- e_{x^J_{N^J}}\\[0.3em]
+ \hat{e}_{x^J_{N^J}}\\[0.3em]
  \arrayrulecolor{gray} \hline
- e_{y^J_1}\\[0.3em]
+ \hat{e}_{y^J_1}\\[0.3em]
  \vdots\\
- e_{y^J_{N^J}}\\[0.3em]
+ \hat{e}_{y^J_{N^J}}\\[0.3em]
 \end{bmatrix}
 =
 \begin{bmatrix}
- \mathcal{H}^x(\mathbf{q}^1,\mathbf{P}_s,\mathbf{P}_e,y^1_1)\\[0.3em]
+ \mathcal{H}^x(\mathbf{q}^1,\hat{\mathbf{P}}_s,\hat{\mathbf{P}}_e,y^1_1)\\[0.3em]
  \vdots\\
- \mathcal{H}^x(\mathbf{q}^1,\mathbf{P}_s,\mathbf{P}_e,y^1_{N^1})\\[0.3em]
+ \mathcal{H}^x(\mathbf{q}^1,\hat{\mathbf{P}}_s,\hat{\mathbf{P}}_e,y^1_{N^1})\\[0.3em]
  \arrayrulecolor{gray} \hline
- \mathcal{H}^y(\mathbf{q}^1,\mathbf{P}_s,\mathbf{P}_e,y^1_1)\\[0.3em]
+ \mathcal{H}^y(\mathbf{q}^1,\hat{\mathbf{P}}_s,\hat{\mathbf{P}}_e,y^1_1)\\[0.3em]
  \vdots\\
- \mathcal{H}^y(\mathbf{q}^1,\mathbf{P}_s,\mathbf{P}_e,y^1_{N^1})\\[0.3em]
+ \mathcal{H}^y(\mathbf{q}^1,\hat{\mathbf{P}}_s,\hat{\mathbf{P}}_e,y^1_{N^1})\\[0.3em]
  \arrayrulecolor{gray} \hline
  \vdots\\
  \arrayrulecolor{gray} \hline
- \mathcal{H}^x(\mathbf{q}^J,\mathbf{P}_s,\mathbf{P}_e,y^J_1)\\[0.3em]
+ \mathcal{H}^x(\mathbf{q}^J,\hat{\mathbf{P}}_s,\hat{\mathbf{P}}_e,y^J_1)\\[0.3em]
  \vdots\\
- \mathcal{H}^x(\mathbf{q}^J,\mathbf{P}_s,\mathbf{P}_e,y^J_{N^J})\\[0.3em]
+ \mathcal{H}^x(\mathbf{q}^J,\hat{\mathbf{P}}_s,\hat{\mathbf{P}}_e,y^J_{N^J})\\[0.3em]
  \arrayrulecolor{gray} \hline
- \mathcal{H}^y(\mathbf{q}^J,\mathbf{P}_s,\mathbf{P}_e,y^J_1)\\[0.3em]
+ \mathcal{H}^y(\mathbf{q}^J,\hat{\mathbf{P}}_s,\hat{\mathbf{P}}_e,y^J_1)\\[0.3em]
  \vdots\\
- \mathcal{H}^y(\mathbf{q}^J,\mathbf{P}_s,\mathbf{P}_e,y^J_{N^J})\\[0.3em]
+ \mathcal{H}^y(\mathbf{q}^J,\hat{\mathbf{P}}_s,\hat{\mathbf{P}}_e,y^J_{N^J})\\[0.3em]
 \end{bmatrix}
 \begin{array}{@{\kern-\nulldelimiterspace}l@{}}
- \left.\begin{array}{@{}c@{}}\\ \\ \\ \\ \\ \\[10pt] \end{array}\right\}2\times N^1\\
+ \left.\begin{array}{@{}c@{}}\\ \\ \\ \\ \\ \\[18pt] \end{array}\right\}2\times N^1\\
  \left.\begin{array}{@{}c@{}}\\                     \end{array}\right. \vdots     \\
- \left.\begin{array}{@{}c@{}}\\ \\ \\ \\ \\ \\[10pt] \end{array}\right\}2\times N^J\\
+ \left.\begin{array}{@{}c@{}}\\ \\ \\ \\ \\ \\[18pt] \end{array}\right\}2\times N^J\\
 \end{array}
 \end{equation}
 \clearpage
@@ -458,8 +455,9 @@ There are three constraints on the unknown parameters used in this work:
 
 Only in the first line segment reconstruction of a long lane marking, the fixed $X_s$ and $Y_s$ values are from the initial parameter estimates derived in \cref{sec:LineProjectionOnDSM}. Starting from the second line segment, the fixed values ${X_s}^0$ and ${Y_s}^0$ depend on the previously determined values.
 
-The constraint equations \eqref{eq:constraint1}, \eqref{eq:constraint2} and \eqref{eq:constraint3} can be stacked together and have the vector form:
+The constraint equations \eqref{eq:constraint1}, \eqref{eq:constraint2} and \eqref{eq:constraint3} can be stacked together in the vector form:
 \begin{equation} \label{eq:convec}
+h(\hat{\mathbf{x}})=0:\quad
 \begin{bmatrix}
  0\\[0.3em]
  0\\[0.3em]
