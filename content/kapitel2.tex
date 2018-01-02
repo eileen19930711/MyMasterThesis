@@ -216,29 +216,23 @@ x_i - e_{x_i}= (x_1-\dfrac{(x_2-x_1)}{(y_2-y_1)}\times y_1) + \dfrac{(x_2-x_1)}{
 \begin{equation} \tag{\ref{eq:MixModel1-2} revisited}
 y_i-e_{y_i} = \bar{y_i}
 \end{equation}
-As the observations are non-linear functions of the unknown parameters, \cref{eq:MixModel2-1} and \cref{eq:MixModel1-2} form a non-linear LS model. % !!!!!!!!!!!!!!!
 
 To express \eqref{eq:MixModel2-1} and \eqref{eq:MixModel1-2} shortly, a function $\mathcal{F}$ is defined as
 
 \begin{equation} \label{eq:Ffunction}
-\mathbf{\hat{p}} = \mathcal{F}(\mathbf{p_s},\mathbf{p_e},x)
+\hat{\mathbf{p}} = \mathcal{F}(\mathbf{p}_s,\mathbf{p}_e,y)
 \end{equation}
 
-which takes 2D coordinates of two points $\mathbf{p_s}(x_s,y_s)$ and $\mathbf{p_e}(x_e,y_e)$ that define an infinite line, and takes the measured x-coordinate $x$ of an image point $\mathbf{p}(x,y)$, and returns the estimated image coordinates $\mathbf{\hat{p}}(\hat{x},\hat{y})$ which lies on the infinite line $\overline{\mathbf{p_s}\mathbf{p_s}}$.
+which takes 2D coordinates of two points $\mathbf{p_s}(x_s,y_s)$ and $\mathbf{p_e}(x_e,y_e)$ that define an infinite line, and takes the measured y-coordinate $y$ of an image point $\mathbf{p}(x,y)$, and returns the estimated image coordinates $\mathbf{\hat{p}}(\hat{x},\hat{y})$ which lies on the infinite line $\overline{\mathbf{p_s}\mathbf{p_s}}$.
 
 Note that as a combination of \eqref{eq:MixModel2-1} and \eqref{eq:MixModel1-2}, function $\mathcal{F}$ is actually composed of
 \begin{equation} \label{eq:Ffunction_xy}
 \begin{split}
-\hat{x} = \mathcal{F}^x(\mathbf{p_s},\mathbf{p_e},x)\\
-\hat{y} = \mathcal{F}^y(\mathbf{p_s},\mathbf{p_e},x)
+\hat{x} = \mathcal{F}^x(\mathbf{p}_s,\mathbf{p}_e,y)\\
+\hat{y} = \mathcal{F}^y(\mathbf{p}_s,\mathbf{p}_e,y)
 \end{split}
 \end{equation}
 
-% % %
-% which can be further rewritten:
-%forms the observation equation
-%Taylor expansion...(local linear approximation)
-%the linear equation can also be expanded
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{3D line reconstruction through non-linear LS Adjustment}
@@ -267,12 +261,19 @@ Correspondingly, the observation equations are line equations in two-point form.
 
 \subsection{Model of Observation Equations}
 \label{subsec:ObsEqua}
+% As the observations are non-linear functions of the unknown parameters, \cref{eq:MixModel2-1} and \cref{eq:MixModel1-2} form a non-linear LS model. % !!!!!!!!!!!!!!!
+% % %
+% which can be further rewritten:
+%Taylor expansion...(local linear approximation)
+%the linear equation can also be expanded
 
-Given the start-point $P_s(X_s,Y_s,Z_s)$ and the end-point $P_e(X_e,Y_e,Z_e)$ of a line segment in the object space and considering the case where there are $J$ images covering this line segment,  the start- and end-points of this line segment's back-projection in image $j$ have the image coordinates $p^j_s(x^j_s,y^j_s)$ and $p^j_e(x^j_e,y^j_e)$:
+Given the start-point $\mathbf{P}_s(X_s,Y_s,Z_s)$ and the end-point $\mathbf{P}_e(X_e,Y_e,Z_e)$ of a line segment $L$ in the object space. Consider the case where there are $J$ images covering this line segment.
+
+With the expanded collinearity model \eqref{eq:expandedcollinearity}, the start- and end-points of this line segment's back-projection in image $j$ have the image coordinates $\mathbf{p}^j_s(x^j_s,y^j_s)$ and $\mathbf{p}^j_e(x^j_e,y^j_e)$:
 \begin{equation} \label{eq:obsmodel-collinearity}
 \begin{split}
-p^j_s = \mathcal{G}(q^j,P_s)\\
-p^j_e = \mathcal{G}(q^j,P_e)
+\mathbf{p}^j_s = \mathcal{G}(\mathbf{q}^j,\mathbf{P}_s)\\
+\mathbf{p}^j_e = \mathcal{G}(\mathbf{q}^j,\mathbf{P}_e)
 \end{split}
 \qquad
 \begin{split}
@@ -280,63 +281,134 @@ p^j_e = \mathcal{G}(q^j,P_e)
 \end{split}
 \end{equation}
 
-Let $l^j$ be an extracted line on image $j$ where there are $L^j$ extracted lines in this image, and $n^j_{l,i}$ be a point in line $l^j$ where this line consists of $N^j_l$ points. Given a measured x coordinate $n^j_{l,i,x}$ of a point $n^j_{l,i}$, the estimated image coordinates $\hat{n}^j_{l,i}(\hat{x}^j_{l,i},\hat{y}^j_{l,i})$ on the infinite line $\overline{p^j_s,p^j_e}$ computed from \cref{eq:Ffunction} are:
+Let $l^j$ be the corresponding line segment of $L$ being extracted (observed) on image $j$. Given a dataset $\{x^j_{l,i},y^j_{l,i}\}^{N^j_l}_{i=1}$ of $N^j_l$ points on line segment $l^j$, their estimated image coordinates $\hat{\mathbf{p}}^j_{l,i}(\hat{x}^j_{l,i},\hat{y}^j_{l,i})$ on the infinite line $\overline{\mathbf{p}^j_s,\mathbf{p}^j_e}$ computed from the orthogonal regression model \eqref{eq:Ffunction} are:
 \begin{equation} \label{eq:obsmodel-linefitting}
-\hat{n}^j_{l,i} = \mathcal{F}(p^j_s,p^j_e,n^j_{l,i,x})
+\hat{\mathbf{p}}^j_{l,i} = \mathcal{F}(\mathbf{p}^j_s,\mathbf{p}^j_e,y^j_{l,i})
 \qquad
 \forall i=1,2,...N^j_l
 \end{equation}
 
-Writing \eqref{eq:obsmodel-collinearity} into \eqref{eq:obsmodel-linefitting} gives a function $\mathcal{H}$:
+
+Combining \eqref{eq:obsmodel-collinearity} with \eqref{eq:obsmodel-linefitting} gives function $\mathcal{H}$:
 \begin{equation} \label{eq:obsmodel}
 \begin{split}
-\hat{n}^j_{l,i} &= \mathcal{F}(\mathcal{G}(q^j,P_s),\mathcal{G}(q^j,P_e),n^j_{l,i,x})\\
-&=\mathcal{H}(q^j,P_s,P_e,n^j_{l,i,x})
+\hat{\mathbf{p}}^j_{l,i} &= \mathcal{F}(\mathcal{G}(\mathbf{q}^j,\mathbf{P}_s),\mathcal{G}(\mathbf{q}^j,\mathbf{P}_e),y^j_{l,i})\\
+&=\mathcal{H}(\mathbf{q}^j,\mathbf{P}_s,\mathbf{P}_e,y^j_{l,i})
 \qquad
-\forall i=1,2,...N^j_l,\quad\forall l=1,2,...L^j,\quad\forall j=1,2,...J
+\forall i=1,2,...N^j_l,\quad\forall j=1,2,...J
 \end{split}
 \end{equation}
-where $n^j_{l,i,x}\quad\forall i=1,2,...N^j_l$ are the measurements, $P_s$ and $P_e$ are the unknowns, $q^j\quad\forall j=1,2,...J$ includes the known interior and exterior orientations of camera $j$.\newline
+%which takes the known camera parameters $\mathbf{q}^j(x_0,y_0,c,X_0,Y_0,Z_0,R_{11},...,R_{33},A_1,A_2,B_1,B_2,C_1,C_2)$, the unknown object coordinates of $\mathbf{P}_s$ and $\mathbf{P}_e$, and the observed y-coordinate of the point $\mathbf{p}^j_{l,i}$ in image space, and returns the estimated image coordinates $\hat{\mathbf{p}}^j_{l,i}$ of point $\mathbf{p}^j_{l,i}$ on the back projected line of $\overline{\mathbf{P}_s,\mathbf{P}_e}$.
+%In \cref{eq:obsmodel}, $y^j_{l,i}, i=1,2,...N^j_l$ are the measurements, $P_s$ and $P_e$ are the unknown quantities, $\mathbf{q}^j, j=1,2,...J$ includes  interior and exterior orientations as well as the lens distortion parameters of camera $j$.\newline
 
-Correspond to \cref{eq:Ffunction_xy}, function $\mathcal{H}$ is composed of
+Corresponding to \cref{eq:Ffunction_xy}, function $\mathcal{H}$ is composed of
 \begin{equation}
 \begin{split}
-\hat{n}^j_{l,i,x} = \mathcal{H}^x(q^j,P_s,P_e,n^j_{l,i,x})\\
-\hat{n}^j_{l,i,y} = \mathcal{H}^y(q^j,P_s,P_e,n^j_{l,i,x})
+\hat{x}^j_{l,i} = \mathcal{H}^x(\mathbf{q}^j,\mathbf{P}_s,\mathbf{P}_e,y^j_{l,i})\\
+\hat{y}^j_{l,i} = \mathcal{H}^y(\mathbf{q}^j,\mathbf{P}_s,\mathbf{P}_e,y^j_{l,i})
 \end{split}
 \end{equation}
 
-Since the adjustment is done "segment-wise"--- for a pair of $P_s$ and $P_e$, the measurements are collected correspondingly. Thus the subscription $l$ representing specific line segment will be left out in the followings.
+Since the adjustment will be done "segment-wise"--- for a pair of $P_s$ and $P_e$, the measurements will be collected correspondingly. % see section ???
+Thus the subscription $l$ representing specific line segment will be left out in the followings.
 
-For an image $j=1$ there are $2\times N^j$ observation equations:
-
+Each image gives $2\times N^j$ observation equations:
 \begin{equation} \label{eq:obs-camera1}
 \begin{bmatrix}
-n^1_{1,y}\\[0.3em]
-n^1_{2,y}\\[0.3em]
-...\\[0.3em]
-n^1_{N^1,y}\\[0.5em]
-n^1_{1,x}\\[0.3em]
-n^1_{2,x}\\[0.3em]
-...\\[0.3em]
-n^1_{N^1,x}
+ x^j_{1}\\[0.3em]
+ x^j_{2}\\[0.3em]
+ \vdots\\[0.3em]
+ x^j_{N^j}\\[0.5em]
+ y^j_{1}\\[0.3em]
+ y^j_{2}\\[0.3em]
+ \vdots\\[0.3em]
+ y^j_{N^j}\\[0.8em]
 \end{bmatrix}
 \doteq % dot equal indicates inconsistency
 \begin{bmatrix}
-\mathcal{H}^y(q^1,P_s,P_e,n^1_{1,x})\\[0.3em]
-\mathcal{H}^y(q^1,P_s,P_e,n^1_{2,x})\\[0.3em]
-...\\[0.3em]
-\mathcal{H}^y(q^1,P_s,P_e,n^1_{N^1,x})\\[0.5em]
-\mathcal{H}^x(q^1,P_s,P_e,n^1_{1,x})\\[0.3em]
-\mathcal{H}^x(q^1,P_s,P_e,n^1_{2,x})\\[0.3em]
-...\\[0.3em]
-\mathcal{H}^x(q^1,P_s,P_e,n^1_{N^1,x})
+ \mathcal{H}^x(q^1,P_s,P_e,y^j_{1})\\[0.3em]
+ \mathcal{H}^x(q^1,P_s,P_e,y^j_{2})\\[0.3em]
+ \vdots\\[0.3em]
+ \mathcal{H}^x(q^1,P_s,P_e,y^j_{N^j})\\[0.5em]
+ \mathcal{H}^y(q^1,P_s,P_e,y^j_{1})\\[0.3em]
+ \mathcal{H}^y(q^1,P_s,P_e,y^j_{2})\\[0.3em]
+ \vdots\\[0.3em]
+ \mathcal{H}^y(q^1,P_s,P_e,y^j_{N^j})\\[0.8em]
 \end{bmatrix}
+\begin{array}{@{\kern-\nulldelimiterspace}l@{}}
+ \left.\begin{array}{@{}c@{}}\\[0.3em] \\[0.3em] \\[0.3em] \\[0.5em] \end{array}\right\}2\times N^j\\
+ \left.\begin{array}{@{}c@{}}\\[0.3em] \\[0.3em] \\[0.3em] \\[0.8em] \end{array}\right\}2\times N^j\\
+\end{array}
+\end{equation}
+\footnote{Dot equal indicates inconsistencies between the measured values, $x^j_i$ and $x^j_i$, and the computed values, $\mathcal{H}^y(q^j,P_s,P_e,y^j_i)$.}
+
+
+For all covering image $j=1,2,...J$, there are $2\times\displaystyle\sum_{j=1}^{J}N^j$ observation equations. Often these equations are stacked together and written in vector form as:
+
+\begin{equation} \label{eq:obs-camera1}
+\begin{bmatrix}
+ x^1_{1}\\[0.3em]
+ x^1_{2}\\[0.3em]
+ \vdots\\[0.3em]
+ x^1_{N^1}\\[0.5em]
+ y^1_{1}\\[0.3em]
+ y^1_{2}\\[0.3em]
+ \vdots\\[0.3em]
+ y^1_{N^1}\\[0.8em]
+ x^2_{1}\\[0.3em]
+ x^2_{2}\\[0.3em]
+ \vdots\\[0.3em]
+ x^2_{N^1}\\[0.5em]
+ y^2_{1}\\[0.3em]
+ y^2_{2}\\[0.3em]
+ \vdots\\[0.3em]
+ y^2_{N^1}\\[0.8em]
+ \vdots\\[0.3em]
+ x^J_{1}\\[0.3em]
+ x^J_{2}\\[0.3em]
+ \vdots\\[0.3em]
+ x^J_{N^1}\\[0.5em]
+ y^J_{1}\\[0.3em]
+ y^J_{2}\\[0.3em]
+ \vdots\\[0.3em]
+ y^J_{N^1}
+\end{bmatrix}
+\doteq % dot equal indicates inconsistency
+\begin{bmatrix}
+ \mathcal{H}^x(q^1,P_s,P_e,y^1_{1})\\[0.3em]
+ \mathcal{H}^x(q^1,P_s,P_e,y^1_{2})\\[0.3em]
+ \vdots\\[0.3em]
+ \mathcal{H}^x(q^1,P_s,P_e,y^1_{N^1})\\[0.5em]
+ \mathcal{H}^y(q^1,P_s,P_e,y^1_{1})\\[0.3em]
+ \mathcal{H}^y(q^1,P_s,P_e,y^1_{2})\\[0.3em]
+ \vdots\\[0.3em]
+ \mathcal{H}^y(q^1,P_s,P_e,y^1_{N^1})\\[0.8em]
+ \mathcal{H}^x(q^2,P_s,P_e,y^2_{1})\\[0.3em]
+ \mathcal{H}^x(q^2,P_s,P_e,y^2_{2})\\[0.3em]
+ \vdots\\[0.3em]
+ \mathcal{H}^x(q^2,P_s,P_e,y^2_{N^1})\\[0.5em]
+ \mathcal{H}^y(q^2,P_s,P_e,y^2_{1})\\[0.3em]
+ \mathcal{H}^y(q^2,P_s,P_e,y^2_{2})\\[0.3em]
+ \vdots\\[0.3em]
+ \mathcal{H}^y(q^2,P_s,P_e,y^2_{N^1})\\[0.8em]
+ \vdots\\[0.3em]
+ \mathcal{H}^x(q^J,P_s,P_e,y^J_{1})\\[0.3em]
+ \mathcal{H}^x(q^J,P_s,P_e,y^J_{2})\\[0.3em]
+ \vdots\\[0.3em]
+ \mathcal{H}^x(q^J,P_s,P_e,y^J_{N^1})\\[0.5em]
+ \mathcal{H}^y(q^J,P_s,P_e,y^J_{1})\\[0.3em]
+ \mathcal{H}^y(q^J,P_s,P_e,y^J_{2})\\[0.3em]
+ \vdots\\[0.3em]
+ \mathcal{H}^y(q^J,P_s,P_e,y^J_{N^1})
+\end{bmatrix}
+\begin{array}{@{\kern-\nulldelimiterspace}l@{}}
+ \left.\begin{array}{@{}c@{}}\\[0.3em] \\[0.3em] \\[0.3em] \\[0.5em] \\[0.3em] \\[0.3em] \\[0.3em] \\[0.8em] \end{array}\right\}2\times N^1\\
+ \left.\begin{array}{@{}c@{}}\\[0.3em] \\[0.3em] \\[0.3em] \\[0.5em] \\[0.3em] \\[0.3em] \\[0.3em] \\[0.8em] \end{array}\right\}2\times N^2\\
+ \left.\begin{array}{@{}c@{}}\\[0.3em]                              \end{array}\right\}     \\
+ \left.\begin{array}{@{}c@{}}\\[0.3em] \\[0.3em] \\[0.3em] \\[0.5em] \\[0.3em] \\[0.3em] \\[0.3em] \\[0.8em] \end{array}\right\}2\times N^J\\
+\end{array}
 \end{equation}
 
-Note that dot equal indicates inconsistency between the measured value, $n^j_i$, and the computed value, $\mathcal{H}^y(q^j,P_s,P_e,n^j_i)$.
-
-For all covering image $j=1,2,...J$ there are $2\times\displaystyle\sum_{j=1}^{J}N^j$ observation equations.
 
 %\begin{equation} \label{eq:obs-cameraJ}
 %\begin{bmatrix}
@@ -386,7 +458,7 @@ Note that only in the first line segment reconstruction of a long lane marking, 
 \label{subsec:LSadj}
 % Add the relevant equations
 % This chapter is difficult to read, more detailed!?
-% Often these n equations are stacked together and written in vector form as
+%
 A non-linear equation system is approximated to be locally linear with small step size of the unknown quantities. Through a linearized form of the equation system, for example Taylor's polynomial expansion, it turns to solve for the increments of unknowns instead of the unknowns themselves, where linear LS adjustment is applied iteratively until convergence is achieved. Depending on the configuration and initial parameters chosen, the nonlinear fit may have good or poor convergence properties.
 
 
