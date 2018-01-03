@@ -335,8 +335,6 @@ Given a start-point $\mathbf{P}_s(X_s,Y_s,Z_s)$ and an end-point $\mathbf{P}_e(X
 %\end{bmatrix}
 %\end{equation}
 %which estimates a start-point $\mathbf{p_s}(x_s,y_s)$ and an end-point $\mathbf{p_e}(x_e,y_e)$ that define a infinite line in image space so that the observed image coordinates $\hat{\mathbf{p}}^j_{l,i}(\hat{x}^j_{l,i},\hat{y}^j_{l,i})$ on defined by . % !!!!!!!!!!!!!!!!!
-
-
 %%%%%%%%%%%%%%% !!!!!!!!!!!!!!!!!! %%%%%%%%%%%%%%%%
 
 Let $l^j$ be the corresponding line segment of $L$ being extracted (observed) on image $j$. Given a dataset $\{x^j_{l,i},y^j_{l,i}\}^{N^j_l}_{i=1}$ of $N^j_l$ points on line segment $l^j$, their estimated image coordinates $\hat{\mathbf{p}}^j_{l,i}(\hat{x}^j_{l,i},\hat{y}^j_{l,i})$ on the infinite line $\overline{\mathbf{p}^j_s,\mathbf{p}^j_e}$ computed from the orthogonal regression model \eqref{eq:Ffunction} are:
@@ -345,7 +343,7 @@ Let $l^j$ be the corresponding line segment of $L$ being extracted (observed) on
 \qquad
 \forall i=1,2,...N^j_l
 \end{equation}
-%%%%%%%%%%%%%%%
+
 
 Combining \eqref{eq:obsmodel-collinearity} with \eqref{eq:obsmodel-linefitting} gives function $\mathcal{H}$:
 \begin{equation} \label{eq:obsmodel}
@@ -357,7 +355,6 @@ Combining \eqref{eq:obsmodel-collinearity} with \eqref{eq:obsmodel-linefitting} 
 \end{split}
 \end{equation}
 which takes camera parameters $\mathbf{q}^j(x_0,y_0,c,X_0,Y_0,Z_0,R_{11},...,R_{33},A_1,A_2,B_1,B_2,C_1,C_2)$, object coordinates of $\mathbf{P}_s$ and $\mathbf{P}_e$ which define a line $\overline{\mathbf{P}_s,\mathbf{P}_e}$, and the observed y-coordinate of the point $\mathbf{p}^j_{l,i}$ in image space, and returns the estimated image coordinates $\hat{\mathbf{p}}^j_{l,i}$ on the back projected line of $\overline{\mathbf{P}_s,\mathbf{P}_e}$.
-%In \cref{eq:obsmodel}, $y^j_{l,i}, i=1,2,...N^j_l$ are the measurements, $P_s$ and $P_e$ are the unknown quantities, $\mathbf{q}^j, j=1,2,...J$ includes  interior and exterior orientations as well as the lens distortion parameters of camera $j$.\newline
 
 Corresponding to \cref{eq:Ffunction_xy}, function $\mathcal{H}$ is composed of
 \begin{equation} \label{eq:obsmodel2}
@@ -519,7 +516,7 @@ The constraint equations \eqref{eq:constraint1}, \eqref{eq:constraint2} and \eqr
 \end{equation}
 
 
-\subsection{The Gauss-Markov Model with Constraints}
+\subsection{Least-Squares Estimation of the Gauss-Markov Model with Constraints}
 \label{subsec:LSadj}
 % Add the relevant equations
 % This chapter is difficult to read, more detailed!?
