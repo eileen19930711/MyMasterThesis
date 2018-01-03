@@ -266,32 +266,39 @@ in the LS model. % Which one?
 Correspondingly, the observation equations are line equations in two-point form. A line equation has however a mathematical meaning of infinite length. Therefore, some constraints on unknowns are necessary to avoid arbitrary locations of the two points on the infinite reconstructed 3D line. The constraint equations are modeled in \cref{subsec:ConEqua}.
 
 
-%Additionally, the measurements are collected accordingly.
+% the measurements are collected accordingly.
 
 \subsection{The Gauss-Markov Model with Constraints}
 \label{GaussMarkovModelwithConstraints}
+
+\paragraph{The Functional Model}
 The Gauss-Markov model with constraints starts from $N$ observations $l_n$ for $U$ unknown parameters $x_u$ with $H$ constraints $h_h$ between the unknowns:
-\begin{equation}
+\begin{equation} \label{eq:GM-ObsEq}
 \boldsymbol l+\widehat{\boldsymbol v}=\boldsymbol f(\widehat{\boldsymbol x})\quad \textnormal{or}\quad \widehat{\boldsymbol l}=\boldsymbol f(\widehat{\boldsymbol x})
 \end{equation}
-\begin{equation}
+\begin{equation} \label{eq:GM-ConEq}
 \boldsymbol h(\widehat{\boldsymbol x})=\mathbf{0}
 \end{equation}
 
 The linearized Gauss-Markov model with constraints between the unknowns is:
-\begin{equation}
+\begin{equation} \label{eq:GM-ObsEq-linear}
 \widehat{\Delta\boldsymbol l}=\Delta\boldsymbol l+\widehat{\boldsymbol v}=\mathsf{A}\,\widehat{\Delta\boldsymbol x}
 \end{equation}
-\begin{equation}
+\begin{equation} \label{eq:GM-ConEq-linear}
 -\boldsymbol h(\widehat{\boldsymbol x}^a)=\mathsf{H^T}\widehat{\Delta\boldsymbol x}
 \end{equation}
 with
-\begin{equation}
+\begin{equation} \label{eq:GM-ObsEq-linear-l}
 \Delta\boldsymbol l=\boldsymbol l-\boldsymbol f(\widehat{\boldsymbol x}^a)
 \end{equation}
-\begin{equation}
+\begin{equation} \label{eq:GM-ObsEq-linear-x}
 \widehat{\Delta\boldsymbol x}=\widehat{\boldsymbol x}-\widehat{\boldsymbol x}^a
 \end{equation}
+
+\paragraph{The Stochastic Model}
+
+
+
 
 \subsection{Model of Observation Equations}
 \label{subsec:ObsEqua}
@@ -399,7 +406,7 @@ Each image gives $2\times N^j$ observation equations\footnote{Dot equal indicate
 \end{array}
 \end{equation}
 
-For all covering image $j=1,2,...J$, there are $2\times\displaystyle\sum_{j=1}^{J}N^j$ observation equations (being written in the structure of the Gauss-Markov model):
+For all covering image $j=1,2,...J$, there are $2\times\displaystyle\sum_{j=1}^{J}N^j$ observation equations. Being written in the structure of the Gauss-Markov model with constraints, corresponding to \cref{eq:GM-ObsEq}, they are expressed as:
 \begin{equation} \label{eq:obsvec-allcam}
 \boldsymbol l+\widehat{\boldsymbol v}=\boldsymbol f(\widehat{\boldsymbol x}):\quad
 \begin{bmatrix}
@@ -473,8 +480,11 @@ For all covering image $j=1,2,...J$, there are $2\times\displaystyle\sum_{j=1}^{
 
 \subsection{Model of Constraint Equations}
 \label{subsec:ConEqua}
+
 % infinitely many solutions.
-% At least two constraints are needed to fix rank deficiency???. 
+% At least two constraints are needed to fix rank deficiency???.
+% TO BE COMPLETED !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 There are three constraints on the unknown parameters used in this work:
 \begin{itemize}
 \item Fixing the X-, Y-coordinates of the start-point using the approximate values:
@@ -492,7 +502,7 @@ There are three constraints on the unknown parameters used in this work:
 
 Only in the first line segment reconstruction of a long lane marking, the fixed $X_s$ and $Y_s$ values are from the initial parameter estimates derived in \cref{sec:LineProjectionOnDSM}. Starting from the second line segment, the fixed values ${X_s}^0$ and ${Y_s}^0$ depend on the previously determined values.
 
-The constraint equations \eqref{eq:constraint1}, \eqref{eq:constraint2} and \eqref{eq:constraint3} can be stacked together in the vector form:
+The constraint equations \eqref{eq:constraint1}, \eqref{eq:constraint2} and \eqref{eq:constraint3} can be stacked together and written in the structure of the Gauss-Markov model with constraints, corresponding to \cref{eq:GM-ConEq}:
 \begin{equation} \label{eq:convec}
 \boldsymbol h(\widehat{\boldsymbol x})=\mathbf{0}:\quad
 \begin{bmatrix}
