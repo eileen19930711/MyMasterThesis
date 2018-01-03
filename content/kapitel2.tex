@@ -26,17 +26,17 @@ In \cref{sec:LineProjectionOnDSM} the problem of acquiring initial values is des
 \label{sec:LineExtraction}
 % Missing some small review about alternative methods?
 % This chapter should be much more detailled.
-The appearance of lane markings on German roads including line type, color and width is specified depending on the road type. Different line types of lane markings are shown in \cref{fig:LaneMarkingTypes} and their line widths are defined in \cref{tab:LaneMarkingWidths}.
+The appearance of lane markings on German roads including line type, color and width is specified depending on the road type. Different line types of lane markings are shown in \cref{fig:LaneMarkingTypes} and their line widths are defined in \cref{tab:LaneMarkingWidths}. As shown in \cref{tab:DashedLaneMarkingLengths}, the dashed lane markings on motorways are of 6 meter length.
 % https://de.wikipedia.org/wiki/Fahrbahnmarkierung#Eigenschaften
 % Richtlinien für die Markierung von Straßen (RMS) Teil 1
 
-Because of the appearance, the problem of lane marking detection can be treated as a line detection problem. We restrict the proposed framework to lane markings with single white lines (dashed or continuous) of 0.3 meter width. Other types like in restricted zone, double lines, parking areas, temporal yellow lines in construction sites etc, are excluded. % https://www.transchool.lee.army.mil/adso/documents/zeichen.pdf
+Because of the appearance, the problem of lane marking detection can be treated as a line detection problem. We restrict the proposed framework to lane markings with single white lines (dashed or continuous) of 0.3 meter width. Other types like in restricted zone, double lines, parking areas, temporal yellow lines in construction sites etc, are excluded.% https://www.transchool.lee.army.mil/adso/documents/zeichen.pdf
 
 The principle to extract line features is to firstly derive the line direction for each pixel by using partial derivatives of a Gaussian smoothing kernel. Pixels that have a local maximum in the second directional derivative perpendicular to the line direction are marked as line points. By thresholding their second directional derivative values, the accepted line points are then linked and connected.
 % C. Steger: “Extracting Curvilinear Structures: A Differential Geometric Approach”. In B. Buxton, R. Cipolla, eds., “Fourth European Conference on Computer Vision”, Lecture Notes in Computer Science, Volume 1064, Springer Verlag, pp. 630-641, 1996. 
 % C. Steger: “Extraction of Curved Lines from Images”. In “13th International Conference on Pattern Recognition”, Volume II, pp. 251-255, 1996. 
 % C. Steger: “An Unbiased Detector of Curvilinear Structures”. IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 20, no. 2, pp. 113-125, 1998
-The resultant connected points which compose a line are of sub-pixel precision. \cref{fig:LineExtraction} shows the extracted lines on the original image.
+The resultant connected points which compose a line are of sub-pixel precision. \cref{fig:LineExtraction} shows the extracted lines on the masked original image.
 % http://www.mvtec.com/doc/halcon/11/en/lines_gauss.html
 
 \begin{figure}
@@ -53,10 +53,9 @@ The resultant connected points which compose a line are of sub-pixel precision. 
 \caption{\small Line types of lane markings [source RMS Teil 1]}
 % https://de.wikipedia.org/wiki/Fahrbahnmarkierung
 % Richtlinien für die Markierung von Straßen (RMS) Teil 1
-
 \label{fig:LaneMarkingTypes}
 \end{figure}
-\setlength{\floatsep}{20pt plus 1.0pt minus 2.0pt}
+\setlength{\floatsep}{16pt plus 1.0pt minus 2.0pt}
 \begin{table}
     \centering
     \begin{tabular}{l|cc}
@@ -67,13 +66,29 @@ The resultant connected points which compose a line are of sub-pixel precision. 
     wide lines   & $0.30$ [m] & $0.25$ [m] \\
     \bottomrule
     \end{tabular}
-    \caption{\small Line widths of lane markings [source RMS Teil 1]}
+    \caption{\small Widths of lane markings [source RMS Teil 1]}
     \label{tab:LaneMarkingWidths}
 % Der Deutsche Verkehrssicherheitsrat
 % https://www.dvr.de/download/publikationen-schriftenreihe-17.pdf
 % Richtlinien für die Markierung von Straßen (RMS) Teil 1
 \end{table}
-
+\setlength{\floatsep}{16pt plus 1.0pt minus 2.0pt}
+\begin{table}
+    \centering
+    \begin{tabular}{l|ccc}
+    \toprule
+          & motorways & \multicolumn{2}{c}{other roads}\\
+          &           & in town & out of town\\
+    \midrule
+    line / gap  & $6$ [m] / $12$ [m] & $3$ [m] / $6$ [m] & $4$ [m] / $8$ [m]\\
+    \bottomrule
+    \end{tabular}
+    \caption{\small Lengths of dashed lane markings with ratio 1:2 [source RMS Teil 1]}
+    \label{tab:DashedLaneMarkingLengths}
+% Der Deutsche Verkehrssicherheitsrat
+% https://www.dvr.de/download/publikationen-schriftenreihe-17.pdf
+% Richtlinien für die Markierung von Straßen (RMS) Teil 1
+\end{table}
 
 \begin{figure}
   \centering
@@ -251,11 +266,32 @@ in the LS model. % Which one?
 Correspondingly, the observation equations are line equations in two-point form. A line equation has however a mathematical meaning of infinite length. Therefore, some constraints on unknowns are necessary to avoid arbitrary locations of the two points on the infinite reconstructed 3D line. The constraint equations are modeled in \cref{subsec:ConEqua}.
 
 
-
-
 %Additionally, the measurements are collected accordingly.
 
-%infinitely many solutions.
+\subsection{The Gauss-Markov Model with Constraints}
+\label{GaussMarkovModelwithConstraints}
+The Gauss-Markov model with constraints starts from $N$ observations $l_n$ for $U$ unknown parameters $x_u$ with $H$ constraints $h_h$ between the unknowns:
+\begin{equation}
+\boldsymbol l+\widehat{\boldsymbol v}=\boldsymbol f(\widehat{\boldsymbol x})\quad \textnormal{or}\quad \widehat{\boldsymbol l}=\boldsymbol f(\widehat{\boldsymbol x})
+\end{equation}
+\begin{equation}
+\boldsymbol h(\widehat{\boldsymbol x})=\mathbf{0}
+\end{equation}
+
+The linearized Gauss-Markov model with constraints between the unknowns is:
+\begin{equation}
+\widehat{\Delta\boldsymbol l}=\Delta\boldsymbol l+\widehat{\boldsymbol v}=\mathsf{A}\,\widehat{\Delta\boldsymbol x}
+\end{equation}
+\begin{equation}
+-\boldsymbol h(\widehat{\boldsymbol x}^a)=\mathsf{H^T}\widehat{\Delta\boldsymbol x}
+\end{equation}
+with
+\begin{equation}
+\Delta\boldsymbol l=\boldsymbol l-\boldsymbol f(\widehat{\boldsymbol x}^a)
+\end{equation}
+\begin{equation}
+\widehat{\Delta\boldsymbol x}=\widehat{\boldsymbol x}-\widehat{\boldsymbol x}^a
+\end{equation}
 
 \subsection{Model of Observation Equations}
 \label{subsec:ObsEqua}
@@ -339,7 +375,7 @@ Each image gives $2\times N^j$ observation equations\footnote{Dot equal indicate
  x^j_2\\[0.3em]
  \vdots\\[0.3em]
  x^j_{N^j}\\[0.5em]
- \arrayrulecolor{gray} \hline
+ \arrayrulecolor{lightgray} \hline
  y^j_1\\[0.3em]
  y^j_2\\[0.3em]
  \vdots\\[0.3em]
@@ -351,7 +387,7 @@ Each image gives $2\times N^j$ observation equations\footnote{Dot equal indicate
  \mathcal{H}^x(\mathbf{q}^j,\hat{\mathbf{P}}_s,\hat{\mathbf{P}}_e,y^j_{2})\\[0.3em]
  \vdots\\[0.3em]
  \mathcal{H}^x(\mathbf{q}^j,\hat{\mathbf{P}}_s,\hat{\mathbf{P}}_e,y^j_{N^j})\\[0.5em]
- \arrayrulecolor{gray} \hline
+ \arrayrulecolor{lightgray} \hline
  \mathcal{H}^y(\mathbf{q}^j,\hat{\mathbf{P}}_s,\hat{\mathbf{P}}_e,y^j_{1})\\[0.3em]
  \mathcal{H}^y(\mathbf{q}^j,\hat{\mathbf{P}}_s,\hat{\mathbf{P}}_e,y^j_{2})\\[0.3em]
  \vdots\\[0.3em]
@@ -370,17 +406,17 @@ For all covering image $j=1,2,...J$, there are $2\times\displaystyle\sum_{j=1}^{
  x^1_1\\[0.3em]
  \vdots\\
  x^1_{N^1}\\[0.3em]
- \arrayrulecolor{gray} \hline
+ \arrayrulecolor{lightgray} \hline
  y^1_1\\[0.3em]
  \vdots\\
  y^1_{N^1}\\[0.3em]
- \arrayrulecolor{gray} \hline
+ \arrayrulecolor{lightgray} \hline
  \vdots\\
- \arrayrulecolor{gray} \hline
+ \arrayrulecolor{lightgray} \hline
  x^J_1\\[0.3em]
  \vdots\\
  x^J_{N^J}\\[0.3em]
- \arrayrulecolor{gray} \hline
+ \arrayrulecolor{lightgray} \hline
  y^J_1\\[0.3em]
  \vdots\\
  y^J_{N^J}\\[0.3em]
@@ -390,17 +426,17 @@ For all covering image $j=1,2,...J$, there are $2\times\displaystyle\sum_{j=1}^{
  \hat{e}_{x^1_1}\\[0.3em]
  \vdots\\
  \hat{e}_{x^1_{N^1}}\\[0.3em]
- \arrayrulecolor{gray} \hline
+ \arrayrulecolor{lightgray} \hline
  \hat{e}_{y^1_1}\\[0.3em]
  \vdots\\
  \hat{e}_{y^1_{N^1}}\\[0.3em]
- \arrayrulecolor{gray} \hline
+ \arrayrulecolor{lightgray} \hline
  \vdots\\
- \arrayrulecolor{gray} \hline
+ \arrayrulecolor{lightgray} \hline
  \hat{e}_{x^J_1}\\[0.3em]
  \vdots\\
  \hat{e}_{x^J_{N^J}}\\[0.3em]
- \arrayrulecolor{gray} \hline
+ \arrayrulecolor{lightgray} \hline
  \hat{e}_{y^J_1}\\[0.3em]
  \vdots\\
  \hat{e}_{y^J_{N^J}}\\[0.3em]
@@ -410,17 +446,17 @@ For all covering image $j=1,2,...J$, there are $2\times\displaystyle\sum_{j=1}^{
  \mathcal{H}^x(\mathbf{q}^1,\hat{\mathbf{P}}_s,\hat{\mathbf{P}}_e,y^1_1)\\[0.3em]
  \vdots\\
  \mathcal{H}^x(\mathbf{q}^1,\hat{\mathbf{P}}_s,\hat{\mathbf{P}}_e,y^1_{N^1})\\[0.3em]
- \arrayrulecolor{gray} \hline
+ \arrayrulecolor{lightgray} \hline
  \mathcal{H}^y(\mathbf{q}^1,\hat{\mathbf{P}}_s,\hat{\mathbf{P}}_e,y^1_1)\\[0.3em]
  \vdots\\
  \mathcal{H}^y(\mathbf{q}^1,\hat{\mathbf{P}}_s,\hat{\mathbf{P}}_e,y^1_{N^1})\\[0.3em]
- \arrayrulecolor{gray} \hline
+ \arrayrulecolor{lightgray} \hline
  \vdots\\
- \arrayrulecolor{gray} \hline
+ \arrayrulecolor{lightgray} \hline
  \mathcal{H}^x(\mathbf{q}^J,\hat{\mathbf{P}}_s,\hat{\mathbf{P}}_e,y^J_1)\\[0.3em]
  \vdots\\
  \mathcal{H}^x(\mathbf{q}^J,\hat{\mathbf{P}}_s,\hat{\mathbf{P}}_e,y^J_{N^J})\\[0.3em]
- \arrayrulecolor{gray} \hline
+ \arrayrulecolor{lightgray} \hline
  \mathcal{H}^y(\mathbf{q}^J,\hat{\mathbf{P}}_s,\hat{\mathbf{P}}_e,y^J_1)\\[0.3em]
  \vdots\\
  \mathcal{H}^y(\mathbf{q}^J,\hat{\mathbf{P}}_s,\hat{\mathbf{P}}_e,y^J_{N^J})\\[0.3em]
@@ -437,7 +473,8 @@ For all covering image $j=1,2,...J$, there are $2\times\displaystyle\sum_{j=1}^{
 
 \subsection{Model of Constraint Equations}
 \label{subsec:ConEqua}
-%At least two constraints are needed to fix rank deficiency???. 
+% infinitely many solutions.
+% At least two constraints are needed to fix rank deficiency???. 
 There are three constraints on the unknown parameters used in this work:
 \begin{itemize}
 \item Fixing the X-, Y-coordinates of the start-point using the approximate values:
@@ -457,22 +494,22 @@ Only in the first line segment reconstruction of a long lane marking, the fixed 
 
 The constraint equations \eqref{eq:constraint1}, \eqref{eq:constraint2} and \eqref{eq:constraint3} can be stacked together in the vector form:
 \begin{equation} \label{eq:convec}
-h(\hat{\mathbf{x}})=0:\quad
-\begin{bmatrix}
- 0\\[0.3em]
- 0\\[0.3em]
- 0\\[0.5em]
-\end{bmatrix}
-=
+\mathbf{h}(\hat{\mathbf{x}})=\mathbf{0}:\quad
 \begin{bmatrix}
  \hat{X}_s-{X_s}^0\\[0.3em]
  \hat{Y}_s-{Y_s}^0\\[0.3em]
  \sqrt{(\hat{X}_s-\hat{X}_e)^2+(\hat{Y}_s-\hat{Y}_e)^2+(\hat{Z}_s-\hat{Z}_e)^2}-S\\[0.3em]
 \end{bmatrix}
+=
+\begin{bmatrix}
+ 0\\[0.3em]
+ 0\\[0.3em]
+ 0\\[0.5em]
+\end{bmatrix}
 \end{equation}
 
 
-\subsection{Non-linear LS Adjustment with Constraints}
+\subsection{The Gauss-Markov Model with Constraints}
 \label{subsec:LSadj}
 % Add the relevant equations
 % This chapter is difficult to read, more detailed!?
