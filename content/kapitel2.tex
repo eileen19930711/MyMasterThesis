@@ -274,7 +274,7 @@ Correspondingly, the observation equations are line equations in two-point form.
 Given are the $N$ observations $\boldsymbol l=[l_n],\,n=1,2,...,N$, from which the $U$ unknown parameters $\boldsymbol x=[x_u],\,u=1,2,...,U$ are to be determined, with generally $U\leq N$. 
 
 The non-linear Gauss-Markov model with $N$ nonlinear functions $\boldsymbol f(\boldsymbol x)=[f_n(\boldsymbol x)],\,u=1,2,...,U$ and the $H$ nonlinear constraints $\boldsymbol h(\hat{\boldsymbol x})=[h_\eta(\hat{\boldsymbol x})],\,\eta=1,2,...,H$ % !!!!!!!!!!!!$\boldsymbol c=[c_h],\,h=1,2,...,H$
-($H<U$) between the unknown can be written as:
+($H<U$) between the unknowns can be written as:
 \begin{equation} \label{eq:GM-ObsEq}
 \boldsymbol l+\widehat{\boldsymbol v}=\boldsymbol f(\widehat{\boldsymbol x})\quad \textnormal{or}\quad \widehat{\boldsymbol l}=\underset{N\times 1}{\boldsymbol f}(\widehat{\boldsymbol x})
 \end{equation}
@@ -283,6 +283,13 @@ The non-linear Gauss-Markov model with $N$ nonlinear functions $\boldsymbol f(\b
 \end{equation}
 where the observations $\boldsymbol l$ are explicit functions of the unknowns $\boldsymbol x$, with the additive residuals $\boldsymbol v$ introduced to the observations $\boldsymbol l$ to achieve consistency.
 
+Assuming that the deviations between the observed values $\boldsymbol l$ and the true values $\widehat{\boldsymbol l}$ are of random nature and have normal (or Gaussian) distribution, the uncertain observations $\boldsymbol l$ are modeled with first and second moments:
+\begin{equation}
+\boldsymbol l\sim\mathcal{N}(\boldsymbol f(\widehat{\boldsymbol x}) ,\mathsf{\Sigma}_{ll})
+\end{equation}
+where $\mathsf{\Sigma}_{ll}$ is the variance-covariance matrix of observations $\boldsymbol l$.
+%dispersion
+
 A non-linear equation system is approximated to be locally linear with small step size of the unknown quantities. The linearized form is expressed as:
 \begin{equation} \label{eq:GM-ObsEq-linear}
 \widehat{\Delta\boldsymbol l}=\Delta\boldsymbol l+\widehat{\boldsymbol v}=\mathsf{A}\,\widehat{\Delta\boldsymbol x}
@@ -290,28 +297,36 @@ A non-linear equation system is approximated to be locally linear with small ste
 \begin{equation} \label{eq:GM-ConEq-linear}
 -\boldsymbol h(\widehat{\boldsymbol x}^a)=\mathsf{H^T}\widehat{\Delta\boldsymbol x}
 \end{equation}
+where\newline
+the $N\times U$ design matrix is
+\begin{equation*}
+\mathsf{A}=\left.\dfrac{\partial\boldsymbol f(\boldsymbol x)}{\partial\boldsymbol x}\right|_{\boldsymbol x=\widehat{\boldsymbol x}^a}
+\end{equation*}
+the $U\times H$ constraint matrix is
+\begin{equation*}
+\mathsf{H}=\left.\dfrac{\partial\boldsymbol h(\boldsymbol x)}{\partial\boldsymbol x^T}\right|_{\boldsymbol x=\widehat{\boldsymbol x}^a}
+\end{equation*}
+
 with
 \begin{equation} \label{eq:GM-ObsEq-linear-l}
 \Delta\boldsymbol l=\boldsymbol l-\boldsymbol f(\widehat{\boldsymbol x}^a)
 \end{equation}
+and the unknown corrections to the parameters:
 \begin{equation} \label{eq:GM-ObsEq-linear-x}
 \widehat{\Delta\boldsymbol x}=\widehat{\boldsymbol x}-\widehat{\boldsymbol x}^a
 \end{equation}
-where $\mathsf{A}$ is the $N\times U$ design matrix,
-$\mathsf{H}$ is the $U\times H$ constraint matrix, $\widehat{\boldsymbol x}^a$ is the approximate values for the estimates of the unknown parameters.
-
-Through the linearized form of the equation system, it turns to solve for the increments of unknowns $\Delta\boldsymbol x$ instead of the unknowns themselves. The linear LS adjustment is applied iteratively until convergence is achieved. 
-
-Depending on the configuration and initial parameters chosen, the nonlinear fit may have good or poor convergence properties.
+where $\widehat{\boldsymbol x}^a$ is the approximate values for the estimates of the unknown parameters.
 
 
-%. Assuming the observations have same weight.
+In the linearized substitute model as shown in \eqref{eq:GM-ObsEq-linear} and \eqref{eq:GM-ConEq-linear}, it turns to solve for the increments of unknowns $\Delta\boldsymbol x$ instead of the unknowns themselves. The LS estimation is applied iteratively until convergence is achieved. 
 
-The task is to minimize the sum of residuals:
+%Depending on the configuration and initial parameters chosen, the nonlinear fit may have good or poor convergence properties.
+
+
+With the assumption of equal-weighted observations, the task is to minimize the sum of residuals:
 \begin{equation}
 \Omega=\dfrac{1}{2}(\boldsymbol l-\boldsymbol f(\boldsymbol x))^T(\boldsymbol l-\boldsymbol f(\boldsymbol x))\quad\textnormal{such that}\quad\boldsymbol h(\boldsymbol x)=\boldsymbol 0
 \end{equation}
-using the constraints of 2.13.
 
 
 The redundancy $R$ of the problem is
