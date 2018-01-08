@@ -288,9 +288,25 @@ Assuming that the deviations between the observed values $\boldsymbol l$ and the
 \boldsymbol l\sim\mathcal{N}(\boldsymbol f(\widehat{\boldsymbol x}) ,\mathsf{\Sigma}_{ll})
 \end{equation}
 where $\mathsf{\Sigma}_{ll}$ is the variance-covariance matrix of observations $\boldsymbol l$.
-%dispersion
 
-A nonlinear equation system is approximated to be locally linear with small step size of the unknown quantities. The linearized form is expressed as:
+!!!!! same statistical dispersion
+\begin{equation}
+\mathsf{\Sigma}_{ll}=\mathbb{D}(\boldsymbol l)=\mathbb{D}(\boldsymbol v)=\mathbb{D}(\widehat{\boldsymbol l})
+\end{equation}
+
+The task is to minimize the weighted sum of residuals: % !!!!!!!!!!!!!!!!!!!!!!!!!
+\begin{equation}
+\Omega=\dfrac{1}{2}(\boldsymbol l-\boldsymbol f(\boldsymbol x))^T(\boldsymbol l-\boldsymbol f(\boldsymbol x))\quad\textnormal{such that}\quad\boldsymbol h(\boldsymbol x)=\boldsymbol 0
+\end{equation}
+with the assumption of equal-weighted observations.
+%Using Lagrangian multipliers $\lambda$, with the assumption of equal-weighted observations, the target function has to be minimized:
+%\begin{equation}
+%\mathcal{L}_{\mathsf{A}}(x,\lambda)=\dfrac{1}{2}(\underbrace{\boldsymbol l-\boldsymbol f(\widehat{\boldsymbol x}^a)}_{\Delta\boldsymbol l}-\underbrace{\mathsf{A}\,\widehat{\Delta\boldsymbol x}}_{\widehat{\Delta\boldsymbol l}})^T
+%(\boldsymbol l-\boldsymbol f(\widehat{\boldsymbol x}^a)-\mathsf{A}\,\widehat{\Delta\boldsymbol x})+\lambda^T(\mathsf{H}^T\boldsymbol x-\boldsymbol c_h)
+%\end{equation}
+
+\clearpage
+The nonlinear equation system is approximated to be locally linear with small step size of the unknown quantities. The linearized form is expressed as:
 \begin{equation} \label{eq:GM-ObsEq-linear}
 \widehat{\Delta\boldsymbol l}=\Delta\boldsymbol l+\widehat{\boldsymbol v}=\underset{N\times U}{\mathsf{A}}\,\widehat{\Delta\boldsymbol x}
 \end{equation}
@@ -306,7 +322,7 @@ the $U\times H$ constraint matrix, which is the Jacobian of the constraints, is
 \begin{equation*}
 \mathsf{H}=\left.\left(\dfrac{\partial\boldsymbol h(\boldsymbol x)}{\partial\boldsymbol x}\right)^T\right|_{\boldsymbol x=\widehat{\boldsymbol x}^a}
 \end{equation*}
-and the residual constraints are
+and the residual constraints are % !!!!!!!!!!!!!!!!!!!!!!!!!
 \begin{equation*}
 \boldsymbol c_h=-\boldsymbol h(\widehat{\boldsymbol x}^a)
 \end{equation*}
@@ -325,16 +341,6 @@ In the linearized substitute model as shown in \eqref{eq:GM-ObsEq-linear} and \e
 
 %Depending on the configuration and initial parameters chosen, the nonlinear fit may have good or poor convergence properties.
 
-The task is to minimize the weighted sum of residuals:
-\begin{equation}
-\Omega=\dfrac{1}{2}(\boldsymbol l-\boldsymbol f(\boldsymbol x))^T(\boldsymbol l-\boldsymbol f(\boldsymbol x))\quad\textnormal{such that}\quad\boldsymbol h(\boldsymbol x)=\boldsymbol 0
-\end{equation}
-with the assumption of equal-weighted observations.
-%Using Lagrangian multipliers $\lambda$, with the assumption of equal-weighted observations, the target function has to be minimized:
-%\begin{equation}
-%\mathcal{L}_{\mathsf{A}}(x,\lambda)=\dfrac{1}{2}(\underbrace{\boldsymbol l-\boldsymbol f(\widehat{\boldsymbol x}^a)}_{\Delta\boldsymbol l}-\underbrace{\mathsf{A}\,\widehat{\Delta\boldsymbol x}}_{\widehat{\Delta\boldsymbol l}})^T
-%(\boldsymbol l-\boldsymbol f(\widehat{\boldsymbol x}^a)-\mathsf{A}\,\widehat{\Delta\boldsymbol x})+\lambda^T(\mathsf{H}^T\boldsymbol x-\boldsymbol c_h)
-%\end{equation}
 
 The unknown parameters $\widehat{\Delta\boldsymbol x}$ of the linearized model can be determined from the extended normal equation system
 \begin{equation}
@@ -353,13 +359,12 @@ The unknown parameters $\widehat{\Delta\boldsymbol x}$ of the linearized model c
 \end{bmatrix}
 \end{equation}
 
+The matrix $\mathsf{A}$ does not need to have full rank, but the block matrix $[\mathsf{A_T},\mathsf{H}]$ must have full rank in order to guarantee the estimation problem has a unique solution.
 
 The redundancy $R$ of the problem is
 \begin{equation}
 R=N+H-U
 \end{equation}
-
-The matrix $\mathsf{A}$ does not need to have full rank, but the block matrix $[\mathsf{A_T},\mathsf{H}]$ must have full rank in order to guarantee the estimation problem has a unique solution.
 
 
 \subsubsection{Observation Equations}
@@ -467,7 +472,7 @@ Each image gives $2\times N^j$ observation equations\footnote{Dot equal indicate
 \end{array}
 \end{equation}
 
-For all covering image $j=1,2,...J$, there are $2\times\displaystyle\sum_{j=1}^{J}N^j$ observation equations. Being written in the structure of the Gauss-Markov model with constraints, corresponding to \cref{eq:GM-ObsEq}, they are expressed as:
+For all covering image $j=1,2,...J$, there are $2\times\displaystyle\sum_{j=1}^{J}N^j$ observation equations. Being written in the structure of the Gauss-Markov model, corresponding to \cref{eq:GM-ObsEq}, they are expressed as:
 \begin{equation} \label{eq:obsvec-allcam}
 \boldsymbol l+\widehat{\boldsymbol v}=\boldsymbol f(\widehat{\boldsymbol x}):\quad
 \begin{bmatrix}
@@ -580,7 +585,7 @@ The constraint equations \eqref{eq:constraint1}, \eqref{eq:constraint2} and \eqr
 \end{equation}
 
 
-\subsubsection{Least-Squares Estimation of the Gauss-Markov Model with Constraints}
+\subsubsection{Least-Squares Estimation of the non-linear Gauss-Markov Model with Constraints}
 \label{subsubsec:LSadj}
 % Add the relevant equations
 % This chapter is difficult to read, more detailed!?
@@ -589,9 +594,6 @@ The constraint equations \eqref{eq:constraint1}, \eqref{eq:constraint2} and \eqr
 
 
 
-
-
-% In this work, both the observation equations and constraint equations are linearized, i.e. all equations are expanded to Taylor's polynomials.
 
 
 
