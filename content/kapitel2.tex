@@ -7,9 +7,9 @@ The following sections introduce the principles of 3D lane marking reconstructio
 
 \cref{sec:LineExtraction} describes the applied standard line detection algorithm for labeling the lane markings. To relate the object coordinates of a point with its image coordinates, \cref{sec:Geometry} introduces the imaging properties of aerial images and their mathematical models, including the collinearity equation and lens distortion correction.
 
-\cref{sec:LineFitting} presents the principle of line fitting and further derives the non-linear \gls{ls} model for line equations in two-point form. With the combination of the extended collinearity equation introduced in \cref{sec:Geometry}, \cref{sec:LSadj} elaborates the usage of line fitting for 3D lane marking reconstruction.% The key challenge is to solve the line fitting problem given weakly-textured environments around lane markings and to solve the quasi-infinite line reconstruction problem.
+\cref{sec:LineFitting} presents the principle of line fitting and further derives the nonlinear \gls{ls} model for line equations in two-point form. With the combination of the extended collinearity equation introduced in \cref{sec:Geometry}, \cref{sec:LSadj} elaborates the usage of line fitting for 3D lane marking reconstruction.% The key challenge is to solve the line fitting problem given weakly-textured environments around lane markings and to solve the quasi-infinite line reconstruction problem.
 
-In \cref{sec:LineProjectionOnDSM} the problem of acquiring initial values is described, as initial values of unknown quantities are required in non-linear LS model. Section2.7??? demonstrates how the corresponding measurements in image space are collected given the initial values in object space.
+In \cref{sec:LineProjectionOnDSM} the problem of acquiring initial values is described, as initial values of unknown quantities are required in nonlinear LS model. Section2.7??? demonstrates how the corresponding measurements in image space are collected given the initial values in object space.
 
 \begin{figure}
   \centering
@@ -177,7 +177,7 @@ In the case of standard linear regression, the regressor $y$ is assumed error fr
 
 For a later combination with point-wise extended collinearity equation \eqref{eq:Gfunction} in next section, we aim to fit the line equation in two-point form to the observed dataset. 
 % extracted lines produced in \cref{sec:LineExtraction} (in forms of sets of points in image coordinates). 
-For such non-linear least squares fitting purpose, a non-linear mixed model is derived in \cref{subsec:NonLinear}. % !!!!!!!!!!!!!!!!!
+For such nonlinear least squares fitting purpose, a nonlinear mixed model is derived in \cref{subsec:NonLinear}. % !!!!!!!!!!!!!!!!!
 
 A functional model is unsolvable when the assumed "dependent" variable is indeed not a function of the independent variables, i.e. the assumed functional relationship does not really exist. Take an observed set of 2D points with their Cartesian coordinates $\{x_i,y_i\}^n_{i=1}$ on a vertical line $x=constant$ for example. Their $y$ values have no dependency on their $x$ values, i.e. knowledge of $x$ tells nothing about $y$. Therefore, for this dataset, the functional model $y=f(x)$ is barely solvable. In such cases, however, $x$ is a function of $y$ (which is actually a constant function) and the equation system which models the dependent variable $x$ being a function of the independent variable $y$ becomes solvable. Regarding the dataset used in this work (which will be described with more details in \cref{sec:Materials}) where the observed 2D points scatter mainly in column direction in image space, the linear relationship between $x$ and $y$ values will be setup as $x=f(y)$ to avoid weakly solvable equations system.
 
@@ -248,7 +248,7 @@ Note that as a combination of \eqref{eq:MixModel2-1} and \eqref{eq:MixModel1-2},
 \end{equation}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{3D line reconstruction through non-linear LS Adjustment}
+\section{3D line reconstruction through nonlinear LS Adjustment}
 \label{sec:LSadj}
 
 In this section, I describe the process of refining the position of a 3D line segment in the object space so that its back-projection in each image has a best-fit to the extracted line in the image space. To simplify the problem, a lane-marking-segment is partially reconstructed through a sliding window in the object space. Each segment is approximated by a straight line, taking into account the maximum curvature of the highway. 
@@ -268,12 +268,12 @@ Correspondingly, the observation equations are line equations in two-point form.
 
 % the measurements are collected accordingly.
 
-\subsection{The Gauss-Markov Model with Constraints}
+\subsection{The Nonlinear Gauss-Markov Model with Constraints}
 \label{GaussMarkovModelwithConstraints}
 
-Given are the $N$ observations $\boldsymbol l=[l_n],\,n=1,2,...,N$, from which the $U$ unknown parameters $\boldsymbol x=[x_u],\,u=1,2,...,U$ are to be determined, with generally $U\leq N$. 
+Given are the $N$ observations $\boldsymbol l=[l_n],\,n=1,2,...,N$, from which the $U$ unknown parameters $\boldsymbol x=[x_u],\,u=1,2,...,U$ are to be determined, with generally $U\leq N$.%, and the fixed $H$ constraints $\boldsymbol c_h=[h_h],\,h=1,2,...,H$
 
-The non-linear Gauss-Markov model with $N$ nonlinear functions $\boldsymbol f(\boldsymbol x)=[f_n(\boldsymbol x)],\,u=1,2,...,U$ and the $H$ nonlinear constraints $\boldsymbol h(\hat{\boldsymbol x})=[h_\eta(\hat{\boldsymbol x})],\,\eta=1,2,...,H$ % !!!!!!!!!!!!$\boldsymbol c=[c_h],\,h=1,2,...,H$
+The nonlinear Gauss-Markov model with $N$ nonlinear functions $\boldsymbol f(\boldsymbol x)=[f_n(\boldsymbol x)],\,u=1,2,...,U$ and the $H$ nonlinear constraints $\boldsymbol h(\hat{\boldsymbol x})=[h_\eta(\hat{\boldsymbol x})],\,\eta=1,2,...,H$ % !!!!!!!!!!!!$\boldsymbol c=[c_h],\,h=1,2,...,H$
 ($H<U$) between the unknowns can be written as:
 \begin{equation} \label{eq:GM-ObsEq}
 \boldsymbol l+\widehat{\boldsymbol v}=\boldsymbol f(\widehat{\boldsymbol x})\quad \textnormal{or}\quad \widehat{\boldsymbol l}=\underset{N\times 1}{\boldsymbol f}(\widehat{\boldsymbol x})
@@ -290,42 +290,67 @@ Assuming that the deviations between the observed values $\boldsymbol l$ and the
 where $\mathsf{\Sigma}_{ll}$ is the variance-covariance matrix of observations $\boldsymbol l$.
 %dispersion
 
-A non-linear equation system is approximated to be locally linear with small step size of the unknown quantities. The linearized form is expressed as:
+A nonlinear equation system is approximated to be locally linear with small step size of the unknown quantities. The linearized form is expressed as:
 \begin{equation} \label{eq:GM-ObsEq-linear}
-\widehat{\Delta\boldsymbol l}=\Delta\boldsymbol l+\widehat{\boldsymbol v}=\mathsf{A}\,\widehat{\Delta\boldsymbol x}
+\widehat{\Delta\boldsymbol l}=\Delta\boldsymbol l+\widehat{\boldsymbol v}=\underset{N\times U}{\mathsf{A}}\,\widehat{\Delta\boldsymbol x}
 \end{equation}
 \begin{equation} \label{eq:GM-ConEq-linear}
--\boldsymbol h(\widehat{\boldsymbol x}^a)=\mathsf{H^T}\widehat{\Delta\boldsymbol x}
+\boldsymbol c_h=\underset{H\times U}{\mathsf{H^T}}\widehat{\Delta\boldsymbol x}
 \end{equation}
 where\newline
-the $N\times U$ design matrix is
+the $N\times U$ design matrix, which is the Jacobian of the function evaluated at the approximate values of the unknown parameters, is
 \begin{equation*}
 \mathsf{A}=\left.\dfrac{\partial\boldsymbol f(\boldsymbol x)}{\partial\boldsymbol x}\right|_{\boldsymbol x=\widehat{\boldsymbol x}^a}
 \end{equation*}
-the $U\times H$ constraint matrix is
+the $U\times H$ constraint matrix, which is the Jacobian of the constraints, is
 \begin{equation*}
-\mathsf{H}=\left.\dfrac{\partial\boldsymbol h(\boldsymbol x)}{\partial\boldsymbol x^T}\right|_{\boldsymbol x=\widehat{\boldsymbol x}^a}
+\mathsf{H}=\left.\left(\dfrac{\partial\boldsymbol h(\boldsymbol x)}{\partial\boldsymbol x}\right)^T\right|_{\boldsymbol x=\widehat{\boldsymbol x}^a}
+\end{equation*}
+and the residual constraints are
+\begin{equation*}
+\boldsymbol c_h=-\boldsymbol h(\widehat{\boldsymbol x}^a)
 \end{equation*}
 
-with
+with the corrections
 \begin{equation} \label{eq:GM-ObsEq-linear-l}
-\Delta\boldsymbol l=\boldsymbol l-\boldsymbol f(\widehat{\boldsymbol x}^a)
+\Delta\boldsymbol l=\boldsymbol l-\boldsymbol f(\widehat{\boldsymbol x}^a)=:\widehat{\boldsymbol v}^a
 \end{equation}
-and the unknown corrections to the parameters:
+%and the unknown corrections to the parameters:
 \begin{equation} \label{eq:GM-ObsEq-linear-x}
 \widehat{\Delta\boldsymbol x}=\widehat{\boldsymbol x}-\widehat{\boldsymbol x}^a
 \end{equation}
 where $\widehat{\boldsymbol x}^a$ is the approximate values for the estimates of the unknown parameters.
 
-
 In the linearized substitute model as shown in \eqref{eq:GM-ObsEq-linear} and \eqref{eq:GM-ConEq-linear}, it turns to solve for the increments of unknowns $\Delta\boldsymbol x$ instead of the unknowns themselves. The LS estimation is applied iteratively until convergence is achieved. 
 
 %Depending on the configuration and initial parameters chosen, the nonlinear fit may have good or poor convergence properties.
 
-
-With the assumption of equal-weighted observations, the task is to minimize the sum of residuals:
+The task is to minimize the weighted sum of residuals:
 \begin{equation}
 \Omega=\dfrac{1}{2}(\boldsymbol l-\boldsymbol f(\boldsymbol x))^T(\boldsymbol l-\boldsymbol f(\boldsymbol x))\quad\textnormal{such that}\quad\boldsymbol h(\boldsymbol x)=\boldsymbol 0
+\end{equation}
+with the assumption of equal-weighted observations.
+%Using Lagrangian multipliers $\lambda$, with the assumption of equal-weighted observations, the target function has to be minimized:
+%\begin{equation}
+%\mathcal{L}_{\mathsf{A}}(x,\lambda)=\dfrac{1}{2}(\underbrace{\boldsymbol l-\boldsymbol f(\widehat{\boldsymbol x}^a)}_{\Delta\boldsymbol l}-\underbrace{\mathsf{A}\,\widehat{\Delta\boldsymbol x}}_{\widehat{\Delta\boldsymbol l}})^T
+%(\boldsymbol l-\boldsymbol f(\widehat{\boldsymbol x}^a)-\mathsf{A}\,\widehat{\Delta\boldsymbol x})+\lambda^T(\mathsf{H}^T\boldsymbol x-\boldsymbol c_h)
+%\end{equation}
+
+The unknown parameters $\widehat{\Delta\boldsymbol x}$ of the linearized model can be determined from the extended normal equation system
+\begin{equation}
+\begin{bmatrix}
+\mathsf{A^TA} & \mathsf{H}\\
+\mathsf{H^T} & 0
+\end{bmatrix}
+\begin{bmatrix}
+\widehat{\Delta\boldsymbol x}\\
+\lambda
+\end{bmatrix}
+=
+\begin{bmatrix}
+\mathsf{A^T}\Delta\boldsymbol l\\
+\boldsymbol c_h
+\end{bmatrix}
 \end{equation}
 
 
@@ -334,13 +359,7 @@ The redundancy $R$ of the problem is
 R=N+H-U
 \end{equation}
 
-The matrix $\mathsf{A}$ does not need to have full rank, but the block matrix $[\mathsf{A_T},\mathsf{H}]$ must have full rank in order to guarantee the estimation problem has a unique solution. 
-
-
-
-
-
-
+The matrix $\mathsf{A}$ does not need to have full rank, but the block matrix $[\mathsf{A_T},\mathsf{H}]$ must have full rank in order to guarantee the estimation problem has a unique solution.
 
 
 \subsubsection{Observation Equations}
