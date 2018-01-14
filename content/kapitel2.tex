@@ -24,15 +24,21 @@ In \cref{sec:LineProjectionOnDSM} the problem of acquiring initial values is des
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Lane markings Properties and Automatic Extraction}
 \label{sec:LineExtraction}
-% Missing some small review about alternative methods?
-% This chapter should be much more detailled.
+\subsection{Line Detector}
+
 The appearance of lane markings on German roads including line type, color and width is specified depending on the road type. Different line types of lane markings are shown in \cref{fig:LaneMarkingTypes} and their line widths are defined in \cref{tab:LaneMarkingWidths}. As shown in \cref{tab:DashedLaneMarkingLengths}, the dashed lane markings on motorways are of 6 meter length.
 % https://de.wikipedia.org/wiki/Fahrbahnmarkierung#Eigenschaften
 % Richtlinien für die Markierung von Straßen (RMS) Teil 1
 
 Because of the appearance, the problem of lane marking detection can be treated as a line detection problem. We restrict the proposed framework to lane markings with single white lines (dashed or continuous) of 0.3 meter width. Other types like in restricted zone, double lines, parking areas, temporal yellow lines in construction sites etc, are excluded.% https://www.transchool.lee.army.mil/adso/documents/zeichen.pdf
 
-The principle to extract line features is to firstly derive the line direction for each pixel by using partial derivatives of a Gaussian smoothing kernel. Pixels that have a local maximum in the second directional derivative perpendicular to the line direction are marked as line points. By thresholding their second directional derivative values, the accepted line points are then linked and connected.
+
+% https://en.wikipedia.org/wiki/Edge_detection#Approaches
+There are many approaches for line detection operators. % Canny, Hough Transform...
+% search-based and zero-crossing based
+Prewitt line detector uses two orthogonal gradient operators, and the pixels in the operators are of same weights. Sobel detector also uses two orthogonal gradient operators, but the weights of pixel in operators are not equal. The closer the pixel to the center of operator, the higher weight it has. Canny detector searches local extrema of gradient to locate the positions of line features. Edge drawing (Topal \& Akinlar, 2012) first spots anchors along rows and columns by Sobel detector, and then joins these anchors to extract line features.
+
+In this work, the principle to extract line features is to firstly derive the line direction for each pixel by using partial derivatives of a Gaussian smoothing kernel. Pixels that have a local maximum in the second directional derivative perpendicular to the line direction are marked as line points. By thresholding their second directional derivative values, the accepted line points are then linked and connected.
 % C. Steger: “Extracting Curvilinear Structures: A Differential Geometric Approach”. In B. Buxton, R. Cipolla, eds., “Fourth European Conference on Computer Vision”, Lecture Notes in Computer Science, Volume 1064, Springer Verlag, pp. 630-641, 1996. 
 % C. Steger: “Extraction of Curved Lines from Images”. In “13th International Conference on Pattern Recognition”, Volume II, pp. 251-255, 1996. 
 % C. Steger: “An Unbiased Detector of Curvilinear Structures”. IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 20, no. 2, pp. 113-125, 1998

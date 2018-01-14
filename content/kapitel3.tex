@@ -286,7 +286,9 @@ reconstructed line vs true line (accuracy?)
 
 analysis on the unknowns:
 
-\cref{fig:Simu3D_2} shows the reconstructed and the true line segments in UTM coordinate system (in Zone 32 ??). The distances from the reconstructed line segment to the true one with 20 centimeter spacing are plotted into histogram in \cref{fig:SimuHist_2}.
+\cref{fig:Simu3D_2} shows the reconstructed and the true line segments in UTM coordinate system (in Zone 32 ??). The distances from the reconstructed line segment to the true one are plotted into histogram in \cref{fig:SimuHist_2}. They are collected along the reconstructed line with 20 centimeter spacing.
+
+The mean value of the differences is zero (statistical test).
 
 
 
@@ -311,8 +313,9 @@ analysis on the unknowns:
 
 \cref{fig:Simu3D_1} shows the reconstructed line segments and the unrefined DSM profile in UTM coordinate system (in Zone 32 ??). The distance from the reconstructed line segment to the approximation
 
-the differences appears non-normal distributed and the first moment is not zero (proved by statistical test)
-That 
+the differences appears non-normal distributed and the first moment is non-zero/ negative (proved by statistical test)
+
+This phenomenon is as expected, as mentioned in sec:DSM??? 
 
 
 
@@ -366,13 +369,14 @@ covering images, observations, unknowns, redundancies,
   \caption{\small The reconstructed line and the unrefined DSM profile.}
   \label{fig:Test3D_1}
   \vspace{1cm}
-  \includegraphics[width=0.8\textwidth]{Test_hist_1.png} %%% 換，字太小。
+  \includegraphics[width=0.8\textwidth]{Test_hist_1.png} %%% 換，字太小、增加xtick。
   \caption{\small Histogram of the distances between the reconstructed line and the unrefined DSM profile.}
   \label{fig:TestHist_1}
 \end{figure}
 
 analysis on unknowns:
 of 453.6 meter
+The DSM profile is in average 6 cm lower than the reconstructed line. 
 
 
 %\subsection{True Data Result: case2-5}
