@@ -318,7 +318,7 @@ H_A: \mu\neq0
 \end{split}
 \end{equation*}
 
-A significance level $\alpha=0.05$ is selected, which is $0.025$ on each tail of the population, i.e. the area in body is $0.975$ out of 100\%. The corresponding z-score:
+A significance level $\alpha=0.05$ is selected, which is $0.025$ on each tail of the population, i.e. the area in body is $0.975$ out of 100\%. The corresponding z-score is:
 \begin{equation*}
 Z_{0.975}=1.96
 \end{equation*}
@@ -329,10 +329,10 @@ the proposed population mean $\mu_0=0$,
 the sample standard deviation $\sigma=0.083$,
 and sample size $n=381$, the test statistic for a One Sample Z Test has a calculated value:
 \begin{equation*}
-Z_{obs} = \frac{\overline{x}-\mu_0}{\sigma/\sqrt{n}}=\frac{-0.029-0}{0.083/\sqrt{381}}\approx6.82
+Z_{obs} = \frac{\overline{x}-\mu_0}{\sigma/\sqrt{n}}=\frac{-0.029-0}{0.083/\sqrt{381}}\approx-6.82
 \end{equation*}
 
-As the test statistic $Z_{obs}\approx6.82$ is greater than $T_{(0.95,8)}=2.306$, i.e. in the rejection region, the null hypothesis is rejected. In other words, with 95\% confidence we can claim that the distances from the reconstructed line segment to the to the DSM profile is significantly non-zero. This tells that ... ???. %This phenomenon is as expected, as mentioned in sec:DSM??? 
+As the test statistic $Z_{obs}\approx-6.82$ is less than $-Z_{0.975}=-1.96$, i.e. in the rejection region, the null hypothesis is rejected. In other words, with 95\% confidence we can claim that the distances from the reconstructed line segment to the to the DSM profile is significantly non-zero. This tells that ... ???. %This phenomenon is as expected, as mentioned in sec:DSM??? 
 
 
 \begin{figure}
@@ -385,34 +385,31 @@ covering images, observations, unknowns, redundancies,
 \subsection{True Data Result: case2 -Continuous Lane Marking}
 \label{subsec:trueresult-2}
 
+A continuous lane marking of 453.6 meters length is reconstructed. \cref{fig:Test3D_1} shows the reconstructed line segments and the DSM profile in UTM coordinate system (in Zone 32N). The distances from the reconstructed line segment to the DSM profile are plotted into histogram in \cref{fig:TestHist_1}. They are collected along the reconstructed line segments with 0.2 meter spacing (considering the DSM grid of 0.2 meter), resulting in sample size of $2246$. The sample mean is $-0.061$ [meter] and the sample standard deviation is $0.188$ [meter]. This sampling procedure is assumed to be independent and random.%??? and normal distributed (Z test assumptions)
 
-\cref{fig:Test3D_1} shows the reconstructed line segments and the DSM profile in UTM coordinate system (in Zone 32N). The distances from the reconstructed line segment to the DSM profile are plotted into histogram in \cref{fig:TestHist_1}. They are collected along the reconstructed line segments with 0.2 meter spacing (considering the DSM grid of 0.2 meter), resulting in sample size of $381$. The sample mean is $-0.029$ [meter] and the sample standard deviation is $0.083$ [meter]. This sampling procedure is assumed to be independent and random.%??? and normal distributed (Z test assumptions)
-
-In order to prove that the population mean of the distances from the reconstructed line segments to the DSM profile is significantly non-zero, a two-tailed Z-test is adopted. Null hypothesis ($H_0$) and (two-tailed) alternative hypothesis ($H_A$) are stated as:
+To prove that the DSM height profile is significantly lower than the reconstructed line segments for more than $5$ centimeters, a lower-tailed Z-test is adopted. Null hypothesis ($H_0$) and (one-tailed) alternative hypothesis ($H_A$) are stated as:
 \begin{equation*}
 \begin{split}
-H_0: \mu=0\\
-H_A: \mu\neq0
+H_0: \mu\geq-0.050\\
+H_A: \mu<-0.050
 \end{split}
 \end{equation*}
 
-A significance level $\alpha=0.05$ is selected, which is $0.025$ on each tail of the population, i.e. the area in body is $0.975$ out of 100\%. The corresponding z-score:
+A significance level $\alpha=0.05$ is selected, i.e. the area in body is $0.950$ out of 100\%. The corresponding z-score is:
 \begin{equation*}
-Z_{0.975}=1.96
+Z_{0.950}=1.64
 \end{equation*}
-leads to the decision rule: if $Z_{obs}$ is less than $-1.96$ or greater than $1.96$, reject the null hypothesis.
+leads to the decision rule: if $Z_{obs}$ is less than $-1.64$, reject the null hypothesis.
 
-With the sample mean $\overline{x}=-0.029$,
-the proposed population mean $\mu_0=0$,
-the sample standard deviation $\sigma=0.083$,
-and sample size $n=381$, the test statistic for a One Sample Z Test has a calculated value:
+With the sample mean $\overline{x}=-0.061$,
+the proposed population mean $\mu_0=-0.050$,
+the sample standard deviation $\sigma=0.188$,
+and sample size $n=2246$, the test statistic for a One Sample Z Test has a calculated value:
 \begin{equation*}
-Z_{obs} = \frac{\overline{x}-\mu_0}{\sigma/\sqrt{n}}=\frac{-0.029-0}{0.083/\sqrt{381}}\approx6.82
+Z_{obs} = \frac{\overline{x}-\mu_0}{\sigma/\sqrt{n}}=\frac{-0.061-(-0.050)}{0.188/\sqrt{2246}}\approx-2.77
 \end{equation*}
 
-As the test statistic $Z_{obs}\approx6.82$ is greater than $T_{(0.95,8)}=2.306$, i.e. in the rejection region, the null hypothesis is rejected. In other words, with 95\% confidence we can claim that the distances from the reconstructed line segment to the to the DSM profile is significantly non-zero. This tells that ... ???. %This phenomenon is as expected, as mentioned in sec:DSM??? 
-
-
+As the test statistic $Z_{obs}\approx-2.77$ is less than $-Z_{0.95}=-1.64$, i.e. in the rejection region, the null hypothesis is rejected. In other words, with 95\% confidence we can claim that the DSM profile is in average, statistically and significantly lower than the reconstructed line segments for more than $5$ centimeters. %This phenomenon is as expected, as mentioned in sec:DSM??? 
 
 \begin{figure}
   \centering
@@ -421,13 +418,9 @@ As the test statistic $Z_{obs}\approx6.82$ is greater than $T_{(0.95,8)}=2.306$,
   \label{fig:Test3D_1}
   \vspace{1cm}
   \includegraphics[width=0.8\textwidth]{Test_hist_1.png} %%% 換，字太小、增加xtick。
-  \caption{\small Histogram of the distances between the reconstructed line and the unrefined DSM profile.}
+  \caption{\small Histogram of the distances from the reconstructed line to the unrefined DSM profile.}
   \label{fig:TestHist_1}
 \end{figure}
-
-analysis on unknowns:
-of 453.6 meter
-The DSM profile is in average 6 cm lower than the reconstructed line. 
 
 
 %\subsection{True Data Result: case2-5}
