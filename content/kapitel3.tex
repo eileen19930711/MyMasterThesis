@@ -254,7 +254,7 @@ adding some known biases in the coordinates of the true line segment's endpoints
   the added bias [meter] & $0$      & $0$      & $+0.5$      & $+0.2$   & $+0.1$   & $+0.3$\\
   \bottomrule
   \end{tabular}
-  \caption{The added biases in the object coordinates of the true line segment's endpoints. I.e. they are the known biases added in the unknown parameters in the LS adjustment.}
+  \caption{The added biases in the object coordinates of the true line segment's endpoints, i.e. the known biases that are added in the unknown parameters in the LS adjustment.}
   \label{tab:BiasesInInitialValues}
 \end{table}
 
@@ -270,28 +270,30 @@ adding some known biases in the coordinates of the true line segment's endpoints
 %statistical test: errors small enough?
 
 %%% analysis on the unknowns:
-\cref{fig:Simu3D_2} shows the reconstructed and the true line segments in UTM coordinate system (in Zone 32N). The distances from the reconstructed line segment to the true one are plotted into histogram in \cref{fig:SimuHist_2}. They are sampled along the reconstructed line with 0.2 meter spacing, resulting in sample size of 385. The sample mean is -0.001 [meter] and the sample standard deviation is 0.016 [meter].
+\cref{fig:Simu3D_2} shows the reconstructed and the true line segments in UTM coordinate system (in Zone 32N). The distances from the reconstructed line segment to the true one are plotted into histogram in \cref{fig:SimuHist_2}. They are sampled along the reconstructed line with 0.2 meter spacing, resulting in sample size of 385. The sample mean is -0.001 [meter] and the sample standard deviation is 0.016 [meter]. This sampling procedure is assumed to be independent and random.%???
 
-To test if the population mean significantly equals zero, t-test is adopted. With null hypothesis($H_0$) and (two-tailed) alternative hypothesis ($H_A$) being stated as:
+To 
+
+
+Z-test is adopted to test if the population mean significantly equals zero, i.e. if the reconstructed line segment is close enough to the true line segment. Null hypothesis ($H_0$) and (two-tailed) alternative hypothesis ($H_A$) are stated as:
 \begin{equation}
 \begin{split}
-H_0: \mu=\overline{x}\\
-H_A: \mu\neq\overline{x}
+H_0: \mu=0\\
+H_A: \mu\neq0
 \end{split}
 \end{equation}
 
+A significance level $\alpha=0.05$ is selected, which is $0.025$ on each tail of the population, i.e. the area in body is $0.975$. The corresponding z-score is $1.96$, leading to the decision rule: if $Z_{obs}$ is less than $-1.96$ or greater than $1.96$, reject the null hypothesis.
+
 With the sample mean $\overline{x}=-0.001$,
-the proposed population mean $\mu=0$,
-the sample standard deviation $s=0.016$,
-and sample size $n=385$, the test statistic $T$ for a One Sample t Test has a calculated value:
+the proposed population mean $\mu_0=0$,
+the sample standard deviation $\sigma=0.016$,
+and sample size $n=385$, the test statistic $Z$ for a One Sample Z Test has a calculated value:
 \begin{equation}
-T_{obs} = \frac{\overline{x} - \mu_0}{s/\sqrt{n}}=\frac{-0.001-0}{0.016/\sqrt{385}}\approx1.226
+Z_{obs} = \frac{\overline{x} - \mu_0}{\sigma/\sqrt{n}}=\frac{-0.001-0}{0.016/\sqrt{385}}\approx1.226
 \end{equation}
 
-A selected significance level $\alpha=0.05$ with degree of freedom $dof=385-1=384$ leads to the critical t-value $T_{cri}=1.660$ (from t Table). As the observed value $T_{obs}=1.226$ is not in the critical region, we fail to reject the null hypothesis. In other words, with 95\% confidence we can claim that the sample mean value of the distances from the reconstructed line segment to the true line segment equals to 0.
-
-
-The mean  is zero (statistical test).
+As the observed value $Z_{obs}=1.226$ is not in the rejection region, we fail to reject the null hypothesis. In other words, with 95\% confidence we can claim that the sample mean value of the distances from the reconstructed line segment to the true line segment equals to 0.
 
 
 \clearpage
