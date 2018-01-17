@@ -236,8 +236,8 @@ covering images, observations, unknowns, redundancies,
 \label{subsec:simudata}
 
 \paragraph{The true line segment in object space}
-Firstly, the object coordinates of the endpoints of a 3D line segment are defined, with 77 meter distance, locating on the road surface in the test area (German highway A9) with 7 aerial images coverage. By linear interpolating several points with 0.2 meter spaces (considering DSM grid of 0.2 meter) between the two endpoints, a 3D line segment in the form of a set of 3D points is generated .
-The location of this 3D line segment serves as the true values in the experiments in this subsection. 
+Firstly, the object coordinates of the endpoints of a 3D line segment are defined, with 77 meters length, locating on the road surface in the test area (German highway A9) with 7 aerial images coverage. By linear interpolating several points with 0.2 meter spaces (considering DSM grid of 0.2 meter) between the two endpoints, a 3D line segment in the form of a set of 3D points is generated.
+This 3D line segment serves as the ground truth in the experiments in this subsection. 
 
 \paragraph{The observed line segments in image spaces}
 The observations in the LS model are simulated by back-projecting the true line segment into the covering images. No noise is added in the observations.
@@ -414,19 +414,52 @@ As the test statistic $Z_{obs}\approx-4.07$ is less than $-Z_{0.95}=-1.64$, i.e.
 
 \begin{figure}
   \centering
-  \includegraphics[width=\textwidth]{4_Test_3D.png} %%% 換，字重疊、圖例太右下。
+  \includegraphics[width=\textwidth]{4_Test_3D.png} %%% 換，字重疊。
   \caption{\small The reconstructed line segments and the unrefined DSM profile in UTM coordinate system (in Zone 32N).}
   \label{fig:Test3D_1}
   \vspace{1cm}
-  \includegraphics[width=\textwidth]{4_Test_hist.png} %%% 換，字太小、增加xtick。
+  \includegraphics[width=\textwidth]{4_Test_hist.png} %%% 換，字太小、xlim。
   \caption{\small Histogram of the distances from the reconstructed line to the unrefined DSM profile.}
   \label{fig:TestHist_1}
 \end{figure}
 
+\clearpage
+
+Images configuration plays an important roll in 3D reconstruction. %!!! discussion
+\cref{fig:TestImgNum_1} shows: when more images cover a line segment, more measurements (extracted line segment) are provided, resulting higher redundancies in LS adjustment. (...???)
+
+Since the estimated variance-covariance matrix of the estimated parameters $\hat{\Sigma}_{\hat{X}\hat{X}}$ depends on both the design matrix $A$ (i.e. the configuration) and the posterior standard deviation $\hat{\sigma}_0$ (i.e. the posterior measurements quality):
+\begin{equation}
+\hat{\Sigma}_{\hat{X}\hat{X}}=\hat{\sigma}_0^2(A^TA)^{-1}=
+\begin{bmatrix}
+\hat{\sigma}_{\hat{X}}^2 && \hat{\sigma}_{\hat{X}\hat{Y}} && \hat{\sigma}_{\hat{X}\hat{Z}} \\
+\hat{\sigma}_{\hat{Y}\hat{X}} && \hat{\sigma}_{\hat{Y}}^2 && \hat{\sigma}_{\hat{Y}\hat{Z}} \\
+\hat{\sigma}_{\hat{Z}\hat{X}} && \hat{\sigma}_{\hat{Z}\hat{Y}} && \hat{\sigma}_{\hat{Z}}^2
+\end{bmatrix}
+\end{equation}
+we are not able to tell from the variances $\hat{\sigma}_{\hat{X}}$, $\hat{\sigma}_{\hat{Y}}$, $\hat{\sigma}_{\hat{Z}}$ whether the .
+
+By setting the priori standard deviation to the same value in all the LS adjustment processes (i.e. assuming the measurements are of same quality in each segment), the priori variance-covariance matrix of the estimated parameters $\Sigma_{\hat{X}\hat{X}}$ reflects the relative quality of the design matrix (i.e. the configuration strength) among all the LS adjustment processes.
+\begin{equation}
+\Sigma_{\hat{X}\hat{X}}=\sigma_0^2(A^TA)^{-1}
+\end{equation}
+
+\cref{fig:TestdesignHV_1} shows:
 
 
+\begin{figure}
+  \centering
+  \includegraphics[width=0.95\textwidth]{4_Test_ImgNum.png} %%% 換，字重疊。
+  \caption{\small The relationship between image amount, the resulting reconstructed line segments, and the redundancies and posterior standard deviation in LS adjustment.}
+  \label{fig:TestImgNum_1}
+  \vspace{1cm}
+  \includegraphics[width=0.8\textwidth]{4_Test_design_XY_Z.png} %%% 換，字太小、xlim。
+  \caption{\small The variances of the estimated object coordinates, in horizontal and vertical directions, for both priori and posterior.}
+  \label{fig:TestdesignHV_1}
+\end{figure}
 
 
+\clearpage
 
 %\subsection{True Data Result: case2-5}
 %\label{sec:trueresult-3}
