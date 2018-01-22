@@ -301,7 +301,7 @@ which is neither less than $-T_{(0.975,17)}=-2.110$ nor greater than $T_{(0.975,
 
 \clearpage
 
-\cref{fig:Simu3D_1} shows the reconstructed line segments and the DSM profile which serves as the initial approximation for non-linear LS adjustment, in UTM coordinate system (in Zone 32N). The maximum distance between them is 1.97 meter, mainly in Z-direction. This tells that \textbf{the reconstruction model is able to refine the initial approximation with at least 2 meters bias in Z-direction}.
+\cref{fig:Simu3D_1} shows the reconstructed line segments and the DSM profile which serves as the initial approximation for non-linear LS adjustment, in UTM coordinate system (in Zone 32N). The maximum distance between them is 1.97 meter, mainly in Z-direction. This tells that \textbf{the reconstruction model is at least able to refine the initial approximation with 2 meters bias in Z-direction}.
 
 
 %The distances from the reconstructed line segment to the DSM profile are plotted into histogram in \cref{fig:SimuHist_1}. They are collected along the reconstructed line segments with 0.2 meter spacing (considering the DSM grid of 0.2 meter), resulting in sample size of $381$. The sample mean is $-0.029$ [meter] and the sample variance is $0.083$ [meter]. % This sampling procedure is assumed to be independent and random.%??? and normal distributed (Z test assumptions)
@@ -342,7 +342,11 @@ which is neither less than $-T_{(0.975,17)}=-2.110$ nor greater than $T_{(0.975,
 %  \label{fig:SimuHist_1}
 \end{figure}
 
-\cref{fig:SimuImgNum_1} gives the information on the amount of covering images, the redundancies and the adjusted height of the reconstructed line nodes in each segment, i.e. each independent LS adjustment.
+\cref{fig:SimuImgNum_1} gives the information on the amount of covering images, the redundancies and the height value of the reconstructed nodes of each segment, i.e. of each independent LS adjustment process.
+
+\cref{fig:SimuError} shows the mean and variance of the added random Gaussian noise and the adjusted residuals. 
+
+
 
 %The redundancies increase with more covering images.
 %The posterior standard deviation
