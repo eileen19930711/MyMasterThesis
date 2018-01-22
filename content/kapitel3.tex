@@ -352,20 +352,20 @@ which is neither less than $-T_{(0.975,17)}=-2.110$ nor greater than $T_{(0.975,
 %reflects the measurement quality.
 %posterior standard deviation appears to have no obvious correlation with the amount of images.  Unless the included measurements
 
+
+
+From \cref{fig:SimuSigmaxx} it can be seen that the estimated parameters generally have smaller priori variance values (in horizontal direction) $\sqrt{\sigma_{\hat{X}}^2+\hat{\sigma}_{\hat{Y}}^2}$ and (in vertical direction) $\sigma_{\hat{Z}}$ with the increase of covering images. Whereas larger deviations from the trend are contained in vertical direction. \textbf{By increasing the configuration strength, i.e. increasing the amount of covering images with different orientations, the precision of the estimated parameters can be improved}.
+
+Besides, the priori variance of the estimated parameters is smaller in vertical direction $\sigma_{\hat{Z}}$ than in horizontal direction $\sqrt{\sigma_{\hat{X}}^2+\hat{\sigma}_{\hat{Y}}^2}$. This tells that \textbf{the reconstructed nodes have higher precision in vertical direction}. [reason? sec 3.1]
+
 \begin{figure}
   \centering
-  \includegraphics[width=\textwidth]{Simu_ImgNum.png}
+  \includegraphics[width=0.95\textwidth]{Simu_ImgNum.png}
   \caption{\small XXX.}
   \label{fig:SimuImgNum_1}
-\end{figure}
-
-From \cref{fig:SimuSigmaxx} it can be seen that the estimated parameters in horizontal direction, i.e. $\hat{X}$ and $\hat{Y}$, have smaller priori variances values $\sqrt{\sigma_{\hat{X}}^2+\hat{\sigma}_{\hat{Y}}^2}$ with the increase of covering images. The priori variance $\sigma_{\hat{Z}}$ of the estimated parameter $\hat{Z}$ generally has this trend whereas some deviations are involved. 
-
-
-
-\begin{figure}
+  \vspace{1cm}
   \centering
-  \includegraphics[width=\textwidth]{Simu_XY_Z.png}
+  \includegraphics[width=0.95\textwidth]{Simu_XY_Z.png}
   \caption{\small The relation between the variances of the estimated parameters and the amount of images.}
   \label{fig:SimuSigmaxx}
 \end{figure}
