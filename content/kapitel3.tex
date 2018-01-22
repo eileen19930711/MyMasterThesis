@@ -342,7 +342,7 @@ which is neither less than $-T_{(0.975,17)}=-2.110$ nor greater than $T_{(0.975,
 %  \label{fig:SimuHist_1}
 \end{figure}
 
-\cref{fig:SimuImgNum_1} shows the amount of images (different views), the redundancies, the posterior standard deviation and the height of the reconstructed line nodes. Each segment is an independent LS adjustment process.
+\cref{fig:SimuImgNum_1} gives the information on the amount of covering images, the redundancies and the adjusted height of the reconstructed line nodes in each segment, i.e. each independent LS adjustment.
 
 %The redundancies increase with more covering images.
 %The posterior standard deviation
@@ -354,25 +354,35 @@ which is neither less than $-T_{(0.975,17)}=-2.110$ nor greater than $T_{(0.975,
 
 
 
-From \cref{fig:SimuSigmaxx} it can be seen that the estimated parameters generally have smaller priori variance values (in horizontal direction) $\sqrt{\sigma_{\hat{X}}^2+\hat{\sigma}_{\hat{Y}}^2}$ and (in vertical direction) $\sigma_{\hat{Z}}$ with the increase of covering images. Whereas larger deviations from the trend are contained in vertical direction. \textbf{By increasing the configuration strength, i.e. increasing the amount of covering images with different orientations, the precision of the estimated parameters can be improved}.
 
-Besides, the priori variance of the estimated parameters is smaller in vertical direction $\sigma_{\hat{Z}}$ than in horizontal direction $\sqrt{\sigma_{\hat{X}}^2+\hat{\sigma}_{\hat{Y}}^2}$. This tells that \textbf{the reconstructed nodes have higher precision in vertical direction}. [reason? sec 3.1]
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.95\textwidth]{Simu_ImgNum.png}
+  \includegraphics[width=\textwidth]{Simu_ImgNum.png}
   \caption{\small XXX.}
   \label{fig:SimuImgNum_1}
   \vspace{1cm}
   \centering
-  \includegraphics[width=0.95\textwidth]{Simu_XY_Z.png}
-  \caption{\small The relation between the variances of the estimated parameters and the amount of images.}
-  \label{fig:SimuSigmaxx}
+  \includegraphics[width=0.95\textwidth]{Simu_error_1.png}
+  \caption{\small The relation between the added random Gaussian noise and the adjusted residuals.}
+  \label{fig:SimuError}
 \end{figure}
 
 
 \clearpage
 
+
+From \cref{fig:SimuSigmaxx} it can be seen that the estimated parameters generally have smaller priori variance values (in horizontal direction) $\sqrt{\sigma_{\hat{X}}^2+\hat{\sigma}_{\hat{Y}}^2}$ and (in vertical direction) $\sigma_{\hat{Z}}$ with the increase of covering images. Whereas larger deviations from the trend are contained in vertical direction. \textbf{By increasing the configuration strength, i.e. increasing the amount of covering images with different orientations, the precision of the estimated parameters can be improved}.
+
+Besides, the priori variance of the estimated parameters is smaller in vertical direction $\sigma_{\hat{Z}}$ than in horizontal direction $\sqrt{\sigma_{\hat{X}}^2+\hat{\sigma}_{\hat{Y}}^2}$. This tells that \textbf{the reconstructed nodes have higher precision in vertical direction}. [reason? sec 3.1]
+
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.95\textwidth]{Simu_XY_Z.png}
+  \caption{\small The relation between the variances of the estimated parameters and the amount of images.}
+  \label{fig:SimuSigmaxx}
+\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{True Data}
