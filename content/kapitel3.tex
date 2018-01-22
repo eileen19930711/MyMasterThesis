@@ -337,7 +337,7 @@ which is neither less than $-T_{(0.975,17)}=-2.110$ nor greater than $T_{(0.975,
 \end{figure}
 
 %%% analysis on measurements:
-\cref{fig:SimuError} shows the mean and variance of the added random Gaussian noise and the adjusted residuals. Comparing this two samples by applying a two-tailed two-sample Z-test. Null hypothesis and alternative hypothesis ($H_A$) are stated as:
+\cref{fig:SimuError} shows the mean and variance of the added random Gaussian noise and the adjusted residuals. This two samples are compared by applying a two-tailed two-sample T-test. Null hypothesis and alternative hypothesis ($H_A$) are stated as:
 \begin{equation*}
 \begin{split}
 H_0: \mu_1-\mu_2=0\\
@@ -345,12 +345,12 @@ H_A: \mu1-\mu_2\neq0
 \end{split}
 \end{equation*}
 
-With significance level $\alpha=0.05$, the z-score is 
+With significance level $\alpha=0.05$ and degree of freedom $\approx300$, the t-score is 
 \begin{equation*}
-Z_{0.975}=1.96
+T_{0.95,300}=1.968
 \end{equation*}
 
-As all the test statistics $Z_{obs}$ of each segment are not less than $-Z_{0.975}=-1.96$ or greater than $Z_{0.975}=1.96$, i.e. not in the rejection region, as shown in fig???, the null hypothesis could not be rejected. In other words, 
+As all the test statistics $T_{obs}$ of each segment are not less than $-T_{0.95,300}=-1.968$ or greater than $T_{0.95,300}=1.968$, i.e. not in the rejection region, as shown in {fig:SimuTtest}, the null hypothesis could not be rejected. In other words, 
 
 
 %The redundancies increase with more covering images.
@@ -372,9 +372,9 @@ As all the test statistics $Z_{obs}$ of each segment are not less than $-Z_{0.97
   \label{fig:SimuError}
   \vspace{1cm}
   \centering
-  \includegraphics[width=\textwidth]{Simu_ImgNum.png}
-  \caption{\small XXX.}
-  \label{fig:SimuZtest}
+  \includegraphics[width=\textwidth]{Simu_Ttest.png}
+  \caption{\small The red area under the probability density function is the rejection region. Since non of the $T_{obs}$ lies in the rejection region, the null hypothesis could not be rejected, i.e. we fail to claim that the adjusted residuals are different from the added random noise.}
+  \label{fig:SimuTtest}
 \end{figure}
 
 \clearpage
