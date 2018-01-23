@@ -362,7 +362,7 @@ without the influence of imperfect camera parameters,
 \clearpage
 
 
-From \cref{fig:SimuSigmaxx} it can be seen that the estimated parameters generally have smaller priori variance values (in horizontal direction) $\sqrt{\sigma_{\hat{X}}^2+\hat{\sigma}_{\hat{Y}}^2}$ and (in vertical direction) $\sigma_{\hat{Z}}$ with the increase of covering images. Whereas larger deviations from the trend are contained in vertical direction. \textbf{By increasing the configuration strength, i.e. increasing the amount of covering images with different orientations, the precision of the estimated parameters can be improved}.
+From \cref{fig:SimuSigmaxx} it can be seen that the estimated parameters generally have smaller priori variance values (in horizontal direction) $\sqrt{\sigma_{\hat{X}}^2+\hat{\sigma}_{\hat{Y}}^2}$ and (in vertical direction) $\sigma_{\hat{Z}}$ with the increase of covering images, whereas larger deviations from the trend are contained in vertical direction. \textbf{By increasing the configuration strength, i.e. increasing the amount of covering images with different orientations, the precision of the estimated parameters can be improved}.
 
 Besides, the priori variance of the estimated parameters is smaller in vertical direction $\sigma_{\hat{Z}}$ than in horizontal direction $\sqrt{\sigma_{\hat{X}}^2+\hat{\sigma}_{\hat{Y}}^2}$. This tells that \textbf{the reconstructed nodes have higher precision in vertical direction}. [reason? sec 3.1]
 
@@ -439,22 +439,20 @@ As the test statistic $Z_{obs}\approx-2.24$ is less than $-Z_{0.95}=-1.64$, i.e.
 %\end{figure}
 
 
-Images configuration plays an important roll in 3D reconstruction. %!!! discussion
+Compare to the simulation data, where all line segments lie on a straight line and have same orientations, the true data (a continuous lane marking) is a curve line, whose line segments have different orientations from each other. Even some segments may have same image coverage configuration, their LS model may have different configuration due to their different orientaions in 3D space. \cref{fig:TestSigmxx} shows that the estimated parameters generally have smaller priori variance values with the increase of covering images. However there are some other factors influencing the configuration strength with same covering image amount.(vermutlich, the configuration strength in image space counts. show figures)
 
-
-\cref{fig:TestSigmxx} shows:
-
+By increasing the configuration strength, the priori precision of the estimated parameters can be improved. \textbf{Not only the increase of the amount of covering images but also the line segment orientations in image space count for the configuration strength}.
 
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{Test_XY_Z.png}
   \caption{\small The variances of the estimated object coordinates, in horizontal and vertical directions.}
-  \label{fig:TestSigmxxhat}
+  \label{fig:TestSigmxx}
   \vspace{1cm}
   \centering
   \includegraphics[width=0.8\textwidth]{Test_XY_Z_hat.png}
   \caption{\small The estimated variances of the estimated object coordinates, in horizontal and vertical directions.}
-  \label{fig:TestSigmxx}
+  \label{fig:TestSigmxxhat}
 \end{figure}
 
 
