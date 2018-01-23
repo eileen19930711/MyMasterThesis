@@ -3,17 +3,14 @@
 
 \cref{sec:Materials} provides information about input dataset and the applied preprocessing steps. 
 
-evaluation procedure
+In \cref{sec:simulation}, the correctness of the derived LS model for reconstruction is evaluated. Some other properties of the proposed reconstruction approach are also discussed.
+
+% evaluation procedure
 %The distance between the LIDAR points and the generated DSM are computed and evaluated statistically
 %To evaluate the influence of the over-counting correction and MGM
 %cost aggregation independently, two evaluations were performed
 
 
-In \cref{sec:sd}, the correctness of the derived model is firstly verified by using simulation data without adding errors in the simulated measurements yet some biases are added in the initial values of the unknowns.
-
-Dashed lane-lines reconstruction is presented in \cref{sec:td-short}. % 5 set of dashed lane line data
-% show the differences with DSM profile
-In long lane-lines reconstruction cases
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Materials}
@@ -212,21 +209,18 @@ regarding the fact that a dashed lane-line is no longer than 6 meter which is co
 % http://www.mvtec.com/doc/halcon/11/en/lines_gauss.html
 % https://www.dvr.de/download/publikationen-schriftenreihe-17.pdf
 
-table:
-simu.case1: noisy measurements and biased initial values of the unknowns
-
-covering images, observations, unknowns, redundancies, 
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Simulation}
 \label{sec:simulation}
-This section aims to verify the correctness of the derived LS model using simulation data. The used materials are as described in \cref{sec:Materials}. Only the measurements (the image coordinates of the extracted lines), the true and approximate values of the unknowns (the object coordinates of a line segment) in the non-linear LS model are simulated, as described in \cref{subsec:simudata}.
+This section aims to verify the correctness of the derived LS model and to discover some characteristics of the reconstruction model using simulation data. The used materials are as described in \cref{sec:Materials}. Only the measurements (the image coordinates of the extracted lines), the true and approximate values of the unknowns (the object coordinates of a line segment) in the non-linear LS model are simulated, as described in \cref{subsec:simudata}.
 
-\cref{subsec:simuresult} aims to check if the iteration scheme converges to the correct solution given imperfect initial values of the unknowns. This subsection also presents the significant height differences between the approximate and the reconstructed line segments, indicating the necessity of refinement base on image triangulation.
-%\cref{subsec:simuresult-2} checks, without the influences from camera parameters' quality, if the derived LS model is able to resist the simulated random errors contained in the measurements.
+\cref{subsec:simuresult} firstly evaluate if the iteration scheme converges to the correct solution given imperfect initial values of the unknowns. The significant height differences between the approximate and the reconstructed line segments are also presented, indicating the refining ability of the proposed reconstruction approach.
 
-Note that the quality of camera parameters (EO., IO. and additional parameters) do not have influences in simulation since the simulated measurements are produced with the same set of camera parameters as the set used for 3D reconstruction.
+The ability of the derived LS model on detecting the measurement errors is then evaluated. Furthermore, how the increase of covering images would influence the reconstruction result is elaborated.
+
+%Note that the quality of camera parameters (EO., IO. and additional parameters) do not have influences in simulation since the simulated measurements are produced with the same set of camera parameters as the set used for 3D reconstruction.
+
 
 
 
@@ -234,7 +228,7 @@ Note that the quality of camera parameters (EO., IO. and additional parameters) 
 \label{subsec:simudata}
 
 \paragraph{The true line segment in object space}
-Firstly, the object coordinates of the endpoints of a 3D line segment are defined, with 136 meters length, locating on the road surface in the test area (German highway A9) with 3 to 7 aerial images coverage. By linear interpolating several points with 0.2 meter spaces (considering DSM grid of 0.2 meter) between the two endpoints, a 3D line segment in the form of a set of 3D points is generated. This 3D line segment serves as the ground truth in the experiments in \cref{sec:simulation}. 
+Firstly, the object coordinates of the endpoints of a 3D line segment are defined, with 151.8 meters length, locating on the road surface in the test area (German highway A9) with 3 to 7 aerial images coverage. By linear interpolating several points with 0.2 meter spaces (considering DSM grid of 0.2 meter) between the two endpoints, a 3D line segment in the form of a set of 3D points is generated. This 3D line segment serves as the ground truth in the experiments in \cref{sec:simulation}. 
 
 \paragraph{The observed line segments in image spaces}
 The observations in the LS model are simulated by back-projecting the true line segment into the covering images. Gaussian random noise $e\sim\mathcal{N}(0,0.5^2)$ is added in the observations for each LS adjustment, as line extraction process is of sub-pixel accuracy. The added noise is plotted in \cref{fig:noise}
@@ -255,7 +249,7 @@ The initial estimates for non-linear LS adjustment is generated by projecting th
 \label{subsec:simuresult}
 
 %%% analysis on the unknowns:
-\cref{fig:Simu3D_2} shows the reconstructed and the true line segments in UTM coordinate system (in Zone 32N). The distances from the reconstructed line nodes to the true line segment are collected, resulting in sample size of $18$. The sample mean is $0.008$ [meter] and the sample variance is $0.101$ [meter]. % This sampling procedure is assumed to be independent and random.%??? (t test assumptions)
+\cref{fig:Simu3D_2} shows the reconstructed and the true line segments in UTM coordinate system (in Zone 32N). The distances from the reconstructed line nodes to the true line segment are computed and collected, resulting in sample size of $18$. The sample mean is $0.008$ [meter] and the sample variance is $0.101$ [meter]. % This sampling procedure is assumed to be independent and random.%??? (t test assumptions)
 
 For such small sample size data, a two-tailed t-test is adopted to test if the population mean significantly not equals zero, i.e. \textbf{if the reconstructed line segments are significantly far from the true line segments}. Null hypothesis ($H_0$) and (two-tailed) alternative hypothesis ($H_A$) are stated as:
 \begin{equation*}
@@ -350,21 +344,9 @@ With significance level $\alpha=0.05$ and degree of freedom $\approx300$, the t-
 T_{0.95,300}=1.968
 \end{equation*}
 
-As shown in \cref{fig:SimuTtest}, all the test statistics $T_{obs}$ of each segment are not less than $-T_{0.95,300}=-1.968$ or greater than $T_{0.95,300}=1.968$, i.e. not in the rejection region, the null hypothesis could not be rejected. In other words, 
+As shown in \cref{fig:SimuTtest}, all the test statistics $T_{obs}$ of each segment are not less than $-T_{0.95,300}=-1.968$ or greater than $T_{0.95,300}=1.968$, i.e. not in the rejection region, the null hypothesis could not be rejected. In other words, we fail to claim that the adjusted residuals are statistically different from the added random noise.
 
-
-%The redundancies increase with more covering images.
-%The posterior standard deviation
-%\begin{equation*}
-%\hat{\sigma}_0=\sqrt{\dfrac{\sum\hat{e}^\mathsf{T}\hat{e}}{redundancy}}
-%\end{equation*}
-%reflects the measurement quality.
-%posterior standard deviation appears to have no obvious correlation with the amount of images.  Unless the included measurements
-
-
-
-
-
+without the influence of imperfect camera parameters, 
 \begin{figure}
   \centering
   \includegraphics[width=0.95\textwidth]{Simu_error_1.png}
@@ -373,7 +355,7 @@ As shown in \cref{fig:SimuTtest}, all the test statistics $T_{obs}$ of each segm
   \vspace{1cm}
   \centering
   \includegraphics[width=\textwidth]{Simu_Ttest.png}
-  \caption{\small The red area under the probability density function is the rejection region, which is 5\%. Since non of the $T_{obs}$ falls in the rejection region, the null hypothesis could not be rejected, i.e. we fail to claim that the adjusted residuals are different from the added random noise.}
+  \caption{\small The red area under the probability density function is the rejection region, which is 5\%. Since non of the $T_{obs}$ falls in the rejection region, the null hypothesis could not be rejected.}
   \label{fig:SimuTtest}
 \end{figure}
 
@@ -392,29 +374,15 @@ Besides, the priori variance of the estimated parameters is smaller in vertical 
   \label{fig:SimuSigmaxx}
 \end{figure}
 
+\clearpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{True Data}
 \label{sec:truedata}
 
-table:
-%case1: Dashed Lane marking
-case2: Continuous Lane marking%, two strips, multiple stereo pairs
-%case3: Continuous Lane marking, two strips, two stereo pairs
-%case4: Continuous Lane marking, two strips, one stereo pair
-%case5: Continuous Lane marking, one strip
+\subsection{True Data Result}
+\label{subsec:trueresult}
 
-covering images, observations, unknowns, redundancies, 
-
-
-
-%\subsection{True Data Result: case 1 -Dashed Lane Marking}
-%\label{subsec:trueresult-1}
-
-
-\subsection{True Data Result: case2 -Continuous Lane Marking}
-\label{subsec:trueresult-2}
-
-A continuous lane marking of ??? meters length is reconstructed. \cref{fig:Test3D_1} shows the reconstructed line segments and the DSM profile in UTM coordinate system (in Zone 32N). The distances from the reconstructed line segment to the DSM profile are plotted into histogram in \cref{fig:TestHist_1}. They are collected along the reconstructed line segments with 0.2 meter spacing (considering the DSM grid of 0.2 meter), resulting in sample size of $1256$. The sample mean is $-0.180$ [meter] and the sample standard deviation is $0.174$ [meter]. %This sampling procedure is assumed to be independent and random.%??? and normal distributed (Z test assumptions)
+A continuous lane marking of 255.9 meters length is reconstructed. \cref{fig:Test3D_1} shows the reconstructed line segments and the DSM profile in UTM coordinate system (in Zone 32N). The distances from the reconstructed line segment to the DSM profile are computed and plotted into histogram in \cref{fig:TestHist_1}. They are collected along the reconstructed line segments with 0.2 meter spacing (considering the DSM grid of 0.2 meter), resulting in sample size of $1256$. The sample mean is $-0.180$ [meter] and the sample standard deviation is $0.174$ [meter]. %This sampling procedure is assumed to be independent and random.%??? and normal distributed (Z test assumptions)
 
 Assuming DSM height profile being significantly lower than the reconstructed line segments for more than $17$??? centimeters, a lower-tailed Z-test is adopted. Null hypothesis ($H_0$) and (one-tailed) alternative hypothesis ($H_A$) are stated as:
 \begin{equation*}
@@ -430,54 +398,44 @@ Z_{0.950}=1.64
 \end{equation*}
 leads to the decision rule: if $Z_{obs}$ is less than $-1.64$, reject the null hypothesis.
 
-With the sample mean $\overline{x}=-0.180$,
+With the sample mean $\overline{x}=-0.181$,
 the proposed population mean $\mu_0=-0.170$,
 the sample standard deviation $\sigma=0.174$,
 and sample size $n=1256$, the test statistic for a One Sample Z Test has a calculated value:
 \begin{equation*}
-Z_{obs} = \frac{\overline{x}-\mu_0}{\sigma/\sqrt{n}}=\frac{-0.180-(-0.170)}{0.174/\sqrt{1256}}\approx-4.07
+Z_{obs} = \frac{\overline{x}-\mu_0}{\sigma/\sqrt{n}}=\frac{-0.181-(-0.170)}{0.174/\sqrt{1256}}\approx-2.24
 \end{equation*}
 
-As the test statistic $Z_{obs}\approx-4.07$ is less than $-Z_{0.95}=-1.64$, i.e. in the rejection region, the null hypothesis is rejected. In other words, \textbf{with 95\% confidence we can claim that the DSM profile is in average, statistically significantly lower than the reconstructed line segments for more than $\mathbf{17}$ centimeters}. %This phenomenon is as expected, as mentioned in sec:DSM??? 
+As the test statistic $Z_{obs}\approx-2.24$ is less than $-Z_{0.95}=-1.64$, i.e. in the rejection region, the null hypothesis is rejected. In other words, \textbf{with 95\% confidence we can claim that the DSM profile is in average, statistically and significantly lower than the reconstructed line segments for at least $\mathbf{17}$ centimeters}. %This phenomenon is as expected, as mentioned in sec:DSM??? 
 
 \begin{figure}
   \centering
-  \includegraphics[width=\textwidth]{4_Test_3D.png} %%% 換，字重疊。
+  \includegraphics[width=\textwidth]{4_Test_3D.png}
   \caption{\small The reconstructed line segments and the unrefined DSM profile in UTM coordinate system (in Zone 32N).}
   \label{fig:Test3D_1}
   \vspace{1cm}
-  \includegraphics[width=\textwidth]{4_Test_hist.png} %%% 換，字太小、xlim。
+  \includegraphics[width=\textwidth]{4_Test_hist.png}
   \caption{\small Histogram of the distances from the reconstructed line to the unrefined DSM profile.}
   \label{fig:TestHist_1}
 \end{figure}
 
 \clearpage
 
+\cref{fig:TestImgNum_1} gives the information on the amount of covering images, the redundancies and the height value of the reconstructed nodes, of each segment. Note that in each segment, LS adjustment is processed independently.
+
+
+
 Images configuration plays an important roll in 3D reconstruction. %!!! discussion
-\cref{fig:TestImgNum_1} shows: when more images cover a line segment, more measurements (extracted line segment) are provided, resulting higher redundancies in LS adjustment. (...???)
 
-Since the estimated variance-covariance matrix of the estimated parameters $\hat{\Sigma}_{\hat{X}\hat{X}}$ depends on both the design matrix $A$ (i.e. the configuration) and the posterior standard deviation $\hat{\sigma}_0$ (i.e. the posterior measurements quality):
-\begin{equation}
-\hat{\Sigma}_{\hat{X}\hat{X}}=\hat{\sigma}_0^2(A^TA)^{-1}=
-\begin{bmatrix}
-\hat{\sigma}_{\hat{X}}^2 && \hat{\sigma}_{\hat{X}\hat{Y}} && \hat{\sigma}_{\hat{X}\hat{Z}} \\
-\hat{\sigma}_{\hat{Y}\hat{X}} && \hat{\sigma}_{\hat{Y}}^2 && \hat{\sigma}_{\hat{Y}\hat{Z}} \\
-\hat{\sigma}_{\hat{Z}\hat{X}} && \hat{\sigma}_{\hat{Z}\hat{Y}} && \hat{\sigma}_{\hat{Z}}^2
-\end{bmatrix}
-\end{equation}
-we are not able to tell from the variances $\hat{\sigma}_{\hat{X}}$, $\hat{\sigma}_{\hat{Y}}$, $\hat{\sigma}_{\hat{Z}}$ whether the .
 
-By setting a constant priori standard deviation value in all the LS adjustment processes (i.e. assuming the measurements are of same quality in each segment), the priori variance-covariance matrix of the estimated parameters $\Sigma_{\hat{X}\hat{X}}$ reflects the quality of the design matrix (i.e. the configuration strength) in each LS adjustment processes.
-\begin{equation}
-\Sigma_{\hat{X}\hat{X}}=\sigma_0^2(A^TA)^{-1}
-\end{equation}
+
 
 \cref{fig:TestdesignHV_1} shows:
 
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.95\textwidth]{4_Test_ImgNum.png} %%% 換，字重疊。
+  \includegraphics[width=0.95\textwidth]{4_Test_ImgNum.png}
   \caption{\small The relationship between image amount, the resulting reconstructed line segments, and the redundancies and posterior standard deviation in LS adjustment.}
   \label{fig:TestImgNum_1}
   \vspace{1cm}
@@ -487,39 +445,6 @@ By setting a constant priori standard deviation value in all the LS adjustment p
 \end{figure}
 
 
-\clearpage
-
-%\subsection{True Data Result: case2-5}
-%\label{sec:trueresult-3}
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Discussion: Influence of the Image Distribution and Amount}
-\label{sec:discussion-ImageDistributionAmount}
-
-
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %3.1  Reference Data
 %The primary reference dataset used in this paper is a 3D point cloud acquired by airborne laser scanning with a density of approximately 0.5 points per square meter.  The laser point cloud data is georeferenced in UTM Zone 31 North, ETRS89 and contains orthometric heights with respect to EGM 2008.  The orthometric  heights  were  converted  to  ellipsoidal  heights  by  simply dding the undulations from EGM 2008.  Only the first pulse returns is used in this study, as the DSM produced by image matching corresponds to the visible surface.  The LIDAR data for the errassa and Vacarisses test areas was acquired on 26th and 27th ovember 2007. The LaMola LIDAR data was acquired on 26th ovember 2007 and 4th May 2008
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-4.3 Internal Factors
-
-4.3.1 Correctness of
-
-4.3.2 Verification of
-
-4.3.3 Precision of
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-4.4 External Factors
-
-4.4.1 Influence of 
-
-%noch etwas Fülltext
-%\blinddocument

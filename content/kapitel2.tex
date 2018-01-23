@@ -609,8 +609,22 @@ The constraint equations \eqref{eq:constraint1}, \eqref{eq:constraint2} and \eqr
 % combine the obs & con model, linearization
 % 2.5.3.2 The Solution of the linearized problem
 
-% system solvable when J>1 and well distributed, 
 
+Since the estimated variance-covariance matrix of the estimated parameters $\hat{\Sigma}_{\hat{X}\hat{X}}$ depends on both the design matrix $A$ (i.e. the configuration) and the posterior standard deviation $\hat{\sigma}_0$ (i.e. the posterior measurements quality):
+\begin{equation}
+\hat{\Sigma}_{\hat{X}\hat{X}}=\hat{\sigma}_0^2(A^TA)^{-1}=
+\begin{bmatrix}
+\hat{\sigma}_{\hat{X}}^2 && \hat{\sigma}_{\hat{X}\hat{Y}} && \hat{\sigma}_{\hat{X}\hat{Z}} \\
+\hat{\sigma}_{\hat{Y}\hat{X}} && \hat{\sigma}_{\hat{Y}}^2 && \hat{\sigma}_{\hat{Y}\hat{Z}} \\
+\hat{\sigma}_{\hat{Z}\hat{X}} && \hat{\sigma}_{\hat{Z}\hat{Y}} && \hat{\sigma}_{\hat{Z}}^2
+\end{bmatrix}
+\end{equation}
+we are not able to tell from the variances $\hat{\sigma}_{\hat{X}}$, $\hat{\sigma}_{\hat{Y}}$, $\hat{\sigma}_{\hat{Z}}$ whether the .
+
+By setting a constant priori standard deviation value in all the LS adjustment processes (i.e. assuming the measurements are of same quality in each segment), the priori variance-covariance matrix of the estimated parameters $\Sigma_{\hat{X}\hat{X}}$ reflects the quality of the design matrix (i.e. the configuration strength) in each LS adjustment processes.
+\begin{equation}
+\Sigma_{\hat{X}\hat{X}}=\sigma_0^2(A^TA)^{-1}
+\end{equation}
 
 
 
