@@ -341,10 +341,10 @@ H_A: \mu1-\mu_2\neq0
 
 With significance level $\alpha=0.05$ and degree of freedom $\approx300$, the t-score is 
 \begin{equation*}
-T_{0.95,300}=1.968
+T_{0.975,300}=1.968
 \end{equation*}
 
-As shown in \cref{fig:SimuTtest}, all the test statistics $T_{obs}$ of each segment are not less than $-T_{0.95,300}=-1.968$ or greater than $T_{0.95,300}=1.968$, i.e. not in the rejection region, the null hypothesis could not be rejected. In other words, we fail to claim that the adjusted residuals are statistically different from the added random noise.
+As shown in \cref{fig:SimuTtest}, all the test statistics $T_{obs}$ of each segment are not less than $-T_{0.975,300}=-1.968$ or greater than $T_{0.975,300}=1.968$, i.e. not in the rejection region, the null hypothesis could not be rejected. In other words, we fail to claim that the adjusted residuals are statistically different from the added random noise.
 
 without the influence of imperfect camera parameters, 
 \begin{figure}
@@ -406,7 +406,7 @@ and sample size $n=1256$, the test statistic for a One Sample Z Test has a calcu
 Z_{obs} = \frac{\overline{x}-\mu_0}{\sigma/\sqrt{n}}=\frac{-0.181-(-0.170)}{0.174/\sqrt{1256}}\approx-2.24
 \end{equation*}
 
-As the test statistic $Z_{obs}\approx-2.24$ is less than $-Z_{0.95}=-1.64$, i.e. in the rejection region, the null hypothesis is rejected. In other words, \textbf{with 95\% confidence we can claim that the DSM profile is in average, statistically and significantly lower than the reconstructed line segments for at least $\mathbf{17}$ centimeters}. %This phenomenon is as expected, as mentioned in sec:DSM??? 
+As the test statistic $Z_{obs}\approx-2.24$ is less than $-Z_{0.95}=-1.64$, i.e. in the rejection region, the null hypothesis is rejected. In other words, \textbf{with 95\% confidence we can claim that the DSM profile is in average, statistically and significantly lower than the reconstructed line segments for at least $\mathbf{17}$ centimeters in this region}. %This phenomenon is as expected, as mentioned in sec:DSM??? 
 
 \begin{figure}
   \centering
@@ -423,31 +423,39 @@ As the test statistic $Z_{obs}\approx-2.24$ is less than $-Z_{0.95}=-1.64$, i.e.
 
 \cref{fig:TestImgNum} gives the information on the amount of covering images, the redundancies and the height value of the reconstructed nodes, of each segment. Note that in each segment, LS adjustment is processed independently.
 
+\begin{figure}
+  \centering
+  \includegraphics[width=0.95\textwidth]{Test_ImgNum.png}
+  \caption{\small XXX...The relationship between image amount, the resulting reconstructed line segments, and the redundancies and posterior standard deviation in LS adjustment.}
+  \label{fig:TestImgNum}
+\end{figure}
+
+
 %\begin{figure}
-%  \centering
-%  \includegraphics[width=0.95\textwidth]{Test_ImgNum.png}
-%  \caption{\small XXX...The relationship between image amount, the resulting reconstructed line segments, and the redundancies and posterior standard deviation in LS adjustment.}
-%  \label{fig:TestImgNum}
+%	\centering
+%	\includegraphics[width=0.8\textwidth]{Test_error.png}
+%	\caption{\small Residual mean and posterior standard deviation.}
+%	\label{fig:Testerror}
 %\end{figure}
 
 
 Images configuration plays an important roll in 3D reconstruction. %!!! discussion
 
 
-
-
 \cref{fig:TestSigmxx} shows:
 
 
-%\begin{figure}
-%  \includegraphics[width=0.8\textwidth]{Test_XY_Z.png}
-%  \caption{\small The variances of the estimated object coordinates, in horizontal and vertical directions.}
-%  \label{fig:TestSigmxxhat}
-%  \vspace{1cm}
-%  \includegraphics[width=0.8\textwidth]{Test_XY_Z_hat.png}
-%  \caption{\small The estimated variances of the estimated object coordinates, in horizontal and vertical directions.}
-%  \label{fig:TestSigmxx}
-%\end{figure}
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\textwidth]{Test_XY_Z.png}
+  \caption{\small The variances of the estimated object coordinates, in horizontal and vertical directions.}
+  \label{fig:TestSigmxxhat}
+  \vspace{1cm}
+  \centering
+  \includegraphics[width=0.8\textwidth]{Test_XY_Z_hat.png}
+  \caption{\small The estimated variances of the estimated object coordinates, in horizontal and vertical directions.}
+  \label{fig:TestSigmxx}
+\end{figure}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
