@@ -179,8 +179,8 @@ keywords: line reconstruction, linear regression, least-squares adjustment
 % \addtocontents{toc}{\protect\newpage}
 % an der passenden Stelle im Fließtext erzwungen werden.
 
-%\listoffigures%%%%%%%% HERE %%%%%%%%%%%%%%%%%%%%%%%%
-%\listoftables%%%%%%%% HERE %%%%%%%%%%%%%%%%%%%%%%%%
+\listoffigures%%%%%%%% HERE %%%%%%%%%%%%%%%%%%%%%%%%
+\listoftables%%%%%%%% HERE %%%%%%%%%%%%%%%%%%%%%%%%
 
 %Wird nur bei Verwendung von der lstlisting-Umgebung mit dem "caption"-Parameter benoetigt
 %\lstlistoflistings 
@@ -228,19 +228,27 @@ keywords: line reconstruction, linear regression, least-squares adjustment
 %\renewcommand{\appendixtocname}{Anhang}
 %\renewcommand{\appendixname}{Anhang}
 %\renewcommand{\appendixpagename}{Anhang}
-\appendix
-\input{content/latex-tipps}%%%%% HERE %%%%%%%%%%%
+%\appendix
+%\input{content/latex-tipps}%%%%% HERE %%%%%%%%%%%
 
 \clearpage
 
 %\printindex
+
+\chapter*{Acknowledgements}
+%\thispagestyle{empty}
+
+I would like to acknowledge ...
+
+\clearpage
+
 
 \printbibliography
 
 \ifdeutsch
 Alle URLs wurden zuletzt am 17.\,03.\,2008 geprüft.
 \else
-All links were last followed on December 22, 2017.
+All links were last followed on January 31, 2018.
 \fi
 
 \pagestyle{empty}

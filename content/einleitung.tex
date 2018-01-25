@@ -59,8 +59,11 @@ low texture area, not able to triangulate the 3D point, it took a min value as t
 
 \section{Issues in Line Matching}
 
-Line matching is challenging for several reasons. First, line segments are often detected inexactly by automatic line detectors or occlusions appear in part of the lines. Thus the end-points of a line segment often do not correspond to each other in different views. Secondly, as mentioned above, there is no strong disambiguating geometric constraint available. Moreover, the corresponding neighborhoods may well have a very different shape and orientation, or even totally different surroundings when dealing with wiry objects. [C. Schmid et al 1997] [M. Hofer et al Feb. 2013]
+Line matching is challenging for several reasons. First, line segments are often detected inexactly by automatic line detectors or occlusions appear in part of the lines. Thus the end-points of a line segment often do not correspond to each other in different views. Secondly, as mentioned above, there is no strong disambiguating geometric constraint available. Moreover, the corresponding neighborhoods may well have a very different shape and orientation, or even totally different surroundings when dealing with wiry objects. [C. Schmid et al 1997] 
 
+\cite{HoferFeb2013}
+
+As \citeauthor{HoferFeb2013} suggested in \citeyear{HoferFeb2013},...
 
 
 \section{Related Work}
@@ -92,8 +95,3 @@ In this thesis, I develop a framework to automatically detect the lane markings 
 The unprojected aerial images with their bundle-adjusted orientations and the DSM are the inputs of my research. By sliding a window of reasonable length and width through the curved long lane lines, the collected line segment in the current window is assumed to be straight. I investigate the use of linear regression to optimize the location of each line segments in object space so that its back projection would best fit the detected 2D line in all the covering views, i.e. the position and height of each 3D lane marking segments will be refined in one optimization step.
 
 The framework will be tested on aerial imagery from the German highway A9 and validated with ground measured lane markings by GPS.
-
-%%%%%%%%%%%%%%%%%%%%
- dem Buch \cite{WSPA} zu tun.
-\emph{Satz} eine neue Zeile im \texttt{.tex}-Dokument anzufangen.
-
