@@ -110,7 +110,7 @@ The resultant connected points which compose a line are of sub-pixel precision. 
 \end{figure}
 
 
-
+\clearpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Imaging Properties of Aerial Photographs}
 \label{sec:Geometry}
@@ -178,7 +178,7 @@ To express \eqref{eq:expandedcollinearity} shortly, a function $\mathcal{G}$ is 
 
 which takes the interior and exterior orientations as well as the lens distortion parameters of a camera $\mathbf{q}(x_0,y_0,c,X_0,Y_0,Z_0,r_{11},...,r_{33},A_1,A_2,B_1,B_2,C_1,C_2)$ and the position of a 3D point $\mathbf{P}(X, Y, Z)$, and returns the corresponding distorted image coordinates $\mathbf{p}(x,y)$.
 
-
+\clearpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Line Fitting}
 \label{sec:LineFitting}
@@ -270,31 +270,25 @@ In this section, I describe the process of refining the position of a 3D line se
 	\subfloat[Before optimization]{\includegraphics[width=0.9\textwidth]{2-4_1_1.png} \label{fig:beforeoptimization}}
 	
 	\subfloat[After optimization]{\includegraphics[width=0.9\textwidth]{2-4_1_2.png} \label{fig:afteroptimization}}
-	\caption{\small Before reconstruction process, the back projection of initial approximate 3D line segment does not best-fit the extracted 2D lines in the covering images. After optimization, the back-projection of the reconstructed line segment should best fitting the extracted 2D lines in all the covering images.}
+	\caption{\small Before reconstruction, the back projection of initial approximate 3D line segment does not best-fit the extracted 2D lines in the covering images. After optimization, the back-projection of the reconstructed line segment should best fitting the extracted 2D lines in all the covering images.}
 	\label{fig:mainidea}
 \end{figure}
 
 
-To simplify the problem, a lane-marking segment is partially reconstructed through a sliding window in the object space. Each segment is approximated by a straight line, taking into account the maximum curvature of the highway. 
+%%%%%%%%%%%%%%%%%% introduce the subsections
+The non-linear LS adjustment model with constraints is introduced in \cref{subsec:LSmodel}. The observation equations for LS adjustment are set up in \cref{subsec:ObsEqua}. They describe the fitting of a straight line to the measurements in all covering images, where the fitting lines on different images are transformed from a single 3D straight line segment through the extended collinearity equation \eqref{eq:expandedcollinearity}.
+
+Regarding the fact that the collinearity is a point-wise condition, a line segment is represented by its two endpoints whose object coordinates are the six unknown parameters % First mentioned here, what are the six unknowns?
+in the LS model. % Which one? 
+Correspondingly, the observation equations are line equations in two-point form. A line equation has however a mathematical meaning of infinite length. Therefore, some constraints on unknowns are necessary to avoid arbitrary locations of the two points on the infinite reconstructed 3D line. The constraint equations are modeled in \cref{subsec:ConEqua}.
+
+In \cref{subsec:LSadj} the non-linear model is linearized and LS estimated.
+
+%%%%% introduce the sliding window
+
+To simplify the problem, a long lane-marking segment is partially reconstructed through a sliding window in the object space. Each segment is approximated by a straight line, taking into account the maximum curvature of the highway. 
 
 In each sliding window, a segment is reconstructed, i.e. a complete non-linear LS adjustment is performed. Only the middle point of the reconstructed line segment is recorded. The sliding window then moves a stepsize forward, and the process of 3D reconstruction is performed again starting from the recorded middle point of the previous line segment. Another line segment is then reconstructed, with its middle point being recorded, and so on. These recorded middle points are in the end the nodes of the reconstructed line. This process is illustrated in \cref{fig:slidingwindow}.
-
-The measurements for each reconstruction process are collected correspondingly, as shown in \cref{fig:measurementscollection} ---by back-projecting the initial line segment into image space and buffering 10 pixels width on each side, only the extracted 2D line segment in this region is collected.
-
-\begin{figure}
-	\centering
-	\subfloat[The pink points represent all the extracted lines (in the form of sets of points). The green points are the endpoints of the back projected initial approximate line segment.]{\includegraphics[width=0.4\textwidth]{2-4_3_1.png} \label{fig:measurementscollection1}}
-	\subfloat[The points in the buffering area are collected as the measurements for LS adjustment.]{\includegraphics[width=0.4\textwidth]{2-4_3_2.png} \label{fig:measurementscollection2}}
-	
-	\caption{\small Measurements collection in image space.}
-	\label{fig:measurementscollection}
-\end{figure}
-
-
-%It is reconstructed by taking into account the measurements (the detected 2D lines) collected in the corresponding back-projected regions in all covering image spaces.
-% by the least-squares estimator (see chapter xx) %!!!
-
-The reconsideration in overlapping region makes the reconstruction more robust, as shown in fig ???
 
 
 \begin{figure}
@@ -309,17 +303,35 @@ The reconsideration in overlapping region makes the reconstruction more robust, 
 	\label{fig:slidingwindow}
 \end{figure}
 
-In \cref{subsubsec:ObsEqua} I firstly set up a model of observation equations. They describe the fitting of a straight line to the measurements in each covering image, where the fitting lines on different images are transformed from a single 3D straight line segment through the extended collinearity equation \eqref{eq:expandedcollinearity}.
 
-Regarding the fact that the collinearity is a point-wise condition, a line segment is represented by its two endpoints whose object coordinates are the six unknown parameters % First mentioned here, what are the six unknowns?
-in the LS model. % Which one? 
-Correspondingly, the observation equations are line equations in two-point form. A line equation has however a mathematical meaning of infinite length. Therefore, some constraints on unknowns are necessary to avoid arbitrary locations of the two points on the infinite reconstructed 3D line. The constraint equations are modeled in \cref{subsubsec:ConEqua}.
+%%%%% describe the collection of measurements 
+The measurements for each reconstruction process are collected correspondingly, as shown in \cref{fig:measurementscollection} ---by back-projecting the initial line segment into image space and buffering 10 pixels width on each side, only the extracted 2D line segment in this region is collected. %The 10 pixels buffering width corresponds to 70 cm in object space. the imperfect DSM profile has maximum ...which is around 70 cm in image space. 
+As shown in \cref{fig:overlappingregion}, the reconsideration in overlapping region of successive sliding windows makes the reconstruction more robust.
+
+\begin{figure}
+	\centering
+	\subfloat[The pink points represent all the extracted lines (in the form of sets of points). The green points are the endpoints of the back projected initial approximate line segment.]{\includegraphics[width=0.45\textwidth]{2-4_3_1.png} \label{fig:measurementscollection1}}
+	\subfloat[The points in the buffering area are collected as the measurements for LS adjustment.]{\includegraphics[width=0.45\textwidth]{2-4_3_2.png} \label{fig:measurementscollection2}}
+	
+	\caption{\small Measurements collection in image space.}
+	\label{fig:measurementscollection}
+\end{figure}
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.45\textwidth]{2-4_3_3.png}
+	\caption{\small The red circle points out the reconsidered measurements in successive sliding windows.}
+	\label{fig:overlappingregion}
+\end{figure}
+
+
 
 
 % the measurements are collected accordingly.
 \clearpage
 \subsection{The Nonlinear Gauss-Markov Model with Constraints}
-\label{GaussMarkovModelwithConstraints}
+\label{subsec:LSmodel}
 
 Given are the $N$ observations $\boldsymbol l=[l_n],\,n=1,2,...,N$, from which the $U$ unknown parameters $\boldsymbol x=[x_u],\,u=1,2,...,U$ are to be determined, with generally $U\leq N$.%, and the fixed $H$ constraints $\boldsymbol c_h=[h_h],\,h=1,2,...,H$
 
@@ -337,12 +349,13 @@ Assuming that the deviations between the observed values $\boldsymbol l$ and the
 \begin{equation}
 \boldsymbol l\sim\mathcal{N}(\boldsymbol f(\widehat{\boldsymbol x}) ,\mathsf{\Sigma}_{ll})
 \end{equation}
-where $\mathsf{\Sigma}_{ll}$ is the variance-covariance matrix of observations $\boldsymbol l$.
+where $\mathsf{\Sigma}_{ll}$ is the variance-covariance matrix of observations $\boldsymbol l$, i.e. the observational errors.
 
-!!!!! same statistical dispersion
-\begin{equation}
-\mathsf{\Sigma}_{ll}=\mathbb{D}(\boldsymbol l)=\mathbb{D}(\boldsymbol v)=\mathbb{D}(\widehat{\boldsymbol l})
-\end{equation}
+%The residuals have the same statistical dispersion as
+%The observational errors:
+%\begin{equation}
+%\mathsf{\Sigma}_{ll}=\mathbb{D}(\boldsymbol l)=\mathbb{D}(\boldsymbol v)=\mathbb{D}(\widehat{\boldsymbol l})
+%\end{equation}
 
 The task is to minimize the weighted sum of residuals: % !!!!!!!!!!!!!!!!!!!!!!!!!
 \begin{equation}
@@ -355,70 +368,9 @@ with the assumption of equal-weighted observations.
 %(\boldsymbol l-\boldsymbol f(\widehat{\boldsymbol x}^a)-\mathsf{A}\,\widehat{\Delta\boldsymbol x})+\lambda^T(\mathsf{H}^T\boldsymbol x-\boldsymbol c_h)
 %\end{equation}
 
-\clearpage
-The nonlinear equation system is approximated to be locally linear with small step size of the unknown quantities. The linearized form is expressed as:
-\begin{equation} \label{eq:GM-ObsEq-linear}
-\widehat{\Delta\boldsymbol l}=\Delta\boldsymbol l+\widehat{\boldsymbol v}=\underset{N\times U}{\mathsf{A}}\,\widehat{\Delta\boldsymbol x}
-\end{equation}
-\begin{equation} \label{eq:GM-ConEq-linear}
-\boldsymbol c_h=\underset{H\times U}{\mathsf{H^T}}\widehat{\Delta\boldsymbol x}
-\end{equation}
-where\newline
-the $N\times U$ design matrix, which is the Jacobian of the function evaluated at the approximate values of the unknown parameters, is
-\begin{equation*}
-\mathsf{A}=\left.\dfrac{\partial\boldsymbol f(\boldsymbol x)}{\partial\boldsymbol x}\right|_{\boldsymbol x=\widehat{\boldsymbol x}^a}
-\end{equation*}
-the $U\times H$ constraint matrix, which is the Jacobian of the constraints, is
-\begin{equation*}
-\mathsf{H}=\left.\left(\dfrac{\partial\boldsymbol h(\boldsymbol x)}{\partial\boldsymbol x}\right)^T\right|_{\boldsymbol x=\widehat{\boldsymbol x}^a}
-\end{equation*}
-and the residual constraints are % !!!!!!!!!!!!!!!!!!!!!!!!!
-\begin{equation*}
-\boldsymbol c_h=-\boldsymbol h(\widehat{\boldsymbol x}^a)
-\end{equation*}
 
-with the corrections
-\begin{equation} \label{eq:GM-ObsEq-linear-l}
-\Delta\boldsymbol l=\boldsymbol l-\boldsymbol f(\widehat{\boldsymbol x}^a)=:\widehat{\boldsymbol v}^a
-\end{equation}
-%and the unknown corrections to the parameters:
-\begin{equation} \label{eq:GM-ObsEq-linear-x}
-\widehat{\Delta\boldsymbol x}=\widehat{\boldsymbol x}-\widehat{\boldsymbol x}^a
-\end{equation}
-where $\widehat{\boldsymbol x}^a$ is the approximate values for the estimates of the unknown parameters.
-
-In the linearized substitute model as shown in \eqref{eq:GM-ObsEq-linear} and \eqref{eq:GM-ConEq-linear}, it turns to solve for the increments of unknowns $\Delta\boldsymbol x$ instead of the unknowns themselves. The LS estimation is applied iteratively until convergence is achieved. 
-
-%Depending on the configuration and initial parameters chosen, the nonlinear fit may have good or poor convergence properties.
-
-
-The unknown parameters $\widehat{\Delta\boldsymbol x}$ of the linearized model can be determined from the extended normal equation system
-\begin{equation}
-\begin{bmatrix}
-\mathsf{A^TA} & \mathsf{H}\\
-\mathsf{H^T} & 0
-\end{bmatrix}
-\begin{bmatrix}
-\widehat{\Delta\boldsymbol x}\\
-\lambda
-\end{bmatrix}
-=
-\begin{bmatrix}
-\mathsf{A^T}\Delta\boldsymbol l\\
-\boldsymbol c_h
-\end{bmatrix}
-\end{equation}
-
-The matrix $\mathsf{A}$ does not need to have full rank, but the block matrix $[\mathsf{A_T},\mathsf{H}]$ must have full rank in order to guarantee the estimation problem has a unique solution.
-
-The redundancy $R$ of the problem is
-\begin{equation}
-R=N+H-U
-\end{equation}
-
-
-\subsubsection{Observation Equations}
-\label{subsubsec:ObsEqua}
+\subsection{Observation Equations}
+\label{subsec:ObsEqua}
 % % %
 % which can be further rewritten:
 %Taylor expansion...(local linear approximation)
@@ -594,8 +546,8 @@ For all covering image $j=1,2,...J$, there are $2\times\displaystyle\sum_{j=1}^{
 
 
 
-\subsubsection{Constraint Equations}
-\label{subsubsec:ConEqua}
+\subsection{Constraint Equations}
+\label{subsec:ConEqua}
 
 % infinitely many solutions.
 % At least two constraints are needed to fix rank deficiency???.
@@ -635,11 +587,72 @@ The constraint equations \eqref{eq:constraint1}, \eqref{eq:constraint2} and \eqr
 \end{equation}
 
 
-\subsubsection{Least-Squares Estimation of the non-linear Gauss-Markov Model with Constraints}
-\label{subsubsec:LSadj}
+\subsection{Least-Squares Estimation of the non-linear Gauss-Markov Model with Constraints}
+\label{subsec:LSadj}
 % Add the relevant equations
 % This chapter is difficult to read, more detailed!?
 % Adjustment theory deals with the optimal combination of redundant measurements/observations, together with the estimation of unknown parameters (Teunissen 2000)
+
+The nonlinear equation system is approximated to be locally linear with small step size of the unknown quantities. The linearized form is expressed as:
+\begin{equation} \label{eq:GM-ObsEq-linear}
+\widehat{\Delta\boldsymbol l}=\Delta\boldsymbol l+\widehat{\boldsymbol v}=\underset{N\times U}{\mathsf{A}}\,\widehat{\Delta\boldsymbol x}
+\end{equation}
+\begin{equation} \label{eq:GM-ConEq-linear}
+\boldsymbol c_h=\underset{H\times U}{\mathsf{H^T}}\widehat{\Delta\boldsymbol x}
+\end{equation}
+where\newline
+the $N\times U$ design matrix, which is the Jacobian of the function evaluated at the approximate values of the unknown parameters, is
+\begin{equation*}
+\mathsf{A}=\left.\dfrac{\partial\boldsymbol f(\boldsymbol x)}{\partial\boldsymbol x}\right|_{\boldsymbol x=\widehat{\boldsymbol x}^a}
+\end{equation*}
+the $U\times H$ constraint matrix, which is the Jacobian of the constraints, is
+\begin{equation*}
+\mathsf{H}=\left.\left(\dfrac{\partial\boldsymbol h(\boldsymbol x)}{\partial\boldsymbol x}\right)^T\right|_{\boldsymbol x=\widehat{\boldsymbol x}^a}
+\end{equation*}
+and the residual constraints are % !!!!!!!!!!!!!!!!!!!!!!!!!
+\begin{equation*}
+\boldsymbol c_h=-\boldsymbol h(\widehat{\boldsymbol x}^a)
+\end{equation*}
+
+with the corrections
+\begin{equation} \label{eq:GM-ObsEq-linear-l}
+\Delta\boldsymbol l=\boldsymbol l-\boldsymbol f(\widehat{\boldsymbol x}^a)=:\widehat{\boldsymbol v}^a
+\end{equation}
+%and the unknown corrections to the parameters:
+\begin{equation} \label{eq:GM-ObsEq-linear-x}
+\widehat{\Delta\boldsymbol x}=\widehat{\boldsymbol x}-\widehat{\boldsymbol x}^a
+\end{equation}
+where $\widehat{\boldsymbol x}^a$ is the approximate values for the estimates of the unknown parameters.
+
+In the linearized substitute model as shown in \eqref{eq:GM-ObsEq-linear} and \eqref{eq:GM-ConEq-linear}, it turns to solve for the increments of unknowns $\Delta\boldsymbol x$ instead of the unknowns themselves. The LS estimation is applied iteratively until convergence is achieved. 
+
+%Depending on the configuration and initial parameters chosen, the nonlinear fit may have good or poor convergence properties.
+
+
+The unknown parameters $\widehat{\Delta\boldsymbol x}$ of the linearized model can be determined from the extended normal equation system
+\begin{equation}
+\begin{bmatrix}
+\mathsf{A^TA} & \mathsf{H}\\
+\mathsf{H^T} & 0
+\end{bmatrix}
+\begin{bmatrix}
+\widehat{\Delta\boldsymbol x}\\
+\lambda
+\end{bmatrix}
+=
+\begin{bmatrix}
+\mathsf{A^T}\Delta\boldsymbol l\\
+\boldsymbol c_h
+\end{bmatrix}
+\end{equation}
+
+The matrix $\mathsf{A}$ does not need to have full rank, but the block matrix $[\mathsf{A_T},\mathsf{H}]$ must have full rank in order to guarantee the estimation problem has a unique solution.
+
+The redundancy $R$ of the problem is
+\begin{equation}
+R=N+H-U
+\end{equation}
+
 
 
 

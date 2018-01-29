@@ -1,0 +1,517 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 2.9 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{anyt/global//global/global}
+    \entry{Aeberhard2015}{article}{}
+      \name{author}{9}{}{%
+        {{hash=133835e63c023ef53714f90e143f2d2d}{%
+           family={Aeberhard},
+           familyi={A\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+        {{hash=864994102994389e37b3894e46438e1b}{%
+           family={Rauch},
+           familyi={R\bibinitperiod},
+           given={S.},
+           giveni={S\bibinitperiod}}}%
+        {{hash=ff21a859b937c627b2186c3e767d00d3}{%
+           family={Bahram},
+           familyi={B\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+        {{hash=4b26d087b584be2b92319124a23a3c17}{%
+           family={Tanzmeister},
+           familyi={T\bibinitperiod},
+           given={G.},
+           giveni={G\bibinitperiod}}}%
+        {{hash=cf4f2a96f5d4841ba4e5bebcea976d1b}{%
+           family={Thomas},
+           familyi={T\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod}}}%
+        {{hash=6e00355fe7ffe050fdd683ae6d4001d7}{%
+           family={Pilat},
+           familyi={P\bibinitperiod},
+           given={Y.},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=8329f31a4314cf2144c4c3d551c7e425}{%
+           family={Homm},
+           familyi={H\bibinitperiod},
+           given={F.},
+           giveni={F\bibinitperiod}}}%
+        {{hash=61135409f42a68e9f9c60fed8cf14325}{%
+           family={Huber},
+           familyi={H\bibinitperiod},
+           given={W.},
+           giveni={W\bibinitperiod}}}%
+        {{hash=3b735b688367437f3b320954a63dca43}{%
+           family={Kaempchen},
+           familyi={K\bibinitperiod},
+           given={N.},
+           giveni={N\bibinitperiod}}}%
+      }
+      \strng{namehash}{8d085b524eaefbda37e0eff29297a491}
+      \strng{fullhash}{26101bf316b0222475a2d505db719c99}
+      \strng{bibnamehash}{26101bf316b0222475a2d505db719c99}
+      \strng{authorbibnamehash}{26101bf316b0222475a2d505db719c99}
+      \strng{authornamehash}{8d085b524eaefbda37e0eff29297a491}
+      \strng{authorfullhash}{26101bf316b0222475a2d505db719c99}
+      \field{labelalpha}{ARB+15}
+      \field{sortinit}{A}
+      \field{sortinithash}{d77c7cdd82ff690d4c3ef13216f92f0b}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{1939-1390}
+      \field{journaltitle}{IEEE Intelligent Transportation Systems Magazine}
+      \field{month}{1}
+      \field{number}{1}
+      \field{title}{Experience, Results and Lessons Learned from Automated Driving on Germany's Highways}
+      \field{volume}{7}
+      \field{year}{2015}
+      \field{pages}{42\bibrangedash 57}
+      \range{pages}{16}
+      \verb{doi}
+      \verb 10.1109/MITS.2014.2360306
+      \endverb
+    \endentry
+    \entry{BayJun2005}{article}{}
+      \name{author}{3}{}{%
+        {{hash=f29476d21dba36576a275921245f7b52}{%
+           family={Bay},
+           familyi={B\bibinitperiod},
+           given={H.},
+           giveni={H\bibinitperiod}}}%
+        {{hash=6f403d6f8c519b49e9176cd6d111b3f8}{%
+           family={Ferrari},
+           familyi={F\bibinitperiod},
+           given={V.},
+           giveni={V\bibinitperiod}}}%
+        {{hash=26815aa48c753194f0f2f368a61242fb}{%
+           family={Gool},
+           familyi={G\bibinitperiod},
+           given={L.\bibnamedelimi Van},
+           giveni={L\bibinitperiod\bibinitdelim V\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{57bcac3e0b8fee9b13376c1e8bfe863d}
+      \strng{fullhash}{73d8171d161dcf897075c8d6d97f0a47}
+      \strng{bibnamehash}{73d8171d161dcf897075c8d6d97f0a47}
+      \strng{authorbibnamehash}{73d8171d161dcf897075c8d6d97f0a47}
+      \strng{authornamehash}{57bcac3e0b8fee9b13376c1e8bfe863d}
+      \strng{authorfullhash}{73d8171d161dcf897075c8d6d97f0a47}
+      \field{labelalpha}{BFG05}
+      \field{sortinit}{B}
+      \field{sortinithash}{276475738cc058478c1677046f857703}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Computer Society Conference on Computer Vision and Pattern Recognition}
+      \field{month}{6}
+      \field{title}{Wide-baseline stereo matching with line segments}
+      \field{volume}{1}
+      \field{year}{2005}
+      \field{pages}{329\bibrangedash 336}
+      \range{pages}{8}
+      \verb{doi}
+      \verb 10.1109/CVPR.2005.375
+      \endverb
+    \endentry
+    \entry{Fraser1997}{article}{}
+      \name{author}{1}{}{%
+        {{hash=ad0ecb3c79c4b617889924a635e5b858}{%
+           family={Fraser},
+           familyi={F\bibinitperiod},
+           given={C.S.},
+           giveni={C\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier}%
+      }
+      \strng{namehash}{ad0ecb3c79c4b617889924a635e5b858}
+      \strng{fullhash}{ad0ecb3c79c4b617889924a635e5b858}
+      \strng{bibnamehash}{ad0ecb3c79c4b617889924a635e5b858}
+      \strng{authorbibnamehash}{ad0ecb3c79c4b617889924a635e5b858}
+      \strng{authornamehash}{ad0ecb3c79c4b617889924a635e5b858}
+      \strng{authorfullhash}{ad0ecb3c79c4b617889924a635e5b858}
+      \field{labelalpha}{Fra97}
+      \field{sortinit}{F}
+      \field{sortinithash}{669c706c6f1fbf3b5a83d26f1d9e9e72}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{ISPRS Journal of Photogrammetry and Remote Sensing}
+      \field{month}{8}
+      \field{number}{4}
+      \field{title}{Digital camera self-calibration}
+      \field{volume}{52}
+      \field{year}{1997}
+      \field{pages}{149\bibrangedash 159}
+      \range{pages}{11}
+      \verb{doi}
+      \verb 10.1016/S0924-2716(97)00005-1
+      \endverb
+    \endentry
+    \entry{Hirschmueller2008}{article}{}
+      \name{author}{2}{}{%
+        {{hash=60cf4e81b64af37d22a31238ee4c1b66}{%
+           family={Hirschmüller},
+           familyi={H\bibinitperiod},
+           given={H.},
+           giveni={H\bibinitperiod}}}%
+        {{hash=fc34d16fc16f70af834ecaea91bdd7fb}{%
+           family={Bucher},
+           familyi={B\bibinitperiod},
+           given={T.},
+           giveni={T\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{c38cffd9e859e4436b605d49f24f8e47}
+      \strng{fullhash}{a4845e49e47c5b49043804d87ee65625}
+      \strng{bibnamehash}{a4845e49e47c5b49043804d87ee65625}
+      \strng{authorbibnamehash}{a4845e49e47c5b49043804d87ee65625}
+      \strng{authornamehash}{c38cffd9e859e4436b605d49f24f8e47}
+      \strng{authorfullhash}{a4845e49e47c5b49043804d87ee65625}
+      \field{labelalpha}{HB08}
+      \field{sortinit}{H}
+      \field{sortinithash}{5f15a7bc777ad49ff15aa4d2831b1681}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Transactions on Pattern Analysis and Machine Intelligence}
+      \field{month}{2}
+      \field{number}{2}
+      \field{title}{Stereo Processing by Semiglobal Matching and Mutual Information}
+      \field{volume}{30}
+      \field{year}{2008}
+      \field{pages}{328\bibrangedash 341}
+      \range{pages}{14}
+      \verb{doi}
+      \verb 10.1109/TPAMI.2007.1166
+      \endverb
+    \endentry
+    \entry{HoferFeb2013}{article}{}
+      \name{author}{3}{}{%
+        {{hash=2244c28d78f080e9ee94bc154cf94e8a}{%
+           family={Hofer},
+           familyi={H\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+        {{hash=9ce4551fdda354bc3971f63da95cda71}{%
+           family={Wendel},
+           familyi={W\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod}}}%
+        {{hash=d150d2dcb10a069f0f8797a490f09c90}{%
+           family={Bischof},
+           familyi={B\bibinitperiod},
+           given={H.},
+           giveni={H\bibinitperiod}}}%
+      }
+      \strng{namehash}{95a2ee32a15e73bd171e42767fd242c7}
+      \strng{fullhash}{8c7d8a3ceb395822ea91acf8d8072f7e}
+      \strng{bibnamehash}{8c7d8a3ceb395822ea91acf8d8072f7e}
+      \strng{authorbibnamehash}{8c7d8a3ceb395822ea91acf8d8072f7e}
+      \strng{authornamehash}{95a2ee32a15e73bd171e42767fd242c7}
+      \strng{authorfullhash}{8c7d8a3ceb395822ea91acf8d8072f7e}
+      \field{labelalpha}{HWB13}
+      \field{sortinit}{H}
+      \field{sortinithash}{5f15a7bc777ad49ff15aa4d2831b1681}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Proceedings of the 18th Computer Vision Winter Workshop}
+      \field{month}{2}
+      \field{title}{Line-based 3D Reconstruction of Wiry Objects}
+      \field{year}{2013}
+      \field{pages}{78\bibrangedash 85}
+      \range{pages}{8}
+    \endentry
+    \entry{SAE2014}{report}{}
+      \name{author}{1}{}{%
+        {{hash=dc783a214927b1603da182dde46b943d}{%
+           family={International},
+           familyi={I\bibinitperiod},
+           given={SAE},
+           giveni={S\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {On-Road Automated Driving (Orad) Committee}%
+      }
+      \list{publisher}{1}{%
+        {Society of Automotive Engineers (SAE) International}%
+      }
+      \strng{namehash}{dc783a214927b1603da182dde46b943d}
+      \strng{fullhash}{dc783a214927b1603da182dde46b943d}
+      \strng{bibnamehash}{dc783a214927b1603da182dde46b943d}
+      \strng{authorbibnamehash}{dc783a214927b1603da182dde46b943d}
+      \strng{authornamehash}{dc783a214927b1603da182dde46b943d}
+      \strng{authorfullhash}{dc783a214927b1603da182dde46b943d}
+      \field{labelalpha}{Int14}
+      \field{sortinit}{I}
+      \field{sortinithash}{320bc8fe8101b9376f9f21cd507de0e8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Taxonomy and Definitions for Terms Related to On-Road Motor Vehicle Automated Driving Systems}
+      \field{year}{2014}
+    \endentry
+    \entry{JainJun2010}{article}{}
+      \name{author}{4}{}{%
+        {{hash=2eda5d7d7682fc69a58f38726b83c33b}{%
+           family={Jain},
+           familyi={J\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod}}}%
+        {{hash=04765cab86a244ae8a4d527b1ccbe506}{%
+           family={Kurz},
+           familyi={K\bibinitperiod},
+           given={C.},
+           giveni={C\bibinitperiod}}}%
+        {{hash=a360b0a63953fa3910b8495c8687a649}{%
+           family={Thormählen},
+           familyi={T\bibinitperiod},
+           given={T.},
+           giveni={T\bibinitperiod}}}%
+        {{hash=14b0a8067ff848f73b8959e04403411e}{%
+           family={Seidel},
+           familyi={S\bibinitperiod},
+           given={H.P.},
+           giveni={H\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{7cc9cfd6a0bcda3b7d2cc9b45ff32aff}
+      \strng{fullhash}{0a9e91c4e2107871089d8313bdf92a95}
+      \strng{bibnamehash}{0a9e91c4e2107871089d8313bdf92a95}
+      \strng{authorbibnamehash}{0a9e91c4e2107871089d8313bdf92a95}
+      \strng{authornamehash}{7cc9cfd6a0bcda3b7d2cc9b45ff32aff}
+      \strng{authorfullhash}{0a9e91c4e2107871089d8313bdf92a95}
+      \field{labelalpha}{JKTS10}
+      \field{sortinit}{J}
+      \field{sortinithash}{fce5f8d0bd05e8d93f3dbe21c78897ca}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Computer Society Conference on Computer Vision and Pattern Recognition}
+      \field{month}{6}
+      \field{title}{Exploiting global connectivity constraints for reconstruction of 3D line segments from images}
+      \field{year}{2010}
+      \field{pages}{1586\bibrangedash 1593}
+      \range{pages}{8}
+      \verb{doi}
+      \verb 10.1109/CVPR.2010.5539781
+      \endverb
+    \endentry
+    \entry{LoweSep1999}{article}{}
+      \name{author}{1}{}{%
+        {{hash=df942535983b5a947c628476dca80b29}{%
+           family={Lowe},
+           familyi={L\bibinitperiod},
+           given={D.G.},
+           giveni={D\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{df942535983b5a947c628476dca80b29}
+      \strng{fullhash}{df942535983b5a947c628476dca80b29}
+      \strng{bibnamehash}{df942535983b5a947c628476dca80b29}
+      \strng{authorbibnamehash}{df942535983b5a947c628476dca80b29}
+      \strng{authornamehash}{df942535983b5a947c628476dca80b29}
+      \strng{authorfullhash}{df942535983b5a947c628476dca80b29}
+      \field{labelalpha}{Low99}
+      \field{sortinit}{L}
+      \field{sortinithash}{2c7981aaabc885868aba60f0c09ee20f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Proceedings of the Seventh IEEE International Conference on Computer Vision}
+      \field{month}{9}
+      \field{title}{Object recognition from local scale-invariant features}
+      \field{volume}{2}
+      \field{year}{1999}
+      \field{pages}{1150\bibrangedash 1157}
+      \range{pages}{8}
+      \verb{doi}
+      \verb 10.1109/ICCV.1999.790410
+      \endverb
+    \endentry
+    \entry{SchmidJun1997}{article}{}
+      \name{author}{2}{}{%
+        {{hash=36f04363f971335e030dbd4af7902e0d}{%
+           family={Schmid},
+           familyi={S\bibinitperiod},
+           given={C.},
+           giveni={C\bibinitperiod}}}%
+        {{hash=97369408412c30098d093b32665c772e}{%
+           family={Zisserman},
+           familyi={Z\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{422b8f8a47a1dec3796348e8ce4157a7}
+      \strng{fullhash}{c0e2676a5f6bd167e547e493402ef9fc}
+      \strng{bibnamehash}{c0e2676a5f6bd167e547e493402ef9fc}
+      \strng{authorbibnamehash}{c0e2676a5f6bd167e547e493402ef9fc}
+      \strng{authornamehash}{422b8f8a47a1dec3796348e8ce4157a7}
+      \strng{authorfullhash}{c0e2676a5f6bd167e547e493402ef9fc}
+      \field{labelalpha}{SZ97}
+      \field{sortinit}{S}
+      \field{sortinithash}{322b1d5276f2f6c1bccdcd15920dbee6}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Proceedings of the IEEE Computer Society Conference on Computer Vision and Pattern Recognition}
+      \field{month}{6}
+      \field{title}{Automatic Line Matching across Views}
+      \field{volume}{1}
+      \field{year}{1997}
+      \field{pages}{666\bibrangedash 671}
+      \range{pages}{6}
+      \verb{doi}
+      \verb 10.1109/CVPR.1997.609397
+      \endverb
+    \endentry
+    \entry{Topal2012}{article}{}
+      \name{author}{2}{}{%
+        {{hash=df7d46ff0d2adf3c6e23b6ce8b446bcb}{%
+           family={Topal},
+           familyi={T\bibinitperiod},
+           given={C.},
+           giveni={C\bibinitperiod}}}%
+        {{hash=a49dbb42d3e41ca9d33685f2a18add94}{%
+           family={Akinlar},
+           familyi={A\bibinitperiod},
+           given={C.},
+           giveni={C\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier}%
+      }
+      \strng{namehash}{f4040f0897d1818ff3b864ea297fd84d}
+      \strng{fullhash}{73308be355b2fe51c87b58e734418db2}
+      \strng{bibnamehash}{73308be355b2fe51c87b58e734418db2}
+      \strng{authorbibnamehash}{73308be355b2fe51c87b58e734418db2}
+      \strng{authornamehash}{f4040f0897d1818ff3b864ea297fd84d}
+      \strng{authorfullhash}{73308be355b2fe51c87b58e734418db2}
+      \field{labelalpha}{TA12}
+      \field{sortinit}{T}
+      \field{sortinithash}{6f7aff9db9dcfeb7f95fd5bbd2f78df9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Visual Communication and Image Representation}
+      \field{month}{8}
+      \field{number}{6}
+      \field{title}{Edge Drawing: A combined real-time edge and segment detector}
+      \field{volume}{23}
+      \field{year}{2012}
+      \field{pages}{862\bibrangedash 872}
+      \range{pages}{11}
+      \verb{doi}
+      \verb 10.1016/j.jvcir.2012.05.004
+      \endverb
+    \endentry
+    \entry{TaylorNov1995}{article}{}
+      \name{author}{2}{}{%
+        {{hash=3bf53aa57db8efe75696d840c050d4e1}{%
+           family={Taylor},
+           familyi={T\bibinitperiod},
+           given={C.J.},
+           giveni={C\bibinitperiod}}}%
+        {{hash=7d25f8468dffba562f6010883dff9aff}{%
+           family={Kriegman},
+           familyi={K\bibinitperiod},
+           given={D.J.},
+           giveni={D\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{dbd5e208e160b6b342864183e4f5029e}
+      \strng{fullhash}{fb4cee9e050e8ae5e5c6839ddf8b2a8a}
+      \strng{bibnamehash}{fb4cee9e050e8ae5e5c6839ddf8b2a8a}
+      \strng{authorbibnamehash}{fb4cee9e050e8ae5e5c6839ddf8b2a8a}
+      \strng{authornamehash}{dbd5e208e160b6b342864183e4f5029e}
+      \strng{authorfullhash}{fb4cee9e050e8ae5e5c6839ddf8b2a8a}
+      \field{labelalpha}{TK95}
+      \field{sortinit}{T}
+      \field{sortinithash}{6f7aff9db9dcfeb7f95fd5bbd2f78df9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Transactions on Pattern Analysis and Machine Intelligence}
+      \field{month}{11}
+      \field{number}{11}
+      \field{title}{Structure and motion from line segments in multiple images}
+      \field{volume}{17}
+      \field{year}{1995}
+      \field{pages}{1021\bibrangedash 1032}
+      \range{pages}{12}
+      \verb{doi}
+      \verb 10.1109/34.473228
+      \endverb
+    \endentry
+    \entry{WangMay2009}{article}{}
+      \name{author}{3}{}{%
+        {{hash=92581400fc578eb34e4be9ef6e4afc33}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Z.},
+           giveni={Z\bibinitperiod}}}%
+        {{hash=632f9c2d92096e686efb4af0dd1071b4}{%
+           family={Wu},
+           familyi={W\bibinitperiod},
+           given={F.},
+           giveni={F\bibinitperiod}}}%
+        {{hash=6021ee4e97a15f230dc90b4fcf8840d3}{%
+           family={Hu},
+           familyi={H\bibinitperiod},
+           given={Z.},
+           giveni={Z\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier}%
+      }
+      \strng{namehash}{461ebdb36c1ade1932f8f303a39bb149}
+      \strng{fullhash}{417f79896b1f0e1a26282af54abd444f}
+      \strng{bibnamehash}{417f79896b1f0e1a26282af54abd444f}
+      \strng{authorbibnamehash}{417f79896b1f0e1a26282af54abd444f}
+      \strng{authornamehash}{461ebdb36c1ade1932f8f303a39bb149}
+      \strng{authorfullhash}{417f79896b1f0e1a26282af54abd444f}
+      \field{labelalpha}{WWH09}
+      \field{sortinit}{W}
+      \field{sortinithash}{ecb89ff85896a47dc313960773ac311d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Pattern Recognition}
+      \field{month}{5}
+      \field{number}{5}
+      \field{title}{MSLD: A robust descriptor for line matching}
+      \field{volume}{42}
+      \field{year}{2009}
+      \field{pages}{941\bibrangedash 953}
+      \range{pages}{13}
+      \verb{doi}
+      \verb 10.1016/j.patcog.2008.08.035
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

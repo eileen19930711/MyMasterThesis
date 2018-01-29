@@ -1941,17 +1941,19 @@
     <bcf:citekey order="15">BayJun2005</bcf:citekey>
     <bcf:citekey order="15">WangMay2009</bcf:citekey>
     <bcf:citekey order="16">SchmidJun1997</bcf:citekey>
-    <bcf:citekey order="17">BayJun2005</bcf:citekey>
-    <bcf:citekey order="18">WangMay2009</bcf:citekey>
-    <bcf:citekey order="19">WangMay2009</bcf:citekey>
-    <bcf:citekey order="20">JainJun2010</bcf:citekey>
-    <bcf:citekey order="20">HoferFeb2013</bcf:citekey>
-    <bcf:citekey order="20">TaylorNov1995</bcf:citekey>
-    <bcf:citekey order="21">JainJun2010</bcf:citekey>
-    <bcf:citekey order="22">HoferFeb2013</bcf:citekey>
-    <bcf:citekey order="23">TaylorNov1995</bcf:citekey>
-    <bcf:citekey order="24">Topal2012</bcf:citekey>
-    <bcf:citekey order="25">Fraser1997</bcf:citekey>
+    <bcf:citekey order="17">SchmidJun1997</bcf:citekey>
+    <bcf:citekey order="18">BayJun2005</bcf:citekey>
+    <bcf:citekey order="19">BayJun2005</bcf:citekey>
+    <bcf:citekey order="20">WangMay2009</bcf:citekey>
+    <bcf:citekey order="21">WangMay2009</bcf:citekey>
+    <bcf:citekey order="22">JainJun2010</bcf:citekey>
+    <bcf:citekey order="23">JainJun2010</bcf:citekey>
+    <bcf:citekey order="24">HoferFeb2013</bcf:citekey>
+    <bcf:citekey order="25">HoferFeb2013</bcf:citekey>
+    <bcf:citekey order="26">TaylorNov1995</bcf:citekey>
+    <bcf:citekey order="27">TaylorNov1995</bcf:citekey>
+    <bcf:citekey order="28">Topal2012</bcf:citekey>
+    <bcf:citekey order="29">Fraser1997</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="anyt">
