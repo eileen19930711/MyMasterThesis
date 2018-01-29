@@ -265,11 +265,11 @@ Note that as a combination of \eqref{eq:MixModel2-1} and \eqref{eq:MixModel1-2},
 
 In this section, I describe the process of refining the position of a 3D line segment in the object space so that its back-projection in each image has a best-fit to the extracted line in the image space, as illustrated in \cref{fig:mainidea}.
 
-\begin{figure} [h!]
+\begin{figure}
 	\centering
-	\subfloat[Before optimization]{\includegraphics[width=0.8\textwidth]{2-4_1_1.png} \label{fig:beforeoptimization}}
+	\subfloat[Before optimization]{\includegraphics[width=0.9\textwidth]{2-4_1_1.png} \label{fig:beforeoptimization}}
 	
-	\subfloat[After optimization]{\includegraphics[width=0.8\textwidth]{2-4_1_2.png} \label{fig:afteroptimization}}
+	\subfloat[After optimization]{\includegraphics[width=0.9\textwidth]{2-4_1_2.png} \label{fig:afteroptimization}}
 	\caption{\small Before reconstruction process, the back projection of initial approximate 3D line segment does not best-fit the extracted 2D lines in the covering images. After optimization, the back-projection of the reconstructed line segment should best fitting the extracted 2D lines in all the covering images.}
 	\label{fig:mainidea}
 \end{figure}
@@ -277,8 +277,25 @@ In this section, I describe the process of refining the position of a 3D line se
 
 To simplify the problem, a lane-marking segment is partially reconstructed through a sliding window in the object space. Each segment is approximated by a straight line, taking into account the maximum curvature of the highway. 
 
-In each sliding window, a segment is reconstructed, i.e. a complete non-linear LS adjustment is performed. Only the middle point of the reconstructed line segment is recorded. The sliding window then moves a stepsize forward, and the process of 3D reconstruction is performed again starting from the recorded middle point of the previous line segment. Another line segment is then reconstructed, with its middle point being recorded. These recorded middle points are in the end the nodes of the reconstructed line. The reconsideration in overlapping region makes the reconstruction more robust.
-% Maybe make figure to illustrate
+In each sliding window, a segment is reconstructed, i.e. a complete non-linear LS adjustment is performed. Only the middle point of the reconstructed line segment is recorded. The sliding window then moves a stepsize forward, and the process of 3D reconstruction is performed again starting from the recorded middle point of the previous line segment. Another line segment is then reconstructed, with its middle point being recorded, and so on. These recorded middle points are in the end the nodes of the reconstructed line. This process is illustrated in \cref{fig:slidingwindow}.
+
+The measurements for each reconstruction process are collected correspondingly, as shown in \cref{fig:measurementscollection} ---by back-projecting the initial line segment into image space and buffering 10 pixels width on each side, only the extracted 2D line segment in this region is collected.
+
+\begin{figure}
+	\centering
+	\subfloat[The pink points represent all the extracted lines (in the form of sets of points). The green points are the endpoints of the back projected initial approximate line segment.]{\includegraphics[width=0.45\textwidth]{2-4_3_1.png} \label{fig:measurementscollection1}}
+	\subfloat[The points in the buffering area are collected as the measurements for LS adjustment.]{\includegraphics[width=0.45\textwidth]{2-4_3_2.png} \label{fig:measurementscollection2}}
+	
+	\caption{\small Measurements collection in image space.}
+	\label{fig:measurementscollection}
+\end{figure}
+
+
+%It is reconstructed by taking into account the measurements (the detected 2D lines) collected in the corresponding back-projected regions in all covering image spaces.
+% by the least-squares estimator (see chapter xx) %!!!
+
+The reconsideration in overlapping region makes the reconstruction more robust, as shown in fig ???
+
 
 \begin{figure}
 	\centering
