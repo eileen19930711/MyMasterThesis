@@ -24,7 +24,6 @@ In \cref{sec:LineProjectionOnDSM} the problem of acquiring initial values is des
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Lane markings Properties and Automatic Extraction}
 \label{sec:LineExtraction}
-\subsection{Line Detector}
 
 The appearance of lane markings on German roads including line type, color and width is specified depending on the road type. Different line types of lane markings are shown in \cref{fig:LaneMarkingTypes} and their line widths are defined in \cref{tab:LaneMarkingWidths}. As shown in \cref{tab:DashedLaneMarkingLengths}, the dashed lane markings on motorways are of 6 meter length.
 % https://de.wikipedia.org/wiki/Fahrbahnmarkierung#Eigenschaften
@@ -33,72 +32,79 @@ The appearance of lane markings on German roads including line type, color and w
 Because of the appearance, the problem of lane marking detection can be treated as a line detection problem. We restrict the proposed framework to lane markings with single white lines (dashed or continuous) of 0.3 meter width. Other types like in restricted zone, double lines, parking areas, temporal yellow lines in construction sites etc, are excluded.% https://www.transchool.lee.army.mil/adso/documents/zeichen.pdf
 
 
+\begin{figure}
+	\centering
+	\subfloat[\small Continuous line]{\fbox{\includegraphics[width=0.3\textwidth, trim={0 150 0 150},clip=true]{Laengsmarkierung_durchgehend.pdf}}}
+	\quad
+	\subfloat[\small Dashed line]{\fbox{\includegraphics[width=0.3\textwidth, trim={0 150 0 150},clip=true]{Laengsmarkierung_unterbrochen.pdf}}}
+	\newline
+	\subfloat[\small Continuous and dashed double lines]{\fbox{\includegraphics[width=0.3\textwidth, trim={0 150 0 150},clip=true]{Laengsmarkierung_unterbrochen_durchgehend.pdf}}}
+	\quad
+	\subfloat[\small Continuous double lines]{\fbox{\includegraphics[width=0.3\textwidth, trim={0 150 0 150},clip=true]{Laengsmarkierung_durchgehend_doppelt.pdf}}}
+	\quad
+	\subfloat[\small Dashed double lines]{\fbox{\includegraphics[width=0.3\textwidth, trim={0 150 0 150},clip=true]{Laengsmarkierung_unterbrochen_doppelt.pdf}}}
+	\caption{\small Line types of lane markings [source RMS Teil 1]}
+	% https://de.wikipedia.org/wiki/Fahrbahnmarkierung
+	% Richtlinien für die Markierung von Straßen (RMS) Teil 1
+	\label{fig:LaneMarkingTypes}
+\end{figure}
+
+%\setlength{\floatsep}{16pt plus 1.0pt minus 2.0pt}
+\begin{table} [h!]
+	\centering
+	\begin{tabular}{l|cc}
+		\toprule
+		& motorways\footnote{\label{motorway}and corresponding roads in the sense of the VwV-StVO to § 42 to mark 330 (motorway) II} & other roads\\
+		\midrule
+		narrow lines & $0.15$ [m] & $0.12$ [m] \\
+		wide lines   & $0.30$ [m] & $0.25$ [m] \\
+		\bottomrule
+	\end{tabular}
+	\caption{\small Widths of lane markings [source RMS Teil 1]}
+	\label{tab:LaneMarkingWidths}
+	% Der Deutsche Verkehrssicherheitsrat
+	% https://www.dvr.de/download/publikationen-schriftenreihe-17.pdf
+	% Richtlinien für die Markierung von Straßen (RMS) Teil 1
+	
+\end{table}
+
+\setlength{\floatsep}{16pt plus 1.0pt minus 2.0pt}
+\begin{table} [h!]
+	\centering
+	\begin{tabular}{l|ccc}
+		\toprule
+		& motorways\textsuperscript{\ref{motorway}} & \multicolumn{2}{c}{other roads}\\
+		\cline{3-4}
+		&           & in town & out of town\\
+		\midrule
+		line / gap  & $6$ [m] / $12$ [m] & $3$ [m] / $6$ [m] & $4$ [m] / $8$ [m]\\
+		\bottomrule
+	\end{tabular}
+	\caption{\small Lengths of dashed lane markings with ratio 1:2 [source RMS Teil 1]}
+	\label{tab:DashedLaneMarkingLengths}
+	% Der Deutsche Verkehrssicherheitsrat
+	% https://www.dvr.de/download/publikationen-schriftenreihe-17.pdf
+	% Richtlinien für die Markierung von Straßen (RMS) Teil 1
+\end{table}
+
+
+\clearpage
+
 % https://en.wikipedia.org/wiki/Edge_detection#Approaches
-There are many approaches for line detection operators. % Canny, Hough Transform...
+There are many algorithms for line detection. % Hough Transform...
 % search-based and zero-crossing based
-Prewitt line detector uses two orthogonal gradient operators, and the pixels in the operators are of same weights. Sobel detector also uses two orthogonal gradient operators, but the weights of pixel in operators are not equal. The closer the pixel to the center of operator, the higher weight it has. Canny detector searches local extrema of gradient to locate the positions of line features. Edge drawing (Topal \& Akinlar, 2012) first spots anchors along rows and columns by Sobel detector, and then joins these anchors to extract line features.
+Prewitt line detector uses two orthogonal gradient operators, and the pixels in the operators are of same weights. Sobel detector also uses two orthogonal gradient operators, but the weights of pixel in operators are not equal ---the closer the pixel to the center of operator, the higher weight it has. Canny edge detector searches local extrema of gradient to locate the positions of line features and is still a state-of-the-art edge detector. Edge-detectors that perform better than the Canny usually require higher computational complexities or a greater number of parameters. Edge drawing \cite{Topal2012} first spots anchors along rows and columns by Sobel detector, and then joins these anchors to extract line features.
 
 In this work, the principle to extract line features is to firstly derive the line direction for each pixel by using partial derivatives of a Gaussian smoothing kernel. Pixels that have a local maximum in the second directional derivative perpendicular to the line direction are marked as line points. By thresholding their second directional derivative values, the accepted line points are then linked and connected.
 % C. Steger: “Extracting Curvilinear Structures: A Differential Geometric Approach”. In B. Buxton, R. Cipolla, eds., “Fourth European Conference on Computer Vision”, Lecture Notes in Computer Science, Volume 1064, Springer Verlag, pp. 630-641, 1996. 
 % C. Steger: “Extraction of Curved Lines from Images”. In “13th International Conference on Pattern Recognition”, Volume II, pp. 251-255, 1996. 
 % C. Steger: “An Unbiased Detector of Curvilinear Structures”. IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 20, no. 2, pp. 113-125, 1998
-The resultant connected points which compose a line are of sub-pixel precision. \cref{fig:LineExtraction} shows the extracted lines on the masked original image.
+The resultant connected points which compose a line are of sub-pixel precision. \cref{fig:LineExtraction} shows the extracted lines on part of the masked original image.
 % http://www.mvtec.com/doc/halcon/11/en/lines_gauss.html
 
 \begin{figure}
-\centering
-\subfloat[\small Continuous line]{\fbox{\includegraphics[width=0.3\textwidth, trim={0 150 0 150},clip=true]{Laengsmarkierung_durchgehend.pdf}}}
-\quad
-\subfloat[\small Dashed line]{\fbox{\includegraphics[width=0.3\textwidth, trim={0 150 0 150},clip=true]{Laengsmarkierung_unterbrochen.pdf}}}
-\newline
-\subfloat[\small Continuous and dashed double lines]{\fbox{\includegraphics[width=0.3\textwidth, trim={0 150 0 150},clip=true]{Laengsmarkierung_unterbrochen_durchgehend.pdf}}}
-\quad
-\subfloat[\small Continuous double lines]{\fbox{\includegraphics[width=0.3\textwidth, trim={0 150 0 150},clip=true]{Laengsmarkierung_durchgehend_doppelt.pdf}}}
-\quad
-\subfloat[\small Dashed double lines]{\fbox{\includegraphics[width=0.3\textwidth, trim={0 150 0 150},clip=true]{Laengsmarkierung_unterbrochen_doppelt.pdf}}}
-\caption{\small Line types of lane markings [source RMS Teil 1]}
-% https://de.wikipedia.org/wiki/Fahrbahnmarkierung
-% Richtlinien für die Markierung von Straßen (RMS) Teil 1
-\label{fig:LaneMarkingTypes}
-\end{figure}
-\setlength{\floatsep}{16pt plus 1.0pt minus 2.0pt}
-\begin{table}
-    \centering
-    \begin{tabular}{l|cc}
-    \toprule
-           & motorways\footnote{and corresponding roads in the sense of the VwV-StVO to § 42 to mark 330 (motorway) II}  & other roads\\
-    \midrule
-    narrow lines & $0.15$ [m] & $0.12$ [m] \\
-    wide lines   & $0.30$ [m] & $0.25$ [m] \\
-    \bottomrule
-    \end{tabular}
-    \caption{\small Widths of lane markings [source RMS Teil 1]}
-    \label{tab:LaneMarkingWidths}
-% Der Deutsche Verkehrssicherheitsrat
-% https://www.dvr.de/download/publikationen-schriftenreihe-17.pdf
-% Richtlinien für die Markierung von Straßen (RMS) Teil 1
-\end{table}
-\setlength{\floatsep}{16pt plus 1.0pt minus 2.0pt}
-\begin{table}
-    \centering
-    \begin{tabular}{l|ccc}
-    \toprule
-          & motorways & \multicolumn{2}{c}{other roads}\\
-          &           & in town & out of town\\
-    \midrule
-    line / gap  & $6$ [m] / $12$ [m] & $3$ [m] / $6$ [m] & $4$ [m] / $8$ [m]\\
-    \bottomrule
-    \end{tabular}
-    \caption{\small Lengths of dashed lane markings with ratio 1:2 [source RMS Teil 1]}
-    \label{tab:DashedLaneMarkingLengths}
-% Der Deutsche Verkehrssicherheitsrat
-% https://www.dvr.de/download/publikationen-schriftenreihe-17.pdf
-% Richtlinien für die Markierung von Straßen (RMS) Teil 1
-\end{table}
-
-\begin{figure}
   \centering
-  \includegraphics[width=0.7\textwidth, trim=750 250 200 320,clip]{ML1234_extlines_rsz.png}
+  \includegraphics[width=0.7\textwidth, trim=750 260 200 360,clip]{ML1234_extlines_rsz.png}
   \caption{\small Lane markings Extraction. The extracted long lane-lines are marked in green and the dashed ones are in yellow.  Note that both cases are reconstructed into 3D with the same framework; different colors here are only for illustration.}
   \label{fig:LineExtraction}
 \end{figure}
@@ -116,8 +122,8 @@ This section describes the geometric model of the projection of 3D points into t
 We assume frame photography, i.e. photographs exposed on a frame chip in one instant, and assume central projection model with cameras that have a single viewpoint and a planar sensor and being straight line-preserving. Collinearity indicates the condition that the image point (on the sensor plate of the camera), the observed point (in object space) and the projection center of the camera were aligned at the moment the picture was taken. Every measured point leads to two collinearity equations, describing transformations from object space to image coordinates:
 \begin{equation} \label{eq:collinearity}
 \begin{split}
-x = x_0 -c \dfrac {R_{11}(X-X_0) + R_{21}(Y-Y_0) + R_{31}(Z-Z_0)} {R_{13}(X-X_0) + R_{23}(Y-Y_0) + R_{33}(Z-Z_0)} \\
-y = y_0 -c \dfrac {R_{12}(X-X_0) + R_{22}(Y-Y_0) + R_{32}(Z-Z_0)} {R_{13}(X-X_0) + R_{23}(Y-Y_0) + R_{33}(Z-Z_0)}
+x = x_0 -c \dfrac {r_{11}(X-X_0) + r_{21}(Y-Y_0) + r_{31}(Z-Z_0)} {r_{13}(X-X_0) + r_{23}(Y-Y_0) + r_{33}(Z-Z_0)} \\
+y = y_0 -c \dfrac {r_{12}(X-X_0) + r_{22}(Y-Y_0) + r_{32}(Z-Z_0)} {r_{13}(X-X_0) + r_{23}(Y-Y_0) + r_{33}(Z-Z_0)}
 \end{split}
 \end{equation}
 where\newline
@@ -126,14 +132,14 @@ $(x_0, y_0)$: image coordinates of principal point \newline
 $c$: principal distance; focal length \newline
 $(X, Y, Z)$: object coordinates of the point \newline
 $(X_0, Y_0, Z_0)$: object coordinates of projection center \newline
-$R_{11},...,R_{33}$: elements of the rotation matrix R (orthogonal 3$\times$3-matrix from object space to image space, with 3 independent angles $\omega$, $\phi$ and $\kappa$)
+$r_{11},...,r_{33}$: elements of the rotation matrix R (orthogonal 3$\times$3-matrix from object space to image space, with 3 independent angles $\omega$, $\phi$ and $\kappa$)
 
 \subsection{Lens Distortion Correction}
 \label{subsec:LensDistortion}
 
 An original image appears to have some degree of deviations from perspective mapping due to lens distortion, lens refraction or non-planarity of the sensor surface. There are several models to describe these perturbing effects and can be used to undistort the images, resulting in rectified images which are now straight line-preserving.
  
-A subset of physical distortion model [Fraser 1997] is chosen, with two radial symmetric distortion parameters $A_1$ and $A_2$, two asymmetric parameters $B_1$ and $B_2$, and a scaling $C1$ and an affine shearing parameter $C_2$. Assuming $x$ and $y$ to be the distorted image coordinates, the corrections $\Delta x$ and $\Delta y$ are then calculated by the following equations:
+A subset of physical distortion model \cite{Fraser1997} is chosen, with two radial symmetric distortion parameters $A_1$ and $A_2$, two asymmetric parameters $B_1$ and $B_2$, and a scaling $C1$ and an affine shearing parameter $C_2$. Assuming $x$ and $y$ to be the distorted image coordinates, the corrections $\Delta x$ and $\Delta y$ are then calculated by the following equations:
 \begin{equation} \label{eq:LensDistortion}
 \begin{split}
 \Delta x &= x_p + A_1x_*(r^2-R_0^2) + A_2x_*(r^4-R_0^4) + B_1(r^2+2x_*^2) + B_22x_*y+C_2y \\
@@ -158,9 +164,9 @@ As real cameras generally only approximate the perspective camera model, lens di
 By inserting \eqref{eq:collinearity} and \eqref{eq:LensDistortion} into \eqref{eq:undistortedimgcoord} , the relationship between a 3D point $\mathbf{P}(X, Y, Z)$ and its corresponding distorted image coordinates $\mathbf{p}(x,y)$ can be described as
 \begin{equation} \label{eq:expandedcollinearity}
 \begin{split}
-x =& x_0-c\dfrac{R_{11}(X-X_0)+R_{21}(Y-Y_0)+R_{31}(Z-Z_0)}{R_{13}(X-X_0)+R_{23}(Y-Y_0)+R_{33}(Z-Z_0)} \\
+x =& x_0-c\dfrac{r_{11}(X-X_0)+r_{21}(Y-Y_0)+r_{31}(Z-Z_0)}{r_{13}(X-X_0)+r_{23}(Y-Y_0)+r_{33}(Z-Z_0)} \\
 &-(x_p + A_1x_*(r^2-R_0^2) + A_2x_*(r^4-R_0^4) + B_1(r^2+2x_*^2) + B_22x_*y+C_2y)\\
-y =& y_0-c\dfrac{R_{12}(X-X_0)+R_{22}(Y-Y_0)+R_{32}(Z-Z_0)}{R_{13}(X-X_0)+R_{23}(Y-Y_0)+R_{33}(Z-Z_0)} \\
+y =& y_0-c\dfrac{r_{12}(X-X_0)+r_{22}(Y-Y_0)+r_{32}(Z-Z_0)}{r_{13}(X-X_0)+r_{23}(Y-Y_0)+r_{33}(Z-Z_0)} \\
 &-(y_p + A_1y  (r^2-R_0^2) + A_2y  (r^4-R_0^4) + B_1(r^2+2y^2)   + B_22x_*y)
 \end{split}
 \end{equation}
@@ -170,7 +176,7 @@ To express \eqref{eq:expandedcollinearity} shortly, a function $\mathcal{G}$ is 
 \mathbf{p} = \mathcal{G}(\mathbf{q},\mathbf{P}) 
 \end{equation}
 
-which takes the interior and exterior orientations as well as the lens distortion parameters of a camera $\mathbf{q}(x_0,y_0,c,X_0,Y_0,Z_0,R_{11},...,R_{33},A_1,A_2,B_1,B_2,C_1,C_2)$ and the position of a 3D point $\mathbf{P}(X, Y, Z)$, and returns the corresponding distorted image coordinates $\mathbf{p}(x,y)$.
+which takes the interior and exterior orientations as well as the lens distortion parameters of a camera $\mathbf{q}(x_0,y_0,c,X_0,Y_0,Z_0,r_{11},...,r_{33},A_1,A_2,B_1,B_2,C_1,C_2)$ and the position of a 3D point $\mathbf{P}(X, Y, Z)$, and returns the corresponding distorted image coordinates $\mathbf{p}(x,y)$.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -179,13 +185,13 @@ which takes the interior and exterior orientations as well as the lens distortio
 
 Line fitting is the process of constructing a infinite straight line that has a best fit to a 2D dataset. One of the approaches is linear regression which attempts to find the linear function that "best" predicts the dependent variable values as a function of the independent variable. In this work, "best" predict will be understood as in the \gls{ls} approach: minimization of the sum of squared residuals (differences between the measured and the estimated values of the dependent variable).
 
-In the case of standard linear regression, the regressor $y$ is assumed error free, inconsistencies\footnote{The word "inconsistencies" indicates the unobserved random errors, also called as measurement errors.} are only for the dependent variable $x$. Geometrically it means that the horizontal distances from observed data to the fitted line is minimized. To minimize the perpendicular distances from the data points to the regression line, a orthogonal regression model is derived in \cref{subsec:OrthogonalRegression}.
+In the case of standard linear regression, the regressor $x$ is assumed error free, inconsistencies\footnote{The word "inconsistencies" indicates the unobserved random errors, also called as measurement errors.} are only for the dependent variable $y$. Geometrically it means that the vertical distances from observed data to the fitted line is minimized. To minimize the perpendicular distances from the data points to the regression line, a orthogonal regression model is derived in \cref{subsec:OrthogonalRegression}.
 
-For a later combination with point-wise extended collinearity equation \eqref{eq:Gfunction} in next section, we aim to fit the line equation in two-point form to the observed dataset. 
+For a later combination with point-wise extended collinearity equation \eqref{eq:Gfunction} in next section, the aim is to fit the line equation in two-point form to the observed dataset. 
 % extracted lines produced in \cref{sec:LineExtraction} (in forms of sets of points in image coordinates). 
-For such nonlinear least squares fitting purpose, a nonlinear mixed model is derived in \cref{subsec:NonLinear}. % !!!!!!!!!!!!!!!!!
+For such nonlinear functional relation between variales, a nonlinear LS model is derived in \cref{subsec:NonLinear}.
 
-A functional model is unsolvable when the assumed "dependent" variable is indeed not a function of the independent variables, i.e. the assumed functional relationship does not really exist. Take an observed set of 2D points with their Cartesian coordinates $\{x_i,y_i\}^n_{i=1}$ on a vertical line $x=constant$ for example. Their $y$ values have no dependency on their $x$ values, i.e. knowledge of $x$ tells nothing about $y$. Therefore, for this dataset, the functional model $y=f(x)$ is barely solvable. In such cases, however, $x$ is a function of $y$ (which is actually a constant function) and the equation system which models the dependent variable $x$ being a function of the independent variable $y$ becomes solvable. Regarding the dataset used in this work (which will be described with more details in \cref{sec:Materials}) where the observed 2D points scatter mainly in column direction in image space, the linear relationship between $x$ and $y$ values will be setup as $x=f(y)$ to avoid weakly solvable equations system.
+A functional model is unsolvable when the assumed "dependent" variable is indeed not a function of the independent variables, i.e. the assumed functional relation does not really exist. Take an observed set of 2D points with their Cartesian coordinates $\{x_i,y_i\}^n_{i=1}$ on a vertical line $x=constant$ for example. Their $y$ values have no dependency on their $x$ values, i.e. knowledge of $x$ tells nothing about $y$. Therefore, for this dataset, the functional model $y=f(x)$ is barely solvable. In such cases, however, $x$ is a function of $y$ (which is actually a constant function) and the equation system which models the dependent variable $x$ being a function of the independent variable $y$ becomes solvable. Regarding the dataset used in this work (which will be described with more details in \cref{sec:Materials}) where the observed 2D points scatter mainly in column direction in image space, the functional relation between variables $x$ and $y$ will be setup as $x=f(y)$ to avoid weakly solvable equations system.
 
 
 %\subsection{Simple Linear Regression}
@@ -203,13 +209,12 @@ A functional model is unsolvable when the assumed "dependent" variable is indeed
 
 \subsection{Orthogonal Regression}
 \label{subsec:OrthogonalRegression}
-A linear regression model describes a dependent variable as a linear function of the regressor (an independent variable). Given a dataset $\{x_i,y_i\}^n_{i=1}$ of $n$ points on a 2D plane, in the case when both dependent variable $x_i$ and regressor $y_i$ are measured with errors %$e_x$ and $e_y$
-, a linear regression model takes the form:
+A linear regression model describes a dependent variable as a linear function of the regressor (an independent variable). Given a dataset $\{x_i,y_i\}^n_{i=1}$ of $n$ points on a 2D plane, in the case when both dependent variable $x_i$ and regressor $y_i$ are measured with errors, a linear regression model takes the form:
 \begin{equation} \label{eq:MixModel1-1}
 x_i - e_{x_i} = %a_0 + a_1(y_i-e_{y_i}) = 
 a_0 + a_1\bar{y_i}
 \end{equation}
-where the regression coefficients $a_0$ and $a_1$ are the unknown parameters to be estimated, $\bar{y_i}$ denotes the true but unobserved regressor, and the error variable $e_{x_i}$ is an unobserved random variable that adds noise to the linear relationship between the dependent variable $x$ and true regressor $\bar{y_i}$. The true regressor $\bar{y_i}$ is observed with an error $e_{y_i}$ in the pseudo observation equation:
+where the regression coefficients $a_0$ and $a_1$ are the unknown parameters to be estimated, $\bar{y_i}$ denotes the true but unobserved regressor, and the error variable $e_{x_i}$ is an unobserved random variable that adds noise to the linear relationship between the dependent variable $x$ and true regressor $\bar{y_i}$. Whereas the true regressor $\bar{y_i}$ is observed with an error $e_{y_i}$ in the pseudo observation equation:
 \begin{equation} \label{eq:MixModel1-2}
 y_i-e_{y_i} = \bar{y_i}
 \end{equation}
@@ -229,7 +234,7 @@ The two-point form of a infinite line in the Cartesian plane passing through the
 \end{equation}
 with $y_2\neq y_1$, where $(x,y)$ is any point on the line.
 
-Let the unknown coordinates of two different points on a line in 2D space be $(x_1,y_1)$ and $(x_2,y_2)$ and the observed 2D points be $\{x_i,y_i\}^n_{i=1}$ with measurement errors $e_{x_i}$ and $e_{y_i}$ in both variables. The orthogonal regression model in two-point form: 
+Let the unknown coordinates of two different points on a line in 2D space be $(x_1,y_1)$ and $(x_2,y_2)$ and the observed 2D points be $\{x_i,y_i\}^n_{i=1}$ with measurement errors $e_{x_i}$ and $e_{y_i}$ in both variables. The orthogonal regression model in two-point form is: 
 \begin{equation} \label{eq:MixModel2-1}
 x_i - e_{x_i}= (x_1-\dfrac{(x_2-x_1)}{(y_2-y_1)}\times y_1) + \dfrac{(x_2-x_1)}{(y_2-y_1)}\times \bar{y_i}
 \end{equation}
@@ -253,17 +258,39 @@ Note that as a combination of \eqref{eq:MixModel2-1} and \eqref{eq:MixModel1-2},
 \end{split}
 \end{equation}
 
+\clearpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{3D line reconstruction through nonlinear LS Adjustment}
+\section{3D Line Reconstruction with Nonlinear LS Adjustment}
 \label{sec:LSadj}
 
-In this section, I describe the process of refining the position of a 3D line segment in the object space so that its back-projection in each image has a best-fit to the extracted line in the image space. To simplify the problem, a lane-marking-segment is partially reconstructed through a sliding window in the object space. Each segment is approximated by a straight line, taking into account the maximum curvature of the highway. 
-The length of the sliding window depends on the expected curvature, and for motorways it was fixed to 9m …
-% What about dashed lane markings in the middle? Why do you choose 9m -> compromise between robustness and minimized systematic errors.
+In this section, I describe the process of refining the position of a 3D line segment in the object space so that its back-projection in each image has a best-fit to the extracted line in the image space, as illustrated in \cref{fig:mainidea}.
 
-In the sliding window, a line segment is reconstructed taking into account all the measurements (the detected lines) collected in the corresponding regions in all covering images. Only the middle point of the sliding window is then reconstructed by the least-squares estimator (see chapter xx) %!!!
-and is recorded. The sliding window then moves half length forward, and the process of 3D reconstruction started again from the recorded middle point of the previous line segment. Another line segment is then reconstructed, with its middle point being recorded. These recorded middle points are in the end the nodes of the reconstructed line. The reconsideration in overlapping region makes the reconstruction more robust.
+\begin{figure} [h!]
+	\centering
+	\subfloat[Before optimization]{\includegraphics[width=0.8\textwidth]{2-4_1_1.png} \label{fig:beforeoptimization}}
+	
+	\subfloat[After optimization]{\includegraphics[width=0.8\textwidth]{2-4_1_2.png} \label{fig:afteroptimization}}
+	\caption{\small Before reconstruction process, the back projection of initial approximate 3D line segment does not best-fit the extracted 2D lines in the covering images. After optimization, the back-projection of the reconstructed line segment should best fitting the extracted 2D lines in all the covering images.}
+	\label{fig:mainidea}
+\end{figure}
+
+
+To simplify the problem, a lane-marking segment is partially reconstructed through a sliding window in the object space. Each segment is approximated by a straight line, taking into account the maximum curvature of the highway. 
+
+In each sliding window, a segment is reconstructed, i.e. a complete non-linear LS adjustment is performed. Only the middle point of the reconstructed line segment is recorded. The sliding window then moves a stepsize forward, and the process of 3D reconstruction is performed again starting from the recorded middle point of the previous line segment. Another line segment is then reconstructed, with its middle point being recorded. These recorded middle points are in the end the nodes of the reconstructed line. The reconsideration in overlapping region makes the reconstruction more robust.
 % Maybe make figure to illustrate
+
+\begin{figure}
+	\centering
+	\subfloat[The first line segment of "sliding window length" is reconstructed, with its starting point and its middle point of "step size" from the starting point being recorded.]{\includegraphics[width=0.9\textwidth]{2-4_2_1.png} \label{fig:slidingwindow1}}
+	
+	\subfloat[Starting from the recorded node of last process, another line segment of "sliding window length" is again to be reconstructed. i.e. the sliding window has moved "step size" forward.]{\includegraphics[width=0.9\textwidth]{2-4_2_2.png} \label{fig:slidingwindow2}}
+	
+	\subfloat[The point of "step size" length from the starting point on the reconstructed segment is recorded.]{\includegraphics[width=0.9\textwidth]{2-4_2_3.png} \label{fig:slidingwindow3}}
+	
+	\caption{\small A line is partially reconstructed through a sliding window.}
+	\label{fig:slidingwindow}
+\end{figure}
 
 In \cref{subsubsec:ObsEqua} I firstly set up a model of observation equations. They describe the fitting of a straight line to the measurements in each covering image, where the fitting lines on different images are transformed from a single 3D straight line segment through the extended collinearity equation \eqref{eq:expandedcollinearity}.
 
@@ -273,7 +300,7 @@ Correspondingly, the observation equations are line equations in two-point form.
 
 
 % the measurements are collected accordingly.
-
+\clearpage
 \subsection{The Nonlinear Gauss-Markov Model with Constraints}
 \label{GaussMarkovModelwithConstraints}
 

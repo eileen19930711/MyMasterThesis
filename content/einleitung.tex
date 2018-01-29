@@ -20,16 +20,16 @@ For autonomous driving, redundant sources of information for the driving environ
 \definecolor{ballblue}{rgb}{0.13, 0.67, 0.8}
 \begin{table}
 	\centering
-	\renewcommand{\arraystretch}{1.2}
+	\renewcommand{\arraystretch}{1.1}
 %	\setlength{\arrayrulewidth}{1.2pt}
 	\begin{tabular}{|>{\centering}m{0.7cm}|>{\centering}m{2cm}|l|l|l|l|}
 		\hline
 		\multicolumn{1}{|m{0.7cm}|}{SAE level} & 
 		Name & 
-		\multicolumn{1}{m{2.4cm}|}{Execution of\newline Steering and\newline braking} &
+		\multicolumn{1}{m{2.2cm}|}{Execution of\newline Steering and\newline braking} &
 		\multicolumn{1}{m{2.4cm}|}{Monitoring of\newline driving\newline environment} &
-		\multicolumn{1}{m{2.4cm}|}{Fallback \newline Performance\newline of Dynamic\newline Driving Task}&
-		\multicolumn{1}{m{2cm}|}{System\newline Capability} \\
+		\multicolumn{1}{m{2.3cm}|}{Fallback \newline Performance\newline of Dynamic\newline Driving Task}&
+		\multicolumn{1}{m{2.4cm}|}{System\newline Capability} \\
 	    
 	    \hline 
 	    \rowcolor{applegreen!50} \multicolumn{6}{|l|}{Human driver monitors the driving environment}\\
@@ -47,10 +47,10 @@ For autonomous driving, redundant sources of information for the driving environ
 		\rowcolor{applegreen!20} 
 		\cellcolor{applegreen!40}1 &
 		\multicolumn{1}{m{2cm}|}{\cellcolor{applegreen!40}Driver\newline Assistance} &
-		\multicolumn{1}{m{2.4cm}|}{Human \&\newline System} &
+		\multicolumn{1}{m{2.2cm}|}{Human \&\newline System} &
 		Human &
 		Human &
-		\multicolumn{1}{m{2cm}|}{some\newline driving\newline modes}\\
+		\multicolumn{1}{m{2.4cm}|}{some\newline driving modes}\\
 		
 		\hline
 		\rowcolor{applegreen!20} 
@@ -59,7 +59,7 @@ For autonomous driving, redundant sources of information for the driving environ
 		System &
 		Human &
 		Human &
-		\multicolumn{1}{m{2cm}|}{some\newline driving\newline modes}\\
+		\multicolumn{1}{m{2.4cm}|}{some\newline driving modes}\\
 		
 		\hline 
 		\rowcolor{ballblue!50} \multicolumn{6}{|l|}{Automated driving system monitors the driving environment}\\
@@ -71,7 +71,7 @@ For autonomous driving, redundant sources of information for the driving environ
 		System &
 		System &
 		Human &
-		\multicolumn{1}{m{2cm}|}{some\newline driving\newline modes}\\
+		\multicolumn{1}{m{2.4cm}|}{some\newline driving modes}\\
 
 		\hline
 		\rowcolor{ballblue!20} 
@@ -80,7 +80,7 @@ For autonomous driving, redundant sources of information for the driving environ
 		System &
 		System &
 		System &
-		\multicolumn{1}{m{2cm}|}{some\newline driving\newline modes}\\
+		\multicolumn{1}{m{2.4cm}|}{some\newline driving modes}\\
 		
 		\hline
 		\rowcolor{ballblue!20} 
@@ -89,7 +89,7 @@ For autonomous driving, redundant sources of information for the driving environ
 		System &
 		System &
 		System &
-		\multicolumn{1}{m{2cm}|}{all\newline driving\newline modes}\\
+		\multicolumn{1}{m{2.4cm}|}{all\newline driving modes}\\
 		
 		\hline
 	\end{tabular}
@@ -107,78 +107,53 @@ Spatial intersection is usually applied in the cases that the correspondences of
 
 \subsection{Feature Extraction and Matching}
 The aim of feature extraction is to gain the characteristics of the images, through which the stereo correspondence processes. As a result, the characteristics of the images closely link to the choice of matching methods. % https://en.wikipedia.org/wiki/3D_reconstruction
-Image regions are typically compared using sum-of-square-differences (SSD) or normalized cross-correlation (NCC)
 
-One of the appearance-based similarity measures for point (corner) features matching is NCC, which is the simplest but effective affine-illumination-invariant method. 
+Blob features have properties of being local intensity maximum or minimum in images. Edge features have image brightness discontinuities in the direction perpendicular to the line direction itself. Variance of algorithms have been proposed for different kinds of features detection. The rotation-invariant Harris corner detector, for example, is commonly used to extract corners and infer features of an image. 
 
-Harris corner detector rotation-invariant
+The features are then matched among different views by comparison of the patches which center on the extracted features. Typically the similarity is measured by taking the \gls{ssd} or \gls{ncc} between the corresponding pixels of two patches.% NCC is the simplest but effective affine-illumination-invariant method. 
 
 Scale-Invariant Feature Transform (SIFT) is proposed by \citeauthor{LoweSep1999} in \citeyear{LoweSep1999} \cite{LoweSep1999}. Lowe‘s approach transforms an image into a large collection of local feature vectors, also known as keypoint descriptors. Each SIFT feature descriptor is invariant to image translation, scaling, and rotation, partially invariant to illumination changes and affine or 3D projection. These SIFT keypoints are than matched by identifying their nearest neighbors.
 
 
-sfm, sgm, 
-
 \subsection{\gls{dim}}
-3D reconstruction using dense image matching is a hot topic as it enables the automatic extraction of 3D urban models, notably from airborne oblique imagery. However, applying DIM algorithms to oblique imagery is challenging because of large scale variations, illumination changes and the many occlusions.
-
-Dense image matching is to derive pixel-wise image points correspondences in MVS. \gls{sgm}, firstly proposed by \citeauthor{Hirschmueller2008} in \citeyear{Hirschmueller2008}, is one of the most popular algorithm for dense image matching. SGM considers the information of entire image by means of aggregating matching cost along 8 or 16 cost paths, which not only enhances matching quality but also reduces computational complexity.
-
-
-%%%
-for semi-global matching, casts the matching step into an energy minimization problem.
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{\gls{dsm}}
-
-High resolution DSM can be generated by laser scanning or dense image matching. Compared to laser scanning, applying dense image matching to produce DSM is of lower cost and requires less time on data collection. 
-
-However, 
-SGM matching based on appearance,
-unstable and noisy in low texture area.  
-lane markings locating on homogeneous asphalt road surfaces, the DSM generated from SGM is noisy
-
-%(放圖)
-
-However, such high-resolution DSM gives a good starting point for the lane marking refinement.
-
+Dense image matching performs matching at the actual image resolution, i.e. pixel-wise correspondence between MVS is to be recovered. Depending on image texture, a per-pixel measure is generally ambiguous. Additional constraints, such as the assumption of a smooth surface, need to be introduced. Proposed by \citeauthor{Hirschmueller2008} in \citeyear{Hirschmueller2008}, \gls{sgm} approximates the two-dimensional global aggregation of matching cost by a number of one-dimensional cost path, where the matching step is casted into an energy minimization problem \cite{Hirschmueller2008}. It not only achieves similar accuracy as truly global matching but also significantly reduces computational complexity.
+% citation: Semi-Global Matching: An Alternative to LiDAR For DSM Generation?
 
 \section{Issues in Line Matching}
 
-Line matching is challenging for several reasons. First, line segments are often detected inexactly by automatic line detectors or occlusions appear in part of the lines. Thus the end-points of a line segment often do not correspond to each other in different views. Secondly, as mentioned above, there is no strong disambiguating geometric constraint available. Moreover, the corresponding neighborhoods may well have a very different shape and orientation in \gls{mvs}, or even totally different surroundings when dealing with wiry objects.\cite{SchmidJun1997,HoferFeb2013}
+Line matching is challenging for several reasons.
 
+Firstly, line segments may be detected inexactly by automatic line detectors or obstructions appear in part of the lines. Consequently the end-points of a line segment often do not correspond to each other in different views.
 
-%Line matching的文獻回顧 [每個方法以何種做法解決了哪些問題，但還有那些問題沒解決]. 由於沒有一種文獻回顧是可以同時解決3種問題，因此using space intersection to project lane markings to 3D object space%是不可行的。
+Secondly, there is no strong disambiguating geometric constraint available \cite{SchmidJun1997}. In the case of points, correspondences must satisfy the epipolar constraint. This strong disambiguating constraint helps to efficiently reduce the searching space from the whole image (2D) to a single line (1D) in matching processes. In the case of infinite line matching, however, there is no geometric constraint. For lines of finite length, there is only a weak overlap constraint arising from applying the epipolar constraint to its end-points.
 
+Moreover, the corresponding neighborhoods may well have a very different shape and orientation in different views, or even totally different surroundings when dealing with wiry objects \cite{HoferFeb2013}.
+
+In the cases of lane markings, they may be partly shaded by vehicles in aerial images. Besides, the continuous lane lines have no endpoints in the images. Worst of all, the asphalt road surface where the lane markings locate on is poorly textured. Therefore, line matching is even hardly applicable on lane markings.
 
 \section{Related Work}
+In the following, some works regarding 3D line reconstruction is presented.
+
+Starting with appearance-based methods. For 3D line reconstruction, \cite{SchmidJun1997,BayJun2005,WangMay2009} try to match line segments based on their appearances or some additional geometry constraints.
 
 \citeauthor{SchmidJun1997} exploit the epipolar geometry of line segments and the one-parameter family of homographies to provide point-wise correspondences, allowing cross-correlation of patches around line segments along the candidate lines in the epipolar-beam-region for matching scores evaluation.
 
-Considering the facts that the neighborhood of line segments may be of poorly textured or the surrounding area of a line segment on the intersection of two planes may have very different affine shape changes in different long base-line views, line segments are barely comparable using classical correlation patches yet the color neighborhood along this line segment undergoes only slight changes. % Long sentence, maybe rewrite. This block is also too detailled and specific for an introduction. Maybe move to other chapter? 
-Based on color histogram rather than textures, \citeauthor{BayJun2005} exploit the appearance similarity of line segment pairs and their topological layout to iteratively increase the correct matches. If region matches are available, they are automatically integrated in the topological configuration and exploited in combination. The final coplanar grouping stage allows to estimate the fundamental matrix even from line segments only. While color provides a very strong cue for discrimination, it may fail in the case where color feature is not distinctive, e.g. gray images. Besides, the advantage of matching groups of line segments is that more geometric information is available for disambiguation, the disadvantage is the increased computational complexity \cite{SchmidJun1997}.
+In the cases of poorly textured or shape-changing neighborhood of line segments in different views, line segments are barely comparable using classical correlation patches yet the color neighborhood along this line segment undergoes only slight changes. Based on color histogram rather than textures, \citeauthor{BayJun2005} exploit the appearance similarity of line segment pairs and their topological layout to iteratively increase the correct matches. If region matches are available, they are automatically integrated and exploited in combination. The final coplanar grouping stage allows to estimate the fundamental matrix even from line segments only. While color provides a very strong cue for discrimination, it may fail in the case where color feature is not distinctive, e.g. gray images. Besides, although matching groups of line segments takes more geometric information into account for disambiguation, the disadvantage is the increased computational complexity.
 
+Without resorting to any other constraints or prior knowledge, \citeauthor{WangMay2009} propose a purely image content-based line descriptor MSLD for automatic line segments matching. Adapting SIFT-like strategy, MSLD is highly distinctive and robust against image rotation, illumination change, image blur, viewpoint change noise, JPEG compression and partial obstruction \cite{WangMay2009}
 
-Without resorting to any other constraints or prior knowledge, \citeauthor{WangMay2009} propose a purely image content-based line descriptor MSLD for automatic line segments matching. Adapting SIFT-like strategy, MSLD is highly distinctive and robust against image rotation, illumination change, image blur, viewpoint change noise, JPEG compression and partial occlusion \cite{WangMay2009}
+The above appearance-based approaches demand either constant and rich neighboring textures or similar color profile of line segments, they are technically matching the surroundings instead of the lines themselves. \cite{JainJun2010,HoferFeb2013,TaylorNov1995}
 
-The above appearance-based approaches demand either constant and rich neighboring textures or similar color profile of line segments, they are technically matching the surroundings instead of the lines themselves.
+In order to create 3D models without the need of explicit line matching, \citeauthor{JainJun2010} generate all possible hypothetical straight 3D line segments by triangulating all the detected straight 2D line segments from different views. They then keep the one whose back projection on the gradient images of neighboring views has the highest score, assuming that line features correspond to high gradient areas in images. Built upon the same principles whilst applying epipolar constraint on the end-points of line segments, \citeauthor{HoferFeb2013} generate less hypothetical 3D line segments and thus increase performance significantly while still creating accurate results. However, both approaches are barely possible in the case of infinite line reconstruction, where the detected 2D lines in different views do not exactly correspond to the same part of a 3D line.
 
-1.1.3 3D line Reconstruction without Matching
-
-In order to create 3D models without the need of explicit line matching, \citeauthor{JainJun2010} generate all possible hypothetical straight 3D line segments by triangulating the detected straight 2D line segments from different views, then they keep the one whose back projection on the gradient images of neighboring views has the highest score, assuming that line segments correspond to high gradient areas in images. Built upon the same principles whilst applying epipolar constraint on line segment end-points, M. Hofer et al. generate less hypothetical 3D line segments and thus increase performance significantly while still creating accurate results. However, both approaches are barely possible in the case of infinite line reconstruction, where the detected 2D lines in different views do not exactly correspond to the same part of a  3D line.
-
-\citeauthor{TaylorNov1995} formulate the Structure from Motion (SfM) problem in terms of minimization of an objective function that measures the total squared distance in the image plane between the observed edge segments and the projections of the reconstructed lines. By reconstructing the infinite straight line that supports the observed edge segments rather than the end-points of the line, the algorithm can be used even when multiple edges in a single image correspond to different portions of the same 3D line.
+\citeauthor{TaylorNov1995} formulate the Structure from Motion (SfM) problem in terms of minimization of an objective function which measures the total squared distance in the image plane between the observed edge segments and the projections of the reconstructed lines. By reconstructing the infinite straight line that supports the observed edge segments rather than the end-points of the line, the algorithm can be used even when multiple edges in a single image correspond to different portions of the same 3D line.
 
 \section{Purpose}
 
-In this thesis, I develop a framework to automatically detect the lane markings in the unprojected aerial imagery, and to refine the 3D information of the road surface by exploiting the line character of the lane markings.
+In this thesis, I develop a framework to automatically detect the lane markings in the unprojected aerial imagery, and refine the 3D information of the road surface by exploiting the line character of the lane markings.
 
-[solve the problem of (quasi)infinite and curved lane markings]
-[apply standard line detection algorithms for automatic lane marking detection]
-[use of aerial image data set with special flight configuration at both sides of the motorway]
+The unprojected aerial images with their bundle-adjusted orientations and the DSM are the inputs of my research. As pre-processing, standard line detection algorithms are applied for automatic lane marking detection in image space. By sliding a window of reasonable length and width through the curved long lane lines, the collected line segment in the window is assumed to be straight.
 
-The unprojected aerial images with their bundle-adjusted orientations and the DSM are the inputs of my research. By sliding a window of reasonable length and width through the curved long lane lines, the collected line segment in the current window is assumed to be straight. I investigate the use of linear regression to optimize the location of each line segments in object space so that its back projection would best fit the detected 2D line in all the covering views, i.e. the position and height of each 3D lane marking segments will be refined in one optimization step.
+I investigate the use of linear regression to optimize the location of each line segments in object space so that its back projection would best fit the detected 2D line in all the covering views, i.e. the position and height of each 3D ane marking segments will be refined in one optimization step. Using the aerial image data set with special flight configuration at both sides of the motorway, the proposed approach addresses the problematic (quasi) infinite and curved properties of lane markings in reconstruction.
 
-The framework will be tested on aerial imagery from the German highway A9 and validated with ground measured lane markings by GPS.
+The framework will be tested on aerial imagery from the German highway A9.% and validated with ground measured lane markings by GPS.
