@@ -276,14 +276,13 @@ In this section, I describe the process of refining the position of a 3D line se
 
 
 %%%%%%%%%%%%%%%%%% introduce the subsections
-The non-linear LS adjustment model with constraints is introduced in \cref{subsec:LSmodel}. The observation equations for LS adjustment are set up in \cref{subsec:ObsEqua}. They describe the fitting of a straight line to the measurements in all covering images, where the fitting lines on different images are transformed from a single 3D straight line segment through the extended collinearity equation \eqref{eq:expandedcollinearity}.
+\cref{subsec:LSmodel} introduces the non-linear LS adjustment model with constraints. The observation equations for LS adjustment are set up in \cref{subsec:ObsEqua}. They describe the fitting of a straight line to the measurements, the extracted line, in all covering images, where the fitting lines on different images are transformed from a single 3D straight line segment through the extended collinearity equation \eqref{eq:expandedcollinearity}. Regarding the fact that the collinearity is a point-wise condition, a line segment is represented by its two endpoints. Correspondingly, the observation equations in the LS model are line equations in two-point form. 
 
-Regarding the fact that the collinearity is a point-wise condition, a line segment is represented by its two endpoints whose object coordinates are the six unknown parameters % First mentioned here, what are the six unknowns?
-in the LS model. % Which one? 
-Correspondingly, the observation equations are line equations in two-point form. A line equation has however a mathematical meaning of infinite length. Therefore, some constraints on unknowns are necessary to avoid arbitrary locations of the two points on the infinite reconstructed 3D line. The constraint equations are modeled in \cref{subsec:ConEqua}.
+By satisfying the collinearity condition, single fitting line on an image spans a plane in $\mathbb{R}^3$. The corresponding lines from different views span several planes in $\mathbb{R}^3$, which are non-parallel to each other and should intersect in a line in $\mathbb{R}^3$. As this infinite line is the solution space of the LS estimation, at least two constraints on the location of the two endpoints of the to-be-reconstructed 3D line segment are necessary to avoid their arbitrary locations on this infinite line in $\mathbb{R}^3$. The constraint equations are modeled in \cref{subsec:ConEqua}.
 
-In \cref{subsec:LSadj} the non-linear model is linearized and LS estimated.
+Now the non-linear LS model has been setup. In \cref{subsec:LSadj} it is linearized and the substitute linear LS model is estimated.
 
+\vspace{20pt}
 %%%%% introduce the sliding window
 
 To simplify the problem, a long lane-marking segment is partially reconstructed through a sliding window in the object space. Each segment is approximated by a straight line, taking into account the maximum curvature of the highway. 
@@ -335,7 +334,7 @@ As shown in \cref{fig:overlappingregion}, the reconsideration in overlapping reg
 
 Given are the $N$ observations $\boldsymbol l=[l_n],\,n=1,2,...,N$, from which the $U$ unknown parameters $\boldsymbol x=[x_u],\,u=1,2,...,U$ are to be determined, with generally $U\leq N$.%, and the fixed $H$ constraints $\boldsymbol c_h=[h_h],\,h=1,2,...,H$
 
-The nonlinear Gauss-Markov model with $N$ nonlinear functions $\boldsymbol f(\boldsymbol x)=[f_n(\boldsymbol x)],\,u=1,2,...,U$ and the $H$ nonlinear constraints $\boldsymbol h(\hat{\boldsymbol x})=[h_\eta(\hat{\boldsymbol x})],\,\eta=1,2,...,H$ % !!!!!!!!!!!!$\boldsymbol c=[c_h],\,h=1,2,...,H$
+The nonlinear Gauss-Markov model with $N$ nonlinear functions $\boldsymbol f(\boldsymbol x)=[f_n(\boldsymbol x)],\,u=1,2,...,U$ and the $H$ nonlinear constraints $\boldsymbol h(\boldsymbol x)=[h_\eta(\boldsymbol x)],\,\eta=1,2,...,H$ % !!!!!!!!!!!!$\boldsymbol c=[c_h],\,h=1,2,...,H$
 ($H<U$) between the unknowns can be written as:
 \begin{equation} \label{eq:GM-ObsEq}
 \boldsymbol l+\widehat{\boldsymbol v}=\boldsymbol f(\widehat{\boldsymbol x})\quad \textnormal{or}\quad \widehat{\boldsymbol l}=\underset{N\times 1}{\boldsymbol f}(\widehat{\boldsymbol x})
@@ -349,7 +348,7 @@ Assuming that the deviations between the observed values $\boldsymbol l$ and the
 \begin{equation}
 \boldsymbol l\sim\mathcal{N}(\boldsymbol f(\widehat{\boldsymbol x}) ,\mathsf{\Sigma}_{ll})
 \end{equation}
-where $\mathsf{\Sigma}_{ll}$ is the variance-covariance matrix of observations $\boldsymbol l$, i.e. the observational errors.
+where $\mathsf{\Sigma}_{ll}$ is the variance-covariance matrix of observations $\boldsymbol l$.%, i.e. the observational errors.
 
 %The residuals have the same statistical dispersion as
 %The observational errors:
@@ -357,11 +356,16 @@ where $\mathsf{\Sigma}_{ll}$ is the variance-covariance matrix of observations $
 %\mathsf{\Sigma}_{ll}=\mathbb{D}(\boldsymbol l)=\mathbb{D}(\boldsymbol v)=\mathbb{D}(\widehat{\boldsymbol l})
 %\end{equation}
 
-The task is to minimize the weighted sum of residuals: % !!!!!!!!!!!!!!!!!!!!!!!!!
+The task is to minimize the weighted sum of residuals:
 \begin{equation}
-\Omega=\dfrac{1}{2}(\boldsymbol l-\boldsymbol f(\boldsymbol x))^T(\boldsymbol l-\boldsymbol f(\boldsymbol x))\quad\textnormal{such that}\quad\boldsymbol h(\boldsymbol x)=\boldsymbol 0
+\Omega(\boldsymbol x)=
+\boldsymbol v^T(\boldsymbol x)\:
+\mathsf{W}_{ll}\:
+\boldsymbol v(\boldsymbol x)
+\quad
+\textnormal{such that}
+\quad\boldsymbol h(\boldsymbol x)=\boldsymbol 0
 \end{equation}
-with the assumption of equal-weighted observations.
 %Using Lagrangian multipliers $\lambda$, with the assumption of equal-weighted observations, the target function has to be minimized:
 %\begin{equation}
 %\mathcal{L}_{\mathsf{A}}(x,\lambda)=\dfrac{1}{2}(\underbrace{\boldsymbol l-\boldsymbol f(\widehat{\boldsymbol x}^a)}_{\Delta\boldsymbol l}-\underbrace{\mathsf{A}\,\widehat{\Delta\boldsymbol x}}_{\widehat{\Delta\boldsymbol l}})^T
@@ -437,13 +441,9 @@ Corresponding to \cref{eq:Ffunction_xy}, function $\mathcal{H}$ is composed of
 \end{split}
 \end{equation}
 
-\cref{eq:Hfunction_xy} 
+Since the 3D line reconstruction will be done "segment-wise", i.e. for a pair of $P_s$ and $P_e$, the measurements will be collected correspondingly, the subscription $l$ representing specific line segment will be left out in the followings.
 
-Since the adjustment will be done "segment-wise"--- for a pair of $P_s$ and $P_e$, the measurements will be collected correspondingly. % see section ???
-Thus the subscription $l$ representing specific line segment will be left out in the followings.
-
-\clearpage
-Each image gives $2\times N^j$ observation equations\footnote{Dot equal indicates inconsistencies between the measured values, $x^j_i$ and $x^j_i$, and the computed values, $\mathcal{H}^x(q^j,P_s,P_e,y^j_i)$ and $\mathcal{H}^y(q^j,P_s,P_e,y^j_i)$.}. These equations are often stacked together and written in vector form as:
+Each image gives $2\times N^j$ observation equations. These equations are often stacked together and written in vector form as:
 \begin{equation} \label{eq:Ffunction}
 \begin{bmatrix}
  x^j_1\\[0.3em]
@@ -473,6 +473,7 @@ Each image gives $2\times N^j$ observation equations\footnote{Dot equal indicate
  \left.\begin{array}{@{}c@{}}\\[0.3em] \\[0.3em] \\[0.3em] \\[0.5em] \end{array}\right\} N^j\\
 \end{array}
 \end{equation}
+where dot equal indicates inconsistencies between the measured values, $x^j_i$ and $x^j_i$, and the computed values, $\mathcal{H}^x(q^j,P_s,P_e,y^j_i)$ and $\mathcal{H}^y(q^j,P_s,P_e,y^j_i)$.
 
 For all covering image $j=1,2,...J$, there are $2\times\displaystyle\sum_{j=1}^{J}N^j$ observation equations. Being written in the structure of the Gauss-Markov model, corresponding to \cref{eq:GM-ObsEq}, they are expressed as:
 \begin{equation} \label{eq:obsvec-allcam}
@@ -549,10 +550,6 @@ For all covering image $j=1,2,...J$, there are $2\times\displaystyle\sum_{j=1}^{
 \subsection{Constraint Equations}
 \label{subsec:ConEqua}
 
-% infinitely many solutions.
-% At least two constraints are needed to fix rank deficiency???.
-% TO BE COMPLETED !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 There are three constraints on the unknown parameters used in this work:
 \begin{itemize}
 \item Fixing the X-, Y-coordinates of the start-point using the approximate values:
@@ -592,6 +589,13 @@ The constraint equations \eqref{eq:constraint1}, \eqref{eq:constraint2} and \eqr
 % Add the relevant equations
 % This chapter is difficult to read, more detailed!?
 % Adjustment theory deals with the optimal combination of redundant measurements/observations, together with the estimation of unknown parameters (Teunissen 2000)
+
+
+with the assumption of equal-weighted observations:
+\begin{equation}
+\Omega=\dfrac{1}{2}(\boldsymbol l-\boldsymbol f(\boldsymbol x))^T(\boldsymbol l-\boldsymbol f(\boldsymbol x))\quad\textnormal{such that}\quad\boldsymbol h(\boldsymbol x)=\boldsymbol 0
+\end{equation}
+
 
 The nonlinear equation system is approximated to be locally linear with small step size of the unknown quantities. The linearized form is expressed as:
 \begin{equation} \label{eq:GM-ObsEq-linear}
