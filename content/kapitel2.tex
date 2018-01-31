@@ -724,14 +724,11 @@ By setting a constant priori standard deviation value in all the LS adjustment p
 
 As the equation system in \cref{sec:LSadj} may exhibit multiple local minimum, a "correct" initial approximation of the unknowns is required for convergence to the correct solution. To provide such initial 3D line segment, the extracted line features derived in \cref{sec:LineExtraction} can be projected onto DSM based on the bundle adjusted exterior and interior orientations.
 
-Given image coordinates $\mathbf{p}(x,y)$ of a point and (bundle-adjusted) image orientations $\mathbf{q}$, there is still one degree of freedom in extended collinearity equation \eqref{eq:Gfunction} on solving object coordinates $\mathbf{P}(X,Y,Z)$. Combined with the usage of DSM, which provides the height information $Z_{DSM}$ given a position $(X,Y)$, the corresponding object coordinates can be solved iteratively until the increment $\Delta Z$ small enough, i.e. convergence achieved. % Equation for dZ
+Given image coordinates $\mathbf{p}(x,y)$ of a point and (bundle-adjusted) image orientations $\mathbf{q}$, there is still one degree of freedom in extended collinearity equation \eqref{eq:Gfunction} on solving object coordinates $\mathbf{P}(X,Y,Z)$. Combined with the usage of DSM, which provides the height information $Z_{DSM}$ given a position $(X,Y)$, the corresponding object coordinates can be solved iteratively until the increment $\Delta Z$ small enough, i.e. convergence achieved. The whole process is illustrated in \cref{alg:LineProjectionOnDSM}.
 
 Considering that the DSM is raster (discrete) whereas $X$ and $Y$ have continuous numerical values, the DSM height $Z_{DSM}$ for the given point $(X,Y)$ is bilinear interpolated.
 
-%Given image coordinates of an image point and an initial Z-value $Z_{initial}$, the 
-%With the following work flow:
-
-\begin{Algorithmus} 
+\begin{Algorithmus}
 \caption{Single Point Projection on DSM\newline
 	[$X$,$Y$,$Z_{DSM}$]=\texttt{PointProjectionOnDSM}($p(x,y)$,$\mathbf{q}$,$DSM$)\newline
 	\textbf{Input}: image coordinates of a point $p(x,y)$, 
@@ -746,7 +743,7 @@ Considering that the DSM is raster (discrete) whereas $X$ and $Y$ have continuou
 \State $Z_{initial}=500$
 \Comment unit: [meter], an initial height value
 \State $\Delta Z=9999$
-\Comment unit: [meter], an infinite big value approximation
+\Comment unit: [meter], an infinite large value approximation
 \While{$\Delta Z>\Theta$}
 	\State ($X$,$Y$) =$\mathbf{q}$.img2geo($p(x,y)$,$Z_{initial}$)
 	\State $Z_{DSM}$ = $DSM$.GetHeight($X$,$Y$)
@@ -757,31 +754,6 @@ Considering that the DSM is raster (discrete) whereas $X$ and $Y$ have continuou
 
 \end{algorithmic}
 \end{Algorithmus}
-
-
-
-
-% % %
-
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\section{Line Grouping}
-%\label{sec:}
-
-
-
-
-
-%\begin{equation}\label{eq:test}
-%a = b + c.
-%\end{equation}
-
-%\begin{equation}
-%a = b + c. \tag{\ref{eq:test} revisited}
-%\end{equation}
 
 
 
