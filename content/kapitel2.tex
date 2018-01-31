@@ -270,7 +270,7 @@ In this section, I describe the process of refining the position of a 3D line se
 	\subfloat[Before optimization]{\includegraphics[width=0.9\textwidth]{2-4_1_1.png} \label{fig:beforeoptimization}}
 	
 	\subfloat[After optimization]{\includegraphics[width=0.9\textwidth]{2-4_1_2.png} \label{fig:afteroptimization}}
-	\caption{\small Before reconstruction, the back projection of initial approximate 3D line segment does not best-fit the extracted 2D lines in the covering images. After optimization, the back-projection of the reconstructed line segment should best fitting the extracted 2D lines in all the covering images.}
+	\caption{\small Before reconstruction, the back projection of initial approximate 3D line segment does not best-fit the extracted 2D lines in the covering images. After optimization, the back-projection of the reconstructed line segment should be best fitting the extracted 2D lines in all the covering images.}
 	\label{fig:mainidea}
 \end{figure}
 
@@ -280,9 +280,9 @@ In this section, I describe the process of refining the position of a 3D line se
 
 By satisfying the collinearity condition, single fitting line on an image spans a plane in $\mathbb{R}^3$. The corresponding lines from different views span several planes in $\mathbb{R}^3$, which are non-parallel to each other and should intersect in a line in $\mathbb{R}^3$. As this infinite line is the solution space of the LS estimation, at least two constraints on the location of the two endpoints of the to-be-reconstructed 3D line segment are necessary to avoid their arbitrary locations on this infinite line in $\mathbb{R}^3$. The constraint equations are modeled in \cref{subsec:ConEqua}.
 
-Now the non-linear LS model has been setup. In \cref{subsec:LSadj} it is linearized and the substitute linear LS model is estimated.
+So far the non-linear LS model has been setup. In \cref{subsec:LSadj} it is further linearized and the substitute linear LS model is estimated.
 
-\vspace{20pt}
+%\vspace{20pt}
 %%%%% introduce the sliding window
 
 To simplify the problem, a long lane-marking segment is partially reconstructed through a sliding window in the object space. Each segment is approximated by a straight line, taking into account the maximum curvature of the highway. 
@@ -329,12 +329,12 @@ As shown in \cref{fig:overlappingregion}, the reconsideration in overlapping reg
 
 % the measurements are collected accordingly.
 \clearpage
-\subsection{The Nonlinear Gauss-Markov Model with Constraints}
+\subsection{The Gauss-Markov Model with Constraints}
 \label{subsec:LSmodel}
 
 Given are the $N$ observations $\boldsymbol l=[l_n],\,n=1,2,...,N$, from which the $U$ unknown parameters $\boldsymbol x=[x_u],\,u=1,2,...,U$ are to be determined, with generally $U\leq N$.%, and the fixed $H$ constraints $\boldsymbol c_h=[h_h],\,h=1,2,...,H$
 
-The nonlinear Gauss-Markov model with $N$ nonlinear functions $\boldsymbol f(\boldsymbol x)=[f_n(\boldsymbol x)],\,u=1,2,...,U$ and the $H$ nonlinear constraints $\boldsymbol h(\boldsymbol x)=[h_\eta(\boldsymbol x)],\,\eta=1,2,...,H$ % !!!!!!!!!!!!$\boldsymbol c=[c_h],\,h=1,2,...,H$
+The Gauss-Markov model with $N$ nonlinear functions $\boldsymbol f(\boldsymbol x)=[f_n(\boldsymbol x)],\,u=1,2,...,U$ and the $H$ nonlinear constraints $\boldsymbol h(\boldsymbol x)=[h_\eta(\boldsymbol x)],\,\eta=1,2,...,H$ % !!!!!!!!!!!!$\boldsymbol c=[c_h],\,h=1,2,...,H$
 ($H<U$) between the unknowns can be written as:
 \begin{equation} \label{eq:GM-ObsEq}
 \boldsymbol l+\widehat{\boldsymbol v}=\boldsymbol f(\widehat{\boldsymbol x})\quad \textnormal{or}\quad \widehat{\boldsymbol l}=\underset{N\times 1}{\boldsymbol f}(\widehat{\boldsymbol x})
@@ -350,27 +350,27 @@ Assuming that the deviations between the observed values $\boldsymbol l$ and the
 \end{equation}
 where $\mathsf{\Sigma}_{ll}$ is the variance-covariance matrix of observations $\boldsymbol l$.%, i.e. the observational errors.
 
-%The residuals have the same statistical dispersion as
-%The observational errors:
-%\begin{equation}
-%\mathsf{\Sigma}_{ll}=\mathbb{D}(\boldsymbol l)=\mathbb{D}(\boldsymbol v)=\mathbb{D}(\widehat{\boldsymbol l})
+%%The residuals have the same statistical dispersion as
+%%The observational errors:
+%%\begin{equation}
+%%\mathsf{\Sigma}_{ll}=\mathbb{D}(\boldsymbol l)=\mathbb{D}(\boldsymbol v)=\mathbb{D}(\widehat{\boldsymbol l})
+%%\end{equation}
+%
+%The task is to minimize the weighted sum of residuals:
+%\begin{equation}\label{eq:targetfunction}
+%\boldsymbol v^\mathsf{T}(\boldsymbol x)\:
+%\mathsf{W}_{ll}\:
+%\boldsymbol v(\boldsymbol x)
 %\end{equation}
-
-The task is to minimize the weighted sum of residuals:
-\begin{equation}
-\Omega(\boldsymbol x)=
-\boldsymbol v^T(\boldsymbol x)\:
-\mathsf{W}_{ll}\:
-\boldsymbol v(\boldsymbol x)
-\quad
-\textnormal{such that}
-\quad\boldsymbol h(\boldsymbol x)=\boldsymbol 0
-\end{equation}
-%Using Lagrangian multipliers $\lambda$, with the assumption of equal-weighted observations, the target function has to be minimized:
-%\begin{equation}
-%\mathcal{L}_{\mathsf{A}}(x,\lambda)=\dfrac{1}{2}(\underbrace{\boldsymbol l-\boldsymbol f(\widehat{\boldsymbol x}^a)}_{\Delta\boldsymbol l}-\underbrace{\mathsf{A}\,\widehat{\Delta\boldsymbol x}}_{\widehat{\Delta\boldsymbol l}})^T
-%(\boldsymbol l-\boldsymbol f(\widehat{\boldsymbol x}^a)-\mathsf{A}\,\widehat{\Delta\boldsymbol x})+\lambda^T(\mathsf{H}^T\boldsymbol x-\boldsymbol c_h)
+%such that
+%\begin{equation}\tag{\ref{eq:targetfunction} revisited}
+%\quad\boldsymbol h(\boldsymbol x)=\boldsymbol 0
 %\end{equation}
+%%Using Lagrangian multipliers $\lambda$, with the assumption of equal-weighted observations, the target function has to be minimized:
+%%\begin{equation}
+%%\mathcal{L}_{\mathsf{A}}(x,\lambda)=\dfrac{1}{2}(\underbrace{\boldsymbol l-\boldsymbol f(\widehat{\boldsymbol x}^a)}_{\Delta\boldsymbol l}-\underbrace{\mathsf{A}\,\widehat{\Delta\boldsymbol x}}_{\widehat{\Delta\boldsymbol l}})^T
+%%(\boldsymbol l-\boldsymbol f(\widehat{\boldsymbol x}^a)-\mathsf{A}\,\widehat{\Delta\boldsymbol x})+\lambda^T(\mathsf{H}^T\boldsymbol x-\boldsymbol c_h)
+%%\end{equation}
 
 
 \subsection{Observation Equations}
@@ -417,7 +417,7 @@ Let $l^j$ be the corresponding line segment of $L$ being extracted (observed) on
 \forall i=1,2,...N^j_l
 \end{equation}
 
-
+\clearpage
 Combining \eqref{eq:obsmodel-collinearity} with \eqref{eq:obsmodel-linefitting} gives function $\mathcal{H}$:
 \begin{equation} \label{eq:Hfunction}
 \begin{split}
@@ -429,7 +429,7 @@ Combining \eqref{eq:obsmodel-collinearity} with \eqref{eq:obsmodel-linefitting} 
 \end{equation}
 which takes camera parameters $\mathbf{q}^j(x_0,y_0,c,X_0,Y_0,Z_0,R_{11},...,R_{33},A_1,A_2,B_1,B_2,C_1,C_2)$, object coordinates of $\mathbf{P}_s$ and $\mathbf{P}_e$ which define a line $\overline{\mathbf{P}_s,\mathbf{P}_e}$, and the observed y-coordinate of the point $\mathbf{p}^j_{l,i}$ in image space, and returns the estimated image coordinates $\hat{\mathbf{p}}^j_{l,i}$ on the back projected line of $\overline{\mathbf{P}_s,\mathbf{P}_e}$.
 
-Corresponding to \cref{eq:Ffunction_xy}, function $\mathcal{H}$ is composed of
+Corresponding to \cref{eq:Ffunction_xy}, function $\mathcal{H}$ is actually composed of
 \begin{equation} \label{eq:Hfunction_xy}
 \begin{split}
 \hat{x}^j_{l,i} = \mathcal{H}^x(\mathbf{q}^j,\mathbf{P}_s,\mathbf{P}_e,y^j_{l,i})\\
@@ -475,7 +475,7 @@ Each image gives $2\times N^j$ observation equations. These equations are often 
 \end{equation}
 where dot equal indicates inconsistencies between the measured values, $x^j_i$ and $x^j_i$, and the computed values, $\mathcal{H}^x(q^j,P_s,P_e,y^j_i)$ and $\mathcal{H}^y(q^j,P_s,P_e,y^j_i)$.
 
-For all covering image $j=1,2,...J$, there are $2\times\displaystyle\sum_{j=1}^{J}N^j$ observation equations. Being written in the structure of the Gauss-Markov model, corresponding to \cref{eq:GM-ObsEq}, they are expressed as:
+For all covering image $j=1,2,...J$, there are $2\times\displaystyle\sum_{j=1}^{J}N^j$ observation equations. Being written in the structure of the \textit{Gauss-Markov model}, corresponding to \cref{eq:GM-ObsEq}, they are expressed as:
 \begin{equation} \label{eq:obsvec-allcam}
 \boldsymbol l+\widehat{\boldsymbol v}=\boldsymbol f(\widehat{\boldsymbol x}):\quad
 \begin{bmatrix}
@@ -543,8 +543,6 @@ For all covering image $j=1,2,...J$, there are $2\times\displaystyle\sum_{j=1}^{
  \left.\begin{array}{@{}c@{}}\\ \\ \\ \\ \\ \\[18pt] \end{array}\right\}2\times N^J\\
 \end{array}
 \end{equation}
-\clearpage
-
 
 
 \subsection{Constraint Equations}
@@ -567,7 +565,7 @@ There are three constraints on the unknown parameters used in this work:
 
 Only in the first line segment reconstruction of a long lane marking, the fixed $X_s$ and $Y_s$ values are from the initial parameter estimates derived in \cref{sec:LineProjectionOnDSM}. Starting from the second line segment, the fixed values ${X_s}^0$ and ${Y_s}^0$ depend on the previously determined values.
 
-The constraint equations \eqref{eq:constraint1}, \eqref{eq:constraint2} and \eqref{eq:constraint3} can be stacked together and written in the structure of the Gauss-Markov model with constraints, corresponding to \cref{eq:GM-ConEq}:
+The constraint equations \eqref{eq:constraint1}, \eqref{eq:constraint2} and \eqref{eq:constraint3} can be stacked together and written in the structure of the \textit{Gauss-Markov model with constraints}, corresponding to \cref{eq:GM-ConEq}:
 \begin{equation} \label{eq:convec}
 \boldsymbol h(\widehat{\boldsymbol x})=\mathbf{0}:\quad
 \begin{bmatrix}
@@ -584,18 +582,9 @@ The constraint equations \eqref{eq:constraint1}, \eqref{eq:constraint2} and \eqr
 \end{equation}
 
 
-\subsection{Least-Squares Estimation of the non-linear Gauss-Markov Model with Constraints}
+\subsection{Least-Squares Estimation}
 \label{subsec:LSadj}
-% Add the relevant equations
-% This chapter is difficult to read, more detailed!?
 % Adjustment theory deals with the optimal combination of redundant measurements/observations, together with the estimation of unknown parameters (Teunissen 2000)
-
-
-with the assumption of equal-weighted observations:
-\begin{equation}
-\Omega=\dfrac{1}{2}(\boldsymbol l-\boldsymbol f(\boldsymbol x))^T(\boldsymbol l-\boldsymbol f(\boldsymbol x))\quad\textnormal{such that}\quad\boldsymbol h(\boldsymbol x)=\boldsymbol 0
-\end{equation}
-
 
 The nonlinear equation system is approximated to be locally linear with small step size of the unknown quantities. The linearized form is expressed as:
 \begin{equation} \label{eq:GM-ObsEq-linear}
@@ -605,13 +594,14 @@ The nonlinear equation system is approximated to be locally linear with small st
 \boldsymbol c_h=\underset{H\times U}{\mathsf{H^T}}\widehat{\Delta\boldsymbol x}
 \end{equation}
 where\newline
-the $N\times U$ design matrix, which is the Jacobian of the function evaluated at the approximate values of the unknown parameters, is
+the $N\times U$ design matrix is the Jacobian of the function evaluated at the approximate values of the unknown parameters
 \begin{equation*}
 \mathsf{A}=\left.\dfrac{\partial\boldsymbol f(\boldsymbol x)}{\partial\boldsymbol x}\right|_{\boldsymbol x=\widehat{\boldsymbol x}^a}
 \end{equation*}
-the $U\times H$ constraint matrix, which is the Jacobian of the constraints, is
+
+the $U\times H$ constraint matrix is the Jacobian of the constraints
 \begin{equation*}
-\mathsf{H}=\left.\left(\dfrac{\partial\boldsymbol h(\boldsymbol x)}{\partial\boldsymbol x}\right)^T\right|_{\boldsymbol x=\widehat{\boldsymbol x}^a}
+\mathsf{H}=\left.\left(\dfrac{\partial\boldsymbol h(\boldsymbol x)}{\partial\boldsymbol x}\right)^\mathsf{T}\right|_{\boldsymbol x=\widehat{\boldsymbol x}^a}
 \end{equation*}
 and the residual constraints are % !!!!!!!!!!!!!!!!!!!!!!!!!
 \begin{equation*}
@@ -630,7 +620,42 @@ where $\widehat{\boldsymbol x}^a$ is the approximate values for the estimates of
 
 In the linearized substitute model as shown in \eqref{eq:GM-ObsEq-linear} and \eqref{eq:GM-ConEq-linear}, it turns to solve for the increments of unknowns $\Delta\boldsymbol x$ instead of the unknowns themselves. The LS estimation is applied iteratively until convergence is achieved. 
 
-%Depending on the configuration and initial parameters chosen, the nonlinear fit may have good or poor convergence properties.
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+As the lines were extracted independently and with the same procesure, the measurements are assumed to be independent from each other and equal-weighted. That is, the weight matrix is an identity matrix:
+\begin{equation}
+\mathsf{W}_{ll}=
+\begin{bmatrix}
+1&0&0&\cdots &0\\
+0&1&0&\cdots &0\\
+0&0&1&\cdots &0\\
+\vdots&&&\ddots&\\
+0&0&0&\cdots &1
+\end{bmatrix}
+\end{equation}
+
+
+The optimal estimate results from minimizing the Mahalanobis distance with given constraints
+\begin{equation}
+\widehat{\boldsymbol x}=
+argmin_{x|\mathsf{H^T}x=c_h}
+\boldsymbol v^\mathsf{T}(\boldsymbol x)\:
+\mathsf{W}_{ll}\:
+\boldsymbol v(\boldsymbol x)
+\end{equation}
+
+Using Lagrangian multipliers $\boldsymbol \lambda$ we aim to minimize
+\begin{equation}
+\Phi(\boldsymbol x,\boldsymbol \lambda)=
+\dfrac{1}{2}
+(\boldsymbol l-\boldsymbol f(\boldsymbol x))^\mathsf{T}\:
+\mathsf{W}_{ll}\:
+(\boldsymbol l-\boldsymbol f(\boldsymbol x))+
+\boldsymbol \lambda^\mathsf{T}
+(\mathsf{H^T}\boldsymbol x-\boldsymbol c_h)
+\end{equation}
+with respect to $\boldsymbol x$ and $\boldsymbol \lambda$.
+%%%%%%%%%%%%%%%%%%
 
 
 The unknown parameters $\widehat{\Delta\boldsymbol x}$ of the linearized model can be determined from the extended normal equation system
@@ -673,7 +698,7 @@ R=N+H-U
 
 Since the estimated variance-covariance matrix of the estimated parameters $\hat{\Sigma}_{\hat{X}\hat{X}}$ depends on both the design matrix $A$ (i.e. the configuration) and the posterior standard deviation $\hat{\sigma}_0$ (i.e. the posterior measurements quality):
 \begin{equation}
-\hat{\Sigma}_{\hat{X}\hat{X}}=\hat{\sigma}_0^2(A^TA)^{-1}=
+\hat{\Sigma}_{\hat{X}\hat{X}}=\hat{\sigma}_0^2(A^\mathsf{T}A)^{-1}=
 \begin{bmatrix}
 \hat{\sigma}_{\hat{X}}^2 && \hat{\sigma}_{\hat{X}\hat{Y}} && \hat{\sigma}_{\hat{X}\hat{Z}} \\
 \hat{\sigma}_{\hat{Y}\hat{X}} && \hat{\sigma}_{\hat{Y}}^2 && \hat{\sigma}_{\hat{Y}\hat{Z}} \\
@@ -684,7 +709,7 @@ we are not able to tell from the variances $\hat{\sigma}_{\hat{X}}$, $\hat{\sigm
 
 By setting a constant priori standard deviation value in all the LS adjustment processes (i.e. assuming the measurements are of same quality in each segment), the priori variance-covariance matrix of the estimated parameters $\Sigma_{\hat{X}\hat{X}}$ reflects the quality of the design matrix (i.e. the configuration strength) in each LS adjustment processes.
 \begin{equation}
-\Sigma_{\hat{X}\hat{X}}=\sigma_0^2(A^TA)^{-1}
+\Sigma_{\hat{X}\hat{X}}=\sigma_0^2(A^\mathsf{T}A)^{-1}
 \end{equation}
 
 
