@@ -428,6 +428,33 @@
       \verb 10.1016/j.jvcir.2012.05.004
       \endverb
     \endentry
+    \entry{Teunissen2000}{book}{}
+      \name{author}{1}{}{%
+        {{hash=6ab50a584de21e03a3e6c449b2adec7d}{%
+           family={Teunissen},
+           familyi={T\bibinitperiod},
+           given={P.\bibnamedelimi J.\bibnamedelimi G.},
+           giveni={P\bibinitperiod\bibinitdelim J\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Delft University Press}%
+      }
+      \strng{namehash}{6ab50a584de21e03a3e6c449b2adec7d}
+      \strng{fullhash}{6ab50a584de21e03a3e6c449b2adec7d}
+      \strng{bibnamehash}{6ab50a584de21e03a3e6c449b2adec7d}
+      \strng{authorbibnamehash}{6ab50a584de21e03a3e6c449b2adec7d}
+      \strng{authornamehash}{6ab50a584de21e03a3e6c449b2adec7d}
+      \strng{authorfullhash}{6ab50a584de21e03a3e6c449b2adec7d}
+      \field{labelalpha}{Teu00}
+      \field{sortinit}{T}
+      \field{sortinithash}{6f7aff9db9dcfeb7f95fd5bbd2f78df9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{9789040719752}
+      \field{series}{Series on mathematical geodesy and positioning}
+      \field{title}{Testing Theory: An Introduction}
+      \field{year}{2000}
+    \endentry
     \entry{TaylorNov1995}{article}{}
       \name{author}{2}{}{%
         {{hash=3bf53aa57db8efe75696d840c050d4e1}{%

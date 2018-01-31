@@ -12,10 +12,10 @@ The following sections introduce the principles of 3D lane marking reconstructio
 In \cref{sec:LineProjectionOnDSM} the problem of acquiring initial values is described, as initial values of unknown quantities are required in nonlinear LS model. Section2.7??? demonstrates how the corresponding measurements in image space are collected given the initial values in object space.
 
 \begin{figure}
-  \centering
-  \includegraphics[width=\textwidth]{workflow.pdf}
-  \caption{\small The work flow}
-  \label{fig:FlowChart}
+	\centering
+	\includegraphics[width=\textwidth]{workflow.pdf}
+	\caption{\small The work flow}
+	\label{fig:FlowChart}
 \end{figure}
 
 \clearpage
@@ -332,6 +332,8 @@ As shown in \cref{fig:overlappingregion}, the reconsideration in overlapping reg
 \subsection{The Gauss-Markov Model with Constraints}
 \label{subsec:LSmodel}
 
+Adjustment theory deals with the optimal combination of redundant measurements/observations, together with the estimation of unknown parameters \cite{Teunissen2000}.
+
 Given are the $N$ observations $\boldsymbol l=[l_n],\,n=1,2,...,N$, from which the $U$ unknown parameters $\boldsymbol x=[x_u],\,u=1,2,...,U$ are to be determined, with generally $U\leq N$.%, and the fixed $H$ constraints $\boldsymbol c_h=[h_h],\,h=1,2,...,H$
 
 The Gauss-Markov model with $N$ nonlinear functions $\boldsymbol f(\boldsymbol x)=[f_n(\boldsymbol x)],\,u=1,2,...,U$ and the $H$ nonlinear constraints $\boldsymbol h(\boldsymbol x)=[h_\eta(\boldsymbol x)],\,\eta=1,2,...,H$ % !!!!!!!!!!!!$\boldsymbol c=[c_h],\,h=1,2,...,H$
@@ -350,6 +352,29 @@ Assuming that the deviations between the observed values $\boldsymbol l$ and the
 \end{equation}
 where $\mathsf{\Sigma}_{ll}$ is the variance-covariance matrix of observations $\boldsymbol l$.%, i.e. the observational errors.
 
+
+
+The optimal estimate results from minimizing the Mahalanobis distance with given constraints
+\begin{equation}
+\widehat{\boldsymbol x}=
+argmin_{x|\mathsf{H^T}x=c_h}
+\boldsymbol v^\mathsf{T}(\boldsymbol x)\:
+\mathsf{W}_{ll}\:
+\boldsymbol v(\boldsymbol x)
+\end{equation}
+
+Using Lagrangian multipliers $\boldsymbol \lambda$ we aim to minimize
+\begin{equation}
+\Phi(\boldsymbol x,\boldsymbol \lambda)=
+\dfrac{1}{2}
+(\boldsymbol l-\boldsymbol f(\boldsymbol x))^\mathsf{T}\:
+\mathsf{W}_{ll}\:
+(\boldsymbol l-\boldsymbol f(\boldsymbol x))+
+\boldsymbol \lambda^\mathsf{T}
+(\mathsf{H^T}\boldsymbol x-\boldsymbol c_h)
+\end{equation}
+with respect to $\boldsymbol x$ and $\boldsymbol \lambda$.
+%%%%%%%%%%%%%%%%%%
 %%The residuals have the same statistical dispersion as
 %%The observational errors:
 %%\begin{equation}
@@ -417,7 +442,6 @@ Let $l^j$ be the corresponding line segment of $L$ being extracted (observed) on
 \forall i=1,2,...N^j_l
 \end{equation}
 
-\clearpage
 Combining \eqref{eq:obsmodel-collinearity} with \eqref{eq:obsmodel-linefitting} gives function $\mathcal{H}$:
 \begin{equation} \label{eq:Hfunction}
 \begin{split}
@@ -584,7 +608,6 @@ The constraint equations \eqref{eq:constraint1}, \eqref{eq:constraint2} and \eqr
 
 \subsection{Least-Squares Estimation}
 \label{subsec:LSadj}
-% Adjustment theory deals with the optimal combination of redundant measurements/observations, together with the estimation of unknown parameters (Teunissen 2000)
 
 The nonlinear equation system is approximated to be locally linear with small step size of the unknown quantities. The linearized form is expressed as:
 \begin{equation} \label{eq:GM-ObsEq-linear}
@@ -618,8 +641,7 @@ with the corrections
 \end{equation}
 where $\widehat{\boldsymbol x}^a$ is the approximate values for the estimates of the unknown parameters.
 
-In the linearized substitute model as shown in \eqref{eq:GM-ObsEq-linear} and \eqref{eq:GM-ConEq-linear}, it turns to solve for the increments of unknowns $\Delta\boldsymbol x$ instead of the unknowns themselves. The LS estimation is applied iteratively until convergence is achieved. 
-
+In the \textit{linearized substitute model} as shown in \eqref{eq:GM-ObsEq-linear} and \eqref{eq:GM-ConEq-linear}, it turns to solve for the increments of unknowns $\Delta\boldsymbol x$ instead of the unknowns themselves.
 %%%%%%%%%%%%%%%%%%%%%%%%
 
 As the lines were extracted independently and with the same procesure, the measurements are assumed to be independent from each other and equal-weighted. That is, the weight matrix is an identity matrix:
@@ -635,33 +657,12 @@ As the lines were extracted independently and with the same procesure, the measu
 \end{equation}
 
 
-The optimal estimate results from minimizing the Mahalanobis distance with given constraints
-\begin{equation}
-\widehat{\boldsymbol x}=
-argmin_{x|\mathsf{H^T}x=c_h}
-\boldsymbol v^\mathsf{T}(\boldsymbol x)\:
-\mathsf{W}_{ll}\:
-\boldsymbol v(\boldsymbol x)
-\end{equation}
-
-Using Lagrangian multipliers $\boldsymbol \lambda$ we aim to minimize
-\begin{equation}
-\Phi(\boldsymbol x,\boldsymbol \lambda)=
-\dfrac{1}{2}
-(\boldsymbol l-\boldsymbol f(\boldsymbol x))^\mathsf{T}\:
-\mathsf{W}_{ll}\:
-(\boldsymbol l-\boldsymbol f(\boldsymbol x))+
-\boldsymbol \lambda^\mathsf{T}
-(\mathsf{H^T}\boldsymbol x-\boldsymbol c_h)
-\end{equation}
-with respect to $\boldsymbol x$ and $\boldsymbol \lambda$.
-%%%%%%%%%%%%%%%%%%
 
 
 The unknown parameters $\widehat{\Delta\boldsymbol x}$ of the linearized model can be determined from the extended normal equation system
 \begin{equation}
 \begin{bmatrix}
-\mathsf{A^TA} & \mathsf{H}\\
+\mathsf{A^T\mathsf{W}_{ll}A} & \mathsf{H}\\
 \mathsf{H^T} & 0
 \end{bmatrix}
 \begin{bmatrix}
@@ -675,7 +676,20 @@ The unknown parameters $\widehat{\Delta\boldsymbol x}$ of the linearized model c
 \end{bmatrix}
 \end{equation}
 
+With the iteration index $\nu$ and the approximate values in the first iteration $\widehat{\boldsymbol x}^{(1)}=\widehat{\boldsymbol x}^{(a)}$, we have
+\begin{equation}\label{eq:xiter}
+	\widehat{\boldsymbol x}^{(\nu+1)}=
+	\widehat{\boldsymbol x}^{(\nu)}+
+	\widehat{\Delta\boldsymbol x}^{(\nu)}
+\end{equation}
+
+By updating the parameters using \cref{eq:xiter}, the LS estimation is applied iteratively until convergence is achieved. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 The matrix $\mathsf{A}$ does not need to have full rank, but the block matrix $[\mathsf{A_T},\mathsf{H}]$ must have full rank in order to guarantee the estimation problem has a unique solution.
+
+
 
 The redundancy $R$ of the problem is
 \begin{equation}
@@ -685,15 +699,6 @@ R=N+H-U
 
 
 
-
-
-
-
-% 2.5.3 non-linear mixed model with constraints...
-% 2.5.3.1 The Model and Its Linearization
-% local linear
-% combine the obs & con model, linearization
-% 2.5.3.2 The Solution of the linearized problem
 
 
 Since the estimated variance-covariance matrix of the estimated parameters $\hat{\Sigma}_{\hat{X}\hat{X}}$ depends on both the design matrix $A$ (i.e. the configuration) and the posterior standard deviation $\hat{\sigma}_0$ (i.e. the posterior measurements quality):
@@ -712,56 +717,46 @@ By setting a constant priori standard deviation value in all the LS adjustment p
 \Sigma_{\hat{X}\hat{X}}=\sigma_0^2(A^\mathsf{T}A)^{-1}
 \end{equation}
 
-
-
-
-% % %
-% derive matrices
-% extended normal equation matrix N*
-
-
+\clearpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Line Projection on the DSM (Determination of Initial Parameter Estimates)}
 \label{sec:LineProjectionOnDSM}
 
 As the equation system in \cref{sec:LSadj} may exhibit multiple local minimum, a "correct" initial approximation of the unknowns is required for convergence to the correct solution. To provide such initial 3D line segment, the extracted line features derived in \cref{sec:LineExtraction} can be projected onto DSM based on the bundle adjusted exterior and interior orientations.
 
-Given image coordinates $\mathbf{p}(x,y)$ of a point and (bundle-adjusted) image orientations $\mathbf{q}$, there is still one degree of freedom in extended collinearity equation \eqref{eq:Gfunction} on solving object coordinates $\mathbf{P}(X,Y,Z)$. Combined with the usage of DSM, which provides the height information $Z$ given a position $(X,Y)$, the corresponding object coordinates can be solved iteratively until the increment $\Delta Z$ small enough, i.e. convergence achieved. % Equation for dZ
+Given image coordinates $\mathbf{p}(x,y)$ of a point and (bundle-adjusted) image orientations $\mathbf{q}$, there is still one degree of freedom in extended collinearity equation \eqref{eq:Gfunction} on solving object coordinates $\mathbf{P}(X,Y,Z)$. Combined with the usage of DSM, which provides the height information $Z_{DSM}$ given a position $(X,Y)$, the corresponding object coordinates can be solved iteratively until the increment $\Delta Z$ small enough, i.e. convergence achieved. % Equation for dZ
 
-Considering that the DSM is raster (discrete) whereas $X$ and $Y$ have continuous numerical values, the DSM height is bilinear interpolated during the iterative process.
+Considering that the DSM is raster (discrete) whereas $X$ and $Y$ have continuous numerical values, the DSM height $Z_{DSM}$ for the given point $(X,Y)$ is bilinear interpolated.
 
 %Given image coordinates of an image point and an initial Z-value $Z_{initial}$, the 
 %With the following work flow:
 
-%pseudo code:
+\begin{Algorithmus} 
+\caption{Single Point Projection on DSM\newline
+	[$X$,$Y$,$Z_{DSM}$]=\texttt{PointProjectionOnDSM}($p(x,y)$,$\mathbf{q}$,$DSM$)\newline
+	\textbf{Input}: image coordinates of a point $p(x,y)$, 
+					camera parameters $\mathbf{q}$ and
+					surface model $DSM$\newline
+	\textbf{Output}: object coordinates of the projected point $P(X,Y,Z_{DSM})$ on DSM
+}
+\label{alg:LineProjectionOnDSM}
+\begin{algorithmic}
+\State $\Theta=0.5$
+\Comment unit: [meter], the convergence threshold
+\State $Z_{initial}=500$
+\Comment unit: [meter], an initial height value
+\State $\Delta Z=9999$
+\Comment unit: [meter], an infinite big value approximation
+\While{$\Delta Z>\Theta$}
+	\State ($X$,$Y$) =$\mathbf{q}$.img2geo($p(x,y)$,$Z_{initial}$)
+	\State $Z_{DSM}$ = $DSM$.GetHeight($X$,$Y$)
+	\State $\Delta Z=|Z_{DSM}-Z_{initial}|$
+	\State $Z_{initial}=Z_{DSM}$
+\EndWhile
+\State return ($X$,$Y$,$Z_{DSM}$)
 
-%x,y = a set of points (detected line);		// unit: [pixel], in image coordinates
-%Z_ini = 500;						// unit: [meter], in world coordinates
-%while( ( Z_new – Z_ini ) < convergentthreshold )
-%	(X,Y) = camera.img2geo(x,y,Z_ini);	// X,Y in world coordinates
-%	Z_new = DSM.Get_height(X,Y);		// Z_new in world coordinates
-%end
-%return (X,Y,Z_new);
-
-%\begin{Algorithmus} 
-%\caption{Line Projection on DSM}
-%\label{alg:LineProjectionOnDSM}
-%\begin{algorithmic}
-%\Procedure{Sample}{$a$,$v_e$}
-%  \State $\mathsf{parentHandled} \gets (a = \mathsf{process}) \lor \mathsf{visited}(a'), (a',c,a) \in \mathsf{HR}$
-%  \State \Comment $(a',c'a) \in \mathsf{HR}$ denotes that $a'$ is the parent of $a$
-%  \If{$\mathsf{parentHandled}\,\land(\mathcal{L}_\mathit{in}(a)=\emptyset\,\lor\,\forall l \in %\mathcal{L}_\mathit{in}(a): \mathsf{visited}(l))$}
-%    \State $\mathsf{visited}(a) \gets \text{true}$
-%    \State $\mathsf{writes}_\circ(a,v_e) \gets
-%    \begin{cases}
-%      \mathsf{joinLinks}(a,v_e)                & \abs{\mathcal{L}_\mathit{in}(a)} > 0\\
-%      \mathsf{writes}_\circ(p,v_e)             & \exists p: (p,c,a) \in \mathsf{HR}\\
-%      (\emptyset, \emptyset, \emptyset, false) & \text{otherwise}
-%    \end{cases}
-%  \EndIf
-%\EndProcedure
-%\end{algorithmic}
-%\end{Algorithmus}
+\end{algorithmic}
+\end{Algorithmus}
 
 
 
