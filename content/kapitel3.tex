@@ -194,25 +194,26 @@ The orthorectified images are processed using the DSM and the interior and exter
 Road segments are masked out from original images based on \gls{osm} data: Firstly, the rasterized road segments from OSM data are written with 25 meter buffer width around road axes into orthorectified images. By back-projecting the mask from orthorectified image to original image using the 3D information from the DSM, it can then be used to mask out the road regions on the original images, as shown in \cref{fig:MaskedImg}.
 
 \begin{figure}%[!h]
-  \parbox{.475\linewidth}{
-    \centering
-    \includegraphics[width=0.45\textwidth]{L1234_rsz.png}
-    \caption{\small Original Image}
-    \label{fig:OriImg}
-  }
-  \quad
-  \parbox{.475\linewidth}{
-    \centering
-    \includegraphics[width=0.45\textwidth]{OL1234_rsz.png}
-    \caption{\small Orthorectified Image}
-    \label{fig:OrthoImg}
-  }
-  \centering
-  \parbox{.7\linewidth}{
-    \includegraphics[width=0.7\textwidth]{ML1234_rsz.png}
-    \caption{\small Masked Image}
-    \label{fig:MaskedImg}
-  }
+	\centering
+	\parbox{.5\linewidth}{
+		\centering
+		    \includegraphics[width=0.5\textwidth]{L1234_rsz.png}
+		    \caption{\small Original Image}
+		    \label{fig:OriImg}
+	    }
+    \quad
+    \parbox{.5\linewidth}{
+    	\centering
+    	\includegraphics[width=0.5\textwidth]{OL1234_rsz.png}
+    	\caption{\small Orthorectified Image}
+    	\label{fig:OrthoImg}
+    }
+	\centering
+	\parbox{.7\linewidth}{
+		\includegraphics[width=0.9\textwidth]{ML1234_rsz.png}
+		\caption{\small Masked Image}
+		\label{fig:MaskedImg}
+	}
 \end{figure}
 
 \clearpage

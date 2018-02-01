@@ -318,6 +318,31 @@
       \verb 10.1109/CVPR.2010.5539781
       \endverb
     \endentry
+    \entry{RMS1}{book}{}
+      \name{author}{1}{}{%
+        {{hash=b55572524375b7c63e0f20d64c38cdd4}{%
+           family={Keppler},
+           familyi={K\bibinitperiod},
+           given={Rudolf},
+           giveni={R\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Forschungsgesellschaft für Straßen- und Verkehrswesen (FGSV)}%
+      }
+      \strng{namehash}{b55572524375b7c63e0f20d64c38cdd4}
+      \strng{fullhash}{b55572524375b7c63e0f20d64c38cdd4}
+      \strng{bibnamehash}{b55572524375b7c63e0f20d64c38cdd4}
+      \strng{authorbibnamehash}{b55572524375b7c63e0f20d64c38cdd4}
+      \strng{authornamehash}{b55572524375b7c63e0f20d64c38cdd4}
+      \strng{authorfullhash}{b55572524375b7c63e0f20d64c38cdd4}
+      \field{labelalpha}{Kep93}
+      \field{sortinit}{K}
+      \field{sortinithash}{9fd838a31ba64d981e8f44562bd33f89}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Richtlinien für die Markierung von Straßen (RMS) Teil 1 --Abmessungen und geometrische Anordnung von Markierungszeichen}
+      \field{year}{1993}
+    \endentry
     \entry{LoweSep1999}{article}{}
       \name{author}{1}{}{%
         {{hash=df942535983b5a947c628476dca80b29}{%
@@ -350,26 +375,6 @@
       \verb{doi}
       \verb 10.1109/ICCV.1999.790410
       \endverb
-    \endentry
-    \entry{RMS1}{article}{}
-      \name{author}{1}{}{%
-        {{hash=6a04f9e9b7a0c60c00fe0daa2e12eca0}{%
-           family={RMS},
-           familyi={R\bibinitperiod}}}%
-      }
-      \strng{namehash}{6a04f9e9b7a0c60c00fe0daa2e12eca0}
-      \strng{fullhash}{6a04f9e9b7a0c60c00fe0daa2e12eca0}
-      \strng{bibnamehash}{6a04f9e9b7a0c60c00fe0daa2e12eca0}
-      \strng{authorbibnamehash}{6a04f9e9b7a0c60c00fe0daa2e12eca0}
-      \strng{authornamehash}{6a04f9e9b7a0c60c00fe0daa2e12eca0}
-      \strng{authorfullhash}{6a04f9e9b7a0c60c00fe0daa2e12eca0}
-      \field{labelalpha}{RMS}
-      \field{sortinit}{R}
-      \field{sortinithash}{da6b42bd3ab22fee61abed031ee405f7}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{XXX}
-      \field{title}{Richtlinien für die Markierung von Straßen (RMS) Teil 1}
     \endentry
     \entry{SchmidJun1997}{article}{}
       \name{author}{2}{}{%
