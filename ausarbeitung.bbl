@@ -351,6 +351,26 @@
       \verb 10.1109/ICCV.1999.790410
       \endverb
     \endentry
+    \entry{RMS1}{article}{}
+      \name{author}{1}{}{%
+        {{hash=6a04f9e9b7a0c60c00fe0daa2e12eca0}{%
+           family={RMS},
+           familyi={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{6a04f9e9b7a0c60c00fe0daa2e12eca0}
+      \strng{fullhash}{6a04f9e9b7a0c60c00fe0daa2e12eca0}
+      \strng{bibnamehash}{6a04f9e9b7a0c60c00fe0daa2e12eca0}
+      \strng{authorbibnamehash}{6a04f9e9b7a0c60c00fe0daa2e12eca0}
+      \strng{authornamehash}{6a04f9e9b7a0c60c00fe0daa2e12eca0}
+      \strng{authorfullhash}{6a04f9e9b7a0c60c00fe0daa2e12eca0}
+      \field{labelalpha}{RMS}
+      \field{sortinit}{R}
+      \field{sortinithash}{da6b42bd3ab22fee61abed031ee405f7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{XXX}
+      \field{title}{Richtlinien für die Markierung von Straßen (RMS) Teil 1}
+    \endentry
     \entry{SchmidJun1997}{article}{}
       \name{author}{2}{}{%
         {{hash=36f04363f971335e030dbd4af7902e0d}{%

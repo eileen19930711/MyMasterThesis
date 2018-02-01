@@ -10,6 +10,17 @@ In \cref{sec:simulation}, the correctness of the derived LS model for reconstruc
 %To evaluate the influence of the over-counting correction and MGM
 %cost aggregation independently, two evaluations were performed
 
+By assuming a constant priori standard deviation to $1$ [pixel] in all the LS adjustment processes, the priori variance-covariance matrix of the estimated parameters
+\begin{equation}
+\Sigma_{\hat{X}\hat{X}}=\sigma_0^2(\mathsf{A^TA})^{-1}=
+\begin{bmatrix}
+\sigma_{\hat{X}}^2 && \sigma_{\hat{X}\hat{Y}} && \sigma_{\hat{X}\hat{Z}} \\
+\sigma_{\hat{Y}\hat{X}} && \sigma_{\hat{Y}}^2 && \sigma_{\hat{Y}\hat{Z}} \\
+\sigma_{\hat{Z}\hat{X}} && \sigma_{\hat{Z}\hat{Y}} && \sigma_{\hat{Z}}^2
+\end{bmatrix}
+\end{equation}
+reflects the quality of the design matrix in different LS adjustment processes. In other words, by assuming same measuring quality of 1 pixel level in each segment, $\Sigma_{\hat{X}\hat{X}}$ reflects the configuration strength of each line segments.
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

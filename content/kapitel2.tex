@@ -5,11 +5,17 @@
 
 The following sections introduce the principles of 3D lane marking reconstruction method of this work, with the work flow shown in \cref{fig:FlowChart}.
 
-\cref{sec:LineExtraction} describes the applied standard line detection algorithm for labeling the lane markings. To relate the object coordinates of a point with its image coordinates, \cref{sec:Geometry} introduces the imaging properties of aerial images and their mathematical models, including the collinearity equation and lens distortion correction.
+\cref{sec:LineExtraction} describes the applied standard line detection algorithm for labeling the lane markings. 
 
-\cref{sec:LineFitting} presents the principle of line fitting and further derives the nonlinear \gls{ls} model for line equations in two-point form. With the combination of the extended collinearity equation introduced in \cref{sec:Geometry}, \cref{sec:LSadj} elaborates the usage of line fitting for 3D lane marking reconstruction.% The key challenge is to solve the line fitting problem given weakly-textured environments around lane markings and to solve the quasi-infinite line reconstruction problem.
+To relate the object coordinates of a point with its image coordinates, \cref{sec:Geometry} introduces the imaging properties of aerial images and their mathematical models, including the collinearity equation and lens distortion correction.
 
-In \cref{sec:LineProjectionOnDSM} the problem of acquiring initial values is described, as initial values of unknown quantities are required in nonlinear LS model. Section2.7??? demonstrates how the corresponding measurements in image space are collected given the initial values in object space.
+\cref{sec:LineFitting} introduce the principle of line fitting and further presents the orthogonal regression model with line equations in two-point form. 
+
+A non-linear LS model is derived and estimated in \cref{sec:LSadj} to elaborate the usage of line fitting with the combination of collinearity condition for 3D lane marking reconstruction.
+
+In \cref{sec:LineProjectionOnDSM} the generation of approximate 3D line segments is described, as initial values of unknown quantities are required in nonlinear LS estimation.
+
+%Section2.7??? demonstrates how the corresponding measurements in image space are collected given the initial values in object space.
 
 \begin{figure}
 	\centering
@@ -43,7 +49,7 @@ Because of the appearance, the problem of lane marking detection can be treated 
 	\subfloat[\small Continuous double lines]{\fbox{\includegraphics[width=0.3\textwidth, trim={0 150 0 150},clip=true]{Laengsmarkierung_durchgehend_doppelt.pdf}}}
 	\quad
 	\subfloat[\small Dashed double lines]{\fbox{\includegraphics[width=0.3\textwidth, trim={0 150 0 150},clip=true]{Laengsmarkierung_unterbrochen_doppelt.pdf}}}
-	\caption{\small Line types of lane markings [source RMS Teil 1]}
+	\caption{\small Line types of lane markings \cite{RMS1}}
 	% https://de.wikipedia.org/wiki/Fahrbahnmarkierung
 	% Richtlinien für die Markierung von Straßen (RMS) Teil 1
 	\label{fig:LaneMarkingTypes}
@@ -60,7 +66,7 @@ Because of the appearance, the problem of lane marking detection can be treated 
 		wide lines   & $0.30$ [m] & $0.25$ [m] \\
 		\bottomrule
 	\end{tabular}
-	\caption{\small Widths of lane markings [source RMS Teil 1]}
+	\caption{\small Widths of lane markings \cite{RMS1}}
 	\label{tab:LaneMarkingWidths}
 	% Der Deutsche Verkehrssicherheitsrat
 	% https://www.dvr.de/download/publikationen-schriftenreihe-17.pdf
@@ -80,7 +86,7 @@ Because of the appearance, the problem of lane marking detection can be treated 
 		line / gap  & $6$ [m] / $12$ [m] & $3$ [m] / $6$ [m] & $4$ [m] / $8$ [m]\\
 		\bottomrule
 	\end{tabular}
-	\caption{\small Lengths of dashed lane markings with ratio 1:2 [source RMS Teil 1]}
+	\caption{\small Lengths of dashed lane markings with ratio 1:2 \cite{RMS1}}
 	\label{tab:DashedLaneMarkingLengths}
 	% Der Deutsche Verkehrssicherheitsrat
 	% https://www.dvr.de/download/publikationen-schriftenreihe-17.pdf
@@ -191,8 +197,10 @@ For a later combination with point-wise extended collinearity equation \eqref{eq
 % extracted lines produced in \cref{sec:LineExtraction} (in forms of sets of points in image coordinates). 
 For such nonlinear functional relation between variales, a nonlinear LS model is derived in \cref{subsec:NonLinear}.
 
+\phantomsection
+\addcontentsline{toc}{section}{}
+\label{SingularityInImgSpace}
 A functional model is unsolvable when the assumed "dependent" variable is indeed not a function of the independent variables, i.e. the assumed functional relation does not really exist. Take an observed set of 2D points with their Cartesian coordinates $\{x_i,y_i\}^n_{i=1}$ on a vertical line $x=constant$ for example. Their $y$ values have no dependency on their $x$ values, i.e. knowledge of $x$ tells nothing about $y$. Therefore, for this dataset, the functional model $y=f(x)$ is barely solvable. In such cases, however, $x$ is a function of $y$ (which is actually a constant function) and the equation system which models the dependent variable $x$ being a function of the independent variable $y$ becomes solvable. Regarding the dataset used in this work (which will be described with more details in \cref{sec:Materials}) where the observed 2D points scatter mainly in column direction in image space, the functional relation between variables $x$ and $y$ will be setup as $x=f(y)$ to avoid weakly solvable equations system.
-
 
 %\subsection{Simple Linear Regression}
 %\label{subsec:LinearRegression}
@@ -465,7 +473,7 @@ Corresponding to \cref{eq:Ffunction_xy}, function $\mathcal{H}$ is actually comp
 \end{split}
 \end{equation}
 
-Since the 3D line reconstruction will be done "segment-wise", i.e. for a pair of $P_s$ and $P_e$, the measurements will be collected correspondingly, the subscription $l$ representing specific line segment will be left out in the followings.
+Since the 3D line reconstruction will be done "segment-wise", i.e. for a pair of $P_s(X_s,Y_s,Z_s)$ and $P_e(X_e,Y_e,Z_e)$ of interest, the measurements $(x^j_{l,i},y^j_{l,i})$ will be collected correspondingly, the subscription $l$ representing specific line segment will be left out in the followings.
 
 Each image gives $2\times N^j$ observation equations. These equations are often stacked together and written in vector form as:
 \begin{equation} \label{eq:Ffunction}
@@ -568,6 +576,29 @@ For all covering image $j=1,2,...J$, there are $2\times\displaystyle\sum_{j=1}^{
 \end{array}
 \end{equation}
 
+with the amount of observations:
+\begin{equation}
+	N=2\times\displaystyle\sum_{j=1}^{J}N^j
+\end{equation}
+
+The unknown parameters in the \textit{Gauss-Markov model} are
+\begin{equation}
+	\boldsymbol x:\quad
+	\begin{bmatrix}
+		X_s\\
+		Y_s\\
+		Z_s\\
+		X_e\\
+		Y_e\\
+		Z_e
+	\end{bmatrix}
+\end{equation}
+with the amount of unknowns:
+\begin{equation}
+	U=6
+\end{equation}
+
+\clearpage
 
 \subsection{Constraint Equations}
 \label{subsec:ConEqua}
@@ -604,9 +635,12 @@ The constraint equations \eqref{eq:constraint1}, \eqref{eq:constraint2} and \eqr
  0\\[0.5em]
 \end{bmatrix}
 \end{equation}
+with the amount of constraints:
+\begin{equation}
+H=3
+\end{equation}
 
-
-\subsection{Least-Squares Estimation}
+\subsection{Least-Squares Estimation for 3D Line Reconstruction}
 \label{subsec:LSadj}
 
 The nonlinear equation system is approximated to be locally linear with small step size of the unknown quantities. The linearized form is expressed as:
@@ -657,8 +691,6 @@ As the lines were extracted independently and with the same procesure, the measu
 \end{equation}
 
 
-
-
 The unknown parameters $\widehat{\Delta\boldsymbol x}$ of the linearized model can be determined from the extended normal equation system
 \begin{equation}
 \begin{bmatrix}
@@ -685,37 +717,35 @@ With the iteration index $\nu$ and the approximate values in the first iteration
 
 By updating the parameters using \cref{eq:xiter}, the LS estimation is applied iteratively until convergence is achieved. 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The redundancy of the problem is
+\begin{equation}
+R=N+H-U=2\times\displaystyle\sum_{j=1}^{J}N^j-3
+\end{equation}
 
 The matrix $\mathsf{A}$ does not need to have full rank, but the block matrix $[\mathsf{A_T},\mathsf{H}]$ must have full rank in order to guarantee the estimation problem has a unique solution.
 
 
+\clearpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Two kinds of singular cases can happen. First, configuration defect in object space: as the 3D reconstruction approach still relies on intersection of multiple rays from different views, either the cases where there is only one image covering the to-be-reconstructed line segment, or when the to-be-reconstructed line segment lies on all of the epipolar planes of any of its two covering images, the problem is not solvable. Second, configuration defect in image space: \hyperref[SingularityInImgSpace]{as mentioned} in \cref{sec:LineFitting}, when the extracted line lies (nearly) in row direction on all the covering images, the problem is also not solvable. In the cases that the to-be-reconstructed line segment lies only on some of the stereo pairs' epipolar planes, the problem is still solvable whereas those stereo pairs are not contributing to the solution. Or similarly, when only in some of the images the extracted line segments lie (nearly) in row direction, the problem is solvable whereas those images are not providing measurements to the estimation.
 
-The redundancy $R$ of the problem is
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+After LS estimation, the estimated variance-covariance matrix of the estimated parameters is
 \begin{equation}
-R=N+H-U
-\end{equation}
-
-
-
-
-
-
-Since the estimated variance-covariance matrix of the estimated parameters $\hat{\Sigma}_{\hat{X}\hat{X}}$ depends on both the design matrix $A$ (i.e. the configuration) and the posterior standard deviation $\hat{\sigma}_0$ (i.e. the posterior measurements quality):
-\begin{equation}
-\hat{\Sigma}_{\hat{X}\hat{X}}=\hat{\sigma}_0^2(A^\mathsf{T}A)^{-1}=
+\hat{\Sigma}_{\hat{X}\hat{X}}=\hat{\sigma}_0^2(\mathsf{A^TA})^{-1}=
 \begin{bmatrix}
 \hat{\sigma}_{\hat{X}}^2 && \hat{\sigma}_{\hat{X}\hat{Y}} && \hat{\sigma}_{\hat{X}\hat{Z}} \\
 \hat{\sigma}_{\hat{Y}\hat{X}} && \hat{\sigma}_{\hat{Y}}^2 && \hat{\sigma}_{\hat{Y}\hat{Z}} \\
 \hat{\sigma}_{\hat{Z}\hat{X}} && \hat{\sigma}_{\hat{Z}\hat{Y}} && \hat{\sigma}_{\hat{Z}}^2
 \end{bmatrix}
 \end{equation}
-we are not able to tell from the variances $\hat{\sigma}_{\hat{X}}$, $\hat{\sigma}_{\hat{Y}}$, $\hat{\sigma}_{\hat{Z}}$ whether the .
+which depends on both the design matrix $\mathsf{A}$ (i.e. the configuration) and the posterior standard deviation $\hat{\sigma}_0$ (i.e. the posterior measurements quality).
 
-By setting a constant priori standard deviation value in all the LS adjustment processes (i.e. assuming the measurements are of same quality in each segment), the priori variance-covariance matrix of the estimated parameters $\Sigma_{\hat{X}\hat{X}}$ reflects the quality of the design matrix (i.e. the configuration strength) in each LS adjustment processes.
-\begin{equation}
-\Sigma_{\hat{X}\hat{X}}=\sigma_0^2(A^\mathsf{T}A)^{-1}
-\end{equation}
+
 
 \clearpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -724,7 +754,7 @@ By setting a constant priori standard deviation value in all the LS adjustment p
 
 As the equation system in \cref{sec:LSadj} may exhibit multiple local minimum, a "correct" initial approximation of the unknowns is required for convergence to the correct solution. To provide such initial 3D line segment, the extracted line features derived in \cref{sec:LineExtraction} can be projected onto DSM based on the bundle adjusted exterior and interior orientations.
 
-Given image coordinates $\mathbf{p}(x,y)$ of a point and (bundle-adjusted) image orientations $\mathbf{q}$, there is still one degree of freedom in extended collinearity equation \eqref{eq:Gfunction} on solving object coordinates $\mathbf{P}(X,Y,Z)$. Combined with the usage of DSM, which provides the height information $Z_{DSM}$ given a position $(X,Y)$, the corresponding object coordinates can be solved iteratively until the increment $\Delta Z$ small enough, i.e. convergence achieved. The whole process is illustrated in \cref{alg:LineProjectionOnDSM}.
+Given image coordinates $\mathbf{p}(x,y)$ of a point and (bundle-adjusted) image orientations $\mathbf{q}$, there is still one degree of freedom in extended collinearity equation \eqref{eq:Gfunction} on solving object coordinates $\mathbf{P}(X,Y,Z)$. Combined with the usage of DSM, which provides the height information $Z_{DSM}$ given a position $(X,Y)$, the corresponding object coordinates can be solved iteratively until the increment $\Delta Z$ small enough, i.e. convergence achieved. The iterative scheme is illustrated in \cref{alg:LineProjectionOnDSM}.
 
 Considering that the DSM is raster (discrete) whereas $X$ and $Y$ have continuous numerical values, the DSM height $Z_{DSM}$ for the given point $(X,Y)$ is bilinear interpolated.
 
