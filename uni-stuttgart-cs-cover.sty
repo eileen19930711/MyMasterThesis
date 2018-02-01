@@ -118,14 +118,18 @@
 	\gdef\@labelvis{Institute for Visualization and Interactive Systems}%
 	
 	\gdef\@labelAffirmation{Declaration}%
-	\gdef\@AffirmationText{I hereby declare that the work presented in this thesis is entirely my own and that
-		I did not use any other sources and references than the listed ones.
-		I have marked all direct or indirect statements from other sources contained therein as quotations.
-		Neither this work nor significant parts of it were part of another examination procedure.
-		I have not published this work in whole or in part before.
-		The electronic copy is consistent with all submitted copies.
+	\gdef\@AffirmationText{
+		Hereby the following is confirmed – according to the Geomatics Engineering (GEOENGINE) examination regulations §22(7):
+		\begin{itemize}
+		\item I, the author, have prepared the thesis fully independently.
+		\item I have not used any other than the specified sources. All statements that are literally taken from other sources are clearly marked. All these sources are explicitly listed in the thesis.
+		\item The submitted thesis in whole or in substantial parts is not been involved in any other examination. 
+		\item This thesis has not been published previously in whole or in parts.
+		\item The electronic version submitted fully complies with this thesis. 
+	\end{itemize}
+%		I hereby declare that the work presented in this thesis is entirely my own and that I did not use any other sources and references than the listed ones. I have marked all direct or indirect statements from other sources contained therein as quotations. Neither this work nor significant parts of it were part of another examination procedure. I have not published this work in whole or in part before. The electronic copy is consistent with all submitted copies.
 	}
-	\gdef\@labelSignature{\ place, date, signature}
+	\gdef\@labelSignature{\ place, date, signature of thesis author}
 }
 
 \def\labelsgerman{
@@ -335,7 +339,7 @@
       \end{center}%
       \vskip 12.5mm plus 12.5mm minus 10mm
       \begin{center}\@setsize\LARGE{22pt}\xviipt\@xviipt %%\LARGE
-        \textbf{ Automatic 3D lane marking reconstruction using multi-view aerial imagery }%\MCS@title}
+        \textbf{Automatic 3D lane marking reconstruction using multi-view aerial imagery }%\MCS@title}
       \end{center}%
       \vskip 10mm plus 10mm minus 7.5mm
       \begin{center}\@setsize\large{14pt}\xiipt\@xiipt %%\large
@@ -358,7 +362,7 @@
   \vbox to 70mm{%%%%% ==> 85 mm von oben
     \begin{USCCover@TBlist}%
       \item[\@labelStartdate:] 3. Juli 2017 %\MCS@startdate
-      \item[\@labelEnddate:] 1. February 2018 %\MCS@enddate
+      \item[\@labelEnddate:] 14. February 2018 %\MCS@enddate
       %\ifx\@crk\relax \else
       %    \vskip 1.5\baselineskip
       %    \item[\@labelcrk:]\MCS@crk
@@ -385,7 +389,7 @@
   \null
   \vskip 5cm\relax
 	\begin{center}
-		\begin{minipage}[t]{10cm}
+		\begin{minipage}[t]{12cm}
 			\hbox{\textbf{\@labelAffirmation}}%
 			\vskip 1cm\relax
 			%\begin{flushleft}%
