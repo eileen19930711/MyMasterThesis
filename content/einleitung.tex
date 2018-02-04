@@ -103,7 +103,7 @@ For autonomous driving, redundant sources of information for the driving environ
 
 Generally, the procedure of 3D objects reconstruction consists of feature extraction in image space and depth information recovery in object space. 
 To reconstruct the depth information at the exposure moment, either multiple projection rays spatial intersection or single projection ray intersection with an elevation model can be applied.
-Spatial intersection is usually applied in the cases that the correspondences of the extracted features among different views can be established. Alternatively, when \gls{dem} is available, single extracted feature can be directly projected onto the DEM. In this case, the quality of DEM directly influences the result of 3D object reconstruction. 
+Spatial intersection, or called \textit{triangulation}, is usually applied in the cases that the correspondences of the extracted features among different views can be established. Alternatively, when \gls{dem} is available, single extracted feature can be directly projected onto the DEM. In this case, the quality of DEM directly influences the result of 3D object reconstruction. 
 
 \subsection{Feature Extraction and Matching}
 The aim of feature extraction is to gain the characteristics of the images, through which the stereo correspondence processes. As a result, the characteristics of the images closely link to the choice of matching methods. % https://en.wikipedia.org/wiki/3D_reconstruction

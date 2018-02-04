@@ -3,7 +3,7 @@
 \chapter{Methodologies}
 \label{chap:k2}
 
-The following sections introduce the principles of 3D lane marking reconstruction method of this work, with the work flow shown in \cref{fig:FlowChart}.
+The following sections introduce the principles of 3D lane marking reconstruction method of this work, based on the work flow shown in \cref{fig:FlowChart}.
 
 \cref{sec:LineExtraction} describes the applied standard line detection algorithm for labeling the lane markings. 
 
@@ -31,7 +31,7 @@ In \cref{sec:LineProjectionOnDSM} the generation of approximate 3D line segments
 \section{Lane markings Properties and Automatic Extraction}
 \label{sec:LineExtraction}
 
-The appearance of lane markings on German roads including line type, color and width is specified depending on the road type. Different line types of lane markings are shown in \cref{fig:LaneMarkingTypes} and their line widths are defined in \cref{tab:LaneMarkingWidths}. As shown in \cref{tab:DashedLaneMarkingLengths}, the dashed lane markings on motorways are of 6 meter length.
+The appearance of lane markings on German roads including line type, color and width is specified depending on the road type. Different line types of lane markings are shown in \cref{fig:LaneMarkingTypes} and their line widths are defined in \cref{tab:LaneMarkingWidths}. As shown in \cref{tab:DashedLaneMarkingLengths}, the dashed lane markings on motorways have 6 meter length.
 % https://de.wikipedia.org/wiki/Fahrbahnmarkierung#Eigenschaften
 % Richtlinien für die Markierung von Straßen (RMS) Teil 1
 
@@ -99,13 +99,11 @@ Because of the appearance, the problem of lane marking detection can be treated 
 % https://en.wikipedia.org/wiki/Edge_detection#Approaches
 There are many algorithms for line detection. % Hough Transform...
 % search-based and zero-crossing based
-Prewitt line detector uses two orthogonal gradient operators, and the pixels in the operators are of same weights. Sobel detector also uses two orthogonal gradient operators, but the weights of pixel in operators are not equal ---the closer the pixel to the center of operator, the higher weight it has. Canny edge detector searches local extrema of gradient to locate the positions of line features and is still a state-of-the-art edge detector. Edge-detectors that perform better than the Canny usually require higher computational complexities or a greater number of parameters. Edge drawing \cite{Topal2012} first spots anchors along rows and columns by Sobel detector, and then joins these anchors to extract line features.
+Prewitt line detector uses two orthogonal gradient operators, and the pixels in the operators are of same weights. Sobel detector also uses two orthogonal gradients operators, but the weights of pixel in operators are not equal ---the closer the pixel to the center of operator, the higher weight it has. Canny edge detector searches local extrema of gradient to locate the positions of line features and is still a state-of-the-art edge detector. Edge-detectors that perform better than the Canny usually require higher computational complexities or a greater number of parameters. Edge drawing \cite{Topal2012} first spots anchors along rows and columns by Sobel detector, and then joins these anchors to extract line features.
 
-In this work, the principle to extract line features is to firstly derive the line direction for each pixel by using partial derivatives of a Gaussian smoothing kernel. Pixels that have a local maximum in the second directional derivative perpendicular to the line direction are marked as line points. By thresholding their second directional derivative values, the accepted line points are then linked and connected.
-% C. Steger: “Extracting Curvilinear Structures: A Differential Geometric Approach”. In B. Buxton, R. Cipolla, eds., “Fourth European Conference on Computer Vision”, Lecture Notes in Computer Science, Volume 1064, Springer Verlag, pp. 630-641, 1996. 
-% C. Steger: “Extraction of Curved Lines from Images”. In “13th International Conference on Pattern Recognition”, Volume II, pp. 251-255, 1996. 
-% C. Steger: “An Unbiased Detector of Curvilinear Structures”. IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 20, no. 2, pp. 113-125, 1998
-The resultant connected points which compose a line are of sub-pixel precision. \cref{fig:LineExtraction} shows the extracted lines on part of the masked original image.
+In this work, the principle to extract line features is to firstly derive the line direction for each pixel by using partial derivatives of a Gaussian smoothing kernel. Pixels that have a local maximum in the second directional derivative perpendicular to the line direction are marked as line points. By thresholding their second directional derivative values, the accepted line points are then linked and connected.\cite{Steger1998}
+
+The resulting connected points which compose a line are of sub-pixel precision. \cref{fig:LineExtraction} shows the extracted lines on part of the masked original image.
 % http://www.mvtec.com/doc/halcon/11/en/lines_gauss.html
 
 \begin{figure}
@@ -121,11 +119,11 @@ The resultant connected points which compose a line are of sub-pixel precision. 
 \section{Imaging Properties of Aerial Photographs}
 \label{sec:Geometry}
 
-This section describes the geometric model of the projection of 3D points into the image generated by a real camera. We first restrict the discussion in \cref{subsec:Collinearity} to central perspective projection where the collinearity equation originate from. We then model deviations from this model, addressing real cameras with imperfect lenses, in \cref{subsec:LensDistortion}.
+This section describes the geometric model of the projection of 3D points into the image generated by a real camera. We first restrict the discussion in \cref{subsec:Collinearity} to central perspective projection where the collinearity equation originates from. We then model deviations from this model, addressing real cameras with imperfect lenses, in \cref{subsec:LensDistortion}.
 
 \subsection{Collinearity Equations}
 \label{subsec:Collinearity}
-We assume frame photography, i.e. photographs exposed on a frame chip in one instant, and assume central projection model with cameras that have a single viewpoint and a planar sensor and being straight line-preserving. Collinearity indicates the condition that the image point (on the sensor plate of the camera), the observed point (in object space) and the projection center of the camera were aligned at the moment the picture was taken. Every measured point leads to two collinearity equations, describing transformations from object space to image coordinates:
+We assume frame photography, i.e. photographs exposed on a frame chip in one instant, and assume the central projection model with cameras that have a single viewpoint and a planar sensor and being straight line-preserving. Collinearity indicates the condition that the image point (on the sensor plate of the camera), the observed point (in object space) and the projection center of the camera were aligned at the moment the picture was taken. Every measured point leads to two collinearity equations, describing transformations from object space to image coordinates:
 \begin{equation} \label{eq:collinearity}
 \begin{split}
 x = x_0 -c \dfrac {r_{11}(X-X_0) + r_{21}(Y-Y_0) + r_{31}(Z-Z_0)} {r_{13}(X-X_0) + r_{23}(Y-Y_0) + r_{33}(Z-Z_0)} \\
@@ -143,7 +141,7 @@ $r_{11},...,r_{33}$: elements of the rotation matrix R (orthogonal 3$\times$3-ma
 \subsection{Lens Distortion Correction}
 \label{subsec:LensDistortion}
 
-An original image appears to have some degree of deviations from perspective mapping due to lens distortion, lens refraction or non-planarity of the sensor surface. There are several models to describe these perturbing effects and can be used to undistort the images, resulting in rectified images which are now straight line-preserving.
+An original image has some degree of deviations from perspective mapping due to lens distortion, lens refraction or non-planarity of the sensor surface. There are several models to describe these perturbing effects and can be used to undistort the images, resulting in rectified images which are now straight line-preserving.
  
 A subset of physical distortion model \cite{Fraser1997} is chosen, with two radial symmetric distortion parameters $A_1$ and $A_2$, two asymmetric parameters $B_1$ and $B_2$, and a scaling $C1$ and an affine shearing parameter $C_2$. Assuming $x$ and $y$ to be the distorted image coordinates, the corrections $\Delta x$ and $\Delta y$ are then calculated by the following equations:
 \begin{equation} \label{eq:LensDistortion}
@@ -165,7 +163,7 @@ y\prime=y+\Delta y
 
 \subsection{Extended Collinearity Equation}
 \label{subsec:ExtendedCollinearity}
-As real cameras generally only approximate the perspective camera model, lens distortion correction can be additionally included in the collinearity model, attempting to correct the pixel position so that they obey the perspective model with sufficient accuracy.[W. Förstner et al. 2016]% The reference is not the original one
+As real cameras only approximate the perspective camera model, lens distortion correction can be additionally included in the collinearity model, attempting to correct the pixel positions so that they obey the perspective model with sufficient accuracy.[W. Förstner et al. 2016]% The reference is not the original one
 
 By inserting \eqref{eq:collinearity} and \eqref{eq:LensDistortion} into \eqref{eq:undistortedimgcoord} , the relationship between a 3D point $\mathbf{P}(X, Y, Z)$ and its corresponding distorted image coordinates $\mathbf{p}(x,y)$ can be described as
 \begin{equation} \label{eq:expandedcollinearity}
@@ -189,7 +187,7 @@ which takes the interior and exterior orientations as well as the lens distortio
 \section{Line Fitting}
 \label{sec:LineFitting}
 
-Line fitting is the process of constructing a infinite straight line that has a best fit to a 2D dataset. One of the approaches is linear regression which attempts to find the linear function that "best" predicts the dependent variable values as a function of the independent variable. In this work, "best" predict will be understood as in the \gls{ls} approach: minimization of the sum of squared residuals (differences between the measured and the estimated values of the dependent variable).
+Line fitting is the process of constructing an infinite straight line that has a best fit to a 2D dataset. One of the approaches is linear regression which attempts to find the linear function that "best" predicts the dependent variable values as a function of the independent variable. In this work, "best" predict will be understood as in the \gls{ls} approach: minimization of the sum of squared residuals (differences between the measured and the estimated values of the dependent variable).
 
 In the case of standard linear regression, the regressor $x$ is assumed error free, inconsistencies\footnote{The word "inconsistencies" indicates the unobserved random errors, also called as measurement errors.} are only for the dependent variable $y$. Geometrically it means that the vertical distances from observed data to the fitted line is minimized. To minimize the perpendicular distances from the data points to the regression line, a orthogonal regression model is derived in \cref{subsec:OrthogonalRegression}.
 
@@ -197,10 +195,7 @@ For a later combination with point-wise extended collinearity equation \eqref{eq
 % extracted lines produced in \cref{sec:LineExtraction} (in forms of sets of points in image coordinates). 
 For such nonlinear functional relation between variales, a nonlinear LS model is derived in \cref{subsec:NonLinear}.
 
-\phantomsection
-\addcontentsline{toc}{section}{}
-\label{SingularityInImgSpace}
-A functional model is unsolvable when the assumed "dependent" variable is indeed not a function of the independent variables, i.e. the assumed functional relation does not really exist. Take an observed set of 2D points with their Cartesian coordinates $\{x_i,y_i\}^n_{i=1}$ on a vertical line $x=constant$ for example. Their $y$ values have no dependency on their $x$ values, i.e. knowledge of $x$ tells nothing about $y$. Therefore, for this dataset, the functional model $y=f(x)$ is barely solvable. In such cases, however, $x$ is a function of $y$ (which is actually a constant function) and the equation system which models the dependent variable $x$ being a function of the independent variable $y$ becomes solvable. Regarding the dataset used in this work (which will be described with more details in \cref{sec:Materials}) where the observed 2D points scatter mainly in column direction in image space, the functional relation between variables $x$ and $y$ will be setup as $x=f(y)$ to avoid weakly solvable equations system.
+A functional model is unsolvable when the assumed "dependent" variable is indeed not a function of the independent variables, i.e. the assumed functional relation does not really exist. Take an observed set of 2D points with their Cartesian coordinates $\{x_i,y_i\}^n_{i=1}$ on a vertical line $x=constant$ for example. Their $y$ values have no dependency on their $x$ values, i.e. knowledge of $x$ tells nothing about $y$. Therefore, for this dataset, the functional model $y=f(x)$ is singular. In such cases, however, $x$ is a function of $y$ (which is actually a constant function) and the equation system which models the dependent variable $x$ being a function of the independent variable $y$ becomes solvable. Regarding the dataset used in this work (which will be described with more details in \cref{sec:Materials}) where the observed 2D points scatter mainly in column direction in image space, the functional relation between variables $x$ and $y$ will be setup as $x=f(y)$ to avoid weakly solvable equations system.
 
 %\subsection{Simple Linear Regression}
 %\label{subsec:LinearRegression}
@@ -226,7 +221,7 @@ where the regression coefficients $a_0$ and $a_1$ are the unknown parameters to 
 \begin{equation} \label{eq:MixModel1-2}
 y_i-e_{y_i} = \bar{y_i}
 \end{equation}
-Such models, as the combination of \eqref{eq:MixModel1-1} and \eqref{eq:MixModel1-2}, that account the measurement errors in both dependent variable and regressor, are errors-in-variables models. Further more, for the case of equal error variances, i.e. when $\delta=\dfrac{\sigma_{e_x}}{\sigma_{e_y}}=1$, it is a orthogonal regression model which minimizes the %sum of squared 
+Such models, as the combination of \eqref{eq:MixModel1-1} and \eqref{eq:MixModel1-2}, that take into account the measurement errors of both dependent variables and regressors, are errors-in-variables models. Further more, for the case of equal error variances, i.e. when $\delta=\dfrac{\sigma_{e_x}}{\sigma_{e_y}}=1$, it is a orthogonal regression model which minimizes the %sum of squared 
 perpendicular distances from the data points to the regression line.
 
 % !!!
@@ -271,7 +266,7 @@ Note that as a combination of \eqref{eq:MixModel2-1} and \eqref{eq:MixModel1-2},
 \section{3D Line Reconstruction with Nonlinear LS Adjustment}
 \label{sec:LSadj}
 
-In this section, I describe the process of refining the position of a 3D line segment in the object space so that its back-projection in each image has a best-fit to the extracted line in the image space, as illustrated in \cref{fig:mainidea}.
+In this section, the process of refining the position of a 3D line segment in the object space so that its back-projection in each image has a best-fit to the extracted line in the image space is described, as illustrated in \cref{fig:mainidea}.
 
 \begin{figure}
 	\centering
@@ -284,7 +279,7 @@ In this section, I describe the process of refining the position of a 3D line se
 
 
 %%%%%%%%%%%%%%%%%% introduce the subsections
-\cref{subsec:LSmodel} introduces the non-linear LS adjustment model with constraints. The observation equations for LS adjustment are set up in \cref{subsec:ObsEqua}. They describe the fitting of a straight line to the measurements, the extracted line, in all covering images, where the fitting lines on different images are transformed from a single 3D straight line segment through the extended collinearity equation \eqref{eq:expandedcollinearity}. Regarding the fact that the collinearity is a point-wise condition, a line segment is represented by its two endpoints. Correspondingly, the observation equations in the LS model are line equations in two-point form. 
+\cref{subsec:LSmodel} introduces the non-linear LS adjustment model with constraints. The observation equations for LS adjustment are set up in \cref{subsec:ObsEqua}. They describe the fitting of a straight line to the measurements, which are the extracted lines, in all covering images, where the fitting lines on different images are transformed from a single 3D straight line segment through the extended collinearity equation \eqref{eq:expandedcollinearity}. Regarding the fact that the collinearity is a point-wise condition, a line segment is represented by its two endpoints. Correspondingly, the observation equations in the LS model are line equations in two-point form. 
 
 By satisfying the collinearity condition, single fitting line on an image spans a plane in $\mathbb{R}^3$. The corresponding lines from different views span several planes in $\mathbb{R}^3$, which are non-parallel to each other and should intersect in a line in $\mathbb{R}^3$. As this infinite line is the solution space of the LS estimation, at least two constraints on the location of the two endpoints of the to-be-reconstructed 3D line segment are necessary to avoid their arbitrary locations on this infinite line in $\mathbb{R}^3$. The constraint equations are modeled in \cref{subsec:ConEqua}.
 
@@ -302,17 +297,17 @@ In each sliding window, a segment is reconstructed, i.e. a complete non-linear L
 	\centering
 	\subfloat[The first line segment of "sliding window length" is reconstructed, with its starting point and its middle point of "step size" from the starting point being recorded.]{\includegraphics[width=0.9\textwidth]{2-4_2_1.png} \label{fig:slidingwindow1}}
 	
-	\subfloat[Starting from the recorded node of last process, another line segment of "sliding window length" is again to be reconstructed. i.e. the sliding window has moved "step size" forward.]{\includegraphics[width=0.9\textwidth]{2-4_2_2.png} \label{fig:slidingwindow2}}
+	\subfloat[Starting from the recorded node of last process, another line segment of "sliding window length" will be reconstructed. i.e. the sliding window has moved "step size" forward.]{\includegraphics[width=0.9\textwidth]{2-4_2_2.png} \label{fig:slidingwindow2}}
 	
 	\subfloat[The point of "step size" length from the starting point on the reconstructed segment is recorded.]{\includegraphics[width=0.9\textwidth]{2-4_2_3.png} \label{fig:slidingwindow3}}
 	
-	\caption{\small A line is partially reconstructed through a sliding window.}
+	\caption{\small 3D reconstruction of a lane marking by a sliding window.}
 	\label{fig:slidingwindow}
 \end{figure}
 
 
 %%%%% describe the collection of measurements 
-The measurements for each reconstruction process are collected correspondingly, as shown in \cref{fig:measurementscollection} ---by back-projecting the initial line segment into image space and buffering 10 pixels width on each side, only the extracted 2D line segment in this region is collected. %The 10 pixels buffering width corresponds to 70 cm in object space. the imperfect DSM profile has maximum ...which is around 70 cm in image space. 
+The measurements for each reconstruction process are collected correspondingly, as shown in \cref{fig:measurementscollection} ---by back-projecting the initial line segment into image space and buffering 10 pixels width on each side. By this, all the extracted 2D line segments in this region are collected. %The 10 pixels buffering width corresponds to 70 cm in object space. the imperfect DSM profile has maximum ...which is around 70 cm in image space. 
 As shown in \cref{fig:overlappingregion}, the reconsideration in overlapping region of successive sliding windows makes the reconstruction more robust.
 
 \begin{figure}
@@ -618,7 +613,7 @@ There are three constraints on the unknown parameters used in this work:
 \end{equation}
 \end{itemize}
 
-Only in the first line segment reconstruction of a long lane marking, the fixed $X_s$ and $Y_s$ values are from the initial parameter estimates derived in \cref{sec:LineProjectionOnDSM}. Starting from the second line segment, the fixed values ${X_s}^0$ and ${Y_s}^0$ depend on the previously determined values.
+Only in the very first line segment reconstruction of a long lane marking, the fixed $X_s$ and $Y_s$ values are from the initial parameter estimates derived in \cref{sec:LineProjectionOnDSM}. Starting from the second line segment, the fixed values ${X_s}^0$ and ${Y_s}^0$ depend on the previously determined values.
 
 The constraint equations \eqref{eq:constraint1}, \eqref{eq:constraint2} and \eqref{eq:constraint3} can be stacked together and written in the structure of the \textit{Gauss-Markov model with constraints}, corresponding to \cref{eq:GM-ConEq}:
 \begin{equation} \label{eq:convec}
@@ -728,7 +723,7 @@ The matrix $\mathsf{A}$ does not need to have full rank, but the block matrix $[
 
 \clearpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Two kinds of singular cases can happen. First, configuration defect in object space: as the 3D reconstruction approach still relies on intersection of multiple projection rays from different views, either the cases where there is only one image covering the to-be-reconstructed line segment, or when the to-be-reconstructed line segment lies on all of the epipolar planes of any of its two covering images, the problem is not solvable. Second, configuration defect in image space: \hyperref[SingularityInImgSpace]{as mentioned} in \cref{sec:LineFitting}, when the extracted line lies (nearly) in row direction on all the covering images, the problem is also not solvable. In the cases that the to-be-reconstructed line segment lies only on some of the stereo pairs' epipolar planes, the problem is still solvable whereas those stereo pairs are not contributing to the solution. Or similarly, when only in some of the images the extracted line segments lie (nearly) in row direction, the problem is solvable whereas those images are not providing measurements to the estimation.
+Two kinds of singular cases can happen. First, a configuration defect in object space can happen: as the 3D reconstruction approach still relies on intersection of multiple projection rays from different views, either the cases where there is only one image covering the targeted line segment, or when the targeted line segment lies on all of the epipolar planes of any of its two covering images, in this cases the problem is not solvable. Second, configuration defect in image space: as mentioned in \cref{sec:LineFitting}, when the extracted line lies (nearly) in row direction on all the covering images, the problem is also not solvable. In the cases that the targeted line segment lies only on some of the stereo pairs' epipolar planes, the problem is still solvable whereas those stereo pairs are not contributing to the solution. Or similarly, when only in some of the images the extracted line segments lie (nearly) in row direction, the problem is solvable whereas those images are not contributing measurements to the estimation.
 
 
 
@@ -752,9 +747,9 @@ which depends on both the design matrix $\mathsf{A}$ (i.e. the configuration) an
 \section{Line Projection on the DSM (Determination of Initial Parameter Estimates)}
 \label{sec:LineProjectionOnDSM}
 
-As the equation system in \cref{sec:LSadj} may exhibit multiple local minimum, a "correct" initial approximation of the unknowns is required for convergence to the correct solution. To provide such initial 3D line segment, the extracted line features derived in \cref{sec:LineExtraction} can be projected onto DSM based on the bundle adjusted exterior and interior orientations.
+As the equation system in \cref{sec:LSadj} may exhibit multiple local minimum, a "correct" initial approximation of the unknowns is required for convergence to the correct solution. To provide such initial 3D line segment, the extracted line features derived in \cref{sec:LineExtraction} can be projected onto a DSM based on the bundle adjusted exterior and interior orientations.
 
-Given image coordinates $\mathbf{p}(x,y)$ of a point and (bundle-adjusted) image orientations $\mathbf{q}$, there is still one degree of freedom in extended collinearity equation \eqref{eq:Gfunction} on solving object coordinates $\mathbf{P}(X,Y,Z)$. Combined with the usage of DSM, which provides the height information $Z_{DSM}$ given a position $(X,Y)$, the corresponding object coordinates can be solved iteratively until the increment $\Delta Z$ small enough, i.e. convergence achieved. The iterative scheme is illustrated in \cref{alg:LineProjectionOnDSM}.
+Given image coordinates $\mathbf{p}(x,y)$ of a point and (bundle-adjusted) image orientations $\mathbf{q}$, there is still one degree of freedom in extended collinearity equation \eqref{eq:Gfunction} on solving object coordinates $\mathbf{P}(X,Y,Z)$. Combined with the usage of a DSM, which provides the height information $Z_{DSM}$ given a position $(X,Y)$, the corresponding object coordinates can be solved iteratively until the increment $\Delta Z$ is small enough, i.e. convergence achieved. The iterative scheme is illustrated in \cref{alg:LineProjectionOnDSM}.
 
 Considering that the DSM is raster (discrete) whereas $X$ and $Y$ have continuous numerical values, the DSM height $Z_{DSM}$ for the given point $(X,Y)$ is bilinear interpolated.
 

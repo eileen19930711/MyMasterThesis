@@ -376,6 +376,38 @@
       \verb 10.1109/ICCV.1999.790410
       \endverb
     \endentry
+    \entry{Steger1998}{article}{}
+      \name{author}{1}{}{%
+        {{hash=8c4e4c22487b3200d308b3e8583471d2}{%
+           family={Steger},
+           familyi={S\bibinitperiod},
+           given={C.},
+           giveni={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{8c4e4c22487b3200d308b3e8583471d2}
+      \strng{fullhash}{8c4e4c22487b3200d308b3e8583471d2}
+      \strng{bibnamehash}{8c4e4c22487b3200d308b3e8583471d2}
+      \strng{authorbibnamehash}{8c4e4c22487b3200d308b3e8583471d2}
+      \strng{authornamehash}{8c4e4c22487b3200d308b3e8583471d2}
+      \strng{authorfullhash}{8c4e4c22487b3200d308b3e8583471d2}
+      \field{labelalpha}{Ste98}
+      \field{sortinit}{S}
+      \field{sortinithash}{322b1d5276f2f6c1bccdcd15920dbee6}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0162-8828}
+      \field{journaltitle}{IEEE Transactions on Pattern Analysis and Machine Intelligence}
+      \field{month}{2}
+      \field{number}{2}
+      \field{title}{An unbiased detector of curvilinear structures}
+      \field{volume}{20}
+      \field{year}{1998}
+      \field{pages}{113\bibrangedash 125}
+      \range{pages}{13}
+      \verb{doi}
+      \verb 10.1109/34.659930
+      \endverb
+    \endentry
     \entry{SchmidJun1997}{article}{}
       \name{author}{2}{}{%
         {{hash=36f04363f971335e030dbd4af7902e0d}{%

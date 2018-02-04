@@ -2,19 +2,51 @@
 
 \chapter{Conclusion and Future Work}
 \label{chap:conclusion}
-Hier bitte einen kurzen Durchgang durch die Arbeit.
 
-configuration plays an important roll in 3D reconstruction.
+This thesis exploits the use of linear regression in image space for 3D lane markings reconstruction. The presented approach showed that despite of the poorly textured neighborhoods, the lane markings can be reconstructed with ???centimeter accuracy??? using well configured aerial images. Instead of using explicit line matching algorithms, the approach requires initial approximate 3D lines and is highly dependent on quality of known image orientations. Nevertheless, it is robust to partial occlusion and is applicable on the (quasi-)infinite lines. %in lowly textured neighberings cases. ???
+The approach is developed for both dashed and continuous lane lines.???
+
+
+
+
+Some conclusions are given:
+
+%\cref{sec:Geometry}
+With the extracted line in the form of sets of points with sub-pixel accuracy and EOIO accuracy???, linear regression can be applied on reconstructing the 3D line segment position.
+
+image distortion vs straight line approximation
+
+
+image configuration plays an important roll in 3D reconstruction. Being covered from more views
+
+
+
+
+
+For SGM generated DSM, lane markings can be exploited to provide information for DSM refinement. 
+
+lane markings are one of the most valuable features on road surface reconstruction to provide 
+
+ refinement based on triangulation is necessary.
+
+
+
+Influence of 
 
 
 advantage
-our model can be used on lane markings reconstruction
-it 
-not relying on textures or appearance-base matching
 
+The approach can be used on lane markings reconstruction
+
+not relying on textures or appearance-based matching
+but purely based on imaging geometry.
 
 drawback
-unknown point-to-point relationship in image space, endpoints correspondence rely on quality of orientations
+
+unknown point-to-point relationship in image space
+
+
+
 
 \section*{Future Work}
 \label{chap:futurework}
