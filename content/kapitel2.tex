@@ -367,7 +367,7 @@ argmin_{x|\mathsf{H^T}x=c_h}
 \end{equation}
 
 Using Lagrangian multipliers $\boldsymbol \lambda$ we aim to minimize
-\begin{equation}
+\begin{equation}\label{eq:targetequation}
 \Phi(\boldsymbol x,\boldsymbol \lambda)=
 \dfrac{1}{2}
 (\boldsymbol l-\boldsymbol f(\boldsymbol x))^\mathsf{T}\:
@@ -723,7 +723,7 @@ The matrix $\mathsf{A}$ does not need to have full rank, but the block matrix $[
 
 \clearpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Two kinds of singular cases can happen. First, a configuration defect in object space can happen: as the 3D reconstruction approach still relies on intersection of multiple projection rays from different views, either the cases where there is only one image covering the targeted line segment, or when the targeted line segment lies on all of the epipolar planes of any of its two covering images, in this cases the problem is not solvable. Second, configuration defect in image space: as mentioned in \cref{sec:LineFitting}, when the extracted line lies (nearly) in row direction on all the covering images, the problem is also not solvable. In the cases that the targeted line segment lies only on some of the stereo pairs' epipolar planes, the problem is still solvable whereas those stereo pairs are not contributing to the solution. Or similarly, when only in some of the images the extracted line segments lie (nearly) in row direction, the problem is solvable whereas those images are not contributing measurements to the estimation.
+Two kinds of singular cases can happen. First, a configuration defect in object space can happen: as the 3D reconstruction approach still relies on intersection of multiple projection rays from different views, either the cases where there is only one image covering the targeted line segment, or when the targeted line segment lies on all of the epipolar planes of any of its two covering images, in these cases the problem is not solvable. Second, a configuration defect in image space can happen: as mentioned in \cref{sec:LineFitting}, when the extracted line lies (nearly) in row direction on all the covering images, the problem is also not solvable. In the cases that the targeted line segment lies only on some of the stereo pairs' epipolar planes, the problem is still solvable whereas those stereo pairs are not contributing to the solution. Or similarly, when only in some of the images the extracted line segments lie (nearly) in row direction, the problem is solvable whereas those images are not contributing measurements to the estimation.
 
 
 
@@ -747,7 +747,9 @@ which depends on both the design matrix $\mathsf{A}$ (i.e. the configuration) an
 \section{Line Projection on the DSM (Determination of Initial Parameter Estimates)}
 \label{sec:LineProjectionOnDSM}
 
-As the equation system in \cref{sec:LSadj} may exhibit multiple local minimum, a "correct" initial approximation of the unknowns is required for convergence to the correct solution. To provide such initial 3D line segment, the extracted line features derived in \cref{sec:LineExtraction} can be projected onto a DSM based on the bundle adjusted exterior and interior orientations.
+As the target equation \ref{eq:targetequation} introduced in \cref{sec:LSadj} may exhibit multiple local minimum, a "correct" initial approximation of the unknowns is required for convergence to the correct solution. To provide such initial 3D line segment, the extracted line features derived in \cref{sec:LineExtraction} can be projected onto a DSM based on the bundle adjusted exterior and interior orientations, as shown in fig???.
+
+% figure here
 
 Given image coordinates $\mathbf{p}(x,y)$ of a point and (bundle-adjusted) image orientations $\mathbf{q}$, there is still one degree of freedom in extended collinearity equation \eqref{eq:Gfunction} on solving object coordinates $\mathbf{P}(X,Y,Z)$. Combined with the usage of a DSM, which provides the height information $Z_{DSM}$ given a position $(X,Y)$, the corresponding object coordinates can be solved iteratively until the increment $\Delta Z$ is small enough, i.e. convergence achieved. The iterative scheme is illustrated in \cref{alg:LineProjectionOnDSM}.
 

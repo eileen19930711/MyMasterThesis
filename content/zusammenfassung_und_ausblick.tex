@@ -3,13 +3,21 @@
 \chapter{Conclusion and Future Work}
 \label{chap:conclusion}
 
-This thesis exploits the use of linear regression in image space for 3D lane markings reconstruction. The presented approach showed that despite of the poorly textured neighborhoods, the lane markings can be reconstructed with ???centimeter accuracy??? using well configured aerial images. Instead of using explicit line matching algorithms, the approach requires initial approximate 3D lines and is highly dependent on quality of known image orientations. Nevertheless, it is robust to partial occlusion and is applicable on the (quasi-)infinite lines. %in lowly textured neighberings cases. ???
+This thesis exploits the use of linear regression in image space with combination of collinearity condition for 3D lane markings reconstruction. The presented approach showed that:
+
+%despite of the poorly textured neighborhoods, 
+using precisely detected lines with sub-pixel precision as well the bundle adjusted image orientations, the lane markings can be reconstructed with ???centimeter accuracy??? using well configured aerial images.
+
+Instead of using explicit line matching algorithms, the approach requires initial approximate 3D lines and is highly dependent on quality of known image orientations. Nevertheless, it is robust to partial occlusion and is applicable on the (quasi-)infinite lines. %in lowly textured neighberings cases. ???
 The approach is developed for both dashed and continuous lane lines.???
 
 
 
 
 Some conclusions are given:
+
+...
+
 
 %\cref{sec:Geometry}
 With the extracted line in the form of sets of points with sub-pixel accuracy and EOIO accuracy???, linear regression can be applied on reconstructing the 3D line segment position.
@@ -18,8 +26,6 @@ image distortion vs straight line approximation
 
 
 image configuration plays an important roll in 3D reconstruction. Being covered from more views
-
-
 
 
 

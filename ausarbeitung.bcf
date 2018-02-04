@@ -1952,16 +1952,17 @@
     <bcf:citekey order="28">HoferFeb2013</bcf:citekey>
     <bcf:citekey order="29">TaylorNov1995</bcf:citekey>
     <bcf:citekey order="30">TaylorNov1995</bcf:citekey>
-    <bcf:citekey order="31">RMS1</bcf:citekey>
+    <bcf:citekey order="31">TaylorNov1995</bcf:citekey>
     <bcf:citekey order="32">RMS1</bcf:citekey>
     <bcf:citekey order="33">RMS1</bcf:citekey>
     <bcf:citekey order="34">RMS1</bcf:citekey>
     <bcf:citekey order="35">RMS1</bcf:citekey>
     <bcf:citekey order="36">RMS1</bcf:citekey>
-    <bcf:citekey order="37">Topal2012</bcf:citekey>
-    <bcf:citekey order="38">Steger1998</bcf:citekey>
-    <bcf:citekey order="39">Fraser1997</bcf:citekey>
-    <bcf:citekey order="40">Teunissen2000</bcf:citekey>
+    <bcf:citekey order="37">RMS1</bcf:citekey>
+    <bcf:citekey order="38">Topal2012</bcf:citekey>
+    <bcf:citekey order="39">Steger1998</bcf:citekey>
+    <bcf:citekey order="40">Fraser1997</bcf:citekey>
+    <bcf:citekey order="41">Teunissen2000</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="anyt">
