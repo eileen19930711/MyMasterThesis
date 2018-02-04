@@ -1,7 +1,9 @@
 \chapter{Experimental Results and Evaluations}
 \label{chap:k3}
 
-\cref{sec:Materials} provides information about the used dataset and the applied preprocessing steps. 
+\cref{sec:Materials} provides information about the used dataset. 
+
+\cref{sec:ParameterSelection} describes the chosen parameters for line extraction, window sliding and 3D line reconstruction. 
 
 In \cref{sec:simulation}, the correctness of the derived LS model for reconstruction is evaluated. Some other properties of the proposed reconstruction approach are also discussed.
 
@@ -9,18 +11,6 @@ In \cref{sec:simulation}, the correctness of the derived LS model for reconstruc
 %The distance between the LIDAR points and the generated DSM are computed and evaluated statistically
 %To evaluate the influence of the over-counting correction and MGM
 %cost aggregation independently, two evaluations were performed
-
-By assuming a constant priori standard deviation to $1$ [pixel] in all the LS adjustment processes, the priori variance-covariance matrix of the estimated parameters
-\begin{equation}
-\Sigma_{\hat{X}\hat{X}}=\sigma_0^2(\mathsf{A^TA})^{-1}=
-\begin{bmatrix}
-\sigma_{\hat{X}}^2 && \sigma_{\hat{X}\hat{Y}} && \sigma_{\hat{X}\hat{Z}} \\
-\sigma_{\hat{Y}\hat{X}} && \sigma_{\hat{Y}}^2 && \sigma_{\hat{Y}\hat{Z}} \\
-\sigma_{\hat{Z}\hat{X}} && \sigma_{\hat{Z}\hat{Y}} && \sigma_{\hat{Z}}^2
-\end{bmatrix}
-\end{equation}
-reflects the quality of the design matrix in different LS adjustment processes. In other words, by assuming same measuring quality of 1 pixel level in each segment, $\Sigma_{\hat{X}\hat{X}}$ reflects the configuration strength of each line segments.
-
 
 \clearpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -209,8 +199,8 @@ Road segments are masked out from original images based on \gls{osm} data: First
 
 \clearpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Preprocessing}
-\label{sec:preprocessing}
+\section{Parameter Selection}
+\label{sec:ParameterSelection}
 
 In lane marking extraction step, the $\sigma$ value for Gaussian smoothing is set to be 1.8 % From HALCON Referenz: For the choice of the thresholds High and Low one has to keep in mind that the second directional derivative depends on the amplitude and width of the line as well as the choice of Sigma. Thus: you must set this value depending on the lane marking width?
 to slightly suppress the noise in images.
@@ -378,6 +368,18 @@ without the influence of imperfect camera parameters,
 \end{figure}
 
 \clearpage
+
+
+By assuming a constant priori standard deviation to $1$ [pixel] in all the LS adjustment processes, the priori variance-covariance matrix of the estimated parameters
+\begin{equation}
+\Sigma_{\hat{X}\hat{X}}=\sigma_0^2(\mathsf{A^TA})^{-1}=
+\begin{bmatrix}
+\sigma_{\hat{X}}^2 && \sigma_{\hat{X}\hat{Y}} && \sigma_{\hat{X}\hat{Z}} \\
+\sigma_{\hat{Y}\hat{X}} && \sigma_{\hat{Y}}^2 && \sigma_{\hat{Y}\hat{Z}} \\
+\sigma_{\hat{Z}\hat{X}} && \sigma_{\hat{Z}\hat{Y}} && \sigma_{\hat{Z}}^2
+\end{bmatrix}
+\end{equation}
+reflects the quality of the design matrix in different LS adjustment processes. In other words, by assuming same measuring quality of 1 pixel level in each segment, $\Sigma_{\hat{X}\hat{X}}$ reflects the configuration strength of each line segments.
 
 
 From \cref{fig:SimuSigmaxx} it can be seen that the estimated parameters generally have smaller priori variance values (in horizontal direction) $\sqrt{\sigma_{\hat{X}}^2+\hat{\sigma}_{\hat{Y}}^2}$ and (in vertical direction) $\sigma_{\hat{Z}}$ with the increase of covering images, whereas larger deviations from the trend are contained in vertical direction. \textbf{By increasing the configuration strength, i.e. increasing the amount of covering images with different orientations, the precision of the estimated parameters can be improved}.

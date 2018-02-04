@@ -3,20 +3,32 @@
 \chapter{Conclusion and Future Work}
 \label{chap:conclusion}
 
-This thesis exploits the use of linear regression in image space with combination of collinearity condition for 3D lane markings reconstruction. The presented approach showed that:
+This thesis exploits the use of linear regression in image space with combination of collinearity condition for 3D lane markings reconstruction. Without utilization of the neighboring textures, the approach requires initial approximate 3D lines and is highly dependent on quality of pre-known image orientations. Nevertheless, it is robust to partial occlusion and is applicable on the (quasi-)infinite lines as well in cases of lowly textured neighborings. 
+%The approach is developed for both dashed and continuous lane lines.???
 
-%despite of the poorly textured neighborhoods, 
-using precisely detected lines with sub-pixel precision as well the bundle adjusted image orientations, the lane markings can be reconstructed with ???centimeter accuracy??? using well configured aerial images.
+From simulated experiments in \cref{sec:simulation}, some conclusions are given:
+\begin{itemize}
+	\item Given approximations with 2 meters bias in Z-direction and sub-pixel random noises in the image coordinates of the detected/measured 2D lines, the 3D positions of line segments were correctly refined.
+	
+	\item With the same line orientations in 3D space, the configuration strength increases with the increase of amount of covering images from different views.
+	
+	\item The reconstructed line segments have higher precision in vertical direction than in horizontal direction.
+\end{itemize}
 
-Instead of using explicit line matching algorithms, the approach requires initial approximate 3D lines and is highly dependent on quality of known image orientations. Nevertheless, it is robust to partial occlusion and is applicable on the (quasi-)infinite lines. %in lowly textured neighberings cases. ???
-The approach is developed for both dashed and continuous lane lines.???
+
+From experimental results from true data in \cref{sec:simulation}, some conclusions are given:
+\begin{itemize}
+	\item The reconstructed line segments are significantly far from DSM. This fact responds to the necessity of reconstrucion based on detected 2D lines in image space and the viewing geometry, instead of simply applying mean filter or such to denoise the DSM.....
+	
+	\item  configuration strength increases with the amount of covering images from different views.
+	\item The reconstructed line segments have higher precision in vertical direction than in horizontal direction.
+\end{itemize}
 
 
-
-
-Some conclusions are given:
 
 ...
+
+using precisely detected lines with sub-pixel precision as well the bundle adjusted image orientations, the lane markings can be reconstructed with ???centimeter accuracy??? using well configured aerial images.
 
 
 %\cref{sec:Geometry}
