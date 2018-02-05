@@ -19,9 +19,18 @@ From simulated experiments in \cref{sec:simulation}, some conclusions are given:
 From experimental results of true data in \cref{sec:simulation}, some conclusions are given:
 \begin{itemize}
 	\item The initial approximations, i.e. the DSM profile, are significantly far away from the reconstructed line segments. This indicates the necessity of reconstrucion based on detected 2D lines in image space and the viewing geometry, instead of simply reducing DSM noise by applying mean filter or such.
-		
-	\item  configuration strength increases with the amount of covering images from different views.
-	\item The reconstructed line segments have higher precision in vertical direction than in horizontal direction.
+	
+	\item The LS-estimated quality of the extracted lines as well the image orientations is better than 1 pixel. %especially the posterior standard deviation contains the errors of the imperfect image orientation parameters.
+	
+	\item Different line orientations in 3D space have different configuration strength despite of the same covering images amount from different views.
+	
+	\item The configuration defect in image space %which is mentioned in \cref{subsec:LSadj} 
+	barely happens when the functional models between image coordinates $x$ and $y$ are chosen properly for linear regression ---accordingly to the characters of detected lane lines in image space. %In the cases of flying along the motorways, the detected lane lines lie mainly in column direction on images. In other words, the defection in image space can be avoided by .
+	
+	\item  The configuration defect in object space %which is mentioned in \cref{subsec:LSadj} 
+	may happen in some of the stereo views in the same strip with the adopted flight configuration in this work.% of flying along the motorways, the detected lane lines lie mainly in flight direction on images.
+	This indirectly indicates that under this aerial images configuration increasing forward overlapping rate does not really increase the configuration strength for 3D lane markings reconstruction.
+	
 \end{itemize}
 
 
