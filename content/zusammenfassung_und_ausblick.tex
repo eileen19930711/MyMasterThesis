@@ -8,7 +8,7 @@ This thesis exploits the use of linear regression in image space with combinatio
 
 From simulated experiments in \cref{sec:simulation}, some conclusions are given:
 \begin{itemize}
-	\item Given approximations with 2 meters bias in Z-direction and sub-pixel random noises in the image coordinates of the detected/measured 2D lines, the 3D positions of line segments were correctly refined.
+	\item Given approximations with 2 meters bias in Z-direction and sub-pixel random noises in the image coordinates of the detected/measured 2D lines, the proposed approach correctly refined the 3D positions of line segments.
 	
 	\item With the same line orientations in 3D space, the configuration strength increases with the increase of amount of covering images from different views.
 	
@@ -16,10 +16,10 @@ From simulated experiments in \cref{sec:simulation}, some conclusions are given:
 \end{itemize}
 
 
-From experimental results from true data in \cref{sec:simulation}, some conclusions are given:
+From experimental results of true data in \cref{sec:simulation}, some conclusions are given:
 \begin{itemize}
-	\item The reconstructed line segments are significantly far from DSM. This fact responds to the necessity of reconstrucion based on detected 2D lines in image space and the viewing geometry, instead of simply applying mean filter or such to denoise the DSM.....
-	
+	\item The initial approximations, i.e. the DSM profile, are significantly far away from the reconstructed line segments. This indicates the necessity of reconstrucion based on detected 2D lines in image space and the viewing geometry, instead of simply reducing DSM noise by applying mean filter or such.
+		
 	\item  configuration strength increases with the amount of covering images from different views.
 	\item The reconstructed line segments have higher precision in vertical direction than in horizontal direction.
 \end{itemize}
