@@ -18,7 +18,9 @@ In \cref{sec:simulation}, the correctness of the derived LS model for reconstruc
 \label{sec:Materials}
 
 \paragraph{Aerial Images}
-For real-time mapping applications during disasters, mass events and traffic monitoring scenarios, the German Aerospace Center (DLR) has developed a new optical sensor system-- the 4k system-- on a helicopter from DLR. The oblique aerial images used in this work are acquired from a Canon EOS 1D-X camera, one of the three non-metric cameras in the 4k system, with an oblique viewing angle $\tau$ of 15$\degree$. The image data sets used in this work were acquired in around 500m flying height $H_{flight height}$ above ground, which leads to a GSD of ~7cm. % data of acquisition, number of images, length of flight strips,…->maybe in chapter “Experiments?
+For real-time mapping applications during disasters, mass events and traffic monitoring scenarios, the German Aerospace Center (DLR) has developed a new optical sensor system-- the 4k system-- on a helicopter from DLR. The oblique aerial images used in this work are acquired from a Canon EOS 1D-X camera, one of the three non-metric cameras in the 4k system, with an oblique viewing angle $\tau$ of 15$\degree$. The pixel size is around $6.9$ \textmu m and the flying height $H_{flight}$ is around 500 m above ground, which leads to a GSD of $\sim$7 cm.
+
+% data of acquisition, number of images, length of flight strips,…->maybe in chapter “Experiments?
 
 An example aerial image is shown in \cref{fig:OriImg}. \cref{tab:CameraProperties} lists the properties of this camera, and \cref{tab:SensorViewingGeometry} provides the viewing geometry information.
 
@@ -55,7 +57,7 @@ An example aerial image is shown in \cref{fig:OriImg}. \cref{tab:CameraPropertie
   \toprule
                          & \textbf{RGB, 50mm lens} \\
   \midrule
-  Viewing directions     & $\pm$15$\degree$\\
+  Oblique angle          & $\pm$15$\degree$\\
   \\[-1em]
   \multirow{2}{*}{FOV}   & $\pm$34$\degree$ across strip,\\
                          & $\pm$13$\degree$ along strip\\
@@ -71,7 +73,7 @@ An example aerial image is shown in \cref{fig:OriImg}. \cref{tab:CameraPropertie
 
 The images used in this work are acquired with a special flight configuration at both sides of the motorway which guarantees a continuous stereo view perpendicular to the lane marking direction.\footnote{The classical photogrammetric approach on flight planning is to have several straight flight lines which cover the whole motorway in a stereo view. This would be possible in this project yet would require more flight costs and would produce many more images.} This is realized by flying at the right-hand side with respect to flying direction along the motorway, with the left oblique camera looking left-down to the motorway, in both forward and backward trip. The flight configuration is shown in \cref{fig:FlightTrajectory} on the Google Earth platform.
 
-Besides, the forward overlap is around 70\%, and all the lane markings are covered by both strips, whereas the side overlap depends on the distance of flight strips, which are a result of the pilots navigation ability and other influences, like wind. Nevertheless, the motorway in its entire width was covered by the two flight strips. Altogether, this results in approximately 8-image coverage in road areas. 
+Besides, the forward overlap is around 70\%, and all the lane markings are covered by both strips, whereas the side overlap depends on the distance of flight strips, which is a result of the pilots navigation ability and other influences, like wind. Nevertheless, the motorway in its entire width was covered by the two flight strips. Altogether, this results in approximately 8-image coverage in road areas. 
 
 \begin{figure}%[!h]
   \centering
@@ -83,17 +85,47 @@ Besides, the forward overlap is around 70\%, and all the lane markings are cover
 
 
 \paragraph{Exterior and Interior Orientations}
-The \gls{eo} of the images are directly measured by a GNSS/Inertial system IGI IId.% Missing: specification of the system, improvements by SAPOS correction,….
-The EO parameters are then refined by a self-calibrating bundle adjustment. The accuracies of the exterior orientation (EO) parameters are shown in \cref{tab:EOaccuracy}. The calibrated \gls{io} parameters and their accuracies are shown in \cref{tab:IOaccuracy}. To provide an overall quality on the interior orientations: from the calibration result of interior orientations (involving lens distortion), the residuals appear non-systematic and the biggest residual $r_{max, IO}$ is around $1$ pixel.
+The aerial images are geo-referenced by \gls{gnss}/Inertial system IGI IId. self-calibrating bundle adjustment is applied to calibrate \gls{io} parameters and to refine \gls{eo} parameters. \cref{tab:EOprecision} and \cref{tab:IOprecision} show the precision of IO and EO parameters after self-calibrating bundle adjustment. % Missing: specification of the system, improvements by SAPOS correction,….
+To provide an overall quality on the interior orientations: from the calibration result of interior orientations (involving lens distortion), the residuals appear non-systematic and the biggest residual $r_{max, IO}$ is around $1$ pixel.% 1 pixel可彙整入表3.4，改正數無系統性如果要寫出來，需繪圖證明。
 
-To judge the influence of exterior and interior parameters on positioning accuracy in object space, the maximum values for each component based on the flight configuration was calculated.
+\begin{table}%[!h]
+	\centering
+	\begin{tabular}{ll|ll}
+		\toprule
+		position accuracies  &[meter]  & attitude accuracies & [degree]\\
+		\midrule
+		$\sigma_{north}$     & $0.055$ & $\sigma_{roll}$  & $0.002$\\
+		$\sigma_{east}$      & $0.035$ & $\sigma_{pitch}$ & $0.002$\\
+		$\sigma_{altitude}$  & $0.069$ & $\sigma_{yaw}$   & $0.005$\\
+		\bottomrule
+	\end{tabular}
+	\caption{Accuracies of Exterior Orientations}
+	\label{tab:EOprecision}
+	%\end{table}
+	\vspace{1cm}
+	%\begin{table}%[!h]
+	\centering
+	\begin{tabular}{lr|lr|l}
+		\toprule
+		\multicolumn{2}{c|}{Interior Orientations}  & \multicolumn{2}{c|}{accuracies} & unit\\
+		\midrule
+		focal length $c$                       &   $0.051$ & $\sigma_c$      & $6.9\mathrm{e}{-7}$ & [meter]\\
+		x coordinate of principal point $pp_x$ & $-42.259$ & $\sigma_{pp_x}$ & $0.167$             &[$\mu$m]\\
+		x coordinate of principal point $pp_y$ & $115.384$ & $\sigma_{pp_y}$ & $0.799$             &[$\mu$m]\\
+		\bottomrule
+	\end{tabular}
+	\caption{Interior Orientations and their accuracies}
+	\label{tab:IOprecision}
+\end{table}
+
+To evaluate the influence of the uncertainties in exterior and interior parameters on positioning precision in object space, the maximum values for each component based on the flight configuration was calculated.
 The quality of interior and exterior orientation parameters set would have a maximum impact in object space for around $16.5$ [cm] in X,Y-direction:
 \begin{itemize}
       \item caused by inaccurate camera position: 
       \item [] $\sqrt{\sigma_{north}^2+\sigma_{east}^2}=\sqrt{0.055^2+0.035^2}\approx0.065$ [meter]
-      \item caused by inaccurate camera attitude:
-      \item [] $\tan(\sqrt{\sigma_{roll}^2+\sigma_{pitch}^2})\times H_{flight height}\times\dfrac{1}{\cos^2\tau}$
-      \item [] $=\tan(\sqrt{0.002^2+0.002^2})\times 500\times\dfrac{1}{\cos^215\degree}\approx0.026$ [meter]
+      \item caused by inaccurate camera attitude, as illustrated in :
+      \item [] $ H_{flight}\times\sqrt{(\tan(\sigma_{roll}+\tau)-\tan\tau)^2+(\dfrac{\tan\sigma_{pitch}}{\cos\tau})^2}$
+      \item [] $=500\times\sqrt{(\tan(0.002\degree+15\degree)-\tan15\degree)^2+(\dfrac{\tan0.002\degree}{\cos15\degree})^2}\approx0.026$ [meter]
       \item caused by inaccurate Interior Orientations:
       \item [] $r_{max, IO}\times GSD\times\dfrac{1}{\cos^2\tau}=1\times0.069\times\dfrac{1}{\cos^215\degree}\approx0.074$ [meter]
 \end{itemize}
@@ -102,50 +134,27 @@ and around $9.4$ [cm] in Z-direction:
       \item caused by inaccurate camera position:
       \item [] $\sigma_{altitude}\approx0.069$ [meter]
       \item caused by inaccurate camera attitude:
-      \item [] $\tan(\sqrt{\sigma_{roll}^2+\sigma_{pitch}^2})\times H_{flight height}\times\dfrac{\sin\tau}{\cos\tau}$
+      \item [] $\tan(\sqrt{\sigma_{roll}^2+\sigma_{pitch}^2})\times H_{flight}\times\dfrac{\sin\tau}{\cos\tau}$
       \item [] $=\tan(\sqrt{0.002^2+0.002^2})\times 500\times\dfrac{\sin15\degree}{\cos15\degree}\approx0.007$ [meter]
       \item caused by inaccurate Interior Orientations:
       \item [] $r_{max, IO}\times GSD\times\dfrac{\sin\tau}{\cos\tau}=1\times0.069\times\dfrac{\sin15\degree}{\cos15\degree}\approx0.018$ [meter]
 \end{itemize}
 
-The above information tells the positioning accuracy in object space with measurements on a single image. With corresponding measurements from multiple stereo views, which allows the intersection of multiple  rays, the positioning accuracy is expected to be improved for being overdetermined.
-
-\begin{table}%[!h]
-    \centering
-    \begin{tabular}{ll|ll}
-    \toprule
-    position accuracies  &[meter]  & attitude accuracies & [degree]\\
-    \midrule
-    $\sigma_{north}$     & $0.055$ & $\sigma_{Roll}$  & $0.002$\\
-    $\sigma_{east}$      & $0.035$ & $\sigma_{Pitch}$ & $0.002$\\
-    $\sigma_{altitude}$  & $0.069$ & $\sigma_{Yaw}$   & $0.005$\\
-    \bottomrule
-    \end{tabular}
-    \caption{Accuracies of Exterior Orientations}
-    \label{tab:EOaccuracy}
-%\end{table}
-\vspace{1cm}
-%\begin{table}%[!h]
-    \centering
-    \begin{tabular}{lr|lr|l}
-    \toprule
-    \multicolumn{2}{c|}{Interior Orientations}  & \multicolumn{2}{c|}{accuracies} & unit\\
-    \midrule
-    focal length $c$                       &   $0.051$ & $\sigma_c$      & $6.9\mathrm{e}{-7}$ & [meter]\\
-    x coordinate of principal point $pp_x$ & $-42.259$ & $\sigma_{pp_x}$ & $0.167$             &[$\mu$m]\\
-    x coordinate of principal point $pp_y$ & $115.384$ & $\sigma_{pp_y}$ & $0.799$             &[$\mu$m]\\
-    \bottomrule
-    \end{tabular}
-    \caption{Interior Orientations and their accuracies}
-    \label{tab:IOaccuracy}
-\end{table}
+The above information tells the positioning precision in object space with measurements on a single image. With corresponding measurements from MVS, which allows the intersection of multiple projection rays, the positioning precision is expected to be improved for being overdetermined.
+\begin{figure}%[!h]
+	\centering
+	\includegraphics[width=\textwidth]{EOinfluence-1.png}
+	\caption{\small XXX}%%%%%%%%
+	\label{fig:EOinfluence-1}
+\end{figure}
 
 \paragraph{\gls{dsm}}
-The DSM is generated from SGM algorithm using MVS. As the asphalt road surfaces where the lane markings locate on are poorly textured, the SGM generated DSM is especially noisy in such poorly textured areas. However, such high-resolution DSM gives a good starting point for the lane marking refinement. In other words, the DSM will be used only for setting up the initial values of the work flow, and will not influence the final results of the 3D lane marking reconstruction.
+The DSM used in this experiment is generated by SGM based on MVS. As the asphalt road surfaces where the lane markings locate on are poorly textured, the SGM generated DSM is especially noisy in such poorly textured areas. However, such high-resolution DSM gives a good starting point for the lane marking refinement. In other words, the DSM will be used only for setting up the initial values of the work flow, and will not influence the final results of the 3D lane marking reconstruction.
 
 The DSM has 20 cm grid spacing. \cref{fig:DSM} shows a part of the DSM. Standard deviations of the height value in this part of the DSM is shown in \cref{fig:DSMstd}. The number of stereo image pairs used for each part on the DSM is shown in \cref{fig:DSMnumber}.
 
 % Standard deviation not well visible. Maybe add number of images for this small part
+% scale bar
 \begin{figure}%[!h]
   \centering
   \includegraphics[width=0.8\textwidth]{DEM_A9_FINAL_PART_small_shaded.png}
@@ -204,7 +213,7 @@ Road segments are masked out from original images based on \gls{osm} data: First
 
 In lane marking extraction step, the $\sigma$ value for Gaussian smoothing is set to be 1.8 % From HALCON Referenz: For the choice of the thresholds High and Low one has to keep in mind that the second directional derivative depends on the amplitude and width of the line as well as the choice of Sigma. Thus: you must set this value depending on the lane marking width?
 to slightly suppress the noise in images.
-The extracted lines of length less than 70 pixels are rejected % why
+The extracted lines whose length is less than 70 pixels are rejected % why
 regarding the fact that a dashed lane-line is no longer than 6 meter which is correspondingly 87 pixels with GSD of 6.9 cm.
 % http://www.mvtec.com/doc/halcon/11/en/lines_gauss.html
 % https://www.dvr.de/download/publikationen-schriftenreihe-17.pdf
@@ -223,7 +232,7 @@ as mentioned in sec.3.1, that the overall interior orientations result in sub-pi
 \label{sec:simulation}
 This section aims to verify the correctness of the derived LS model and to discover some characteristics of the reconstruction model using simulation data. The used materials are as described in \cref{sec:Materials}. Only the measurements (the image coordinates of the extracted lines), the true and approximate values of the unknowns (the object coordinates of a line segment) in the non-linear LS model are simulated, as described in \cref{subsec:simudata}.
 
-\cref{subsec:simuresult} firstly evaluate if the iteration scheme converges to the correct solution given imperfect initial values of the unknowns. The significant height differences between the approximate and the reconstructed line segments are also presented, indicating the refining ability of the proposed reconstruction approach.
+\cref{subsec:simuresult} firstly evaluates if the iteration scheme converges to the correct solution given imperfect initial values of the unknowns. The significant height differences between the approximate and the reconstructed line segments are also presented, indicating the refining ability of the proposed reconstruction approach.
 
 The ability of the derived LS model on detecting the measurement errors is then evaluated. Furthermore, how the increase of covering images would influence the reconstruction result is elaborated.
 
@@ -257,7 +266,7 @@ The initial estimates for non-linear LS adjustment is generated by projecting th
 \label{subsec:simuresult}
 
 %%% analysis on the unknowns:
-\cref{fig:Simu3D_2} shows the reconstructed and the true line segments in UTM coordinate system (in Zone 32N). The distances from the reconstructed line nodes to the true line segment are computed and collected, resulting in sample size of $18$. The sample mean is $0.008$ [meter] and the sample variance is $0.101$ [meter]. % This sampling procedure is assumed to be independent and random.%??? (t test assumptions)
+\cref{fig:Simu3D_2} shows the reconstructed and the true line segments in UTM coordinate system (in Zone 32N). The distances from the reconstructed line nodes to the true line segment are computed and collected, resulting in sample size of $18$. The sample mean is $0.008$ [meter] and the sample variance is $0.101^2$ [meter\textsuperscript{2}]. % This sampling procedure is assumed to be independent and random.%??? (t test assumptions)
 
 For such small sample size data, a two-tailed t-test is adopted to test if the population mean significantly not equals zero, i.e. \textbf{if the reconstructed line segments are significantly far from the true line segments}. Null hypothesis ($H_0$) and (two-tailed) alternative hypothesis ($H_A$) are stated as:
 \begin{equation*}
@@ -273,9 +282,9 @@ T_{(0.975,17)}=2.110
 \end{equation*}
 which leads to the decision rule: if test statistic $T_{obs}$ is less than $-T_{(0.975,17)}=-2.110$ or greater than $T_{(0.975,17)}=2.110$, reject the null hypothesis.
 
-With the sample mean $\overline{x}=0.008$,
-the proposed population mean $\mu_0=0$,
-the sample standard deviation $\sigma=0.101$,
+With the sample mean $\overline{x}=0.008$ [meter],
+the proposed population mean $\mu_0=0$ [meter],
+the sample standard deviation $\sigma=0.101$ [meter],
 and sample size $n=18$, the test statistic for One Sample T Test has the calculated value:
 \begin{equation*}
 T_{obs} = \frac{\overline{x}-\mu_0}{\sigma/\sqrt{n}}=\frac{0.008-0}{0.101/\sqrt{18}}\approx0.34
@@ -368,7 +377,7 @@ without the influence of imperfect camera parameters,
 \clearpage
 
 
-By assuming a constant priori standard deviation to $1$ [pixel] in all the LS adjustment processes, the priori variance-covariance matrix of the estimated parameters
+By assuming a constant priori standard deviation of measurements to $1$ [pixel] in all the LS adjustment processes, the priori variance-covariance matrix of the estimated parameters
 \begin{equation}
 \Sigma_{\hat{X}\hat{X}}=\sigma_0^2(\mathsf{A^TA})^{-1}=
 \begin{bmatrix}
@@ -416,9 +425,9 @@ Z_{0.950}=1.64
 \end{equation*}
 leads to the decision rule: if $Z_{obs}$ is less than $-1.64$, reject the null hypothesis.
 
-With the sample mean $\overline{x}=-0.181$,
-the proposed population mean $\mu_0=-0.170$,
-the sample standard deviation $\sigma=0.174$,
+With the sample mean $\overline{x}=-0.181$ [meter],
+the proposed population mean $\mu_0=-0.170$ [meter],
+the sample standard deviation $\sigma=0.174$ [meter],
 and sample size $n=1256$, the test statistic for a One Sample Z Test has a calculated value:
 \begin{equation*}
 Z_{obs} = \frac{\overline{x}-\mu_0}{\sigma/\sqrt{n}}=\frac{-0.181-(-0.170)}{0.174/\sqrt{1256}}\approx-2.24
