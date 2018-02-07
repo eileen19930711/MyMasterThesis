@@ -23,7 +23,12 @@ For real-time mapping applications during disasters, mass events and traffic mon
 % data of acquisition, number of images, length of flight strips,…->maybe in chapter “Experiments?
 
 An example aerial image is shown in \cref{fig:OriImg}. \cref{tab:CameraProperties} lists the properties of this camera, and \cref{tab:SensorViewingGeometry} provides the viewing geometry information.
-
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\textwidth]{L1234_rsz.png}
+	\caption{\small Original Image}
+	\label{fig:OriImg}
+\end{figure}
 
 \begin{table}%[!h]
   \centering
@@ -49,9 +54,7 @@ An example aerial image is shown in \cref{fig:OriImg}. \cref{tab:CameraPropertie
   \end{tabular}
   \caption{Properties of the oblique camera }
   \label{tab:CameraProperties}
-%\end{table}
-\vspace{1cm}
-%\begin{table}%[!h]
+\vspace{0.8cm}
   \centering
   \begin{tabular}{lll}
   \toprule
@@ -77,13 +80,13 @@ Besides, the forward overlap is around 70\%, and all the lane markings are cover
 
 \begin{figure}%[!h]
   \centering
-  \subfloat[]{\includegraphics[height=0.5\textwidth]{FlightTrajectory5.png} \label{fig:trajectory1}}
-  \subfloat[]{\includegraphics[height=0.5\textwidth, trim=220 0 0 0,clip]{FlightTrajectory3.png} \label{fig:trajectory2}}
+  \subfloat[]{\includegraphics[height=0.48\textwidth]{FlightTrajectory5.png} \label{fig:trajectory1}}
+  \subfloat[]{\includegraphics[height=0.48\textwidth, trim=220 0 0 0,clip]{FlightTrajectory3.png} \label{fig:trajectory2}}
   \caption{\small Flight trajectory of DLR helicopter visualized on the Google Earth platform. The green polyline shows the flight trajectory. \textit{Source: \textbf{Google Earth} 04/01/2017}}
   \label{fig:FlightTrajectory}
 \end{figure}
 
-
+\clearpage
 \paragraph{Exterior and Interior Orientations}
 The aerial images are geo-referenced by \gls{gnss}/Inertial system IGI IId. self-calibrating bundle adjustment is applied to calibrate \gls{io} parameters and to refine \gls{eo} parameters. \cref{tab:EOprecision} and \cref{tab:IOprecision} show the precision of IO and EO parameters after self-calibrating bundle adjustment. % Missing: specification of the system, improvements by SAPOS correction,….
 To provide an overall quality on the interior orientations: from the calibration result of interior orientations (involving lens distortion), the residuals appear non-systematic and the biggest residual $r_{max, IO}$ is around $1$ pixel.% 1 pixel可彙整入表3.4，改正數無系統性如果要寫出來，需繪圖證明。
@@ -92,34 +95,32 @@ To provide an overall quality on the interior orientations: from the calibration
 	\centering
 	\begin{tabular}{ll|ll}
 		\toprule
-		position accuracies  &[meter]  & attitude accuracies & [degree]\\
+		position precisions  &[meter]  & attitude precisions & [degree]\\
 		\midrule
 		$\sigma_{north}$     & $0.055$ & $\sigma_{roll}$  & $0.002$\\
 		$\sigma_{east}$      & $0.035$ & $\sigma_{pitch}$ & $0.002$\\
 		$\sigma_{altitude}$  & $0.069$ & $\sigma_{yaw}$   & $0.005$\\
 		\bottomrule
 	\end{tabular}
-	\caption{Accuracies of Exterior Orientations}
+	\caption{Precisions of Exterior Orientations}
 	\label{tab:EOprecision}
-	%\end{table}
-	\vspace{1cm}
-	%\begin{table}%[!h]
+	\vspace{0.3cm}
 	\centering
 	\begin{tabular}{lr|lr|l}
 		\toprule
-		\multicolumn{2}{c|}{Interior Orientations}  & \multicolumn{2}{c|}{accuracies} & unit\\
+		\multicolumn{2}{c|}{Interior Orientations}  & \multicolumn{2}{c|}{precisions} & unit\\
 		\midrule
 		focal length $c$                       &   $0.051$ & $\sigma_c$      & $6.9\mathrm{e}{-7}$ & [meter]\\
 		x coordinate of principal point $pp_x$ & $-42.259$ & $\sigma_{pp_x}$ & $0.167$             &[$\mu$m]\\
 		x coordinate of principal point $pp_y$ & $115.384$ & $\sigma_{pp_y}$ & $0.799$             &[$\mu$m]\\
 		\bottomrule
 	\end{tabular}
-	\caption{Interior Orientations and their accuracies}
+	\caption{Interior Orientations and their precisions}
 	\label{tab:IOprecision}
 \end{table}
 
 To evaluate the influence of the uncertainties in exterior and interior parameters on positioning precision in object space, the maximum values for each component based on the flight configuration was calculated.
-The quality of interior and exterior orientation parameters set would have a maximum impact in object space for around $16.5$ [cm] in X,Y-direction:
+The quality of interior and exterior orientation parameters set would have a maximum impact in object space for around $16$ [cm] in X,Y-direction:
 \begin{itemize}
       \item caused by inaccurate camera position: 
       \item [] $\sqrt{\sigma_{north}^2+\sigma_{east}^2}=\sqrt{0.055^2+0.035^2}\approx0.065$ [meter]
@@ -127,26 +128,27 @@ The quality of interior and exterior orientation parameters set would have a max
       \item [] $ H_{flight}\times\sqrt{(\tan(\sigma_{roll}+\tau)-\tan\tau)^2+(\dfrac{\tan\sigma_{pitch}}{\cos\tau})^2}$
       \item [] $=500\times\sqrt{(\tan(0.002\degree+15\degree)-\tan15\degree)^2+(\dfrac{\tan0.002\degree}{\cos15\degree})^2}\approx0.026$ [meter]
       \item caused by inaccurate Interior Orientations:
-      \item [] $r_{max, IO}\times GSD\times\dfrac{1}{\cos^2\tau}=1\times0.069\times\dfrac{1}{\cos^215\degree}\approx0.074$ [meter]
+      \item [] $r_{max, IO}\times GSD=1\times0.069=0.069$ [meter]
 \end{itemize}
-and around $9.4$ [cm] in Z-direction:
+and around $6.9$ [cm] in Z-direction:
 \begin{itemize}
       \item caused by inaccurate camera position:
       \item [] $\sigma_{altitude}\approx0.069$ [meter]
-      \item caused by inaccurate camera attitude:
-      \item [] $\tan(\sqrt{\sigma_{roll}^2+\sigma_{pitch}^2})\times H_{flight}\times\dfrac{\sin\tau}{\cos\tau}$
-      \item [] $=\tan(\sqrt{0.002^2+0.002^2})\times 500\times\dfrac{\sin15\degree}{\cos15\degree}\approx0.007$ [meter]
-      \item caused by inaccurate Interior Orientations:
-      \item [] $r_{max, IO}\times GSD\times\dfrac{\sin\tau}{\cos\tau}=1\times0.069\times\dfrac{\sin15\degree}{\cos15\degree}\approx0.018$ [meter]
+%      \item caused by inaccurate camera attitude:
+%      \item [] $H_{flight}\times\dfrac{\tan(\sigma_{roll}+\tau)-\tan\tau}{\tan(\sigma_{roll}+\tau)}$
+%      \item [] $=500\times\dfrac{\tan(0.002\degree+15\degree)-\tan15\degree}{\tan(0.002\degree+15\degree)}\approx0.070$ [meter]
+%      \item caused by inaccurate Interior Orientations:
+%      \item [] $r_{max, IO}\times GSD\times\dfrac{\sin\tau}{\cos\tau}=1\times0.069\times\dfrac{\sin15\degree}{\cos15\degree}\approx0.018$ [meter]
 \end{itemize}
 
-The above information tells the positioning precision in object space with measurements on a single image. With corresponding measurements from MVS, which allows the intersection of multiple projection rays, the positioning precision is expected to be improved for being overdetermined.
+The above information tells the positioning precision in object space with measurements on a single image. With corresponding measurements from MVS, which allows the intersection of multiple projection rays from different directions, the positioning precision is expected to be improved.% for being overdetermined.
 \begin{figure}%[!h]
 	\centering
 	\includegraphics[width=\textwidth]{EOinfluence-1.png}
 	\caption{\small XXX}%%%%%%%%
 	\label{fig:EOinfluence-1}
 \end{figure}
+
 
 \paragraph{\gls{dsm}}
 The DSM used in this experiment is generated by SGM based on MVS. As the asphalt road surfaces where the lane markings locate on are poorly textured, the SGM generated DSM is especially noisy in such poorly textured areas. However, such high-resolution DSM gives a good starting point for the lane marking refinement. In other words, the DSM will be used only for setting up the initial values of the work flow, and will not influence the final results of the 3D lane marking reconstruction.
@@ -174,7 +176,7 @@ The DSM has 20 cm grid spacing. \cref{fig:DSM} shows a part of the DSM. Standard
   \label{fig:DSMnumber}
 \end{figure}
 
-
+\clearpage
 \paragraph{Orthorectified Images}
 The orthorectified images are processed using the DSM and the interior and exterior orientations derived from the bundle adjustment. They are georeferenced and the scale is uniform. One of the orthorectified images is shown in \cref{fig:OrthoImg}. The orthorectified images are only used for setting up initial values and used as intermediary step for processing the road masks, but do not influence the results of 3D lane marking reconstruction.
 % Maybe a nice place, to visualize the DSM error on the lane marking projections…
@@ -184,26 +186,13 @@ Road segments are masked out from original images based on \gls{osm} data: First
 
 \begin{figure}%[!h]
 	\centering
-	\parbox{.5\linewidth}{
-		\centering
-		    \includegraphics[width=0.5\textwidth]{L1234_rsz.png}
-		    \caption{\small Original Image}
-		    \label{fig:OriImg}
-	    }
-    \quad
-    \parbox{.5\linewidth}{
-    	\centering
-    	\includegraphics[width=0.55\textwidth]{OL1234_rsz.png}
+    	\includegraphics[width=0.7\textwidth]{OL1234_rsz.png}
     	\caption{\small Orthorectified Image}
     	\label{fig:OrthoImg}
-    }
-	\centering
-	\parbox{.7\linewidth}{
-		\centering
-		\includegraphics[width=0.5\textwidth]{ML1234_rsz.png}
+	\vspace{1cm}
+		\includegraphics[width=0.7\textwidth]{ML1234_rsz.png}
 		\caption{\small Masked Image}
 		\label{fig:MaskedImg}
-	}
 \end{figure}
 
 \clearpage
