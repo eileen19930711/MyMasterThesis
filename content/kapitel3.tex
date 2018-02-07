@@ -200,6 +200,7 @@ Road segments are masked out from original images based on \gls{osm} data: First
 \section{Parameter Selection}
 \label{sec:ParameterSelection}
 
+%%% extraction %%%%%%%%%%%%%%%%
 In lane marking extraction step, the $\sigma$ value for Gaussian smoothing is set to be 1.8 % From HALCON Referenz: For the choice of the thresholds High and Low one has to keep in mind that the second directional derivative depends on the amplitude and width of the line as well as the choice of Sigma. Thus: you must set this value depending on the lane marking width?
 to slightly suppress the noise in images.
 The extracted lines whose length is less than 70 pixels are rejected % why
@@ -209,9 +210,29 @@ regarding the fact that a dashed lane-line is no longer than 6 meter which is co
 
 
 
+%%% line projection on DSM %%%%%%%%%%%%%%%%
+$\Delta Z < thres$
+
+
+
+%%% sliding window %%%%%%%%%%%%%%%%
 The length of the sliding window depends on the expected curvature, and for motorways it was fixed to 9m …
 % What about dashed lane markings in the middle? Why do you choose 9m -> compromise between robustness and minimized systematic errors.
 
+
+
+%%% measurements collection: buffer width %%%%%%%%%%%%%%%%
+
+
+
+%%% LS parameters %%%%%%%%%%%%%%%%
+convergence threshold 
+
+
+%%% amount of image coverage %%%%%%%%%%%%%%%%
+
+
+%%% lens distortion -> not straight line preserved
 as mentioned in sec.3.1, that the overall interior orientations result in sub-pixel accuracy, the extracted lane lines on the original (lens-distorted) images are approximated to be straight line preserved.
 
 

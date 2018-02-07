@@ -585,12 +585,15 @@ The unknown parameters in the \textit{Gauss-Markov model} are
 		Z_s\\
 		X_e\\
 		Y_e\\
-		Z_e
+		Z_e\\
+		y^1_1\\[0.3em]
+		\vdots\\
+		y^J_{N^J}\\[0.3em]
 	\end{bmatrix}
 \end{equation}
 with the amount of unknowns:
 \begin{equation}
-	U=6
+	U=6+\displaystyle\sum_{j=1}^{J}N^j
 \end{equation}
 
 \clearpage
@@ -715,7 +718,7 @@ By updating the parameters using \cref{eq:xiter}, the LS estimation is applied i
 
 The redundancy of the problem is
 \begin{equation}
-R=N+H-U=2\times\displaystyle\sum_{j=1}^{J}N^j-3
+R=N+H-U=\displaystyle\sum_{j=1}^{J}N^j-3
 \end{equation}
 
 The matrix $\mathsf{A}$ does not need to have full rank, but the block matrix $[\mathsf{A_T},\mathsf{H}]$ must have full rank in order to guarantee the estimation problem has a unique solution.
@@ -742,7 +745,7 @@ which depends on both the design matrix $\mathsf{A}$ (i.e. the configuration) an
 
 
 
-\clearpage
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Line Projection on the DSM (Determination of Initial Parameter Estimates)}
 \label{sec:LineProjectionOnDSM}
@@ -751,9 +754,16 @@ As the target equation \ref{eq:targetequation} introduced in \cref{sec:LSadj} ma
 
 % figure here
 
-Given image coordinates $\mathbf{p}(x,y)$ of a point and (bundle-adjusted) image orientations $\mathbf{q}$, there is still one degree of freedom in extended collinearity equation \eqref{eq:Gfunction} on solving object coordinates $\mathbf{P}(X,Y,Z)$. Combined with the usage of a DSM, which provides the height information $Z_{DSM}$ given a position $(X,Y)$, the corresponding object coordinates can be solved iteratively until the increment $\Delta Z$ is small enough, i.e. convergence achieved. The iterative scheme is illustrated in \cref{alg:LineProjectionOnDSM}.
+Given image coordinates $\mathbf{p}(x,y)$ of a point and (bundle-adjusted) image orientations $\mathbf{q}$, there is still one degree of freedom in extended collinearity equation \eqref{eq:Gfunction} on solving object coordinates $\mathbf{P}(X,Y,Z)$. Combined with the usage of a DSM, which provides the height information $Z_{DSM}$ given a position $(X,Y)$, the corresponding object coordinates can be solved iteratively until the increment $\Delta Z$ is small enough, i.e. convergence achieved. The iterative scheme is illustrated in \cref{fig:ProjectiononDSM} and \cref{alg:LineProjectionOnDSM}.
 
 Considering that the DSM is raster (discrete) whereas $X$ and $Y$ have continuous numerical values, the DSM height $Z_{DSM}$ for the given point $(X,Y)$ is bilinear interpolated.
+
+\begin{figure}%[!h]
+	\centering
+	\includegraphics[width=\textwidth]{ProjectionOnDSM.png}
+	\caption{\small XXX}
+	\label{fig:ProjectiononDSM}
+\end{figure}
 
 \begin{Algorithmus}
 \caption{Single Point Projection on DSM\newline
@@ -781,6 +791,4 @@ Considering that the DSM is raster (discrete) whereas $X$ and $Y$ have continuou
 
 \end{algorithmic}
 \end{Algorithmus}
-
-
 
