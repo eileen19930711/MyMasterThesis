@@ -18,9 +18,9 @@ In \cref{sec:simulation}, the correctness of the derived LS model for reconstruc
 \label{sec:Materials}
 
 \paragraph{Aerial Images}
-For real-time mapping applications during disasters, mass events and traffic monitoring scenarios, the German Aerospace Center (DLR) has developed a new optical sensor system-- the 4k system-- on a helicopter from DLR. The oblique aerial images used in this work are acquired from a Canon EOS 1D-X camera, one of the three non-metric cameras in the 4k system, with an oblique viewing angle $\tau$ of 15$\degree$. The pixel size is around $6.9$ \textmu m and the flying height $H_{flight}$ is around 500 m above ground, which leads to a GSD of $\sim$7 cm.
+For real-time mapping applications during disasters, mass events and traffic monitoring scenarios, the German Aerospace Center (DLR) has developed a new optical sensor system-- the 4k system-- on a helicopter from DLR. The oblique aerial images used in this work are acquired from a Canon EOS 1D-X camera, one of the three non-metric cameras in the 4k system, with an oblique viewing angle $\tau$ of 15$\degree$. The pixel size is around $6.9$ \textmu m and the flying height $H_{flight}$ was around 500 m above ground, which leads to a GSD of $\sim$6.9 cm.
 
-% data of acquisition, number of images, length of flight strips,…->maybe in chapter “Experiments?
+As described in \cite{Fischer2017}, this aerial imagery shall be improved to have an absolute geolocation accuracy of better than 30 centimeters if TerraSAR-X geodetic points are included as reference points.
 
 An example aerial image is shown in \cref{fig:OriImg}. \cref{tab:CameraProperties} lists the properties of this camera, and \cref{tab:SensorViewingGeometry} provides the viewing geometry information.
 \begin{figure}
@@ -74,7 +74,10 @@ An example aerial image is shown in \cref{fig:OriImg}. \cref{tab:CameraPropertie
   \label{tab:SensorViewingGeometry}
 \end{table}
 
-The images used in this work are acquired with a special flight configuration at both sides of the motorway which guarantees a continuous stereo view perpendicular to the lane marking direction.\footnote{The classical photogrammetric approach on flight planning is to have several straight flight lines which cover the whole motorway in a stereo view. This would be possible in this project yet would require more flight costs and would produce many more images.} This is realized by flying at the right-hand side with respect to flying direction along the motorway, with the left oblique camera looking left-down to the motorway, in both forward and backward trip. The flight configuration is shown in \cref{fig:FlightTrajectory} on the Google Earth platform.
+The images used in this work are acquired with a special flight configuration at both sides of the motorway which guarantees a continuous stereo view perpendicular to the lane marking direction.\footnote{The classical photogrammetric approach on flight planning is to have several straight flight lines which cover the whole motorway in a stereo view. This would be possible in this project yet would require more flight costs and would produce many more images.} This is realized by flying at the right-hand side with respect to flying direction along the motorway, with the left oblique camera looking left-down to the motorway, in both forward and backward trips. The flight configuration is shown in \cref{fig:FlightTrajectory} on the Google Earth platform.
+
+There are 15 images used in this work: 8 images in forward trip (first strip) and 7 in backward (second strip). The striplength is ??? meter. The coverage configuration is shown in fig???.
+% data of acquisition, number of images, length of flight strips,…
 
 Besides, the forward overlap is around 70\%, and all the lane markings are covered by both strips, whereas the side overlap depends on the distance of flight strips, which is a result of the pilots navigation ability and other influences, like wind. Nevertheless, the motorway in its entire width was covered by the two flight strips. Altogether, this results in approximately 8-image coverage in road areas. 
 
@@ -88,8 +91,8 @@ Besides, the forward overlap is around 70\%, and all the lane markings are cover
 
 \clearpage
 \paragraph{Exterior and Interior Orientations}
-The aerial images are geo-referenced by \gls{gnss}/Inertial system IGI IId. self-calibrating bundle adjustment is applied to calibrate \gls{io} parameters and to refine \gls{eo} parameters. \cref{tab:EOprecision} and \cref{tab:IOprecision} show the precision of IO and EO parameters after self-calibrating bundle adjustment. % Missing: specification of the system, improvements by SAPOS correction,….
-To provide an overall quality on the interior orientations: from the calibration result of interior orientations (involving lens distortion), the residuals appear non-systematic and the biggest residual $r_{max, IO}$ is around $1$ pixel.% 1 pixel可彙整入表3.4，改正數無系統性如果要寫出來，需繪圖證明。
+The aerial images are geo-referenced by \gls{gnss}/Inertial system IGI AEROcontrol-IId and further improved by \gls{sapos} correction. Self-calibrating bundle adjustment is applied to calibrate \gls{io} parameters and to refine \gls{eo} parameters. \cref{tab:EOprecision} and \cref{tab:IOprecision} show the precision of IO and EO parameters after self-calibrating bundle adjustment. % Missing: specification of the system, ,….
+To provide an overall quality on the interior orientations: from the calibration result of interior orientations (involving lens distortion), the residuals appear non-systematic and the biggest residual $r_{max, IO}$ is around 1 pixel.% 1 pixel可彙整入表3.4，改正數無系統性如果要寫出來，需繪圖證明。
 
 \begin{table}%[!h]
 	\centering
@@ -119,6 +122,14 @@ To provide an overall quality on the interior orientations: from the calibration
 	\label{tab:IOprecision}
 \end{table}
 
+
+\begin{figure}%[!h]
+	\centering
+	\includegraphics[width=0.8\textwidth]{EOinfluence-1.png}
+	\caption{\small The impact of uncertain camera attitude in horizontal direction.}
+	\label{fig:EOinfluence-1}
+\end{figure}
+\clearpage
 To evaluate the influence of the uncertainties in exterior and interior parameters on positioning precision in object space, the maximum values for each component based on the flight configuration was calculated.
 The quality of interior and exterior orientation parameters set would have a maximum impact in object space for around $16$ [cm] in X,Y-direction:
 \begin{itemize}
@@ -142,12 +153,7 @@ and around $6.9$ [cm] in Z-direction:
 \end{itemize}
 
 The above information tells the positioning precision in object space with measurements on a single image. With corresponding measurements from MVS, which allows the intersection of multiple projection rays from different directions, the positioning precision is expected to be improved.% for being overdetermined.
-\begin{figure}%[!h]
-	\centering
-	\includegraphics[width=\textwidth]{EOinfluence-1.png}
-	\caption{\small XXX}%%%%%%%%
-	\label{fig:EOinfluence-1}
-\end{figure}
+
 
 
 \paragraph{\gls{dsm}}

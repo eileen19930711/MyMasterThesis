@@ -134,6 +134,79 @@
       \verb 10.1109/CVPR.2005.375
       \endverb
     \endentry
+    \entry{wiki3dreconstruction}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=d0e1ac76a01b87d4d996862fd2242c98}{%
+           family={{Estimation lemma}},
+           familyi={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{d0e1ac76a01b87d4d996862fd2242c98}
+      \strng{fullhash}{d0e1ac76a01b87d4d996862fd2242c98}
+      \strng{bibnamehash}{d0e1ac76a01b87d4d996862fd2242c98}
+      \strng{authorbibnamehash}{d0e1ac76a01b87d4d996862fd2242c98}
+      \strng{authornamehash}{d0e1ac76a01b87d4d996862fd2242c98}
+      \strng{authorfullhash}{d0e1ac76a01b87d4d996862fd2242c98}
+      \field{labelalpha}{Est}
+      \field{sortinit}{E}
+      \field{sortinithash}{f615fb9c6fba11c6f962fb3fd599810e}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{[Online; accessed 31-January-2018]}
+      \field{title}{3D reconstruction --- Wikipedia, the Free Encyclopedia}
+      \verb{urlraw}
+      \verb https://en.wikipedia.org/wiki/3D_reconstruction
+      \endverb
+      \verb{url}
+      \verb https://en.wikipedia.org/wiki/3D_reconstruction
+      \endverb
+    \endentry
+    \entry{Fischer2017}{article}{}
+      \name{author}{5}{}{%
+        {{hash=5d533687ae230f7b70304fcaa0b988ff}{%
+           family={Fischer},
+           familyi={F\bibinitperiod},
+           given={P.},
+           giveni={P\bibinitperiod}}}%
+        {{hash=00aaaf9d26bc4659242bd86f4149a3b6}{%
+           family={Plaß},
+           familyi={P\bibinitperiod},
+           given={B.},
+           giveni={B\bibinitperiod}}}%
+        {{hash=73308c07f55394d9f90a7cc541592508}{%
+           family={Kurz},
+           familyi={K\bibinitperiod},
+           given={F.},
+           giveni={F\bibinitperiod}}}%
+        {{hash=080fc84be60a7de348467a020bde54f3}{%
+           family={Krauss},
+           familyi={K\bibinitperiod},
+           given={T.},
+           giveni={T\bibinitperiod}}}%
+        {{hash=5e61b934c93775b0bffd846745c70ce8}{%
+           family={Runge},
+           familyi={R\bibinitperiod},
+           given={H.},
+           giveni={H\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {TU München, Lehrstuhl für Verkehrstechnik}%
+      }
+      \strng{namehash}{9a3befd6d62fc838e8146011c7f48e59}
+      \strng{fullhash}{e7c81476a2287cbe6264e9607af1ba29}
+      \strng{bibnamehash}{e7c81476a2287cbe6264e9607af1ba29}
+      \strng{authorbibnamehash}{e7c81476a2287cbe6264e9607af1ba29}
+      \strng{authornamehash}{9a3befd6d62fc838e8146011c7f48e59}
+      \strng{authorfullhash}{e7c81476a2287cbe6264e9607af1ba29}
+      \field{labelalpha}{FPK+17}
+      \field{sortinit}{F}
+      \field{sortinithash}{669c706c6f1fbf3b5a83d26f1d9e9e72}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{International Conference on Intelligent Transport Systems in Theory and Practice, mobil.TUM}
+      \field{month}{7}
+      \field{title}{Validation of HD maps for autonomous driving}
+      \field{year}{2017}
+    \endentry
     \entry{Fraser1997}{article}{}
       \name{author}{1}{}{%
         {{hash=ad0ecb3c79c4b617889924a635e5b858}{%
