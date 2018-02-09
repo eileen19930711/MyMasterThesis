@@ -15,7 +15,6 @@ A non-linear LS model is derived and estimated in \cref{sec:LSadj} to elaborate 
 
 In \cref{sec:LineProjectionOnDSM} the generation of approximate 3D line segments is described, as initial values of unknown quantities are required in nonlinear LS estimation.
 
-%Section2.7??? demonstrates how the corresponding measurements in image space are collected given the initial values in object space.
 
 \begin{figure}
 	\centering
@@ -32,8 +31,6 @@ In \cref{sec:LineProjectionOnDSM} the generation of approximate 3D line segments
 \label{sec:LineExtraction}
 
 The appearance of lane markings on German roads including line type, color and width is specified depending on the road type. Different line types of lane markings are shown in \cref{fig:LaneMarkingTypes} and their line widths are defined in \cref{tab:LaneMarkingWidths}. As shown in \cref{tab:DashedLaneMarkingLengths}, the dashed lane markings on motorways have 6 meter length.
-% https://de.wikipedia.org/wiki/Fahrbahnmarkierung#Eigenschaften
-% Richtlinien für die Markierung von Straßen (RMS) Teil 1
 
 Because of the appearance, the problem of lane marking detection can be treated as a line detection problem. We restrict the proposed framework to lane markings with single white lines (dashed or continuous) of 0.3 meter width. Other types like in restricted zone, double lines, parking areas, temporal yellow lines in construction sites etc, are excluded.% https://www.transchool.lee.army.mil/adso/documents/zeichen.pdf
 
@@ -50,8 +47,6 @@ Because of the appearance, the problem of lane marking detection can be treated 
 	\quad
 	\subfloat[\small Dashed double lines]{\fbox{\includegraphics[width=0.3\textwidth, trim={0 150 0 150},clip=true]{Laengsmarkierung_unterbrochen_doppelt.pdf}}}
 	\caption{\small Line types of lane markings \cite{RMS1}}
-	% https://de.wikipedia.org/wiki/Fahrbahnmarkierung
-	% Richtlinien für die Markierung von Straßen (RMS) Teil 1
 	\label{fig:LaneMarkingTypes}
 \end{figure}
 
@@ -97,9 +92,7 @@ Because of the appearance, the problem of lane marking detection can be treated 
 \clearpage
 
 % https://en.wikipedia.org/wiki/Edge_detection#Approaches
-There are many algorithms for line detection. % Hough Transform...
-% search-based and zero-crossing based
-Prewitt line detector uses two orthogonal gradient operators, and the pixels in the operators are of same weights. Sobel detector also uses two orthogonal gradients operators, but the weights of pixel in operators are not equal ---the closer the pixel to the center of operator, the higher weight it has. Canny edge detector searches local extrema of gradient to locate the positions of line features and is still a state-of-the-art edge detector. Edge-detectors that perform better than the Canny usually require higher computational complexities or a greater number of parameters. Edge drawing \cite{Topal2012} first spots anchors along rows and columns by Sobel detector, and then joins these anchors to extract line features.
+There are many algorithms for line detection. Prewitt line detector uses two orthogonal gradient operators, and the pixels in the operators are of same weights. Sobel detector also uses two orthogonal gradients operators, but the weights of pixel in operators are not equal ---the closer the pixel to the center of operator, the higher weight it has. Canny edge detector searches local extrema of gradient to locate the positions of line features and is still a state-of-the-art edge detector. Edge-detectors that perform better than the Canny usually require higher computational complexities or a greater number of parameters. Edge drawing \cite{Topal2012} first spots anchors along rows and columns by Sobel detector, and then joins these anchors to extract line features.
 
 In this work, the principle to extract line features is to firstly derive the line direction for each pixel by using partial derivatives of a Gaussian smoothing kernel. Pixels that have a local maximum in the second directional derivative perpendicular to the line direction are marked as line points. By thresholding their second directional derivative values, the accepted line points are then linked and connected.\cite{Steger1998}
 
@@ -163,7 +156,7 @@ y\prime=y+\Delta y
 
 \subsection{Extended Collinearity Equation}
 \label{subsec:ExtendedCollinearity}
-As real cameras only approximate the perspective camera model, lens distortion correction can be additionally included in the collinearity model, attempting to correct the pixel positions so that they obey the perspective model with sufficient accuracy.[W. Förstner et al. 2016]% The reference is not the original one
+As real cameras only approximate the perspective camera model, lens distortion correction can be additionally included in the collinearity model, attempting to correct the pixel positions so that they obey the perspective model with sufficient accuracy.%[W. Förstner et al. 2016] % The reference is not the original one
 
 By inserting \eqref{eq:collinearity} and \eqref{eq:LensDistortion} into \eqref{eq:undistortedimgcoord} , the relationship between a 3D point $\mathbf{P}(X, Y, Z)$ and its corresponding distorted image coordinates $\mathbf{p}(x,y)$ can be described as
 \begin{equation} \label{eq:expandedcollinearity}
@@ -191,9 +184,7 @@ Line fitting is the process of constructing an infinite straight line that has a
 
 In the case of standard linear regression, the regressor $x$ is assumed error free, inconsistencies\footnote{The word "inconsistencies" indicates the unobserved random errors, also called as measurement errors.} are only for the dependent variable $y$. Geometrically it means that the vertical distances from observed data to the fitted line is minimized. To minimize the perpendicular distances from the data points to the regression line, a orthogonal regression model is derived in \cref{subsec:OrthogonalRegression}.
 
-For a later combination with point-wise extended collinearity equation \eqref{eq:Gfunction} in next section, the aim is to fit the line equation in two-point form to the observed dataset. 
-% extracted lines produced in \cref{sec:LineExtraction} (in forms of sets of points in image coordinates). 
-For such nonlinear functional relation between variales, a nonlinear LS model is derived in \cref{subsec:NonLinear}.
+For a later combination with point-wise extended collinearity equation \eqref{eq:Gfunction} in next section, the aim is to fit the line equation in two-point form to the observed dataset. For such nonlinear functional relation between variales, a nonlinear LS model is derived in \cref{subsec:NonLinear}.
 
 A functional model is unsolvable when the assumed "dependent" variable is indeed not a function of the independent variables, i.e. the assumed functional relation does not really exist. Take an observed set of 2D points with their Cartesian coordinates $\{x_i,y_i\}^n_{i=1}$ on a vertical line $x=constant$ for example. Their $y$ values have no dependency on their $x$ values, i.e. knowledge of $x$ tells nothing about $y$. Therefore, for this dataset, the functional model $y=f(x)$ is singular. In such cases, however, $x$ is a function of $y$ (which is actually a constant function) and the equation system which models the dependent variable $x$ being a function of the independent variable $y$ becomes solvable. Regarding the dataset used in this work (which will be described with more details in \cref{sec:Materials}) where the observed 2D points scatter mainly in column direction in image space, the functional relation between variables $x$ and $y$ will be setup as $x=f(y)$ to avoid weakly solvable equations system.
 
@@ -221,12 +212,7 @@ where the regression coefficients $a_0$ and $a_1$ are the unknown parameters to 
 \begin{equation} \label{eq:MixModel1-2}
 y_i-e_{y_i} = \bar{y_i}
 \end{equation}
-Such models, as the combination of \eqref{eq:MixModel1-1} and \eqref{eq:MixModel1-2}, that take into account the measurement errors of both dependent variables and regressors, are errors-in-variables models. Further more, for the case of equal error variances, i.e. when $\delta=\dfrac{\sigma_{e_x}}{\sigma_{e_y}}=1$, it is a orthogonal regression model which minimizes the %sum of squared 
-perpendicular distances from the data points to the regression line.
-
-% !!!
-%As \eqref{eq:MixModel1-1} describes the relationship between observations and unknowns and \eqref{eq:MixModel1-2} describes the relationship between observations, this model is known as the mixed model or Gauss-Helmert model.
-% It will be helpful to write the basic equations of the model.
+Such models, as the combination of \eqref{eq:MixModel1-1} and \eqref{eq:MixModel1-2}, that take into account the measurement errors of both dependent variables and regressors, are errors-in-variables models. Further more, for the case of equal error variances, i.e. when $\delta=\dfrac{\sigma_{e_x}}{\sigma_{e_y}}=1$, it is a orthogonal regression model which minimizes the perpendicular distances from the data points to the regression line.
 
 \subsection{Orthogonal Regression in Two-point Form}
 \label{subsec:NonLinear}
@@ -281,13 +267,13 @@ In this section, the process of refining the position of a 3D line segment in th
 %%%%%%%%%%%%%%%%%% introduce the subsections
 \cref{subsec:LSmodel} introduces the non-linear LS adjustment model with constraints. The observation equations for LS adjustment are set up in \cref{subsec:ObsEqua}. They describe the fitting of a straight line to the measurements, which are the extracted lines, in all covering images, where the fitting lines on different images are transformed from a single 3D straight line segment through the extended collinearity equation \eqref{eq:expandedcollinearity}. Regarding the fact that the collinearity is a point-wise condition, a line segment is represented by its two endpoints. Correspondingly, the observation equations in the LS model are line equations in two-point form. 
 
-By satisfying the collinearity condition, single fitting line on an image spans a plane in $\mathbb{R}^3$. The corresponding lines from different views span several planes in $\mathbb{R}^3$, which are non-parallel to each other and should intersect in a line in $\mathbb{R}^3$. As this infinite line is the solution space of the LS estimation, at least two constraints on the location of the two endpoints of the to-be-reconstructed 3D line segment are necessary to avoid their arbitrary locations on this infinite line in $\mathbb{R}^3$. The constraint equations are modeled in \cref{subsec:ConEqua}.
+By satisfying the collinearity condition, single fitting line on an image spans a plane in $\mathbb{R}^3$. The corresponding lines from different views span several planes in $\mathbb{R}^3$, which are non-parallel to each other and should intersect in a line in $\mathbb{R}^3$. As this infinite line is the solution space of the LS estimation, at least two constraints on the location of the two endpoints of the targeted 3D line segment are necessary to avoid their arbitrary locations on this infinite line in $\mathbb{R}^3$. The constraint equations are modeled in \cref{subsec:ConEqua}.
 
 So far the non-linear LS model has been setup. In \cref{subsec:LSadj} it is further linearized and the substitute linear LS model is estimated.
 
 %\vspace{20pt}
-%%%%% introduce the sliding window
 
+%%%%% introduce the sliding window
 To simplify the problem, a long lane-marking segment is partially reconstructed through a sliding window in the object space. Each segment is approximated by a straight line, taking into account the maximum curvature of the highway. 
 
 In each sliding window, a segment is reconstructed, i.e. a complete non-linear LS adjustment is performed. Only the middle point of the reconstructed line segment is recorded. The sliding window then moves a stepsize forward, and the process of 3D reconstruction is performed again starting from the recorded middle point of the previous line segment. Another line segment is then reconstructed, with its middle point being recorded, and so on. These recorded middle points are in the end the nodes of the reconstructed line. This process is illustrated in \cref{fig:slidingwindow}.
@@ -307,12 +293,11 @@ In each sliding window, a segment is reconstructed, i.e. a complete non-linear L
 
 
 %%%%% describe the collection of measurements 
-The measurements for each reconstruction process are collected correspondingly, as shown in \cref{fig:measurementscollection} ---by back-projecting the initial line segment into image space and buffering 10 pixels width on each side. By this, all the extracted 2D line segments in this region are collected. %The 10 pixels buffering width corresponds to 70 cm in object space. the imperfect DSM profile has maximum ...which is around 70 cm in image space. 
-As shown in \cref{fig:overlappingregion}, the reconsideration in overlapping region of successive sliding windows makes the reconstruction more robust.
+The measurements for each reconstruction process are collected correspondingly, as shown in \cref{fig:measurementscollection} ---by back-projecting the initial line segment into image space and buffering 10 pixels width on each side. By this, all the extracted 2D line segments in this region are collected. As shown in \cref{fig:overlappingregion}, the reconsideration in overlapping region of successive sliding windows makes the reconstruction more robust.
 
 \begin{figure}
 	\centering
-	\subfloat[The pink points represent all the extracted lines (in the form of sets of points). The green points are the endpoints of the back projected initial approximate line segment.]{\includegraphics[width=0.45\textwidth]{2-4_3_1.png} \label{fig:measurementscollection1}}
+	\subfloat[The pink points represent all the extracted lines (in the form of sets of points). The green points are the endpoints of the back projected initial approximate 3D line segment.]{\includegraphics[width=0.45\textwidth]{2-4_3_1.png} \label{fig:measurementscollection1}}
 	\subfloat[The points in the buffering area are collected as the measurements for LS adjustment.]{\includegraphics[width=0.45\textwidth]{2-4_3_2.png} \label{fig:measurementscollection2}}
 	
 	\caption{\small Measurements collection in image space.}
@@ -327,10 +312,6 @@ As shown in \cref{fig:overlappingregion}, the reconsideration in overlapping reg
 	\label{fig:overlappingregion}
 \end{figure}
 
-
-
-
-% the measurements are collected accordingly.
 \clearpage
 \subsection{The Gauss-Markov Model with Constraints}
 \label{subsec:LSmodel}
@@ -403,10 +384,6 @@ with respect to $\boldsymbol x$ and $\boldsymbol \lambda$.
 
 \subsection{Observation Equations}
 \label{subsec:ObsEqua}
-% % %
-% which can be further rewritten:
-%Taylor expansion...(local linear approximation)
-%the linear equation can also be expanded
 
 Given a start-point $\mathbf{P}_s(X_s,Y_s,Z_s)$ and an end-point $\mathbf{P}_e(X_e,Y_e,Z_e)$ of a line segment $L$ in the object space and the camera parameters $\mathbf{q}^j$ of camera $j$. Consider the case where there are $J$ images covering this line segment. With the expanded collinearity model \eqref{eq:expandedcollinearity}, the start- and end-points of this line segment's back-projection in image $j$ have the image coordinates $\mathbf{p}^j_s(x^j_s,y^j_s)$ and $\mathbf{p}^j_e(x^j_e,y^j_e)$:
 \begin{equation} \label{eq:obsmodel-collinearity}

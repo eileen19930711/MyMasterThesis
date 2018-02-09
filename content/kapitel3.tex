@@ -54,7 +54,7 @@ An example aerial image is shown in \cref{fig:OriImg}. \cref{tab:CameraPropertie
   \end{tabular}
   \caption{Properties of the oblique camera }
   \label{tab:CameraProperties}
-\vspace{0.8cm}
+\vspace{0.5cm}
   \centering
   \begin{tabular}{lll}
   \toprule
@@ -76,25 +76,26 @@ An example aerial image is shown in \cref{fig:OriImg}. \cref{tab:CameraPropertie
 
 The images used in this work are acquired with a special flight configuration at both sides of the motorway which guarantees a continuous stereo view perpendicular to the lane marking direction.\footnote{The classical photogrammetric approach on flight planning is to have several straight flight lines which cover the whole motorway in a stereo view. This would be possible in this project yet would require more flight costs and would produce many more images.} This is realized by flying at the right-hand side with respect to flying direction along the motorway, with the left oblique camera looking left-down to the motorway, in both forward and backward trips. The flight configuration is shown in \cref{fig:FlightTrajectory} on the Google Earth platform.
 
+\begin{figure}%[!h]
+	\centering
+	\subfloat[]{\includegraphics[height=0.5\textwidth]{FlightTrajectory5.png} \label{fig:trajectory1}}
+	\subfloat[]{\includegraphics[height=0.5\textwidth, trim=220 0 0 0,clip]{FlightTrajectory3.png} \label{fig:trajectory2}}
+	\caption{\small Flight trajectory of DLR helicopter visualized on the Google Earth platform. The green polyline shows the flight trajectory. \textit{Source: \textbf{Google Earth} 04/01/2017}}
+	\label{fig:FlightTrajectory}
+\end{figure}
+
+\clearpage
 There are 15 images used in this work: 8 images in forward trip (first strip) and 7 in backward (second strip). The striplength is ??? meter. The coverage configuration is shown in fig???.
 % data of acquisition, number of images, length of flight strips,…
 
 Besides, the forward overlap is around 70\%, and all the lane markings are covered by both strips, whereas the side overlap depends on the distance of flight strips, which is a result of the pilots navigation ability and other influences, like wind. Nevertheless, the motorway in its entire width was covered by the two flight strips. Altogether, this results in approximately 8-image coverage in road areas. 
 
-\begin{figure}%[!h]
-  \centering
-  \subfloat[]{\includegraphics[height=0.48\textwidth]{FlightTrajectory5.png} \label{fig:trajectory1}}
-  \subfloat[]{\includegraphics[height=0.48\textwidth, trim=220 0 0 0,clip]{FlightTrajectory3.png} \label{fig:trajectory2}}
-  \caption{\small Flight trajectory of DLR helicopter visualized on the Google Earth platform. The green polyline shows the flight trajectory. \textit{Source: \textbf{Google Earth} 04/01/2017}}
-  \label{fig:FlightTrajectory}
-\end{figure}
 
-\clearpage
 \paragraph{Exterior and Interior Orientations}
 The aerial images are geo-referenced by \gls{gnss}/Inertial system IGI AEROcontrol-IId and further improved by \gls{sapos} correction. Self-calibrating bundle adjustment is applied to calibrate \gls{io} parameters and to refine \gls{eo} parameters. \cref{tab:EOprecision} and \cref{tab:IOprecision} show the precision of IO and EO parameters after self-calibrating bundle adjustment. % Missing: specification of the system, ,….
 To provide an overall quality on the interior orientations: from the calibration result of interior orientations (involving lens distortion), the residuals appear non-systematic and the biggest residual $r_{max, IO}$ is around 1 pixel.% 1 pixel可彙整入表3.4，改正數無系統性如果要寫出來，需繪圖證明。
 
-\begin{table}%[!h]
+\begin{table}[!h]
 	\centering
 	\begin{tabular}{ll|ll}
 		\toprule
@@ -107,7 +108,7 @@ To provide an overall quality on the interior orientations: from the calibration
 	\end{tabular}
 	\caption{Precisions of Exterior Orientations}
 	\label{tab:EOprecision}
-	\vspace{0.3cm}
+	\vspace{0.5cm}
 	\centering
 	\begin{tabular}{lr|lr|l}
 		\toprule
@@ -123,12 +124,6 @@ To provide an overall quality on the interior orientations: from the calibration
 \end{table}
 
 
-\begin{figure}%[!h]
-	\centering
-	\includegraphics[width=0.8\textwidth]{EOinfluence-1.png}
-	\caption{\small The impact of uncertain camera attitude in horizontal direction.}
-	\label{fig:EOinfluence-1}
-\end{figure}
 \clearpage
 To evaluate the influence of the uncertainties in exterior and interior parameters on positioning precision in object space, the maximum values for each component based on the flight configuration was calculated.
 The quality of interior and exterior orientation parameters set would have a maximum impact in object space for around $16$ [cm] in X,Y-direction:
@@ -151,6 +146,13 @@ and around $6.9$ [cm] in Z-direction:
 %      \item caused by inaccurate Interior Orientations:
 %      \item [] $r_{max, IO}\times GSD\times\dfrac{\sin\tau}{\cos\tau}=1\times0.069\times\dfrac{\sin15\degree}{\cos15\degree}\approx0.018$ [meter]
 \end{itemize}
+
+\begin{figure}%[!h]
+	\centering
+	\includegraphics[width=0.8\textwidth]{EOinfluence-1.png}
+	\caption{\small The impact of uncertain camera attitude in horizontal direction.}
+	\label{fig:EOinfluence-1}
+\end{figure}
 
 The above information tells the positioning precision in object space with measurements on a single image. With corresponding measurements from MVS, which allows the intersection of multiple projection rays from different directions, the positioning precision is expected to be improved.% for being overdetermined.
 
@@ -182,7 +184,7 @@ The DSM has 20 cm grid spacing. \cref{fig:DSM} shows a part of the DSM. Standard
   \label{fig:DSMnumber}
 \end{figure}
 
-\clearpage
+
 \paragraph{Orthorectified Images}
 The orthorectified images are processed using the DSM and the interior and exterior orientations derived from the bundle adjustment. They are georeferenced and the scale is uniform. One of the orthorectified images is shown in \cref{fig:OrthoImg}. The orthorectified images are only used for setting up initial values and used as intermediary step for processing the road masks, but do not influence the results of 3D lane marking reconstruction.
 % Maybe a nice place, to visualize the DSM error on the lane marking projections…
@@ -228,7 +230,7 @@ The length of the sliding window depends on the expected curvature, and for moto
 
 
 %%% measurements collection: buffer width %%%%%%%%%%%%%%%%
-
+%The 10 pixels buffering width corresponds to 70 cm in object space. the imperfect DSM profile has maximum ...which is around 70 cm in image space. 
 
 
 %%% LS parameters %%%%%%%%%%%%%%%%

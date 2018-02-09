@@ -316,34 +316,6 @@
       \field{pages}{78\bibrangedash 85}
       \range{pages}{8}
     \endentry
-    \entry{SAE2014}{report}{}
-      \name{author}{1}{}{%
-        {{hash=dc783a214927b1603da182dde46b943d}{%
-           family={International},
-           familyi={I\bibinitperiod},
-           given={SAE},
-           giveni={S\bibinitperiod}}}%
-      }
-      \list{institution}{1}{%
-        {On-Road Automated Driving (Orad) Committee}%
-      }
-      \list{publisher}{1}{%
-        {Society of Automotive Engineers (SAE) International}%
-      }
-      \strng{namehash}{dc783a214927b1603da182dde46b943d}
-      \strng{fullhash}{dc783a214927b1603da182dde46b943d}
-      \strng{bibnamehash}{dc783a214927b1603da182dde46b943d}
-      \strng{authorbibnamehash}{dc783a214927b1603da182dde46b943d}
-      \strng{authornamehash}{dc783a214927b1603da182dde46b943d}
-      \strng{authorfullhash}{dc783a214927b1603da182dde46b943d}
-      \field{labelalpha}{Int14}
-      \field{sortinit}{I}
-      \field{sortinithash}{320bc8fe8101b9376f9f21cd507de0e8}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{title}{Taxonomy and Definitions for Terms Related to On-Road Motor Vehicle Automated Driving Systems}
-      \field{year}{2014}
-    \endentry
     \entry{JainJun2010}{article}{}
       \name{author}{4}{}{%
         {{hash=2eda5d7d7682fc69a58f38726b83c33b}{%
@@ -448,6 +420,32 @@
       \verb{doi}
       \verb 10.1109/ICCV.1999.790410
       \endverb
+    \endentry
+    \entry{SAE2014}{report}{}
+      \name{author}{1}{}{%
+        {{hash=bd2efb25fc16abee258f7bc3fb2caf2a}{%
+           family={{SAE International}},
+           familyi={S\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {On-Road Automated Driving (Orad) Committee}%
+      }
+      \list{publisher}{1}{%
+        {Society of Automotive Engineers (SAE) International}%
+      }
+      \strng{namehash}{bd2efb25fc16abee258f7bc3fb2caf2a}
+      \strng{fullhash}{bd2efb25fc16abee258f7bc3fb2caf2a}
+      \strng{bibnamehash}{bd2efb25fc16abee258f7bc3fb2caf2a}
+      \strng{authorbibnamehash}{bd2efb25fc16abee258f7bc3fb2caf2a}
+      \strng{authornamehash}{bd2efb25fc16abee258f7bc3fb2caf2a}
+      \strng{authorfullhash}{bd2efb25fc16abee258f7bc3fb2caf2a}
+      \field{labelalpha}{SAE14}
+      \field{sortinit}{S}
+      \field{sortinithash}{322b1d5276f2f6c1bccdcd15920dbee6}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Taxonomy and Definitions for Terms Related to On-Road Motor Vehicle Automated Driving Systems}
+      \field{year}{2014}
     \endentry
     \entry{Steger1998}{article}{}
       \name{author}{1}{}{%
