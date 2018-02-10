@@ -718,7 +718,7 @@ After LS estimation, the estimated variance-covariance matrix of the estimated p
 \hat{\sigma}_{\hat{Z}\hat{X}} && \hat{\sigma}_{\hat{Z}\hat{Y}} && \hat{\sigma}_{\hat{Z}}^2
 \end{bmatrix}
 \end{equation}
-which depends on both the design matrix $\mathsf{A}$ (i.e. the configuration) and the posterior standard deviation $\hat{\sigma}_0$ (i.e. the posterior measurements quality).
+which depends on both the design matrix $\mathsf{A}$ (i.e. the configuration) and the posterior standard deviation of unit weight $\hat{\sigma}_0$ (i.e. the posterior measurements quality).
 
 
 
@@ -727,9 +727,15 @@ which depends on both the design matrix $\mathsf{A}$ (i.e. the configuration) an
 \section{Line Projection on the DSM (Determination of Initial Parameter Estimates)}
 \label{sec:LineProjectionOnDSM}
 
-As the target equation \ref{eq:targetequation} introduced in \cref{sec:LSadj} may exhibit multiple local minimum, a "correct" initial approximation of the unknowns is required for convergence to the correct solution. To provide such initial 3D line segment, the extracted line features derived in \cref{sec:LineExtraction} can be projected onto a DSM based on the bundle adjusted exterior and interior orientations, as shown in fig???.
+As the target equation \ref{eq:targetequation} introduced in \cref{sec:LSadj} may exhibit multiple local minimum, a "correct" initial approximation of the unknowns is required for convergence to the correct solution. To provide such initial 3D line segment, the extracted line features derived in \cref{sec:LineExtraction} can be projected onto a DSM based on the bundle adjusted exterior and interior orientations, as shown in \cref{fig:DSMprofile}.
 
-% figure here
+\begin{figure}%[!h]
+	\centering
+	\includegraphics[width=\textwidth]{Test_3D_DSM.png}
+	\caption{\small The projected line has noisy Z-values.}
+	\label{fig:DSMprofile}
+\end{figure}
+
 
 Given image coordinates $\mathbf{p}(x,y)$ of a point and (bundle-adjusted) image orientations $\mathbf{q}$, there is still one degree of freedom in extended collinearity equation \eqref{eq:Gfunction} on solving object coordinates $\mathbf{P}(X,Y,Z)$. Combined with the usage of a DSM, which provides the height information $Z_{DSM}$ given a position $(X,Y)$, the corresponding object coordinates can be solved iteratively until the increment $\Delta Z$ is small enough, i.e. convergence achieved. The iterative scheme is illustrated in \cref{fig:ProjectiononDSM} and \cref{alg:LineProjectionOnDSM}.
 
