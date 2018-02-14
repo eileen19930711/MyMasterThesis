@@ -143,7 +143,7 @@
 \fi
 The 3D information of road infrastructures are gaining importance with the development of autonomous driving. 3D lane markings, for example, support lane-accurate localization. 
 % Motivation
-Several approaches have been proposed to reconstruct 3D line features from optical imagery. However, standard appearance-based matching approaches are hardly applicable on lane markings due to the similar color profile of all lane markings and the lack of textures in their neighboring areas. 
+Several approaches have been proposed to reconstruct 3D line features from optical-sensor imagery. However, standard appearance-based matching approaches are hardly applicable on lane markings due to the similar color profile of all lane markings and the lack of textures in their neighboring areas. 
 This thesis presents a workflow for 3D lane markings reconstruction without explicit feature matching process. The aim is to optimize the best 3D line location by minimizing the distance from its back projection to the detected 2D line in all the covering images.
 % What materials are used? the ideas?
 Firstly the lane markings are automatically extracted from aerial images using some standard line detection algorithms. By projecting these extracted lines onto the \gls{sgm} generated \gls{dsm}, the approximate 3D line segments are generated. Starting from these approximations, the 3D lines are iteratively refined based on the detected 2D lines in the original images and the viewing geometry. 
