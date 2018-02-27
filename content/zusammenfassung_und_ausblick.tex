@@ -3,7 +3,7 @@
 \chapter{Conclusion and Future Work}
 \label{chap:conclusion}
 
-This thesis exploits the use of linear regression in image space with combination of collinearity condition for 3D lane markings reconstruction. Without utilization of the neighboring textures, the approach requires initial approximate 3D lines and is highly dependent on quality of pre-known image orientations. Nevertheless, it is robust to partial occlusion and is applicable on the (quasi-)infinite lines as well as in cases of lowly textured neighborings. 
+This thesis exploits the use of linear regression in image space with combination of collinearity condition for 3D lane markings reconstruction. Without the utilization of the neighboring textures, the approach requires initial approximate 3D lines and is highly dependent on quality of pre-known image orientations. Nevertheless, it is robust to partial occlusion of the targeted lines on images and is applicable to the (quasi-)infinite line features as well as in cases of lowly textured neighborings. 
 %The approach is developed for both dashed and continuous lane lines.???
 
 From simulated experiments in \cref{sec:simulation}, some conclusions are given:
@@ -20,19 +20,19 @@ From experimental results of true data in \cref{sec:simulation}, some conclusion
 \begin{itemize}
 	\item The initial approximations, i.e. the DSM profile, are significantly far away from the reconstructed line segments. This indicates the necessity of reconstrucion based on detected 2D lines in image space and the viewing geometry, instead of simply reducing DSM noise by applying mean filter or such.
 	
-	\item The LS-estimated quality of the extracted lines as well the image orientations is better than 1 pixel. %especially the posterior standard deviation contains the errors of the imperfect image orientation parameters.
+	\item The LS-estimated precision of the measurements, involving the lane marking extraction quality as well as the quality of image orientation parameters, is better than 1 pixel.
 	
-	\item Different line orientations in 3D space have different configuration strength despite of the same covering images amount from different views.
+	\item Despite of the same covering images amount from different views, configuration strength differs with different 3D line orientations.
 	
 	\item The configuration defect in image space %which is mentioned in \cref{subsec:LSadj} 
-	barely happens when the functional models between image coordinates $x$ and $y$ are chosen properly for linear regression ---accordingly to the characters of detected lane lines in image space. %In the cases of flying along the motorways, the detected lane lines lie mainly in column direction on images. In other words, the defection in image space can be avoided by .
+	barely happens when the linear regression functional model between image coordinates $x$ and $y$ are properly set up ---according to the characteristics of the detected lane-lines in image space.
 	
-	\item  The configuration defect in object space %which is mentioned in \cref{subsec:LSadj} 
-	may happen in some of the stereo views in the same strip with the adopted flight configuration in this work.% of flying along the motorways, the detected lane lines lie mainly in flight direction on images.
-	This indirectly indicates that under this aerial images configuration increasing forward overlapping rate does not really increase the configuration strength for 3D lane markings reconstruction.
+	\item  %The configuration defect in object space %which is mentioned in \cref{subsec:LSadj} 
+	%may happen in some of the stereo views in the same strip with the adopted flight configuration in this work.% of flying along the motorways, the detected lane lines lie mainly in flight direction on images.
+	With the adopted flight configuration in this work, where the lane markings lie nearly on the epipolar plane of the  stereo pairs in the same strip, those stereo pairs barely contribute on increasing the configuration strength for lane marking reconstruction. 
+	This indirectly indicates that, under this image configuration, increasing forward overlapping rate does not really increase the configuration strength for 3D lane markings reconstruction. 
 	
 \end{itemize}
-
 
 
 ...
@@ -79,6 +79,9 @@ unknown point-to-point relationship in image space
 \label{chap:futurework}
 
 Future improvements could be achieved by:
+
+having crab angles of $\approx45\degree$ in flight.
+Theoretically this kind of configuration defect may be solved.
 
 increasing the oblique angle
 

@@ -210,18 +210,17 @@ Road segments are masked out from original images based on \gls{osm} data: First
 
 %%% extraction %%%%%%%%%%%%%%%%
 In lane marking extraction process (see \cref{sec:LineExtraction}), the $\sigma$ value for Gaussian smoothing is set to be 1.8 to slightly suppress the noise in images. % From HALCON Referenz: For the choice of the thresholds High and Low one has to keep in mind that the second directional derivative depends on the amplitude and width of the line as well as the choice of Sigma. Thus: you must set this value depending on the lane marking width?
-A length threshold on the extracted lines are applied to reduce some of the false positives ---the detected line features which are indeed not lane markings. Regarding the fact that a dashed lane line is around 6 meter long, which corresponds to 62--87 pixels in image space (in 45$\degree$ direction or parallel to one of the coordinate axes), the extracted lines whose length is less than \textcolor{red}{65} pixels are rejected.
+A length threshold on the extracted lines are applied to reduce some of the false positives ---the detected line features which are indeed not lane markings. Regarding the fact that a dashed lane-line is around 6 meter long which corresponds to 62--87 pixels in image space (in 45$\degree$ direction or parallel to one of the coordinate axes), the extracted lines whose length is less than \textcolor{red}{65} pixels are rejected.
 % http://www.mvtec.com/doc/halcon/11/en/lines_gauss.html
 % https://www.dvr.de/download/publikationen-schriftenreihe-17.pdf
 
 
 %%% line projection on DSM %%%%%%%%%%%%%%%%
-The convergence threshold for 2D image point projection on DSM (see \cref{sec:LineProjectionOnDSM}) is selected as 0.5 m, as the height precision of the used DSM is around \textcolor{red}{50 cm}.
+The convergence threshold for 2D image point projection on DSM (see \cref{sec:LineProjectionOnDSM}) is selected as 0.5 m, as the height precision on road surface of the used DSM is expected to be around \textcolor{red}{50 cm}.
 
 
 %%% sliding window %%%%%%%%%%%%%%%%
-
-The length of the sliding window should be decided base on the expected curvature of the targeted line. Additionally for the sake of robustness, regression model requires as much independent measurements as possible. In the cases of lane markings on motorways, the sliding window length was fixed to 16 m as a compromise between robustness and the minimized systematic errors arisen from straight-approximated curvature. The step size of sliding window was set to half of the sliding window length, i.e. 8 m.
+The length of the sliding window should be decided base on the expected curvature of the targeted line and the robustness of the reconstruction model. In the cases of continuous lane markings on motorways, the sliding window length was fixed to 16 m, or for the last line segment it may be up to 24 m long, as a compromise between optimization robustness and the minimized systematic errors arisen from straight-approximated curvature. As to the cases of dashed lane-lines (6 m long), a sliding window has the same length as its targeted approximating line, i.e. it has 6 m length. The step size of sliding window was set to half of the sliding window length, i.e. 8 m.
 
 
 
@@ -237,7 +236,9 @@ The length of the sliding window should be decided base on the expected curvatur
 
 
 %%% lens distortion -> not straight line preserved
-as mentioned in sec.3.1, that the overall interior orientations result in sub-pixel accuracy, the extracted lane lines on the original (lens-distorted) images are approximated to be straight line preserved.
+The adapted lens distortion model is none shape-preserving, i.e. a 3D straight line is no more straight in image. However 
+lens distortion correction maximum: ??? pixel
+%as mentioned in sec.3.1, that the overall interior orientations result in sub-pixel accuracy, the extracted lane lines on the original (lens-distorted) images are approximated to be straight line preserved.
 
 
 
@@ -423,7 +424,7 @@ Besides, the priori variance of the estimated parameters is smaller in vertical 
 \subsection{True Data Result}
 \label{subsec:trueresult}
 
-A continuous lane marking of 255.9 meters length is reconstructed. \cref{fig:Test3D} shows the reconstructed line segments and the DSM profile in UTM coordinate system (in Zone 32N). The distances from the reconstructed line segment to the DSM profile are computed and plotted into histogram in \cref{fig:TestHist}. They are collected along the reconstructed line segments with 0.2 meter spacing (considering the DSM grid of 0.2 meter), resulting in sample size of $1256$. The sample mean is $-0.180$ [meter] and the sample standard deviation is $0.174$ [meter]. %This sampling procedure is assumed to be independent and random.%??? and normal distributed (Z test assumptions)
+A continuous lane marking of 255.9 meters length is reconstructed. \cref{fig:Test3D} shows the reconstructed line segments and the DSM profile in UTM coordinate system (in Zone 32N). The distances from the reconstructed line segment to the DSM profile are computed and plotted into histogram in \cref{fig:TestHist}. They are collected along the reconstructed line segments with 0.2 meter spacing (considering the DSM grid of 0.2 meter), resulting in sample size of $1256$. The sample mean is $-0.181$ [meter] and the sample standard deviation is $0.174$ [meter]. %This sampling procedure is assumed to be independent and random.%??? and normal distributed (Z test assumptions)
 
 Assuming DSM height profile being significantly lower than the reconstructed line segments for more than $17$??? centimeters, a lower-tailed Z-test is adopted. Null hypothesis ($H_0$) and (one-tailed) alternative hypothesis ($H_A$) are stated as:
 \begin{equation*}

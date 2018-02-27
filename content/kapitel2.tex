@@ -727,12 +727,12 @@ which depends on both the design matrix $\mathsf{A}$ (i.e. the configuration) an
 \section{Line Projection on the DSM (Determination of Initial Parameter Estimates)}
 \label{sec:LineProjectionOnDSM}
 
-As the target equation \ref{eq:targetequation} introduced in \cref{sec:LSadj} may exhibit multiple local minimum, a "correct" initial approximation of the unknowns is required for convergence to the correct solution. To provide such initial 3D line segment, the extracted line features derived in \cref{sec:LineExtraction} can be projected onto a DSM based on the bundle adjusted exterior and interior orientations, as shown in \cref{fig:DSMprofile}.
+As the target equation \ref{eq:targetequation} introduced in \cref{sec:LSadj} may exhibit multiple local minimum, a "correct" initial approximation of the unknowns is required for convergence to the correct solution. To provide such initial 3D line segment, the extracted line features derived in \cref{sec:LineExtraction} can be projected onto a DSM based on the bundle adjusted exterior and interior orientations. An example is shown in \cref{fig:DSMprofile}.
 
 \begin{figure}%[!h]
 	\centering
 	\includegraphics[width=\textwidth]{Test_3D_DSM.png}
-	\caption{\small The projected line has noisy Z-values.}
+	\caption{\small The projected line on DSM.}
 	\label{fig:DSMprofile}
 \end{figure}
 
