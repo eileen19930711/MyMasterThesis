@@ -1,15 +1,15 @@
 [0] Config.pm:302> INFO - This is Biber 2.10
 [0] Config.pm:305> INFO - Logfile is 'ausarbeitung.blg'
-[94] biber-MSWIN64:313> INFO - === 
-[263] Biber.pm:371> INFO - Reading 'ausarbeitung.bcf'
-[374] Biber.pm:857> INFO - Found 17 citekeys in bib section 0
-[406] Biber.pm:3976> INFO - Processing section 0
-[445] Biber.pm:4136> INFO - Looking for bibtex format file 'bibliography.bib' for section 0
-[454] bibtex.pm:1490> INFO - LaTeX decoding ...
-[517] bibtex.pm:1306> INFO - Found BibTeX data source 'bibliography.bib'
-[799] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[799] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[799] Biber.pm:3804> INFO - Sorting list 'anyt/global//global/global' of type 'entry' with template 'anyt' and locale 'en-US'
-[799] Biber.pm:3810> INFO - No sort tailoring available for locale 'en-US'
-[911] bbl.pm:617> INFO - Writing 'ausarbeitung.bbl' with encoding 'UTF-8'
-[920] bbl.pm:720> INFO - Output to ausarbeitung.bbl
+[143] biber-MSWIN64:313> INFO - === 
+[335] Biber.pm:371> INFO - Reading 'ausarbeitung.bcf'
+[479] Biber.pm:857> INFO - Found 17 citekeys in bib section 0
+[548] Biber.pm:3976> INFO - Processing section 0
+[684] Biber.pm:4136> INFO - Looking for bibtex format file 'bibliography.bib' for section 0
+[695] bibtex.pm:1490> INFO - LaTeX decoding ...
+[796] bibtex.pm:1306> INFO - Found BibTeX data source 'bibliography.bib'
+[1353] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[1353] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[1353] Biber.pm:3804> INFO - Sorting list 'anyt/global//global/global' of type 'entry' with template 'anyt' and locale 'en-US'
+[1354] Biber.pm:3810> INFO - No sort tailoring available for locale 'en-US'
+[1533] bbl.pm:617> INFO - Writing 'ausarbeitung.bbl' with encoding 'UTF-8'
+[1546] bbl.pm:720> INFO - Output to ausarbeitung.bbl

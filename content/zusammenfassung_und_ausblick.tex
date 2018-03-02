@@ -18,7 +18,7 @@ From simulated experiments in \cref{sec:simulation}, some conclusions are given:
 
 From experimental results of true data in \cref{sec:simulation}, some conclusions are given:
 \begin{itemize}
-	\item The initial approximations, i.e. the DSM profile, are significantly far away from the reconstructed line segments. This indicates the necessity of reconstrucion based on detected 2D lines in image space and the viewing geometry, instead of simply reducing DSM noise by applying mean filter or such.
+	\item The DSM profile, i.e. the initial 3D line approximation, is significantly dozens of centimeters far away from the reconstructed line segments. This indicates the necessity of reconstrucion based on detected 2D lines in image space and the viewing geometry, instead of simply reducing DSM noise by applying mean filter or such.
 	
 	\item The LS-estimated precision of the measurements, involving the lane marking extraction quality as well as the quality of image orientation parameters, is better than 1 pixel.
 	
@@ -29,48 +29,27 @@ From experimental results of true data in \cref{sec:simulation}, some conclusion
 	
 	\item  %The configuration defect in object space %which is mentioned in \cref{subsec:LSadj} 
 	%may happen in some of the stereo views in the same strip with the adopted flight configuration in this work.% of flying along the motorways, the detected lane lines lie mainly in flight direction on images.
-	With the adopted flight configuration in this work, where the lane markings lie nearly on the epipolar plane of the  stereo pairs in the same strip, those stereo pairs barely contribute on increasing the configuration strength for lane marking reconstruction. 
-	This indirectly indicates that, under this image configuration, increasing forward overlapping rate does not really increase the configuration strength for 3D lane markings reconstruction. 
+	With the adopted flight configuration in this work, the stereo pairs in the same strip, where the lane markings lie nearly on the epipolar plane, barely contribute on increasing the configuration strength for lane marking reconstruction. 
+	%This indirectly indicates that, under this kind of image configuration, increasing forward overlapping rate does not really increase the configuration strength for 3D lane markings reconstruction. 
 	
 \end{itemize}
 
 
-...
+%using precisely detected lines with sub-pixel precision as well the bundle adjusted image orientations, the lane markings can be reconstructed with ???centimeter accuracy??? using well configured aerial images.
 
-using precisely detected lines with sub-pixel precision as well the bundle adjusted image orientations, the lane markings can be reconstructed with ???centimeter accuracy??? using well configured aerial images.
+%With the extracted line in the form of sets of points with sub-pixel accuracy and EOIO accuracy???, linear regression can be applied on reconstructing the 3D line segment position.
 
+%image distortion vs straight line approximation
 
-%\cref{sec:Geometry}
-With the extracted line in the form of sets of points with sub-pixel accuracy and EOIO accuracy???, linear regression can be applied on reconstructing the 3D line segment position.
+Some general conclusions are:
+\begin{itemize}
+	\item Image configuration plays an important roll in 3D reconstruction. In the case of this work, being covered by more views whose base-lines are as perpendicular as possible to lane-marking directions, would improve the reconstruction result.
+	
+	\item Lane markings can be exploited to provide information on refining SGM-generated DSM.% Reconstruction based on imaging geometry is necessary.
 
-image distortion vs straight line approximation
+	\item The proposed reconstruction workflow relys on initial approximation with enough accuracy.
+\end{itemize}
 
-
-image configuration plays an important roll in 3D reconstruction. Being covered from more views
-
-
-
-For SGM generated DSM, lane markings can be exploited to provide information for DSM refinement. 
-
-lane markings are one of the most valuable features on road surface reconstruction to provide 
-
- refinement based on triangulation is necessary.
-
-
-
-Influence of 
-
-
-advantage
-
-The approach can be used on lane markings reconstruction
-
-not relying on textures or appearance-based matching
-but purely based on imaging geometry.
-
-drawback
-
-unknown point-to-point relationship in image space
 
 
 
@@ -78,11 +57,11 @@ unknown point-to-point relationship in image space
 \section*{Future Work}
 \label{chap:futurework}
 
-Future improvements could be achieved by:
+%Future improvements could be achieved by:
 
-having crab angles of $\approx45\degree$ in flight.
-Theoretically this kind of configuration defect may be solved.
+%having crab angles of $\approx45\degree$ in flight.
+%Theoretically this kind of configuration defect may be solved.
 
-increasing the oblique angle
-
+%increasing the oblique angle
+The proposed approach addresses 3D line features reconstruction problems without resorting to their appearances in images. Similar cases are railways. Appling this framwork to such cases may be done in the future. Additionally, it worths trying the framework with images taken from drones instead of from helicopters.
 

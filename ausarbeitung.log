@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2018.1.25)  28 FEB 2018 00:42
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2018.1.25)  2 MAR 2018 03:12
 entering extended mode
 **./ausarbeitung.tex
 (ausarbeitung.tex
@@ -3160,7 +3160,7 @@ Overfull \hbox (1.9744pt too wide) in paragraph at lines 27--27
 
 [11] [12] [13] [14] [15]) (content/kapitel2.tex [16]
 chapter 2.
-<graphics/workflow.pdf, id=333, 477.04224pt x 592.61403pt>
+<graphics/workflow.pdf, id=338, 477.04224pt x 592.61403pt>
 File: graphics/workflow.pdf Graphic file (type pdf)
 <use graphics/workflow.pdf>
 Package pdftex.def Info: graphics/workflow.pdf  used on input line 21.
@@ -3169,19 +3169,19 @@ Package pdftex.def Info: graphics/workflow.pdf  used on input line 21.
 
 
 ] [18 <./graphics/workflow.pdf>]
-<graphics/Laengsmarkierung_durchgehend.pdf, id=375, 401.5pt x 401.5pt>
+<graphics/Laengsmarkierung_durchgehend.pdf, id=380, 401.5pt x 401.5pt>
 File: graphics/Laengsmarkierung_durchgehend.pdf Graphic file (type pdf)
 <use graphics/Laengsmarkierung_durchgehend.pdf>
 Package pdftex.def Info: graphics/Laengsmarkierung_durchgehend.pdf  used on inp
 ut line 40.
 (pdftex.def)             Requested size: 128.03871pt x 32.01013pt.
-<graphics/Laengsmarkierung_unterbrochen.pdf, id=377, 401.5pt x 401.5pt>
+<graphics/Laengsmarkierung_unterbrochen.pdf, id=382, 401.5pt x 401.5pt>
 File: graphics/Laengsmarkierung_unterbrochen.pdf Graphic file (type pdf)
 <use graphics/Laengsmarkierung_unterbrochen.pdf>
 Package pdftex.def Info: graphics/Laengsmarkierung_unterbrochen.pdf  used on in
 put line 42.
 (pdftex.def)             Requested size: 128.03871pt x 32.01013pt.
-<graphics/Laengsmarkierung_unterbrochen_durchgehend.pdf, id=379, 401.5pt x 401.
+<graphics/Laengsmarkierung_unterbrochen_durchgehend.pdf, id=384, 401.5pt x 401.
 5pt>
 File: graphics/Laengsmarkierung_unterbrochen_durchgehend.pdf Graphic file (type
  pdf)
@@ -3189,14 +3189,14 @@ File: graphics/Laengsmarkierung_unterbrochen_durchgehend.pdf Graphic file (type
 Package pdftex.def Info: graphics/Laengsmarkierung_unterbrochen_durchgehend.pdf
   used on input line 44.
 (pdftex.def)             Requested size: 128.03871pt x 32.01013pt.
-<graphics/Laengsmarkierung_durchgehend_doppelt.pdf, id=381, 401.5pt x 401.5pt>
+<graphics/Laengsmarkierung_durchgehend_doppelt.pdf, id=386, 401.5pt x 401.5pt>
 File: graphics/Laengsmarkierung_durchgehend_doppelt.pdf Graphic file (type pdf)
 
 <use graphics/Laengsmarkierung_durchgehend_doppelt.pdf>
 Package pdftex.def Info: graphics/Laengsmarkierung_durchgehend_doppelt.pdf  use
 d on input line 46.
 (pdftex.def)             Requested size: 128.03871pt x 32.01013pt.
-<graphics/Laengsmarkierung_unterbrochen_doppelt.pdf, id=383, 401.5pt x 401.5pt>
+<graphics/Laengsmarkierung_unterbrochen_doppelt.pdf, id=388, 401.5pt x 401.5pt>
 
 File: graphics/Laengsmarkierung_unterbrochen_doppelt.pdf Graphic file (type pdf
 )
@@ -3219,7 +3219,7 @@ Package nag Warning: \label in float, but not after \caption on input line 58.
 erbrochen.pdf> <./graphics/Laengsmarkierung_unterbrochen_durchgehend.pdf> <./gr
 aphics/Laengsmarkierung_durchgehend_doppelt.pdf> <./graphics/Laengsmarkierung_u
 nterbrochen_doppelt.pdf>]
-<graphics/ML1234_extlines_rsz.png, id=468, 1300.86pt x 867.24pt>
+<graphics/ML1234_extlines_rsz.png, id=473, 1300.86pt x 867.24pt>
 File: graphics/ML1234_extlines_rsz.png Graphic file (type png)
 <use graphics/ML1234_extlines_rsz.png>
 Package pdftex.def Info: graphics/ML1234_extlines_rsz.png  used on input line 1
@@ -3239,12 +3239,12 @@ Package pdftex.def Info: graphics/ML1234_extlines_rsz.png  used on input line 1
                                                   \fi \fi 
 l.250 \clearpage
                 ]
-<graphics/2-4_1_1.png, id=545, 845.1575pt x 597.23125pt>
+<graphics/2-4_1_1.png, id=550, 845.1575pt x 597.23125pt>
 File: graphics/2-4_1_1.png Graphic file (type png)
 <use graphics/2-4_1_1.png>
 Package pdftex.def Info: graphics/2-4_1_1.png  used on input line 259.
 (pdftex.def)             Requested size: 384.10966pt x 271.43991pt.
-<graphics/2-4_1_2.png, id=546, 845.1575pt x 597.23125pt>
+<graphics/2-4_1_2.png, id=551, 845.1575pt x 597.23125pt>
 File: graphics/2-4_1_2.png Graphic file (type png)
 <use graphics/2-4_1_2.png>
 Package pdftex.def Info: graphics/2-4_1_2.png  used on input line 261.
@@ -3253,32 +3253,32 @@ Package pdftex.def Info: graphics/2-4_1_2.png  used on input line 261.
 
 LaTeX Warning: Float too large for page by 9.62288pt on input line 264.
 
-<graphics/2-4_2_1.png, id=553, 845.1575pt x 317.185pt>
+<graphics/2-4_2_1.png, id=558, 845.1575pt x 317.185pt>
 File: graphics/2-4_2_1.png Graphic file (type png)
 <use graphics/2-4_2_1.png>
 Package pdftex.def Info: graphics/2-4_2_1.png  used on input line 284.
 (pdftex.def)             Requested size: 384.10966pt x 144.15967pt.
-<graphics/2-4_2_2.png, id=554, 845.1575pt x 317.185pt>
+<graphics/2-4_2_2.png, id=559, 845.1575pt x 317.185pt>
 File: graphics/2-4_2_2.png Graphic file (type png)
 <use graphics/2-4_2_2.png>
 Package pdftex.def Info: graphics/2-4_2_2.png  used on input line 286.
 (pdftex.def)             Requested size: 384.10966pt x 144.15967pt.
-<graphics/2-4_2_3.png, id=555, 845.1575pt x 317.185pt>
+<graphics/2-4_2_3.png, id=560, 845.1575pt x 317.185pt>
 File: graphics/2-4_2_3.png Graphic file (type png)
 <use graphics/2-4_2_3.png>
 Package pdftex.def Info: graphics/2-4_2_3.png  used on input line 288.
 (pdftex.def)             Requested size: 384.10966pt x 144.15967pt.
-<graphics/2-4_3_1.png, id=559, 461.725pt x 597.23125pt>
+<graphics/2-4_3_1.png, id=564, 461.725pt x 597.23125pt>
 File: graphics/2-4_3_1.png Graphic file (type png)
 <use graphics/2-4_3_1.png>
 Package pdftex.def Info: graphics/2-4_3_1.png  used on input line 300.
 (pdftex.def)             Requested size: 192.05482pt x 248.42046pt.
-<graphics/2-4_3_2.png, id=560, 461.725pt x 597.23125pt>
+<graphics/2-4_3_2.png, id=565, 461.725pt x 597.23125pt>
 File: graphics/2-4_3_2.png Graphic file (type png)
 <use graphics/2-4_3_2.png>
 Package pdftex.def Info: graphics/2-4_3_2.png  used on input line 301.
 (pdftex.def)             Requested size: 192.05482pt x 248.42046pt.
-<graphics/2-4_3_3.png, id=561, 461.725pt x 597.23125pt>
+<graphics/2-4_3_3.png, id=566, 461.725pt x 597.23125pt>
 File: graphics/2-4_3_3.png Graphic file (type png)
 <use graphics/2-4_3_3.png>
 Package pdftex.def Info: graphics/2-4_3_3.png  used on input line 310.
@@ -3294,12 +3294,12 @@ graphics/2-4_2_3.png>] [28 <./graphics/2-4_3_1.png (PNG copy)> <./graphics/2-4_
 [32
 
 ] [33]
-<graphics/Test_3D_DSM.png, id=665, 632.1216pt x 351.4731pt>
+<graphics/Test_3D_DSM.png, id=670, 632.1216pt x 351.4731pt>
 File: graphics/Test_3D_DSM.png Graphic file (type png)
 <use graphics/Test_3D_DSM.png>
 Package pdftex.def Info: graphics/Test_3D_DSM.png  used on input line 734.
 (pdftex.def)             Requested size: 426.79141pt x 237.31454pt.
-<graphics/ProjectionOnDSM.png, id=669, 845.1575pt x 597.23125pt>
+<graphics/ProjectionOnDSM.png, id=674, 845.1575pt x 597.23125pt>
 File: graphics/ProjectionOnDSM.png Graphic file (type png)
 <use graphics/ProjectionOnDSM.png>
 Package pdftex.def Info: graphics/ProjectionOnDSM.png  used on input line 746.
@@ -3326,18 +3326,18 @@ chapter 3.
 
 
 ]
-<graphics/L1234_rsz.png, id=698, 650.43pt x 433.62pt>
+<graphics/L1234_rsz.png, id=703, 650.43pt x 433.62pt>
 File: graphics/L1234_rsz.png Graphic file (type png)
 <use graphics/L1234_rsz.png>
 Package pdftex.def Info: graphics/L1234_rsz.png  used on input line 28.
 (pdftex.def)             Requested size: 298.75269pt x 199.16988pt.
-<graphics/FlightTrajectory5.png, id=701, 1005.7575pt x 950.55125pt>
+<graphics/FlightTrajectory5.png, id=706, 1005.7575pt x 950.55125pt>
 File: graphics/FlightTrajectory5.png Graphic file (type png)
 <use graphics/FlightTrajectory5.png>
 Package pdftex.def Info: graphics/FlightTrajectory5.png  used on input line 81.
 
 (pdftex.def)             Requested size: 225.77924pt x 213.3957pt.
-<graphics/FlightTrajectory3.png, id=702, 1009.7725pt x 874.26625pt>
+<graphics/FlightTrajectory3.png, id=707, 1009.7725pt x 874.26625pt>
 File: graphics/FlightTrajectory3.png Graphic file (type png)
 <use graphics/FlightTrajectory3.png>
 Package pdftex.def Info: graphics/FlightTrajectory3.png  used on input line 82.
@@ -3349,7 +3349,7 @@ Package pdftex.def Info: graphics/FlightTrajectory3.png  used on input line 82.
 /FlightTrajectory5.png>] [40
 
 ]
-<graphics/EOinfluence-1.png, id=728, 1521.685pt x 1075.01625pt>
+<graphics/EOinfluence-1.png, id=733, 1521.685pt x 1075.01625pt>
 File: graphics/EOinfluence-1.png Graphic file (type png)
 <use graphics/EOinfluence-1.png>
 Package pdftex.def Info: graphics/EOinfluence-1.png  used on input line 152.
@@ -3357,31 +3357,31 @@ Package pdftex.def Info: graphics/EOinfluence-1.png  used on input line 152.
  [41
 
  <./graphics/EOinfluence-1.png (PNG copy)>]
-<graphics/DEM_A9_FINAL_PART_small_shaded.png, id=736, 1106.1325pt x 854.19125pt
+<graphics/DEM_A9_FINAL_PART_small_shaded.png, id=741, 1106.1325pt x 854.19125pt
 >
 File: graphics/DEM_A9_FINAL_PART_small_shaded.png Graphic file (type png)
 <use graphics/DEM_A9_FINAL_PART_small_shaded.png>
 Package pdftex.def Info: graphics/DEM_A9_FINAL_PART_small_shaded.png  used on i
 nput line 170.
 (pdftex.def)             Requested size: 341.43442pt x 263.6626pt.
-<graphics/DEM_A9_STD_small_terrain.png, id=737, 553.06625pt x 427.5975pt>
+<graphics/DEM_A9_STD_small_terrain.png, id=742, 553.06625pt x 427.5975pt>
 File: graphics/DEM_A9_STD_small_terrain.png Graphic file (type png)
 <use graphics/DEM_A9_STD_small_terrain.png>
 Package pdftex.def Info: graphics/DEM_A9_STD_small_terrain.png  used on input l
 ine 174.
 (pdftex.def)             Requested size: 341.43442pt x 263.97243pt.
-<graphics/DEM_A9_NUM_scaled_s.png, id=738, 314.17375pt x 785.93625pt>
+<graphics/DEM_A9_NUM_scaled_s.png, id=743, 314.17375pt x 785.93625pt>
 File: graphics/DEM_A9_NUM_scaled_s.png Graphic file (type png)
 <use graphics/DEM_A9_NUM_scaled_s.png>
 Package pdftex.def Info: graphics/DEM_A9_NUM_scaled_s.png  used on input line 1
 82.
 (pdftex.def)             Requested size: 213.3957pt x 533.82996pt.
-<graphics/OL1234_rsz.png, id=741, 796.9775pt x 887.315pt>
+<graphics/OL1234_rsz.png, id=746, 796.9775pt x 887.315pt>
 File: graphics/OL1234_rsz.png Graphic file (type png)
 <use graphics/OL1234_rsz.png>
 Package pdftex.def Info: graphics/OL1234_rsz.png  used on input line 197.
 (pdftex.def)             Requested size: 298.75269pt x 332.60692pt.
-<graphics/ML1234_rsz.png, id=742, 1300.86pt x 867.24pt>
+<graphics/ML1234_rsz.png, id=747, 1300.86pt x 867.24pt>
 File: graphics/ML1234_rsz.png Graphic file (type png)
 <use graphics/ML1234_rsz.png>
 Package pdftex.def Info: graphics/ML1234_rsz.png  used on input line 201.
@@ -3391,41 +3391,41 @@ D_small_terrain.png>] [44 <./graphics/DEM_A9_NUM_scaled_s.png>] [45 <./graphics
 /OL1234_rsz.png> <./graphics/ML1234_rsz.png>] [46
 
 ]
-<graphics/Simu_errorhist_1.png, id=780, 387.849pt x 191.5155pt>
+<graphics/Simu_errorhist_1.png, id=785, 387.849pt x 191.5155pt>
 File: graphics/Simu_errorhist_1.png Graphic file (type png)
 <use graphics/Simu_errorhist_1.png>
-Package pdftex.def Info: graphics/Simu_errorhist_1.png  used on input line 270.
+Package pdftex.def Info: graphics/Simu_errorhist_1.png  used on input line 269.
 
 (pdftex.def)             Requested size: 341.43442pt x 168.5955pt.
  [47 <./graphics/Simu_errorhist_1.png>]
-<graphics/Simu_3D_2.png, id=791, 632.1216pt x 411.4572pt>
+<graphics/Simu_3D_2.png, id=796, 632.1216pt x 411.4572pt>
 File: graphics/Simu_3D_2.png Graphic file (type png)
 <use graphics/Simu_3D_2.png>
-Package pdftex.def Info: graphics/Simu_3D_2.png  used on input line 313.
+Package pdftex.def Info: graphics/Simu_3D_2.png  used on input line 312.
 (pdftex.def)             Requested size: 426.79141pt x 277.81578pt.
-<graphics/Simu_3D_1.png, id=792, 632.1216pt x 411.4572pt>
+<graphics/Simu_3D_1.png, id=797, 632.1216pt x 411.4572pt>
 File: graphics/Simu_3D_1.png Graphic file (type png)
 <use graphics/Simu_3D_1.png>
-Package pdftex.def Info: graphics/Simu_3D_1.png  used on input line 318.
+Package pdftex.def Info: graphics/Simu_3D_1.png  used on input line 317.
 (pdftex.def)             Requested size: 426.79141pt x 277.81578pt.
 
 
-LaTeX Warning: Float too large for page by 20.90332pt on input line 321.
+LaTeX Warning: Float too large for page by 20.90332pt on input line 320.
 
 [48
 
 ] [49 <./graphics/Simu_3D_2.png> <./graphics/Simu_3D_1.png>]
-<graphics/Simu_ImgNum.png, id=805, 597.6729pt x 409.53pt>
+<graphics/Simu_ImgNum.png, id=810, 597.6729pt x 409.53pt>
 File: graphics/Simu_ImgNum.png Graphic file (type png)
 <use graphics/Simu_ImgNum.png>
-Package pdftex.def Info: graphics/Simu_ImgNum.png  used on input line 358.
+Package pdftex.def Info: graphics/Simu_ImgNum.png  used on input line 357.
 (pdftex.def)             Requested size: 426.79141pt x 292.44304pt.
-<graphics/Simu_error_1.png, id=808, 402.5439pt x 288.8391pt>
+<graphics/Simu_error_1.png, id=813, 402.5439pt x 288.8391pt>
 File: graphics/Simu_error_1.png Graphic file (type png)
 <use graphics/Simu_error_1.png>
 Package pdftex.def Info: graphics/Simu_error_1.png  used on input line 382.
 (pdftex.def)             Requested size: 405.45053pt x 290.93185pt.
-<graphics/Simu_Ttest.png, id=809, 463.9734pt x 192.9609pt>
+<graphics/Simu_Ttest.png, id=814, 463.9734pt x 192.9609pt>
 File: graphics/Simu_Ttest.png Graphic file (type png)
 <use graphics/Simu_Ttest.png>
 Package pdftex.def Info: graphics/Simu_Ttest.png  used on input line 387.
@@ -3434,7 +3434,7 @@ Package pdftex.def Info: graphics/Simu_Ttest.png  used on input line 387.
 
  <./graphics/Simu_ImgNum.png>] [51 <./graphics/Simu_error_1.png> <./graphics/Si
 mu_Ttest.png>]
-<graphics/Simu_XY_Z.png, id=822, 576.4737pt x 412.1799pt>
+<graphics/Simu_XY_Z.png, id=827, 576.4737pt x 412.1799pt>
 File: graphics/Simu_XY_Z.png Graphic file (type png)
 <use graphics/Simu_XY_Z.png>
 Package pdftex.def Info: graphics/Simu_XY_Z.png  used on input line 414.
@@ -3442,12 +3442,12 @@ Package pdftex.def Info: graphics/Simu_XY_Z.png  used on input line 414.
  [52
 
  <./graphics/Simu_XY_Z.png>]
-<graphics/Test_3D.png, id=831, 630.4353pt x 426.1521pt>
+<graphics/Test_3D.png, id=836, 630.4353pt x 426.1521pt>
 File: graphics/Test_3D.png Graphic file (type png)
 <use graphics/Test_3D.png>
 Package pdftex.def Info: graphics/Test_3D.png  used on input line 455.
 (pdftex.def)             Requested size: 426.79141pt x 288.50508pt.
-<graphics/Test_hist.png, id=832, 365.2044pt x 191.9973pt>
+<graphics/Test_hist.png, id=837, 365.2044pt x 191.9973pt>
 File: graphics/Test_hist.png Graphic file (type png)
 <use graphics/Test_hist.png>
 Package pdftex.def Info: graphics/Test_hist.png  used on input line 459.
@@ -3455,40 +3455,52 @@ Package pdftex.def Info: graphics/Test_hist.png  used on input line 459.
  [53
 
 ] [54 <./graphics/Test_3D.png> <./graphics/Test_hist.png>]
-<graphics/Test_ImgNum.png, id=845, 588.2778pt x 409.53pt>
+<graphics/Test_ImgNum.png, id=850, 588.2778pt x 409.53pt>
 File: graphics/Test_ImgNum.png Graphic file (type png)
 <use graphics/Test_ImgNum.png>
 Package pdftex.def Info: graphics/Test_ImgNum.png  used on input line 470.
 (pdftex.def)             Requested size: 405.45053pt x 282.26355pt.
-<graphics/Test_XY_Z.png, id=847, 582.7371pt x 413.6253pt>
+<graphics/Test_XY_Z.png, id=852, 582.7371pt x 413.6253pt>
 File: graphics/Test_XY_Z.png Graphic file (type png)
 <use graphics/Test_XY_Z.png>
 Package pdftex.def Info: graphics/Test_XY_Z.png  used on input line 490.
 (pdftex.def)             Requested size: 426.79141pt x 302.94115pt.
-<graphics/Test_XY_Z_hat.png, id=848, 654.0435pt x 420.1296pt>
+<graphics/Test_XY_Z_hat.png, id=853, 654.0435pt x 420.1296pt>
 File: graphics/Test_XY_Z_hat.png Graphic file (type png)
 <use graphics/Test_XY_Z_hat.png>
 Package pdftex.def Info: graphics/Test_XY_Z_hat.png  used on input line 495.
 (pdftex.def)             Requested size: 426.79141pt x 274.15158pt.
 
 
-LaTeX Warning: Float too large for page by 42.36449pt on input line 498.
+LaTeX Warning: Float too large for page by 28.1381pt on input line 498.
 
+<graphics/Reconstruction-BeforeAfter_45.png, id=856, 686.565pt x 476.982pt>
+File: graphics/Reconstruction-BeforeAfter_45.png Graphic file (type png)
+<use graphics/Reconstruction-BeforeAfter_45.png>
+Package pdftex.def Info: graphics/Reconstruction-BeforeAfter_45.png  used on in
+put line 504.
+(pdftex.def)             Requested size: 426.79141pt x 296.50453pt.
+<graphics/all_1.png, id=857, 590.205pt x 714.67pt>
+File: graphics/all_1.png Graphic file (type png)
+<use graphics/all_1.png>
+Package pdftex.def Info: graphics/all_1.png  used on input line 511.
+(pdftex.def)             Requested size: 426.79141pt x 516.80843pt.
 ) (content/zusammenfassung_und_ausblick.tex [55
 
  <./graphics/Test_ImgNum.png>]
-[56 <./graphics/Test_XY_Z.png> <./graphics/Test_XY_Z_hat.png>]
+[56 <./graphics/Test_XY_Z.png> <./graphics/Test_XY_Z_hat.png>] [57 <./graphics/
+Reconstruction-BeforeAfter_45.png>] [58 <./graphics/all_1.png>]
 chapter 4.
-[57
-
-
-]) [58]
-chapter without number
 [59
 
 
+]) [60]
+chapter without number
+[61
 
-] [60] [61
+
+
+] [62] [63
 
 
 ]
@@ -3628,6 +3640,8 @@ Use my own \@writefile for lof
 Use my own \@writefile for lof
 Use my own \@writefile for lof
 Use my own \@writefile for lof
+Use my own \@writefile for lof
+Use my own \@writefile for lof
 Use my own \@writefile for toc
 Use my own \@writefile for lof
 Use my own \@writefile for lot
@@ -3658,7 +3672,7 @@ Process extension: `lot'
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 265.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 265.
 Package rerunfilecheck Info: File `ausarbeitung.out' has not changed.
-(rerunfilecheck)             Checksum: F4240B6DCCD9F53D9DE343B017063740;1509.
+(rerunfilecheck)             Checksum: 4A023B059A673C62246B40D3B3B80EC6;1509.
 
 
 LaTeX Warning: There were multiply-defined labels.
@@ -3668,11 +3682,11 @@ Package logreq Info: Writing requests to 'ausarbeitung.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 63988 strings out of 493307
- 1392063 string characters out of 3138822
- 2105049 words of memory out of 3000000
- 65899 multiletter control sequences out of 15000+200000
- 689752 words of font info for 332 fonts, out of 3000000 for 9000
+ 64009 strings out of 493307
+ 1392525 string characters out of 3138822
+ 2105342 words of memory out of 3000000
+ 65911 multiletter control sequences out of 15000+200000
+ 690012 words of font info for 334 fonts, out of 3000000 for 9000
  1145 hyphenation exceptions out of 8191
  71i,20n,96p,10467b,3044s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}{C:/Program Files/Mi
@@ -3699,9 +3713,9 @@ les/MiKTeX 2.9/fonts/type1/public/lm/lmsy10.pfb><C:/Program Files/MiKTeX 2.9/fo
 nts/type1/public/lm/lmsy8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/a
 msfonts/symbols/msbm10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/helveti
 c/uhvb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvr8a.pfb>
-Output written on ausarbeitung.pdf (61 pages, 9118074 bytes).
+Output written on ausarbeitung.pdf (63 pages, 10421421 bytes).
 PDF statistics:
- 1072 PDF objects out of 1200 (max. 8388607)
- 215 named destinations out of 1000 (max. 500000)
- 58786 words of extra memory for PDF output out of 61914 (max. 10000000)
+ 1095 PDF objects out of 1200 (max. 8388607)
+ 219 named destinations out of 1000 (max. 500000)
+ 58796 words of extra memory for PDF output out of 61914 (max. 10000000)
 
