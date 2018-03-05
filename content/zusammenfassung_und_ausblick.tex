@@ -3,7 +3,7 @@
 \chapter{Conclusion and Future Work}
 \label{chap:conclusion}
 
-This thesis exploits the use of linear regression in image space with combination of collinearity condition for 3D lane markings reconstruction. Without the utilization of the neighboring textures, the approach requires initial approximate 3D lines and is highly dependent on quality of pre-known image orientations. Nevertheless, it is robust to partial occlusion of the targeted lines on images and is applicable to the (quasi-)infinite line features as well as in cases of lowly textured neighborings. 
+This thesis exploits the use of linear regression in image space with combination of collinearity condition for 3D lane markings reconstruction. Without the utilization of the neighboring textures, the approach requires initial approximate 3D lines and is highly dependent on quality of pre-known image orientations. Nevertheless, it is robust to partial occlusion of the targeted lines on images and is applicable to the (quasi-)infinite line features as well as in cases of lowly textured neighborings and it improves the DSM at lowly textured road surfaces. 
 %The approach is developed for both dashed and continuous lane lines.???
 
 From simulated experiments in \cref{sec:simulation}, some conclusions are given:
@@ -18,7 +18,7 @@ From simulated experiments in \cref{sec:simulation}, some conclusions are given:
 
 From experimental results of true data in \cref{sec:simulation}, some conclusions are given:
 \begin{itemize}
-	\item The DSM profile, i.e. the initial 3D line approximation, is significantly dozens of centimeters far away from the reconstructed line segments. This indicates the necessity of reconstrucion based on detected 2D lines in image space and the viewing geometry, instead of simply reducing DSM noise by applying mean filter or such.
+	\item The DSM profile, i.e. the initial 3D line approximation, is significantly and systematically dozens of centimeters far away from the reconstructed line segments. This indicates the necessity of reconstrucion based on detected 2D lines in image space and the viewing geometry, instead of simply reducing DSM noise by applying mean filter or such.
 	
 	\item The LS-estimated precision of the measurements, involving the lane marking extraction quality as well as the quality of image orientation parameters, is better than 1 pixel.
 	
@@ -47,7 +47,7 @@ Some general conclusions are:
 	
 	\item Lane markings can be exploited to provide information on refining SGM-generated DSM.% Reconstruction based on imaging geometry is necessary.
 
-	\item The proposed reconstruction workflow relys on initial approximation with enough accuracy.
+	\item The proposed reconstruction workflow relys on initial approximation with enough accuracy, i.e. a global terrain model like SRTM would not be sufficient as starting height, as the error could be several meters in particular at roads.
 \end{itemize}
 
 
