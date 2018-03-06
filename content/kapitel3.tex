@@ -3,11 +3,11 @@
 
 \cref{sec:Materials} provides information about the used dataset. 
 
-\cref{sec:ParameterSelection} describes the chosen parameters for line extraction, window sliding and 3D line reconstruction. 
+\cref{sec:ParameterSelection} describes the chosen parameters for line extraction, line projection on DSM, and window sliding processes.
 
 In \cref{sec:simulation}, the correctness of the derived LS model for reconstruction is evaluated. Some other properties of the proposed reconstruction approach are also discussed.
 
-% evaluation procedure
+\cref{sec:truedata} evaluates the true data results. The result of single continuous lane-marking is presented and the theoretical precision is evaluated.
 %The distance between the LIDAR points and the generated DSM are computed and evaluated statistically
 %To evaluate the influence of the over-counting correction and MGM
 %cost aggregation independently, two evaluations were performed
@@ -25,7 +25,7 @@ As described in \cite{Fischer2017}, this aerial imagery shall be improved to hav
 An example aerial image is shown in \cref{fig:OriImg}. \cref{tab:CameraProperties} lists the properties of this camera, and \cref{tab:SensorViewingGeometry} provides the viewing geometry information.
 \begin{figure}
 	\centering
-	\includegraphics[width=0.7\textwidth]{L1234_rsz.png}
+	\includegraphics[width=0.8\textwidth]{L1234_rsz.png}
 	\caption{\small Original Image}
 	\label{fig:OriImg}
 \end{figure}
@@ -85,8 +85,7 @@ The images used in this work are acquired with a special flight configuration at
 \end{figure}
 
 \clearpage
-There are 15 images used in this work: 8 images in forward trip (first strip) and 7 in backward (second strip). The \textcolor{red}{striplength is ??? meter. The coverage configuration is shown in fig???.}
-% data of acquisition, number of images, length of flight strips,…
+There are 15 images used in this work: 8 images in forward trip (first strip) and 7 in backward (second strip). The length of flight strips is around 590 meter.
 
 Besides, the forward overlap is around 70\%, and all the lane markings are covered by both strips, whereas the side overlap depends on the distance of flight strips, which is a result of the pilots navigation ability and other influences, like wind. Nevertheless, the motorway in its entire width was covered by the two flight strips. Altogether, this results in approximately 8-image coverage in road areas. 
 
@@ -149,7 +148,7 @@ and around $6.9$ [cm] in Z-direction:
 
 \begin{figure}%[!h]
 	\centering
-	\includegraphics[width=0.8\textwidth]{EOinfluence-1.png}
+	\includegraphics[width=0.9\textwidth]{EOinfluence-1.png}
 	\caption{\small The impact of uncertain camera attitude in horizontal direction.}
 	\label{fig:EOinfluence-1}
 \end{figure}
@@ -194,11 +193,11 @@ Road segments are masked out from original images based on \gls{osm} data: First
 
 \begin{figure}%[!h]
 	\centering
-    	\includegraphics[width=0.7\textwidth]{OL1234_rsz.png}
+    	\includegraphics[width=0.8\textwidth]{OL1234_rsz.png}
     	\caption{\small Orthorectified Image}
     	\label{fig:OrthoImg}
-	\vspace{1cm}
-		\includegraphics[width=0.7\textwidth]{ML1234_rsz.png}
+	\vspace{0.5cm}
+		\includegraphics[width=0.75\textwidth]{ML1234_rsz.png}
 		\caption{\small Masked Image}
 		\label{fig:MaskedImg}
 \end{figure}
@@ -210,13 +209,13 @@ Road segments are masked out from original images based on \gls{osm} data: First
 
 %%% extraction %%%%%%%%%%%%%%%%
 In lane marking extraction process (see \cref{sec:LineExtraction}), the $\sigma$ value for Gaussian smoothing is set to be 1.8 to slightly suppress the noise in images. % From HALCON Referenz: For the choice of the thresholds High and Low one has to keep in mind that the second directional derivative depends on the amplitude and width of the line as well as the choice of Sigma. Thus: you must set this value depending on the lane marking width?
-A length threshold on the extracted lines is applied to reduce false positives ---the detected line features which are indeed not lane markings. Regarding the fact that a dashed lane-line is around 6 meter long which corresponds to 62--87 pixels in image space (when parallel to one of the coordinate axes or in 45$\degree$ direction), the extracted lines whose length is less than \textcolor{red}{65} pixels are rejected.
+A length threshold on the extracted lines is applied to reduce false positives ---the detected line features which are indeed not lane markings. Regarding the fact that a dashed lane-line is around 6 meter long which corresponds to 62--87 pixels in image space (when parallel to one of the coordinate axes or in 45$\degree$ direction), the extracted lines whose length is less than 65 pixels are rejected.
 % http://www.mvtec.com/doc/halcon/11/en/lines_gauss.html
 % https://www.dvr.de/download/publikationen-schriftenreihe-17.pdf
 
 
 %%% line projection on DSM %%%%%%%%%%%%%%%%
-The convergence threshold for 2D image point projection on DSM (see \cref{sec:LineProjectionOnDSM}) is selected as 0.5 m, as the height precision on road surface of the used DSM is expected to be around \textcolor{red}{50 cm}.
+The convergence threshold for 2D image point projection on DSM (see \cref{sec:LineProjectionOnDSM}) is selected as 0.5 m, as the height precision on road surface of the used DSM is expected to be around 50 cm.
 
 
 %%% sliding window %%%%%%%%%%%%%%%%
@@ -264,7 +263,7 @@ The observations in the LS model are simulated by back-projecting the true line 
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.8\textwidth]{Simu_errorhist_1.png}
+  \includegraphics[width=\textwidth]{Simu_errorhist_1.png}
   \caption{\small The added Gaussian random noise in the observations.}
   \label{fig:noise}
 \end{figure}
@@ -402,14 +401,14 @@ By assuming a constant priori standard deviation of measurements to $1$ [pixel] 
 reflects the quality of the design matrix in different LS adjustment processes. In other words, by assuming same measuring quality of 1 pixel level in each segment, $\Sigma_{\hat{X}\hat{X}}$ reflects the configuration strength of each line segments.
 
 
-From \cref{fig:SimuSigmaxx} it can be seen that the estimated parameters generally have smaller priori variance values (in horizontal direction) $\sqrt{\sigma_{\hat{X}}^2+\hat{\sigma}_{\hat{Y}}^2}$ and (in vertical direction) $\sigma_{\hat{Z}}$ with the increase of covering images, whereas larger deviations from the trend are contained in vertical direction. {By increasing the configuration strength, i.e. increasing the amount of covering images with different orientations, the precision of the estimated parameters can be improved}.
+From \cref{fig:SimuSigmaxx} it can be seen that the estimated parameters generally have smaller priori variance values (in horizontal direction) $\sqrt{\sigma_{\hat{X}}^2+\hat{\sigma}_{\hat{Y}}^2}$ and (in vertical direction) $\sigma_{\hat{Z}}$ with the increase of covering images. This tells that, {the precision of the estimated parameters can be improved by increasing the configuration strength, i.e. increasing the amount of covering images with different orientations}.
 
-Besides, the priori variance of the estimated parameters is smaller in vertical direction $\sigma_{\hat{Z}}$ than in horizontal direction $\sqrt{\sigma_{\hat{X}}^2+\hat{\sigma}_{\hat{Y}}^2}$. This tells that {the reconstructed nodes have higher precision in vertical direction}. [reason? sec 3.1]
+Besides, the priori variance of the estimated parameters is smaller in horizontal direction $\sqrt{\sigma_{\hat{X}}^2+\hat{\sigma}_{\hat{Y}}^2}$ than in vertical direction $\sigma_{\hat{Z}}$. This tells that {the reconstructed nodes have higher precision in horizontal direction}. 
 
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.95\textwidth]{Simu_XY_Z.png}
+  \includegraphics[width=\textwidth]{Simu_SigmaXX.png}
   \caption{\small The relation between the variances of the estimated parameters and the amount of images.}
   \label{fig:SimuSigmaxx}
 \end{figure}
@@ -485,12 +484,12 @@ By increasing the configuration strength, the priori precision of the estimated 
 
 \begin{figure}
   \centering
-  \includegraphics[width=\textwidth]{Test_XY_Z.png}
+  \includegraphics[width=\textwidth]{Test_SigmaXX.png}
   \caption{\small The variances of the estimated object coordinates, in horizontal and vertical directions.}
   \label{fig:TestSigmxx}
   \vspace{0.5cm}
   \centering
-  \includegraphics[width=\textwidth]{Test_XY_Z_hat.png}
+  \includegraphics[width=\textwidth]{Test_SigmaXXhat.png}
   \caption{\small The estimated variances of the estimated object coordinates, in horizontal and vertical directions.}
   \label{fig:TestSigmxxhat}
 \end{figure}
@@ -499,9 +498,9 @@ The reconstructed lane-markings in the testing area are shown in \cref{fig:TestA
 
 \begin{figure}
 	\centering
-	\subfloat[]{\includegraphics[width=0.8\textwidth]{Reconstructed_BeforeandAfter0.png}}
+	\subfloat[]{\includegraphics[width=0.8\textwidth]{Reconstructed_BeforeandAfter.png}}
 	
-	\subfloat[\small Zoom in to show the difference between the original DSM profiles and the reconstructed lines.]{\includegraphics[width=0.8\textwidth]{Reconstruction_zoom2.png}}
+	\subfloat[\small Zoom in to show the difference between the original DSM profiles and the reconstructed lines.]{\includegraphics[width=0.8\textwidth]{Reconstruction_zoom3.png}}
 	\caption{\small All the reconstructed lane-lines in the testing area.}
 	\label{fig:TestAll3D}
 \end{figure}

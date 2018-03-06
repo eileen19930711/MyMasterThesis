@@ -711,14 +711,31 @@ Two kinds of singular cases can happen. First, a configuration defect in object 
 
 After LS estimation, the estimated variance-covariance matrix of the estimated parameters is
 \begin{equation}
-\hat{\Sigma}_{\hat{X}\hat{X}}=\hat{\sigma}_0^2(\mathsf{A^TA})^{-1}=
+\begin{split}
+\hat{\Sigma}_{\hat{X}\hat{X}}&=
+\hat{\sigma}_0^2
+(
+(\mathsf{A^TW_{ll}A})^{-1}
+-
+(\mathsf{A^TW_{ll}A})^{-1}
+\mathsf{H}
+(
+\mathsf{H^T}
+(\mathsf{A^TW_{ll}A})^{-1}
+\mathsf{H}
+)^{-1}
+\mathsf{H^T}
+(\mathsf{A^TW_{ll}A})^{-1}
+)\\
+&=
 \begin{bmatrix}
 \hat{\sigma}_{\hat{X}}^2 && \hat{\sigma}_{\hat{X}\hat{Y}} && \hat{\sigma}_{\hat{X}\hat{Z}} \\
 \hat{\sigma}_{\hat{Y}\hat{X}} && \hat{\sigma}_{\hat{Y}}^2 && \hat{\sigma}_{\hat{Y}\hat{Z}} \\
 \hat{\sigma}_{\hat{Z}\hat{X}} && \hat{\sigma}_{\hat{Z}\hat{Y}} && \hat{\sigma}_{\hat{Z}}^2
 \end{bmatrix}
+\end{split}
 \end{equation}
-which depends on both the design matrix $\mathsf{A}$ (i.e. the configuration) and the posterior standard deviation of unit weight $\hat{\sigma}_0$ (i.e. the posterior measurements quality).
+which depends on both the design matrix $\mathsf{A}$ (i.e. the configuration) and the posterior standard deviation of the measurements $\hat{\sigma}_0$ (i.e. the posterior measurements quality) under the constraints $\mathsf{H}$.
 
 
 
