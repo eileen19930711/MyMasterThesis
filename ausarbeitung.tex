@@ -147,12 +147,11 @@ Several approaches have been proposed for the 3D reconstruction of line features
 This thesis presents a workflow for 3D lane markings reconstruction without explicit feature matching process using multi-view aerial imagery. The aim is to optimize the best 3D line location by minimizing the distance from its back projection to the detected 2D line in all the covering images.
 % What materials are used? the ideas?
 Firstly, the lane markings are automatically extracted from aerial images using standard line detection algorithms. By projecting these extracted lines onto the \gls{sgm} generated \gls{dsm}, the approximate 3D line segments are generated. Starting from these approximations, the 3D lines are iteratively refined based on the detected 2D lines in the original images and the viewing geometry. 
-The proposed approach relies on precise detection of 2D lines in image space, a pre-knowledge of the approximate 3D line segments, and it heavily relies on image orientations. Nevertheless, it avoids the problem of non-textured neighborhood and is not limited to lines of finite length. 
-\textcolor{red}{Experimental results are given for both continuous and dashed lane lines.??? The theoretical precision of reconstruction with the proposed framwork is evaluated.}
+The proposed approach relies on precise detection of 2D lines in image space, a pre-knowledge of the approximate 3D line segments, and it heavily relies on image orientations. Nevertheless, it avoids the problem of non-textured neighborhood and is not limited to lines of finite length. The theoretical precision of 3D reconstruction with the proposed framwork is evaluated.
 
 \vspace{3cm}
 
-keywords: 3D line features reconstruction, linear regression, least-squares adjustment
+keywords: 3D line features reconstruction, line fitting, least-squares adjustment
 \cleardoublepage
 
 

@@ -3,8 +3,8 @@
 \chapter{Conclusion and Future Work}
 \label{chap:conclusion}
 
-This thesis exploits the use of linear regression in image space with combination of collinearity condition for 3D lane markings reconstruction. Without the utilization of the neighboring textures, the approach requires initial approximate 3D lines and is highly dependent on quality of pre-known image orientations. Nevertheless, it is robust to partial occlusion of the targeted lines on images and is applicable to the (quasi-)infinite line features as well as in cases of lowly textured neighborings and it improves the DSM at lowly textured road surfaces. 
-%The approach is developed for both dashed and continuous lane lines.???
+This thesis proposed a framework on automatic 3D lane marking reconstruction using multi-view aerial imagery. Standard line detection algorithms are applied to extract lane markings on the aerial images. By exploiting the use of linear regression in image space and with the combination of collinearity condition, lane markings are reconstructed based on their detected positions in images and the viewing geometry. Without the utilization of the neighboring textures, the approach requires initial approximate 3D lines and is highly dependent on quality of pre-known image orientations. Nevertheless, it is robust to partial occlusion of the targeted lines on images and is applicable to the (quasi-)infinite line features as well as in cases of lowly textured neighborings and it improves the DSM at lowly textured road surfaces. 
+
 
 From simulated experiments in \cref{sec:simulation}, some conclusions are given:
 \begin{itemize}
@@ -12,7 +12,7 @@ From simulated experiments in \cref{sec:simulation}, some conclusions are given:
 	
 	\item With the same line orientations in 3D space, the configuration strength increases with the increase of amount of covering images from different views.
 	
-	\item The reconstructed line segments have higher precision in vertical direction than in horizontal direction.
+	\item The reconstructed line segments have higher priori precision in horizontal direction than in vertical direction.
 \end{itemize}
 
 
@@ -21,16 +21,14 @@ From experimental results of true data in \cref{sec:simulation}, some conclusion
 	\item The DSM profile, i.e. the initial 3D line approximation, is significantly and systematically dozens of centimeters far away from the reconstructed line segments. This indicates the necessity of reconstrucion based on detected 2D lines in image space and the viewing geometry, instead of simply reducing DSM noise by applying mean filter or such.
 	
 	\item The LS-estimated precision of the measurements, involving the lane marking extraction quality as well as the quality of image orientation parameters, is better than 1 pixel.
+
+	\item The configuration defect %which is mentioned in \cref{subsec:LSadj} 
+	barely happens: when the linear regression functional model between image coordinates $x$ and $y$ are properly set up ---according to the characteristics of the detected lane-lines in image space, and when the flight configuration guarantees stereo views whose base-lines are perpendicular to lane-lines orientations in 3D.
 	
-	\item Despite of the same covering images amount from different views, configuration strength differs with different 3D line orientations.
-	
-	\item The configuration defect in image space %which is mentioned in \cref{subsec:LSadj} 
-	barely happens when the linear regression functional model between image coordinates $x$ and $y$ are properly set up ---according to the characteristics of the detected lane-lines in image space.
-	
-	\item  %The configuration defect in object space %which is mentioned in \cref{subsec:LSadj} 
-	%may happen in some of the stereo views in the same strip with the adopted flight configuration in this work.% of flying along the motorways, the detected lane lines lie mainly in flight direction on images.
-	With the adopted flight configuration in this work, the stereo pairs in the same strip, where the lane markings lie nearly on the epipolar plane, barely contribute on increasing the configuration strength for lane marking reconstruction. 
-	%This indirectly indicates that, under this kind of image configuration, increasing forward overlapping rate does not really increase the configuration strength for 3D lane markings reconstruction. 
+%	\item  %The configuration defect in object space %which is mentioned in \cref{subsec:LSadj} 
+%	%may happen in some of the stereo views in the same strip with the adopted flight configuration in this work.% of flying along the motorways, the detected lane lines lie mainly in flight direction on images.
+%	With the adopted flight configuration in this work, the stereo pairs in the same strip, where the lane markings lie nearly on the epipolar plane, barely contribute on increasing the configuration strength for lane marking reconstruction. 
+%	%This indirectly indicates that, under this kind of image configuration, increasing forward overlapping rate does not really increase the configuration strength for 3D lane markings reconstruction. 
 	
 \end{itemize}
 
@@ -40,14 +38,14 @@ From experimental results of true data in \cref{sec:simulation}, some conclusion
 %With the extracted line in the form of sets of points with sub-pixel accuracy and EOIO accuracy???, linear regression can be applied on reconstructing the 3D line segment position.
 
 %image distortion vs straight line approximation
-
+\clearpage
 Some general conclusions are:
 \begin{itemize}
 	\item Image configuration plays an important roll in 3D reconstruction. In the case of this work, being covered by more views whose base-lines are as perpendicular as possible to lane-marking directions, would improve the reconstruction result.
 	
 	\item Lane markings can be exploited to provide information on refining SGM-generated DSM.% Reconstruction based on imaging geometry is necessary.
 
-	\item The proposed reconstruction workflow relys on initial approximation with enough accuracy, i.e. a global terrain model like SRTM would not be sufficient as starting height, as the error could be several meters in particular at roads.
+	\item The proposed reconstruction workflow relies on initial approximation with enough accuracy, i.e. a global terrain model like SRTM would not be sufficient as starting height, as the error could be several meters in particular at roads.
 \end{itemize}
 
 
