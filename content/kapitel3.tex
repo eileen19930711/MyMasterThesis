@@ -129,7 +129,7 @@ The quality of interior and exterior orientation parameters set would have a max
 \begin{itemize}
       \item caused by inaccurate camera position: 
       \item [] $\sqrt{\sigma_{north}^2+\sigma_{east}^2}=\sqrt{0.055^2+0.035^2}\approx0.065$ [meter]
-      \item caused by inaccurate camera attitude, as illustrated in :
+      \item caused by inaccurate camera attitude, as illustrated in \cref{fig:EOinfluence-1}:
       \item [] $ H_{flight}\times\sqrt{(\tan(\sigma_{roll}+\tau)-\tan\tau)^2+(\dfrac{\tan\sigma_{pitch}}{\cos\tau})^2}$
       \item [] $=500\times\sqrt{(\tan(0.002\degree+15\degree)-\tan15\degree)^2+(\dfrac{\tan0.002\degree}{\cos15\degree})^2}\approx0.026$ [meter]
       \item caused by inaccurate Interior Orientations:
@@ -178,7 +178,7 @@ The DSM has 20 cm grid spacing. \cref{fig:DSM} shows a part of the DSM. Standard
 
 \begin{figure}%[!h]
   \centering
-  \includegraphics[width=0.5\textwidth]{DEM_A9_NUM_scaled_s.png}
+  \includegraphics[width=0.55\textwidth]{DEM_A9_NUM_scaled_s.png}
   \caption{\small Distribution of stereo pairs used for DSM generation. Lighter color indicates more stereo pairs are used in that area. Maximum 27 stereo pairs are used for one pixel.}%%%%%%%%
   \label{fig:DSMnumber}
 \end{figure}
@@ -469,7 +469,7 @@ As the test statistic $Z_{obs}\approx-3.59$ is less than $-Z_{0.95}=-1.64$, i.e.
   \includegraphics[width=\textwidth]{Test_3D.png}
   \caption{\small The reconstructed line segments and the unrefined DSM profile in UTM 32N coordinate system.}
   \label{fig:Test3D}
-  \vspace{1cm}
+  \vspace{2cm}
   \includegraphics[width=\textwidth]{Test_hist.png}
   \caption{\small Histogram of the distances from the reconstructed line to the unrefined DSM profile.}
   \label{fig:TestHist}
