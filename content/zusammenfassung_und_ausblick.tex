@@ -3,7 +3,7 @@
 \chapter{Conclusion and Future Work}
 \label{chap:conclusion}
 
-This thesis proposed a framework for automatic 3D lane marking reconstruction using multi-view aerial imagery. Standard line detection algorithms are applied to extract lane markings on the aerial images. By exploiting the use of linear regression in image space and with the combination of collinearity condition, lane markings are reconstructed based on their detected positions in images and the viewing geometry. Without the utilization of the neighboring textures, the approach requires initial approximate 3D lines and is highly dependent on quality of pre-known image orientations. Nevertheless, it is robust to partial occlusions of the targeted lines on images and is applicable to the (quasi-)infinite line features as well as in cases of lowly textured neighborings and it improves the DSM at lowly textured road surfaces. 
+This thesis proposed a framework for automatic 3D lane marking reconstruction using multi-view aerial imagery. Standard line detection algorithms are applied to extract lane markings on the aerial images. By exploiting the use of linear regression in image space and with the combination of collinearity condition, lane markings are reconstructed based on their detected positions in images and the viewing geometry. Without the utilization of the neighboring textures, the approach requires initial approximate 3D lines and is highly dependent on quality of pre-known image orientations. Nevertheless, it is robust to partial occlusions of the targeted lines on images and is applicable to the (quasi-)infinite line features as well as in cases of lowly textured neighboring and it improves the DSM at lowly textured road surfaces. 
 
 
 From simulated experiments in \cref{sec:simulation}, some conclusions are given:
@@ -23,8 +23,9 @@ From experimental results of true data in \cref{sec:simulation}, some conclusion
 	\item The LS-estimated precision of the measurements, involving the lane marking extraction quality as well as the quality of image orientation parameters, is better than 1 pixel.
 
 	\item The configuration defect %which is mentioned in \cref{subsec:LSadj} 
-	barely happens: when the linear regression functional model between image coordinates $x$ and $y$ are properly set up ---according to the characteristics of the detected lane-lines in image space, and when the flight configuration guarantees stereo views whose base-lines are perpendicular to lane-lines orientations in 3D.
+	barely happens: 1.when the linear regression functional model between image coordinates $x$ and $y$ are properly set up ---according to the characteristics of the detected lane-lines in image space. 2.when the flight configuration guarantees stereo views whose base-lines are perpendicular to lane-lines orientations in 3D.
 	
+	\item The theoretical precision of the reconstructed line-nodes is within 2.5 cm in vertical direction and within 5 mm in horizontal direction.
 %	\item  %The configuration defect in object space %which is mentioned in \cref{subsec:LSadj} 
 %	%may happen in some of the stereo views in the same strip with the adopted flight configuration in this work.% of flying along the motorways, the detected lane lines lie mainly in flight direction on images.
 %	With the adopted flight configuration in this work, the stereo pairs in the same strip, where the lane markings lie nearly on the epipolar plane, barely contribute on increasing the configuration strength for lane marking reconstruction. 
@@ -38,7 +39,7 @@ From experimental results of true data in \cref{sec:simulation}, some conclusion
 %With the extracted line in the form of sets of points with sub-pixel accuracy and EOIO accuracy???, linear regression can be applied on reconstructing the 3D line segment position.
 
 %image distortion vs straight line approximation
-\clearpage
+
 Some general conclusions are:
 \begin{itemize}
 	\item Image configuration plays an important roll in 3D reconstruction. In the case of this work, being covered by more views whose base-lines are as perpendicular as possible to lane-marking directions, would improve the reconstruction result.
