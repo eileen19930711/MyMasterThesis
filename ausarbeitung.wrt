@@ -124,14 +124,17 @@
 \@writefile{lof}{\contentsline {figure}{\numberline {\relax 3.22}{\ignorespaces \nag@@warning@xxi \relax \fontsize {10}{12}\selectfont \abovedisplayskip 10\p@ plus2\p@ minus5\p@ \abovedisplayshortskip \z@ plus3\p@ \belowdisplayshortskip 6\p@ plus3\p@ minus3\p@ \def \leftmargin \leftmargini \parsep 4.5\p@ plus2\p@ minus\p@ \topsep 9\p@ plus3\p@ minus5\p@ \itemsep 4.5\p@ plus2\p@ minus\p@ {\leftmargin \leftmargini \topsep 6\p@ plus2\p@ minus2\p@ \parsep 3\p@ plus2\p@ minus\p@ \itemsep \parsep }\belowdisplayskip \abovedisplayskip \add@extra@listi {sml}All the nodes of reconstructed lines on georeferenced aerial images, in UTM 32N coordiate system.\relax }}{58}{figure.caption.43}}
 \@writefile{lof}{\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {}}}{58}{subfigure.22.1}}
 \@writefile{lof}{\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Zooming into road surface}}}{58}{subfigure.22.2}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {4}Conclusion and Future Work}{59}{chapter.4}}
+\@writefile{lof}{\contentsline {figure}{\numberline {\relax 3.23}{\ignorespaces \nag@@warning@xxi \relax \fontsize {10}{12}\selectfont \abovedisplayskip 10\p@ plus2\p@ minus5\p@ \abovedisplayshortskip \z@ plus3\p@ \belowdisplayshortskip 6\p@ plus3\p@ minus3\p@ \def \leftmargin \leftmargini \parsep 4.5\p@ plus2\p@ minus\p@ \topsep 9\p@ plus3\p@ minus5\p@ \itemsep 4.5\p@ plus2\p@ minus\p@ {\leftmargin \leftmargini \topsep 6\p@ plus2\p@ minus2\p@ \parsep 3\p@ plus2\p@ minus\p@ \itemsep \parsep }\belowdisplayskip \abovedisplayskip \add@extra@listi {sml}With the reconstructed lane-lines, the DSM quality on road surfaces is improved.\relax }}{59}{figure.caption.44}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {The original DSM surface.}}}{59}{subfigure.23.1}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {The refined DSM surface.}}}{59}{subfigure.23.2}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {4}Conclusion and Future Work}{61}{chapter.4}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{lol}{\addvspace {10\p@ }}
 \@writefile{loa}{\addvspace {10\p@ }}
 \@writefile{code}{\addvspace {10\p@ }}
 \@writefile{alg}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {chapter}{\nonumberline Bibliography}{61}{chapter*.45}}
+\@writefile{toc}{\contentsline {chapter}{\nonumberline Bibliography}{65}{chapter*.47}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{lol}{\addvspace {10\p@ }}

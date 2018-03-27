@@ -136,7 +136,7 @@ $r_{11},...,r_{33}$: elements of the rotation matrix R (orthogonal 3$\times$3-ma
 
 An original image has some degree of deviations from perspective mapping due to lens distortion, lens refraction or non-planarity of the sensor surface. There are several models to describe these perturbing effects and can be used to undistort the images, resulting in rectified images which are now straight line-preserving.
  
-A subset of physical distortion model \cite{Fraser1997} is chosen, with two radial symmetric distortion parameters $A_1$ and $A_2$, two asymmetric parameters $B_1$ and $B_2$, and a scaling $C1$ and an affine shearing parameter $C_2$. Assuming $x$ and $y$ to be the distorted image coordinates, the corrections $\Delta x$ and $\Delta y$ are then calculated by the following equations:
+A subset of physical distortion model \cite{Fraser1997} is chosen, with two radial symmetric distortion parameters $A_1$ and $A_2$, two asymmetric parameters $B_1$ and $B_2$, and a scaling $C1$ and an affine shearing parameter $C_2$. Assuming $x\prime$ and $y\prime$ to be the distorted image coordinates, the corrections $\Delta x$ and $\Delta y$ are then calculated by the following equations:
 \begin{equation} \label{eq:LensDistortion}
 \begin{split}
 \Delta x &= x_p + A_1x_*(r^2-R_0^2) + A_2x_*(r^4-R_0^4) + B_1(r^2+2x_*^2) + B_22x_*y+C_2y \\
@@ -146,11 +146,11 @@ A subset of physical distortion model \cite{Fraser1997} is chosen, with two radi
 with $r=\sqrt{x_*^2+y^2}$, $x_*=\dfrac{x}{C_1}$ and radius\footnote{At the radius $R_0$ the radial symmetric distortion is zero by definition, which avoids too high distortion values at the edges and reduces the correlation with the focal length.} $R_0$ being set %to 0.014m which corresponds 
 to a third of the sensor diagonal.
 
-The undistorted image coordinates $x\prime$ and $y\prime$ are then calculated by
+The undistorted image coordinates $x$ and $y$ are then calculated by
 \begin{equation} \label{eq:undistortedimgcoord}
 \begin{split}
-x\prime=x+\Delta x \\
-y\prime=y+\Delta y
+x=x\prime+\Delta x \\
+y=y\prime+\Delta y
 \end{split}
 \end{equation}
 
@@ -158,12 +158,12 @@ y\prime=y+\Delta y
 \label{subsec:ExtendedCollinearity}
 As real cameras only approximate the perspective camera model, lens distortion correction can be additionally included in the collinearity model, attempting to correct the pixel positions so that they obey the perspective model with sufficient accuracy.%[W. Förstner et al. 2016] % The reference is not the original one
 
-By inserting \eqref{eq:collinearity} and \eqref{eq:LensDistortion} into \eqref{eq:undistortedimgcoord} , the relationship between a 3D point $\mathbf{P}(X, Y, Z)$ and its corresponding distorted image coordinates $\mathbf{p}(x,y)$ can be described as
+By inserting \eqref{eq:collinearity} and \eqref{eq:LensDistortion} into \eqref{eq:undistortedimgcoord} , the relationship between a 3D point $\mathbf{P}(X, Y, Z)$ and its corresponding distorted image coordinates $\mathbf{p}(x\prime,y\prime)$ can be described as
 \begin{equation} \label{eq:expandedcollinearity}
 \begin{split}
-x =& x_0-c\dfrac{r_{11}(X-X_0)+r_{21}(Y-Y_0)+r_{31}(Z-Z_0)}{r_{13}(X-X_0)+r_{23}(Y-Y_0)+r_{33}(Z-Z_0)} \\
+x\prime =& x_0-c\dfrac{r_{11}(X-X_0)+r_{21}(Y-Y_0)+r_{31}(Z-Z_0)}{r_{13}(X-X_0)+r_{23}(Y-Y_0)+r_{33}(Z-Z_0)} \\
 &-(x_p + A_1x_*(r^2-R_0^2) + A_2x_*(r^4-R_0^4) + B_1(r^2+2x_*^2) + B_22x_*y+C_2y)\\
-y =& y_0-c\dfrac{r_{12}(X-X_0)+r_{22}(Y-Y_0)+r_{32}(Z-Z_0)}{r_{13}(X-X_0)+r_{23}(Y-Y_0)+r_{33}(Z-Z_0)} \\
+y\prime =& y_0-c\dfrac{r_{12}(X-X_0)+r_{22}(Y-Y_0)+r_{32}(Z-Z_0)}{r_{13}(X-X_0)+r_{23}(Y-Y_0)+r_{33}(Z-Z_0)} \\
 &-(y_p + A_1y  (r^2-R_0^2) + A_2y  (r^4-R_0^4) + B_1(r^2+2y^2)   + B_22x_*y)
 \end{split}
 \end{equation}
@@ -173,7 +173,7 @@ To express \eqref{eq:expandedcollinearity} shortly, a function $\mathcal{G}$ is 
 \mathbf{p} = \mathcal{G}(\mathbf{q},\mathbf{P}) 
 \end{equation}
 
-which takes the interior and exterior orientations as well as the lens distortion parameters of a camera $\mathbf{q}(x_0,y_0,c,X_0,Y_0,Z_0,r_{11},...,r_{33},A_1,A_2,B_1,B_2,C_1,C_2)$ and the position of a 3D point $\mathbf{P}(X, Y, Z)$, and returns the corresponding distorted image coordinates $\mathbf{p}(x,y)$.
+which takes the interior and exterior orientations as well as the lens distortion parameters of a camera $\mathbf{q}(x_0,y_0,c,X_0,Y_0,Z_0,r_{11},...,r_{33},A_1,A_2,B_1,B_2,C_1,C_2)$ and the position of a 3D point $\mathbf{P}(X, Y, Z)$, and returns the corresponding distorted image coordinates $\mathbf{p}(x\prime,y\prime)$.
 
 \clearpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -184,7 +184,7 @@ Line fitting is the process of constructing an infinite straight line that has a
 
 In the case of standard linear regression, the regressor $x$ is assumed error free, inconsistencies\footnote{The word "inconsistencies" indicates the unobserved random errors, also called as measurement errors.} are only for the dependent variable $y$. Geometrically it means that the vertical distances from observed data to the fitted line is minimized. To minimize the perpendicular distances from the data points to the regression line, a orthogonal regression model is derived in \cref{subsec:OrthogonalRegression}.
 
-For a later combination with point-wise extended collinearity equation \eqref{eq:Gfunction} in next section, the aim is to fit the line equation in two-point form to the observed dataset. For such nonlinear functional relation between variales, a nonlinear LS model is derived in \cref{subsec:NonLinear}.
+For a later combination with point-wise extended collinearity equation \eqref{eq:Gfunction} in next section, the aim is to fit the line equation in two-point form to the observed dataset. For such nonlinear functional relation between variables, a nonlinear LS model is derived in \cref{subsec:NonLinear}.
 
 A functional model is unsolvable when the assumed "dependent" variable is indeed not a function of the independent variables, i.e. the assumed functional relation does not really exist. Take an observed set of 2D points with their Cartesian coordinates $\{x_i,y_i\}^n_{i=1}$ on a vertical line $x=constant$ for example. Their $y$ values have no dependency on their $x$ values, i.e. knowledge of $x$ tells nothing about $y$. Therefore, for this dataset, the functional model $y=f(x)$ is singular. In such cases, however, $x$ is a function of $y$ (which is actually a constant function) and the equation system which models the dependent variable $x$ being a function of the independent variable $y$ becomes solvable. Regarding the dataset used in this work (which will be described with more details in \cref{sec:Materials}) where the observed 2D points scatter mainly in column direction in image space, the functional relation between variables $x$ and $y$ will be setup as $x=f(y)$ to avoid weakly solvable equations system.
 
@@ -653,7 +653,7 @@ where $\widehat{\boldsymbol x}^a$ is the approximate values for the estimates of
 In the \textit{linearized substitute model} as shown in \eqref{eq:GM-ObsEq-linear} and \eqref{eq:GM-ConEq-linear}, it turns to solve for the increments of unknowns $\Delta\boldsymbol x$ instead of the unknowns themselves.
 %%%%%%%%%%%%%%%%%%%%%%%%
 
-As the lines were extracted independently and with the same procesure, the measurements are assumed to be independent from each other and equal-weighted. That is, the weight matrix is an identity matrix:
+As the lines were extracted independently and with the same procedure, the measurements are assumed to be independent from each other and equal-weighted. That is, the weight matrix is an identity matrix:
 \begin{equation}
 \mathsf{W}_{ll}=
 \begin{bmatrix}

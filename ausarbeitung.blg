@@ -1,15 +1,15 @@
-[0] Config.pm:302> INFO - This is Biber 2.10
-[0] Config.pm:305> INFO - Logfile is 'ausarbeitung.blg'
-[72] biber-MSWIN64:313> INFO - === 
-[196] Biber.pm:371> INFO - Reading 'ausarbeitung.bcf'
-[334] Biber.pm:857> INFO - Found 17 citekeys in bib section 0
-[359] Biber.pm:3976> INFO - Processing section 0
-[418] Biber.pm:4136> INFO - Looking for bibtex format file 'bibliography.bib' for section 0
-[431] bibtex.pm:1490> INFO - LaTeX decoding ...
-[513] bibtex.pm:1306> INFO - Found BibTeX data source 'bibliography.bib'
-[845] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[845] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[845] Biber.pm:3804> INFO - Sorting list 'anyt/global//global/global' of type 'entry' with template 'anyt' and locale 'en-US'
-[845] Biber.pm:3810> INFO - No sort tailoring available for locale 'en-US'
-[928] bbl.pm:617> INFO - Writing 'ausarbeitung.bbl' with encoding 'UTF-8'
-[941] bbl.pm:720> INFO - Output to ausarbeitung.bbl
+[1] Config.pm:302> INFO - This is Biber 2.10
+[1] Config.pm:305> INFO - Logfile is 'ausarbeitung.blg'
+[59] biber-MSWIN64:313> INFO - === 
+[271] Biber.pm:371> INFO - Reading 'ausarbeitung.bcf'
+[414] Biber.pm:857> INFO - Found 17 citekeys in bib section 0
+[431] Biber.pm:3976> INFO - Processing section 0
+[448] Biber.pm:4136> INFO - Looking for bibtex format file 'bibliography.bib' for section 0
+[457] bibtex.pm:1490> INFO - LaTeX decoding ...
+[514] bibtex.pm:1306> INFO - Found BibTeX data source 'bibliography.bib'
+[734] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[734] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[734] Biber.pm:3804> INFO - Sorting list 'anyt/global//global/global' of type 'entry' with template 'anyt' and locale 'en-US'
+[735] Biber.pm:3810> INFO - No sort tailoring available for locale 'en-US'
+[764] bbl.pm:617> INFO - Writing 'ausarbeitung.bbl' with encoding 'UTF-8'
+[772] bbl.pm:720> INFO - Output to ausarbeitung.bbl

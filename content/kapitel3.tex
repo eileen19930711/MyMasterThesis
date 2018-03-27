@@ -115,7 +115,7 @@ To provide an overall quality on the interior orientations: from the calibration
 		\midrule
 		focal length $c$                       &   $0.051$ & $\sigma_c$      & $6.9\mathrm{e}{-7}$ & [meter]\\
 		x coordinate of principal point $pp_x$ & $-42.259$ & $\sigma_{pp_x}$ & $0.167$             &[$\mu$m]\\
-		x coordinate of principal point $pp_y$ & $115.384$ & $\sigma_{pp_y}$ & $0.799$             &[$\mu$m]\\
+		y coordinate of principal point $pp_y$ & $115.384$ & $\sigma_{pp_y}$ & $0.799$             &[$\mu$m]\\
 		\bottomrule
 	\end{tabular}
 	\caption{Interior Orientations and their precisions}
@@ -511,9 +511,7 @@ Computed with \cref{eq:postSigmaXX}, \cref{fig:TestSigmxxhat} shows: with sub-pi
   \label{fig:TestSigmxxhat}
 \end{figure}
 
-\vspace{1cm}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-The reconstructed lane-markings in the test area are shown in \cref{fig:TestAll3D} and \cref{fig:TestAll2D}. 
+The reconstructed lane-markings in the test area are shown in \cref{fig:TestAll3D} and \cref{fig:TestAll2D}. They are further exploited to improve the DSM at lowly textured road surfaces, as shown in \cref{fig:DSMcomparison}.
 
 \begin{figure}
 	\centering
@@ -534,3 +532,11 @@ The reconstructed lane-markings in the test area are shown in \cref{fig:TestAll3
 	\label{fig:TestAll2D}
 \end{figure}
 
+\begin{figure}
+	\centering
+	\subfloat[The original DSM surface.]{\includegraphics[width=0.88\textwidth]{DSMoriginal.JPG}}
+	
+	\subfloat[The refined DSM surface.]{\includegraphics[width=0.88\textwidth]{DSMrefined.JPG}}
+	\caption{\small With the reconstructed lane-lines, the DSM quality on road surfaces is improved.}
+	\label{fig:DSMcomparison}
+\end{figure}
